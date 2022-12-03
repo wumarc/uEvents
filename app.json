@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "uEvents",
-    "slug": "uEvents",
+    "slug": "uevents",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "731378f9-b90e-476d-8d73-992ad5856af1"
+      }
+    },
+    "owner": "antoine3044"
   }
 }
