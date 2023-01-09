@@ -21,6 +21,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.uEvents",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -31,9 +33,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "731378f9-b90e-476d-8d73-992ad5856af1"
+        "projectId": "a0c34a7b-61b5-4599-ae76-83955092abcc"
       }
     },
-    "owner": "antoine3044"
+    "owner": "rationalpi"
   }
 }

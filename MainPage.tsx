@@ -36,7 +36,6 @@ const MainPage: FC = (props) => {
           </Stack.Navigator>
         </NavigationContainer>
       </View>
-
       {/* End of actual post */}
       <View
         style={{
