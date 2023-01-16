@@ -53,7 +53,7 @@ const MainPage: FC = (props) => {
           <Button title="Saved"></Button>
         </View>
         <View style={{ height: "100%", width: "20%" }}>
-          <Button title="Tickets"></Button>
+          <Button title="Tickets (This is a test)"></Button>
         </View>
         <View style={{ height: "100%", width: "20%" }}>
           <Button title="Home"></Button>
