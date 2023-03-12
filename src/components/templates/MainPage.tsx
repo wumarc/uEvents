@@ -6,6 +6,7 @@ import Notification from "./Notification";
 import Profile from "./Profile";
 import Home from "./Home";
 
+
 const MainPage = () => {
 
   const [index, setIndex] = useState(0);

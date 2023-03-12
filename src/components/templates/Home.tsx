@@ -1,5 +1,5 @@
 import { BottomNavigation, Text } from "react-native-paper";
-import { View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -12,9 +12,7 @@ const Home = () => {
       alignItems: 'center',
       backgroundColor: '#00BFA5'
     }}>
- 
-      <Text>  This is the Home page! </Text>
- 
+      <Text> This is the Home page! </Text>
     </View>
   );
   

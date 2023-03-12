@@ -1,4 +1,4 @@
-import MainPage from "./src/components/MainPage";
+import MainPage from "./src/components/templates/MainPage";
 
 export default function App() {
   return <MainPage />;
