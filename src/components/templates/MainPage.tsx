@@ -6,7 +6,6 @@ import Notification from "./Notification";
 import Profile from "./Profile";
 import Home from "./Home";
 
-
 const MainPage = () => {
 
   const [index, setIndex] = useState(0);
@@ -25,13 +24,13 @@ const MainPage = () => {
   });
 
   return (
-    <SafeAreaProvider>
-      <BottomNavigation
-        navigationState={{index, routes}}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-      />
-    </SafeAreaProvider>
+      <SafeAreaProvider>
+          <BottomNavigation
+            navigationState={{index, routes}}
+            onIndexChange={setIndex}
+            renderScene={renderScene}
+          />
+      </SafeAreaProvider>
   );
 
 };

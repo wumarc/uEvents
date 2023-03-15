@@ -13,7 +13,7 @@ const Events = () => {
       backgroundColor: '#00BFA5'
     }}>
  
-      <Text>  This is the events page! </Text>
+      <Text> This is the events page! </Text>
  
     </View>
   );

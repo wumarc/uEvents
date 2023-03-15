@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "module": "esnext",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -28,7 +29,7 @@
   "exclude": [
     "node_modules",
     "babel.config.js",
-    "metro.config.js",
+    "metro.config.ts",
     "jest.config.js"
   ],
   "extends": "expo/tsconfig.base"
