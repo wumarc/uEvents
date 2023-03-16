@@ -1,10 +1,11 @@
 import { BottomNavigation, Text } from "react-native-paper";
 import { useState } from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Events from "./Events";
-import Notification from "./Notification";
-import Profile from "./Profile";
-import Home from "./Home";
+import EventsPage from "../components/pages/EventsPage";
+import NotificationPage from "../components/pages/NotificationPage";
+import MessageScreen from "./MessageScreen";
+import HomePage from "../components/pages/HomePage";
+
 
 const MainPage = () => {
 
@@ -12,15 +13,15 @@ const MainPage = () => {
   const [routes] = useState([
     { key: "home", title: "Home", focusedIcon: "home", unfocusedIcon: "home-outline" },
     { key: "events", title: "Events", focusedIcon: "calendar-month", unfocusedIcon: "calendar-month-outline" },
-    { key: "notification", title: "Notification", focusedIcon: "bell", unfocusedIcon: "bell-outline" },
-    { key: "profile", title: "Profile", focusedIcon: "account", unfocusedIcon: "account-outline" },
+    { key: "notification", title: "Notifications", focusedIcon: "bell", unfocusedIcon: "bell-outline" },
+    { key: "message", title: "Messages", focusedIcon: "message", unfocusedIcon: "message-outline" },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    home: () => <Home/>,
-    events: () => <Events/>,
-    notification: () => <Notification/>,
-    profile: () => <Profile/>
+    home: () => <HomePage/>,
+    events: () => <EventsPage/>,
+    notification: () => <NotificationPage/>,
+    message: () => <MessageScreen/>
   });
 
   return (

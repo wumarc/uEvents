@@ -3,7 +3,8 @@ import { useState } from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View } from "react-native";
 
-const Notification = () => {
+
+const NotificationPage = () => {
 
   return (
     <View style={{
@@ -13,11 +14,11 @@ const Notification = () => {
       backgroundColor: '#00BFA5'
     }}>
  
-      <Text>  This is the notification page! </Text>
+      <Text> This is the notification page! </Text>
  
     </View>
   );
   
 };
 
-export default Notification;
+export default NotificationPage;

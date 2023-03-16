@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-const Events = () => {
+const EventsPage = () => {
 
   return (
     <View style={{
@@ -20,4 +20,4 @@ const Events = () => {
   
 };
 
-export default Events;
+export default EventsPage;

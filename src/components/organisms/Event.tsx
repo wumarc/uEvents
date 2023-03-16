@@ -1,8 +1,9 @@
+import { StyleSheet } from "react-native";
 import { BottomNavigation, Text } from "react-native-paper";
 import { SafeAreaView, View } from "react-native";
 import { useEffect, useState } from "react";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { EventObject } from "../../model/EventObject";
+import { Card, Button } from "react-native-paper";
 
 const Event: React.FC<any> = ({props}) => {
 
@@ -13,7 +14,7 @@ const Event: React.FC<any> = ({props}) => {
     time: null,
     location: "",
     organizer: "",
-    num_attendees: 0,
+    num_attendees: 30,
   });
 
   useEffect(() => {
@@ -29,14 +30,26 @@ const Event: React.FC<any> = ({props}) => {
   }, [props]);
 
   return (
-    <View>
-      <Text>Event details</Text>
-      <Text> {event.name} </Text>
-      <Text> {event.description} </Text>
-      <Text> Number of attendes: {event.num_attendees} </Text> 
-    </View>
+    <Card style={styles.container}>
+      <Card.Title title={event.name}/>
+      <Card.Content>
+        <Text>{event.description}</Text>
+        <Text> Number of attendes: {event.num_attendees} </Text> 
+      </Card.Content>
+      <Card.Actions>
+        <Button>Details</Button>
+      </Card.Actions>
+    </Card>
   );
   
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 15,
+    marginHorizontal: 5,
+  }
+})
 
 export default Event;
