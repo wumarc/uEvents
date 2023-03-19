@@ -9,3 +9,18 @@ const addEvent = async () => {
     num_attendees: 150
   });
 }
+
+    setWebLinks(await Promise.all(treatmentIds.map(async (id) => {
+      let data = await getRequest(`/learn/${id}`);
+      console.log(webLinks)
+      console.log(data)
+      return data;
+    })))
+
+    
+    // treatmentIds.forEach(async (id) => {
+    //   let data = await getRequest(`/learn/${id}`);
+    //   console.log(webLinks)
+    //   console.log(data)
+    //   if (data.length) setWebLinks([...webLinks, data]);
+    // });
