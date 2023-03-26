@@ -7,8 +7,9 @@ import { EventObject } from "../../model/EventObject";
 import Event from "../organisms/Event";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ProfilePage from "./ProfilePage";
+import ProfileButton from "./ProfileButton";
 import HomePageEventsList from "./HomePageEventsList";
+import EventDetails from "../organisms/EventDetails";
 
 const HomePage = () => {
 
@@ -17,14 +18,18 @@ const HomePage = () => {
   return (
       <SafeAreaView style={styles.container}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="Home">
             <Stack.Screen 
               name="Home" 
               options={{
                 headerTitle: () => <Text style={styles.title}> uEvents </Text>,
-                headerRight: () => <ProfilePage />
+                headerRight: () => <ProfileButton />
               }}
               component={HomePageEventsList} 
+            />
+            <Stack.Screen
+              name="Event"
+              component={EventDetails}
             />
           </Stack.Navigator>
         </NavigationContainer>

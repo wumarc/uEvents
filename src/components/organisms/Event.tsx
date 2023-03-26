@@ -31,10 +31,11 @@ const Event: React.FC<any> = ({props}) => {
 
   return (
     <Card style={styles.container}>
-      <Card.Title title={event.name}/>
+      <Text>{event.name}</Text>
+      {/* <Card.Title title={event.name}/> This line is giving a node issue*/}
       <Card.Content>
         <Text>{event.description}</Text>
-        <Text> Number of attendes: {event.num_attendees} </Text> 
+        <Text> Number of attendes: {event.num_attendees} </Text>
       </Card.Content>
       <Card.Actions>
         <Button>Details</Button>

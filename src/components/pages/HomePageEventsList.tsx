@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EventObject } from "../../model/EventObject";
 import { FlatList } from "react-native-gesture-handler";
 import Event from "../organisms/Event"
 import { SegmentedButtons } from "react-native-paper";
 import { Text, View, SafeAreaView, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 
-export const HomePageEventsList = () => {
+export const HomePageEventsList = ({navigation}: any) => {
 
     const [value, setValue] = useState('upcoming');
     const [upcomingEvents, setUpcomingEvents] = useState<EventObject[]>([
@@ -62,7 +63,9 @@ export const HomePageEventsList = () => {
         date: null
       }
     ]);
-  
+
+    const [selectedEvent, setSelectedEvent] = useState<string>("");
+
     return (
         <SafeAreaView style={styles.container}>
           <SegmentedButtons
@@ -77,13 +80,13 @@ export const HomePageEventsList = () => {
           {/* Generate the tab based on what the current button value is */}
           <FlatList
             data={value == 'upcoming' ? upcomingEvents : value == 'going' ? goingEvents : savedEvents}
-            renderItem = { ({ item }) => (
-                <View>
-                  <Event props={item}/>
-                </View>
-              )
+            renderItem = {({item}) => 
+              <Pressable onPress={() => { navigation.navigate('Event')}}>
+                <Event props={item} />
+              </Pressable>
             }
             keyExtractor={item => item.name}
+            extraData={selectedEvent}
           />
         </SafeAreaView>
     );
