@@ -1,16 +1,27 @@
 import { View, Text, Image, Button, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from '@rneui/themed';
 
-const EventDetails = () => {
+const EventDetails = ({eventItem}: any) => {
 
   const [event, setEvent] = useState({
-    title: "Tech Morning: Careers & Coffee",
-    date: "Tuesday, March 23, 2021",
-    location: "Morisset Library, University of Ottawa",
-    organizer: "Faculty of Engineering Society",
-    description: "This is a great to help you get to know the Faculty of Engineering and the many opportunities available to you."
+    title: "",
+    date: "",
+    location: "",
+    organizer: "",
+    description: ""
   });
+
+  useEffect(() => {
+    console.log("Event Item: " + eventItem);
+    // setEvent({
+    //   title: eventItem.name,
+    //   date: eventItem.date,
+    //   location: eventItem.location,
+    //   organizer: eventItem.organizer,
+    //   description: eventItem.description
+    // });
+  }, [name]);
 
   return (
       <View style={styles.big_container}>

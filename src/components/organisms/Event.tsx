@@ -1,46 +1,49 @@
-import { StyleSheet } from "react-native";
-import { BottomNavigation, Text } from "react-native-paper";
-import { SafeAreaView, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { EventObject } from "../../model/EventObject";
-import { Card, Button } from "react-native-paper";
+import { Divider, Text, color } from "@rneui/base";
+import EventDivider from "../atoms/Divider";
+import convertDate from "../../utils/DateConverter";
 
 const Event: React.FC<any> = ({props}) => {
 
   const [event, setEvent] = useState<EventObject>({
-    name: "",
+    name: "Fall Hiking and Climbing",
     description: "",
-    date: null,
+    date: new Date("TUE, MAR 28 08:00 EDT"),
     time: null,
-    location: "",
-    organizer: "",
+    location: "Morisset Library, University of Ottawa",
+    organizer: "uOttawa Outdoors Club",
     num_attendees: 30,
   });
 
-  useEffect(() => {
-    setEvent({
-      name: props.name,
-      description: props.description,
-      date: props.date,
-      time: props.time,
-      location: props.location,
-      organizer: props.organizer,
-      num_attendees: props.num_attendees,
-    });
-  }, [props]);
+  // useEffect(() => {
+  //   setEvent({
+  //     name: props.name,
+  //     description: props.description,
+  //     date: props.date,
+  //     time: props.time,
+  //     location: props.location,
+  //     organizer: props.organizer,
+  //     num_attendees: props.num_attendees,
+  //   });
+  // }, [props]);
 
   return (
-    <Card style={styles.container}>
-      <Text>{event.name}</Text>
-      {/* <Card.Title title={event.name}/> This line is giving a node issue*/}
-      <Card.Content>
-        <Text>{event.description}</Text>
-        <Text> Number of attendes: {event.num_attendees} </Text>
-      </Card.Content>
-      <Card.Actions>
-        <Button>Details</Button>
-      </Card.Actions>
-    </Card>
+    <View style={styles.container}>
+      <Text style={styles.date}>{convertDate(new Date())}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'column'}}>
+          <Text style={styles.title}>{event.name}</Text>
+          <Text>{event.organizer}</Text>
+        </View>
+        <Image style={{width: 100, height: 50}} source={require('../../assets/octo.jpeg')}/>
+      </View>
+      <View>
+        <Text>{event.num_attendees} going • {event.location}</Text>
+      </View>
+      <EventDivider/>
+    </View>
   );
   
 };
@@ -49,7 +52,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 15,
-    marginHorizontal: 5,
+    marginHorizontal: 15,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+  date: {
+    fontWeight: "bold",
+    color: "red"
+  },
+  organization: {
+    fontWeight: "normal",
   }
 })
 

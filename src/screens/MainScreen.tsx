@@ -6,8 +6,7 @@ import NotificationPage from "../components/pages/NotificationPage";
 import MessageScreen from "./MessageScreen";
 import HomePage from "../components/pages/HomePage";
 
-
-const MainPage = () => {
+const MainScreen = ({navigation}: any) => {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -18,22 +17,22 @@ const MainPage = () => {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    home: () => <HomePage/>,
+    home: () => <HomePage navigation={navigation}/>,
     events: () => <EventsPage/>,
     notification: () => <NotificationPage/>,
-    message: () => <MessageScreen/>
+    message: () => <MessageScreen/>,
   });
-
+  
   return (
       <SafeAreaProvider>
-          <BottomNavigation
-            navigationState={{index, routes}}
-            onIndexChange={setIndex}
-            renderScene={renderScene}
-          />
+        <BottomNavigation
+          navigationState={{index, routes}}
+          onIndexChange={setIndex}
+          renderScene={renderScene}
+        />
       </SafeAreaProvider>
   );
 
 };
 
-export default MainPage;
+export default MainScreen;
