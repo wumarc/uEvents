@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { EventObject } from "../../model/EventObject";
 import { Divider, Text, color } from "@rneui/base";
 import EventDivider from "../atoms/Divider";
-import convertDate from "../../utils/DateConverter";
+import convertDate from "../../utils/util";
 
 const Event: React.FC<any> = ({props}) => {
 
