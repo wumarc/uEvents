@@ -82,7 +82,7 @@ const HomePage = ({navigation}: any) => {
             data={value == 'upcoming' ? upcomingEvents : value == 'going' ? goingEvents : savedEvents}
             renderItem = {({item}) =>
               <Pressable 
-                onPress={() => navigation.navigate({screen: 'EventDetails', eventItem: {item} })}
+                onPress={() => navigation.navigate('EventDetails', {item})}
                 style={styles.event}
               >
                 <Event props={item}/>

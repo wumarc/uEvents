@@ -16,7 +16,6 @@ const convertDate = (date: Date) => {
 }
 
 
-
 export default (
     convertDate
 );

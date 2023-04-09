@@ -1,8 +1,8 @@
 import { View, Text, Image, Button, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import { Icon } from '@rneui/themed';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const EventDetails = ({eventItem}: any) => {
+const EventDetails = ({route}: any) => {
 
   const [event, setEvent] = useState({
     title: "",
@@ -13,26 +13,37 @@ const EventDetails = ({eventItem}: any) => {
   });
 
   useEffect(() => {
-    console.log("Event Item: " + eventItem);
-    // setEvent({
-    //   title: eventItem.name,
-    //   date: eventItem.date,
-    //   location: eventItem.location,
-    //   organizer: eventItem.organizer,
-    //   description: eventItem.description
-    // });
-  }, [name]);
+    setEvent({
+      title: route.params.item.name,
+      date: route.params.item.date,
+      location: route.params.item.location,
+      organizer: route.params.item.organizer,
+      description: route.params.item.description
+    });
+  }, [route]);
 
   return (
       <View style={styles.big_container}>
-         {/* <Image source={require("../../assets/icon.png")} /> */}
-          <Text style={styles.title}> {event.title} </Text>
+         <Image 
+            source={{uri: 'https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg'}}
+            style={{width: '100%', height: 300, borderRadius: 10}}
+            resizeMethod="resize"
+          />
+          <Text style={styles.title}> {event.title}</Text>
           <View style={styles.container}>
-            <Icon name="rowing"/>
-            <Text style={styles.regular_text}> {event.date} </Text>
+            <Icon
+              color="grey"
+              name="event"
+              size={30}
+            />
+           <Text style={styles.regular_text}> {event.date} </Text>
           </View>
           <View style={styles.container}>
-            <Icon name="rowing"/>
+            <Icon
+                color="grey"
+                name="place"
+                size={30}
+              />
             <Text style={styles.regular_text}> {event.location} </Text>
           </View>
           <View >
@@ -58,8 +69,9 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   title: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
+    flexWrap: "wrap",
   },
   regular_text: {
     fontSize: 18,
