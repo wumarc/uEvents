@@ -1,6 +1,5 @@
 import React from "react";
 import MainScreen from "./src/screens/MainScreen";
-import { Provider as PaperProvider } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import ProfileScreen from "./src/screens/ProfileScreen";
@@ -25,7 +24,7 @@ export default function App() {
   };
 
   return (
-      <PaperProvider>
+      
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Main">
             <Stack.Screen
@@ -63,6 +62,5 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </PaperProvider>
   );
 }
