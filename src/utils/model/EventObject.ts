@@ -9,6 +9,4 @@ export type EventObject = {
     organizer: string;
     date: Date | null;
     time?: Timestamp | null;
-
 };
-  

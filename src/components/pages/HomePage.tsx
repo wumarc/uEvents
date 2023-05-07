@@ -2,7 +2,7 @@ import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View, Pressable } 
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
-import { EventObject } from "../../model/EventObject";
+import { EventObject } from "../../utils/model/EventObject";
 import Event from "../organisms/Event";
 import { SegmentedButtons } from "react-native-paper";
 

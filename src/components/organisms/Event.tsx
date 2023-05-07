@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
-import { EventObject } from "../../model/EventObject";
+import { EventObject } from "../../utils/model/EventObject";
 import { Divider, Text, color } from "@rneui/base";
 import EventDivider from "../atoms/Divider";
 import convertDate from "../../utils/util";
