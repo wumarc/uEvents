@@ -11,6 +11,8 @@
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
     "@react-native-firebase/app": "^17.3.2",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/material-bottom-tabs": "^6.2.15",
     "@react-navigation/native-stack": "^6.9.4",
     "@react-navigation/stack": "^6.3.7",
     "@realm/react": "^0.4.3",
@@ -31,6 +33,7 @@
     "react-native": "0.70.8",
     "react-native-dotenv": "^3.4.8",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-paper": "^5.7.2",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.9",
     "typescript": "^4.9.3"
