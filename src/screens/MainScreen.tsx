@@ -1,9 +1,6 @@
-import { BottomNavigation, Text } from "react-native-paper";
 import { useState } from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import EventsPage from "../components/pages/EventsPage";
-import NotificationPage from "../components/pages/NotificationPage";
-import MessageScreen from "./MessageScreen";
 import HomePage from "../components/pages/HomePage";
 
 const MainScreen = ({navigation}: any) => {
@@ -16,20 +13,18 @@ const MainScreen = ({navigation}: any) => {
     { key: "message", title: "Messages", focusedIcon: "message", unfocusedIcon: "message-outline" },
   ]);
 
-  const renderScene = BottomNavigation.SceneMap({
-    home: () => <HomePage navigation={navigation}/>,
-    events: () => <EventsPage/>,
-    notification: () => <NotificationPage/>,
-    message: () => <MessageScreen/>,
-  });
+  // const renderScene = BottomNavigation.SceneMap({
+  //   home: () => <HomePage navigation={navigation}/>,
+  //   events: () => <EventsPage/>,
+  // });
   
   return (
       <SafeAreaProvider>
-        <BottomNavigation
+        {/* <BottomNavigation
           navigationState={{index, routes}}
           onIndexChange={setIndex}
           renderScene={renderScene}
-        />
+        /> */}
       </SafeAreaProvider>
   );
 
