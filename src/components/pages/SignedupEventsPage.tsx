@@ -1,13 +1,14 @@
 import { View, Text } from "react-native";
 import Event from "../organisms/Event";
+import { ScrollView } from "react-native";
 
 const SignedupEventsPage = () => {
 
     return (
-        <View>
+        <ScrollView>
           <Text>Events you are going to</Text>
           <Event />
-        </View>
+        </ScrollView>
     );
     
   };
