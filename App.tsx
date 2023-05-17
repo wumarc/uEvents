@@ -1,70 +1,85 @@
 import React from "react";
-import HomePage from "./src/components/pages/HomePage";
-import ProfilePage from "./src/components/pages/ProfilePage";
-import SavedEventsPage from "./src/components/pages/SavedEventsPage";
-import SignedupEventsPage from "./src/components/pages/SignedupEventsPage";
-import SearchPage from "./src/components/pages/SearchPage";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import HomePage from "./src/screens/HomePage";
+import ProfilePage from "./src/screens/ProfilePage";
+import SavedEventsPage from "./src/screens/SavedEventsPage";
+import SignedupEventsPage from "./src/screens/SignedupEventsPage";
+import SearchPage from "./src/screens/SearchPage";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet } from "react-native";
-import {Platform} from 'react-native';
+import { Platform } from "react-native";
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
-
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
         <Tab.Navigator>
-          <Tab.Screen 
-            name="Events" 
+          <Tab.Screen
+            name="Events"
             component={SignedupEventsPage}
             options={{
-              tabBarLabel: 'Events',
+              tabBarLabel: "Events",
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="calendar" color={color} size={26} />
+                <MaterialCommunityIcons
+                  name="calendar"
+                  color={color}
+                  size={26}
+                />
               ),
             }}
           />
           <Tab.Screen
-            name="Saved" 
+            name="Saved"
             component={SavedEventsPage}
             options={{
-              tabBarLabel: 'Saved',
+              tabBarLabel: "Saved",
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="calendar-heart" color={color} size={26} />
+                <MaterialCommunityIcons
+                  name="calendar-heart"
+                  color={color}
+                  size={26}
+                />
               ),
             }}
           />
-          <Tab.Screen 
-            name="Home" 
-            component={HomePage} 
+          <Tab.Screen
+            name="Home"
+            component={HomePage}
             options={{
-              tabBarLabel: 'Home',
+              tabBarLabel: "Home",
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="home" color={color} size={26} />
               ),
             }}
           />
           <Tab.Screen
-            name="Search" 
+            name="Search"
             component={SearchPage}
             options={{
-              tabBarLabel: 'Search',
+              tabBarLabel: "Search",
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="magnify" color={color} size={26} />
+                <MaterialCommunityIcons
+                  name="magnify"
+                  color={color}
+                  size={26}
+                />
               ),
             }}
           />
           <Tab.Screen
-            name="Profile" 
+            name="Profile"
             component={ProfilePage}
             options={{
-              tabBarLabel: 'Profile',
+              tabBarLabel: "Profile",
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="account-circle" color={color} size={26} />
+                <MaterialCommunityIcons
+                  name="account-circle"
+                  color={color}
+                  size={26}
+                />
               ),
             }}
           />
@@ -72,14 +87,12 @@ export default function App() {
       </SafeAreaView>
     </NavigationContainer>
   );
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A6A9BC',
-    paddingTop: Platform.OS === 'android' ? 25 : 0
-}
-
+    backgroundColor: "#A6A9BC",
+    paddingTop: Platform.OS === "android" ? 25 : 0,
+  },
 });

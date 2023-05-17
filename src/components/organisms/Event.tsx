@@ -5,17 +5,13 @@ import { Divider, Text, color } from "@rneui/base";
 import EventDivider from "../atoms/Divider";
 import convertDate from "../../utils/util";
 
-const Event: React.FC<any> = ({props}) => {
+// Event component props
+interface EventProps {
+  event: EventObject;
+}
 
-  const [event, setEvent] = useState<EventObject>({
-    name: "Fall Hiking and Climbing",
-    description: "",
-    date: new Date("TUE, MAR 28 08:00 EDT"),
-    time: null,
-    location: "Morisset Library, University of Ottawa",
-    organizer: "uOttawa Outdoors Club",
-    num_attendees: 30,
-  });
+const Event: React.FC<EventProps> = (props) => {
+  const [event, setEvent] = useState<EventObject>(props.event);
 
   // useEffect(() => {
   //   setEvent({
@@ -32,20 +28,24 @@ const Event: React.FC<any> = ({props}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.date}>{convertDate(new Date())}</Text>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flexDirection: 'column'}}>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "column" }}>
           <Text style={styles.title}>{event.name}</Text>
-          <Text>{event.organizer}</Text>
+          <Text>{event.organizer.name}</Text>
         </View>
-        <Image style={{width: 100, height: 50}} source={require('../../assets/octo.jpeg')}/>
+        <Image
+          style={{ width: 100, height: 50 }}
+          source={require("../../assets/octo.jpeg")}
+        />
       </View>
       <View>
-        <Text>{event.num_attendees} going • {event.location}</Text>
+        <Text>
+          {event.attendees.length} going • {event.location}
+        </Text>
       </View>
-      <EventDivider/>
+      <EventDivider />
     </View>
   );
-  
 };
 
 const styles = StyleSheet.create({
@@ -56,15 +56,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   date: {
     fontWeight: "bold",
-    color: "red"
+    color: "red",
   },
   organization: {
     fontWeight: "normal",
-  }
-})
+  },
+});
 
 export default Event;
