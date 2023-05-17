@@ -4,5 +4,5 @@ node_modules
 # To be removed once we figure out the owner issue
 app.json
 
-# Remove this line after .env file is set up
-firebaseConfig.ts
+# This ignores the env.d.ts environment file
+/src/types/*
