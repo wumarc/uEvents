@@ -1,6 +1,8 @@
 node_modules
 .expo
 .env
+# To be removed once we figure out the owner issue
+app.json
 
 # Remove this line after .env file is set up
 firebaseConfig.ts
