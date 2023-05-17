@@ -1,11 +1,7 @@
-
-
 export type Student = {
-
-    name: string;
-    studentId: string;
-    email: string;
-    password: string;
-    phone: string;
-    
+  name: string;
+  studentId: string;
+  email: string;
+  password: string;
+  phone: string;
 };
