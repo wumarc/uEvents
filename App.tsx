@@ -1,4 +1,3 @@
-import React from "react";
 import HomePage from "./src/screens/HomePage";
 import ProfilePage from "./src/screens/ProfilePage";
 import SavedEventsPage from "./src/screens/SavedEventsPage";
