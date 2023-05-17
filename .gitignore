@@ -1,6 +1,5 @@
 node_modules
 .expo
-.env
 
-# Remove this line after .env file is set up
-firebaseConfig.ts
+# This ignores the env.d.ts environment file
+/src/types/*
