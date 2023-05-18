@@ -2,7 +2,7 @@
 
 ## Tech Stacks and Project Structure Explained
 
-For the front-end, we are utilizing [React Native](https://reactnative.dev/), a JavaScript library for building mobile applications. We are also using [React Native Elements](https://reactnativeelements.com/), a UI library that provides pre-built components, to facilitate the development process. In addition, we've opted to use [TypeScript](https://www.typescriptlang.org/), a superset of JavaScript that offers optional static typing and many other features, to enhance our programming language.
+For the front-end, we are utilizing [React Native](https://reactnative.dev/), a JavaScript library for building mobile applications. We are also using [React Native Elements](https://reactnativeelements.com/), a UI library that provides pre-built components, to facilitate the development process. In addition, we've opted to use [TypeScript](https://www.typescriptlang.org/), a superset of JavaScript that offers optional static typing and many other features, to enhance our programming language. In addition to the UI library we are using, [React Navigation](https://reactnavigation.org/) is an important library we will make use of to implement routing and navigation features.
 
 On the backend, we have opted to use [Firebase](https://firebase.google.com/), a cloud-based platform that offers a range of features for
 
