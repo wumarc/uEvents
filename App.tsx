@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Platform } from "react-native";
+import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
 
