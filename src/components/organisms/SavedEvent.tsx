@@ -2,7 +2,6 @@ import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Divider, Text, color } from "@rneui/base";
-import EventDivider from "../atoms/Divider";
 import convertDate from "../../utils/util";
 import { Icon } from "@rneui/base";
 
@@ -55,7 +54,6 @@ const SavedEvent: React.FC<EventProps> = (props) => {
           {event.attendees.length} going • {event.location}
         </Text>
       </View>
-      <EventDivider />
     </View>
   );
 };
