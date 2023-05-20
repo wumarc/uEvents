@@ -16,10 +16,12 @@ To guide our development process, we have adopted the atomic design principle. T
 4. Execute `npm expo start` to run the app and follow the instructions in the terminal.
 
 ## Firebase Setup
-* Install Firebase by running `npm install firebase`
-* Create a `types` folder in your `src` folder
-* Create a file named `env.d.ts`
-* Define your env variables as string:
+
+- Install Firebase by running `npm install firebase`
+- Create a `types` folder in your `src` folder
+- Create a file named `env.d.ts`
+- Define your env variables as string:
+
 ```
 declare module '@env' {
     export const API_KEY: "",
@@ -31,4 +33,11 @@ declare module '@env' {
     export const MEASUREMENT_ID: ""
   }
 ```
-* The configuration info can be found on Firebase > Project Settings > General > Your apps > SDK setup and configuration
+
+- The configuration info can be found on Firebase > Project Settings > General > Your apps > SDK setup and configuration
+
+## Deploy the website
+
+- `firebase login` with your uEvents personal gmail account
+- `npx expo export:web`
+- `firebase deploy --only web`

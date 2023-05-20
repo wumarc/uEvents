@@ -6,3 +6,6 @@ app.json
 
 # This ignores the env.d.ts environment file
 /src/types/*
+
+web-build
+.firebase
