@@ -2,7 +2,6 @@ import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Divider, Text, color } from "@rneui/base";
-import EventDivider from "../atoms/Divider";
 import convertDate from "../../utils/util";
 
 // Event component props
@@ -27,23 +26,46 @@ const Event: React.FC<EventProps> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.date}>{convertDate(new Date())}</Text>
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ flexDirection: "column" }}>
-          <Text style={styles.title}>{event.name}</Text>
-          <Text>{event.organizer.name}</Text>
+
+      {/* Event Details Section */}
+      <View style={{ flexDirection: "column" }}>
+
+        { /* Event Description*/}
+        <View style={{ flexDirection: "row" }}>
+
+          {/* Event Name, Organizer and Date */}
+          <View style={{flexDirection: "column"}}>
+            <Text style={styles.date}>{convertDate(new Date())}</Text>
+            <Text style={styles.title}>{event.name}</Text>
+            <Text>{event.organizer.name}</Text>
+          </View>
+
+          { /* Event Image */}
+          <View style={{flexDirection: "column"}}>
+            <Image
+              style={{ width: 100, height: 50 }}
+              source={require("../../assets/octo.jpeg")}
+            />
+          </View>
+
         </View>
-        <Image
-          style={{ width: 100, height: 50 }}
-          source={require("../../assets/octo.jpeg")}
-        />
+          
+        { /* Event Location and Attendees */ }
+        <View style={{ flexDirection: "row" }}>
+          <Text>
+            {event.attendees.length} going • {event.location}
+          </Text>
+        </View>
+
       </View>
-      <View>
-        <Text>
-          {event.attendees.length} going • {event.location}
-        </Text>
+
+      {/* Event Participants Section */}
+      <View style={{ flexDirection: "column" }}>
+        {/* Bubble 1 */}
+        {/* Bubble 2 */}
+        {/* Bubble 3 */}
       </View>
-      <EventDivider />
+
     </View>
   );
 };
