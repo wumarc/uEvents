@@ -1,10 +1,11 @@
 import { View, Text} from "react-native"
 import { Button, Input } from '@rneui/themed';
+import { StyleSheet } from "react-native";
 
 const ProfileScreen = () => {
 
     return (
-        <View>
+        <View style={styles.container}>
             {/* Header Section */}
             <View style={{ flexDirection: "row" }}>
                 <Text>Your Profile</Text>
@@ -58,7 +59,12 @@ const ProfileScreen = () => {
 
 }
 
-
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 15,
+        marginHorizontal: 15,
+      },
+  })
 
 export default ProfileScreen
