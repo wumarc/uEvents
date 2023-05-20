@@ -2,12 +2,11 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import Event from "../components/organisms/Event";
 import { mockEventClimbing } from "../utils/model/EventObject";
 
-
 const SignedupEventsPage = () => {
 
   let placeholders = ['1', '1', '1', '1', '1']
 
-  const openEvents = () => {
+  const openEvent = () => {
     console.log("Open Event");
   }
 

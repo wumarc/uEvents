@@ -4,15 +4,16 @@ import SavedEventsPage from "./src/screens/SavedEventsPage";
 import SignedupEventsPage from "./src/screens/SignedupEventsPage";
 import SearchPage from "./src/screens/SearchPage";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Platform } from "react-native";
-import 'react-native-gesture-handler';
+// import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
+
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
