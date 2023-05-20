@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
-import Event from "../components/organisms/Event";
+import SavedEvent from "../components/organisms/SavedEvent";
 import { mockEventClimbing } from "../utils/model/EventObject";
 
 const SavedEventsPage = () => {
@@ -11,7 +11,7 @@ const SavedEventsPage = () => {
       }}
     >
       <Text>Your Saved Events</Text>
-      <Event event={mockEventClimbing} />
+      <SavedEvent event={mockEventClimbing} />
     </ScrollView>
   );
 };
