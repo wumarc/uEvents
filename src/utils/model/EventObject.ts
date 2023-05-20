@@ -3,6 +3,7 @@ import { Organizer } from "./Organizer";
 import { Student } from "./Student";
 
 export type EventObject = {
+  id: string;
   name: string;
   description: string;
   attendees: Student[];
@@ -15,6 +16,7 @@ export type EventObject = {
 // Mock data
 
 export const mockEventClimbing: EventObject = {
+  id: "1",
   name: "Fall Hiking and Climbing",
   description: "",
   attendees: [],
@@ -23,6 +25,20 @@ export const mockEventClimbing: EventObject = {
   location: "Morisset Library, University of Ottawa",
   organizer: {
     name: "uOttawa Outdoors Club",
+    events: [],
+  },
+};
+
+export const defaultEvent: EventObject = {
+  id: "1",
+  name: "",
+  description: "",
+  attendees: [],
+  date: null,
+  time: null,
+  location: "",
+  organizer: {
+    name: "",
     events: [],
   },
 };
