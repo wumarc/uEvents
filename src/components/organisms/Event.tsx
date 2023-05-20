@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
   organization: {
     fontWeight: "normal",
   },
-  bubbles: {
-
+  bubbles: { 
+    
   }
 });
 

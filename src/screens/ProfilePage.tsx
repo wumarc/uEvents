@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { Student } from "../utils/model/Student";
 
 const ProfileScreen = (props: any) => {
-
+    
     const [profile, setProfile] = useState<Student>(props.profile);
 
     return (
