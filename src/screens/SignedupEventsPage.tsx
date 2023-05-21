@@ -64,7 +64,7 @@ const SignedupEventsPage = () => {
       />
     </Stack.Navigator>
   );
-  
+
 };
 
 export default SignedupEventsPage;
