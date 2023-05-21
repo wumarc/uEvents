@@ -23,6 +23,7 @@ import { uid } from "../utils/util";
 import Event from "../components/organisms/Event";
 
 const HomePage = () => {
+  
   const [loading, dbListenedValue, set, add, remove] =
     useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
 
