@@ -10,6 +10,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { Platform } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./src/components/organisms/EventDetails";
+import { View, Text } from "react-native";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -94,6 +95,14 @@ const DetailedView = () => {
   );
 };
 
+const SignupView = () => {
+  return (
+    <View>
+      <Text>Signup View</Text>
+    </View>
+  );
+}
+
 export default function App() {
 
   return (
@@ -113,6 +122,10 @@ export default function App() {
           <Stack.Screen 
             name="DetailedView"
             component={DetailedView}
+          />
+          <Stack.Screen
+            name="SignupView"
+            component={SignupView}
           />
         </Stack.Navigator>
       </SafeAreaView>
