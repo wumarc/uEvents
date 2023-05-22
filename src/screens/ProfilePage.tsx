@@ -15,7 +15,7 @@ const ProfileScreen = (props: any) => {
             <View style={styles.profileHeader}>
                 <Text h4>Your Profile</Text>
             </View>
-
+                
             {/* Image Section */}
             <View style={styles.profileImage}>
                 {/* <Image 
