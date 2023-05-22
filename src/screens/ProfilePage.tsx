@@ -1,51 +1,70 @@
-import { View, Text} from "react-native"
-import { Button, Input } from '@rneui/themed';
+import { View} from "react-native"
+import { useState } from "react";
+import { Button, Input, Image, Text } from '@rneui/themed';
 import { StyleSheet } from "react-native";
+import { Student } from "../utils/model/Student";
+import { Avatar } from 'react-native-elements';
 
-const ProfileScreen = () => {
+const ProfileScreen = (props: any) => {
+    
+    const [profile, setProfile] = useState<Student>(props.profile);
 
     return (
         <View style={styles.container}>
             {/* Header Section */}
-            <View style={{ flexDirection: "row" }}>
-                <Text>Your Profile</Text>
+            <View style={styles.profileHeader}>
+                <Text h4>Your Profile</Text>
             </View>
 
             {/* Image Section */}
-            <View style={{ flexDirection: "row" }}>
-                <Text>Image</Text>
+            <View style={styles.profileImage}>
+                {/* <Image 
+                    source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
+                    style={{ 
+                        width: 200,
+                        height: 200,
+                        borderRadius: 200/2,
+                    }}
+                /> */}
+                <Avatar
+                    source={{uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w',}}
+                    // showEditButton
+                    rounded
+                    size="xlarge"
+                />
             </View>
-            {/* <View style={{ flexDirection: "column" }}> */}
 
             {/* Student Info Section */}
-            <View style={{ flexDirection: "row" }}>
-                <View style={{ flexDirection: "column" }}>
+            <View style={styles.studentInfo}>
+                <View style={{ flexDirection: "column", flex: 1 }}>
                     <Input
                         placeholder='Student Name'
-                        leftIcon={{ type: 'font-awesome', name: 'user' }}
+                        leftIcon={{ 
+                            type: 'material', 
+                            name: 'person'
+                        }}
                     />
                     <Input
                         placeholder='Student ID'
-                        leftIcon={{ type: 'font-awesome', name: 'id-card' }}
+                        leftIcon={{ 
+                            type: 'material',
+                            name: 'credit-card' 
+                        }}
                     />
                     <Input
                         placeholder='Student Email'
-                        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-                    />
-                    <Input
-                        placeholder='Password'
-                        leftIcon={{ type: 'font-awesome', name: 'lock' }}
-                    />
-                    <Input
-                        placeholder='Phone Number'
-                        leftIcon={{ type: 'font-awesome', name: 'phone' }}
+                        leftIcon={{ 
+                            type: 'material', 
+                            name: 'email'
+                        }}
+                        
                     />
                 </View>
             </View>
 
             {/* Save Changes Section */}
-            <View style={{ flexDirection: "row" }}>
-                <Button 
+            <View style={styles.saveButton}>
+                <Button
                     color="primary"
                     radius="lg"
                     size="md"
@@ -62,9 +81,31 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 15,
-        marginHorizontal: 15,
-      },
+        marginTop: 0,
+        marginHorizontal: 0,
+        paddingHorizontal: 8,
+        // backgroundColor: "red",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    profileHeader: {
+        flexDirection: "row",
+        justifyContent: "center",
+        paddingTop: 15
+    },
+    profileImage: {
+        flexDirection: "row", 
+        justifyContent: "center",
+        marginBottom: 10
+    },
+    studentInfo: {
+        flexDirection: "row",
+        // backgroundColor: "green"
+    },
+    saveButton: {
+        flexDirection: "row",
+        marginBottom: 10,
+    }
   })
 
 export default ProfileScreen

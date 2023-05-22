@@ -1,26 +1,27 @@
 import { View, Text, Image, Button, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { EventObject, mockEventClimbing } from "../../utils/model/EventObject";
 
-const EventDetails = ({route}: any) => {
+const EventDetails = ({navigation}: any) => {
 
   const [event, setEvent] = useState({
-    title: "",
-    date: "",
-    location: "",
-    organizer: "",
-    description: ""
+    title: mockEventClimbing.name,
+    date: "TUE, MAR 28 08:00 EDT",
+    location: mockEventClimbing.location,
+    organizer: mockEventClimbing.organizer.name,
+    description: mockEventClimbing.description
   });
 
-  useEffect(() => {
-    setEvent({
-      title: route.params.item.name,
-      date: route.params.item.date,
-      location: route.params.item.location,
-      organizer: route.params.item.organizer,
-      description: route.params.item.description
-    });
-  }, [route]);
+  // useEffect(() => {
+  //   setEvent({
+  //     title: route.params.item.name,
+  //     date: route.params.item.date,
+  //     location: route.params.item.location,
+  //     organizer: route.params.item.organizer,
+  //     description: route.params.item.description
+  //   });
+  // }, [route]);
 
   return (
       <View style={styles.big_container}>
@@ -53,7 +54,10 @@ const EventDetails = ({route}: any) => {
             <Text style={styles.regular_text}> {event.description} </Text>
           </View>
           <View>
-            <Button title="Attend"/>
+            <Button 
+              title="Attend"
+              // onPress={() => {navigation.navigate('SignupView')}}
+            />
           </View>
       </View>
   ); 

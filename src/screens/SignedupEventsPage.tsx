@@ -1,15 +1,14 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import Event from "../components/organisms/Event";
 import { mockEventClimbing } from "../utils/model/EventObject";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import EventDetails from "../components/organisms/EventDetails";;
+import { StyleSheet } from "react-native";
 
-const SignedupEventsPage = () => {
+let placeholders = ['1', '1', '1', '1', '1']
 
-  let placeholders = ['1', '1', '1', '1', '1']
-
-  const openEvent = () => {
-    console.log("Open Event");
-  }
-
+const SignedupEventsPage = ({navigation}: any) => {
+  
   return (
     <ScrollView
       style={{
@@ -18,16 +17,14 @@ const SignedupEventsPage = () => {
       }}
     >
       {/* Title of page */}
-      <View>
-        <Text>Your Signed Up Events</Text>
-      </View>
+      <View><Text>Your Signed Up Events</Text></View>
 
       {/* List of events, we will eventually replace placeholders with events from the db */}
       {placeholders.map((item, index) => {
         return (
           <TouchableOpacity
             key={index}
-            onPress={() => {}}
+            onPress={() => {navigation.navigate('DetailedView')}}
           >
               <Event
                 key={index}
@@ -39,6 +36,13 @@ const SignedupEventsPage = () => {
 
     </ScrollView>
   );
+
 };
+
+
+const styles = StyleSheet.create({
+  
+})
+
 
 export default SignedupEventsPage;
