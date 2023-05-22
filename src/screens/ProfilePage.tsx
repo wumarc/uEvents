@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Input, Image, Text } from '@rneui/themed';
 import { StyleSheet } from "react-native";
 import { Student } from "../utils/model/Student";
+import { Avatar } from 'react-native-elements';
 
 const ProfileScreen = (props: any) => {
     
@@ -17,13 +18,19 @@ const ProfileScreen = (props: any) => {
 
             {/* Image Section */}
             <View style={styles.profileImage}>
-                <Image 
+                {/* <Image 
                     source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
                     style={{ 
                         width: 200,
                         height: 200,
                         borderRadius: 200/2,
                     }}
+                /> */}
+                <Avatar
+                    source={{uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w',}}
+                    // showEditButton
+                    rounded
+                    size="xlarge"
                 />
             </View>
 

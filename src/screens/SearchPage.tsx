@@ -36,7 +36,7 @@ const SearchPage = () => {
         rightIconContainerStyle={{}}
         lightTheme
         loadingProps={{}}
-        onChangeText={newVal => { setValue(newVal) }}
+        onChangeText={newVal => {setValue(newVal)}}
         placeholder="What event are you looking for?"
         placeholderTextColor="#888"
         round
