@@ -6,7 +6,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { fireStore } from "./../../firebaseConfig";
+import { fireStore } from "../firebaseConfig";
 
 export function useSateWithFireStore<T>(
   pathToId: string,

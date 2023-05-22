@@ -1,9 +1,9 @@
-// import { auth } from "../../firebaseConfig";
+import { auth } from "../firebaseConfig";
 
-// export function getFirebaseUserID(): string | undefined {
-//   let id = auth.currentUser?.uid;
-//   return id;
-// }
+export function getFirebaseUserID(): string | undefined {
+  let id = auth.currentUser?.uid;
+  return id;
+}
 
 /**
  * Returns a unique uid
