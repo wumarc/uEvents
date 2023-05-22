@@ -3,6 +3,7 @@ import Event from "../components/organisms/Event";
 import { mockEventClimbing } from "../utils/model/EventObject";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "../components/organisms/EventDetails";;
+import { StyleSheet } from "react-native";
 
 let placeholders = ['1', '1', '1', '1', '1']
 
@@ -37,5 +38,11 @@ const SignedupEventsPage = ({navigation}: any) => {
   );
 
 };
+
+
+const styles = StyleSheet.create({
+  
+})
+
 
 export default SignedupEventsPage;

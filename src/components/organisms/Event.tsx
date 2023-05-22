@@ -62,7 +62,7 @@ const Event: React.FC<EventProps> = (props) => {
         </View>
 
         {/* Event Participants Section */}
-        <View style={{ 
+        <View style={{
             flexDirection: "column", 
             // backgroundColor: "orange",
             justifyContent: "space-between"
