@@ -1,8 +1,8 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./src/firebaseConfig";
-import SignInPage from "./src/SignInPage";
+import SignInPage from "./src/screens/SignInPage";
 import Main from "./src/main";
-import { Loading } from "./src/Loading";
+import { Loading } from "./src/screens/LoadingPage";
 import { View, Text } from "react-native";
 
 export default function App() {
