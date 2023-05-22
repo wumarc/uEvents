@@ -1,24 +1,34 @@
-import { View} from "react-native"
+import { View } from "react-native";
 import { useState } from "react";
-import { Button, Input, Image, Text } from '@rneui/themed';
+import { Button, Image, Text } from "@rneui/themed";
+import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
-import { Student } from "../utils/model/Student";
-import { Avatar } from 'react-native-elements';
+import { defaultStudent, Student } from "../utils/model/Student";
+import { Avatar } from "react-native-elements";
+import { useSateWithFireStore } from "../utils/useStateWithFirebase";
+import { getFirebaseUserID } from "../utils/util";
 
 const ProfileScreen = (props: any) => {
-    
-    const [profile, setProfile] = useState<Student>(props.profile);
+  const [loading, profile, setProfile] = useSateWithFireStore<Student>(
+    "students" + "/" + getFirebaseUserID(),
+    "info",
+    defaultStudent
+  );
 
-    return (
-        <View style={styles.container}>
-            {/* Header Section */}
-            <View style={styles.profileHeader}>
-                <Text h4>Your Profile</Text>
-            </View>
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
 
-            {/* Image Section */}
-            <View style={styles.profileImage}>
-                {/* <Image 
+  return (
+    <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.profileHeader}>
+        <Text h4>Your Profile</Text>
+      </View>
+
+      {/* Image Section */}
+      <View style={styles.profileImage}>
+        {/* <Image 
                     source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
                     style={{ 
                         width: 200,
@@ -26,86 +36,77 @@ const ProfileScreen = (props: any) => {
                         borderRadius: 200/2,
                     }}
                 /> */}
-                <Avatar
-                    source={{uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w',}}
-                    // showEditButton
-                    rounded
-                    size="xlarge"
-                />
-            </View>
+        <Avatar
+          source={{
+            uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
+          }}
+          // showEditButton
+          rounded
+          size="xlarge"
+        />
+      </View>
 
-            {/* Student Info Section */}
-            <View style={styles.studentInfo}>
-                <View style={{ flexDirection: "column", flex: 1 }}>
-                    <Input
-                        placeholder='Student Name'
-                        leftIcon={{ 
-                            type: 'material', 
-                            name: 'person'
-                        }}
-                    />
-                    <Input
-                        placeholder='Student ID'
-                        leftIcon={{ 
-                            type: 'material',
-                            name: 'credit-card' 
-                        }}
-                    />
-                    <Input
-                        placeholder='Student Email'
-                        leftIcon={{ 
-                            type: 'material', 
-                            name: 'email'
-                        }}
-                        
-                    />
-                </View>
-            </View>
-
-            {/* Save Changes Section */}
-            <View style={styles.saveButton}>
-                <Button
-                    color="primary"
-                    radius="lg"
-                    size="md"
-                >
-                    Save Changes
-                </Button>
-            </View>
-
+      {/* Student Info Section */}
+      <View style={styles.studentInfo}>
+        <View style={{ flexDirection: "column", flex: 1 }}>
+          <Input
+            placeholder="Name"
+            defaultValue={profile.name ? profile.name : ""}
+            leftIcon={{
+              type: "material",
+              name: "person",
+            }}
+            onChangeText={(value) => setProfile({ ...profile, name: value })}
+          />
+          <Input
+            placeholder="Student Id"
+            defaultValue={
+              profile.studentId.toString() ? profile.studentId.toString() : ""
+            }
+            leftIcon={{
+              type: "material",
+              name: "credit-card",
+            }}
+            onChangeText={(value) => {
+              if (parseInt(value) != undefined) {
+                setProfile({ ...profile, studentId: parseInt(value) });
+              }
+            }}
+          />
         </View>
-    )
-
-}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 0,
-        marginHorizontal: 0,
-        paddingHorizontal: 8,
-        // backgroundColor: "red",
-        alignItems: "center",
-        justifyContent: "space-between"
-    },
-    profileHeader: {
-        flexDirection: "row",
-        justifyContent: "center",
-        paddingTop: 15
-    },
-    profileImage: {
-        flexDirection: "row", 
-        justifyContent: "center",
-        marginBottom: 10
-    },
-    studentInfo: {
-        flexDirection: "row",
-        // backgroundColor: "green"
-    },
-    saveButton: {
-        flexDirection: "row",
-        marginBottom: 10,
-    }
-  })
+  container: {
+    flex: 1,
+    marginTop: 0,
+    marginHorizontal: 0,
+    paddingHorizontal: 8,
+    // backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  profileHeader: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 15,
+  },
+  profileImage: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  studentInfo: {
+    flexDirection: "row",
+    // backgroundColor: "green"
+  },
+  saveButton: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+});
 
-export default ProfileScreen
+export default ProfileScreen;

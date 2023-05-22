@@ -32,6 +32,11 @@ export function useSateWithFireStore<T>(
 
   let dbListenedValue: T = snap?.get(fieldName);
 
+  if (dbListenedValue == undefined) {
+    setDoc(document, { [fieldName]: defaultValue });
+    dbListenedValue = defaultValue;
+  }
+
   const set = (newVal: T) => {
     updateDoc(document, { [fieldName]: newVal });
   };
