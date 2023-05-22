@@ -4,6 +4,8 @@ import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
 import convertDate from "../../utils/util";
 import EventDivider from "../atoms/EventDivider";
+import { Avatar } from 'react-native-elements';
+import { colours } from "../../../theme/colours/colours";
 
 // Event component props
 interface EventProps {
@@ -68,16 +70,25 @@ const Event: React.FC<EventProps> = (props) => {
             justifyContent: "space-between"
         }}>
           {/* Bubble 1: Friends who are going */}
-          <Icon
-            name="people"
+          <Avatar
+            size={32}
+            rounded
+            icon={{ name: "people", type: "material" }}
+            containerStyle={{ backgroundColor: "#9700b9" }}
           />
           {/* Bubble 2: TBD */}
-          <Icon
-            name="people"
+          <Avatar
+            size={32}
+            rounded
+            icon={{ name: "people", type: "material" }}
+            containerStyle={{ backgroundColor: "#9700b9" }}
           />
           {/* Bubble 3: Save event */}
-          <Icon
-            name="favorite"
+          <Avatar
+            size={32}
+            rounded
+            icon={{ name: "favorite", type: "material" }}
+            containerStyle={{ backgroundColor: "#9700b9" }}
           />
         </View>
 

@@ -11,6 +11,7 @@ import { Platform } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./src/components/organisms/EventDetails";
 import { View, Text } from "react-native";
+import { colours } from "./theme/colours/colours";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -18,7 +19,9 @@ const Stack = createNativeStackNavigator();
 
 const MainView = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      barStyle={{ backgroundColor: colours.secondary }}
+    >
       <Tab.Screen
         name="Events"
         component={SignedupEventsPage}
@@ -137,7 +140,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#A6A9BC",
+    backgroundColor: colours.secondary,
     paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 });
