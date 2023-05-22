@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
 import convertDate from "../../utils/util";
-import EventDivider from "../atoms/EventDivider";
 import { Avatar } from 'react-native-elements';
 import { colours } from "../../../theme/colours/colours";
 
@@ -31,36 +30,20 @@ const Event: React.FC<EventProps> = (props) => {
     <View>
       <View style={styles.container}>
 
-        {/* Event Details Section */}
-        <View style={{ flexDirection: "column" }}>
+        {/* Image */}
+        <View style={{flexDirection: "column"}}>
+          <Image
+            style={{ width: 100, height: 100, borderRadius: 15}}
+            source={require("../../assets/octo.jpeg")}
+          />
+        </View>
 
-          { /* Event Description*/}
-          <View style={{ flexDirection: "row" }}>
-
-            {/* Event Name, Organizer and Date */}
-            <View style={{flexDirection: "column"}}>
-              <Text style={styles.date}>{convertDate(new Date())}</Text>
-              <Text style={styles.title}>{event.name}</Text>
-              <Text>{event.organizer.name}</Text>
-            </View>
-
-            { /* Event Image */}
-            <View style={{flexDirection: "column"}}>
-              <Image
-                style={{ width: 100, height: 100 }}
-                source={require("../../assets/octo.jpeg")}
-              />
-            </View>
-
-          </View>
-            
-          { /* Event Location and Attendees */ }
-          <View style={{ flexDirection: "row" }}>
-            <Text>
-              {event.attendees.length} going • {event.location}
-            </Text>
-          </View>
-
+        {/* Event Details */}
+        <View style={{flexDirection: "column"}}>
+          <Text style={styles.title}>{event.name}</Text>
+          <Text style={styles.date}>Date: {convertDate(new Date())}</Text>
+          <Text>Location: {event.location}</Text>
+          <Text>Price: </Text>
         </View>
 
         {/* Event Participants Section */}
@@ -93,8 +76,6 @@ const Event: React.FC<EventProps> = (props) => {
         </View>
 
       </View>
-
-      <EventDivider/>
     
     </View>
   );
@@ -105,23 +86,24 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginTop: 10,
-    marginHorizontal: 15,
-    // backgroundColor: "blue"
+    paddingHorizontal: 15,
+    paddingVertical: 23,
+    borderRadius: 10,
+    marginHorizontal: 5,
+    backgroundColor: colours.secondary
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
+    color: colours.primary,
     // fontFamily: "Arial"
   },
   date: {
     fontWeight: "bold",
-    color: "red",
+    color: "white",
   },
   organization: {
     fontWeight: "normal",
-  },
-  bubbles: { 
-    
   }
 });
 

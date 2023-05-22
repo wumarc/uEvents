@@ -19,7 +19,9 @@ const Stack = createNativeStackNavigator();
 
 const MainView = () => {
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: colours.secondary }}>
+    <Tab.Navigator 
+      barStyle={{ backgroundColor: colours.secondary }}
+    >
       <Tab.Screen
         name="Events"
         component={SignedupEventsPage}

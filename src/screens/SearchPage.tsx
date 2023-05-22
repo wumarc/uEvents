@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SearchBar } from '@rneui/themed';
 import { EventObject, mockEventClimbing, mockEventGaming, mockEventPainting } from "../utils/model/EventObject";
 import Event from "../components/organisms/Event";
+import { colours } from "../../theme/colours/colours";
 
 const SearchPage = () => {
 
@@ -29,7 +30,7 @@ const SearchPage = () => {
       {/* Search Bar */}
       <SearchBar
         platform="default"
-        containerStyle={{}}
+        containerStyle={{backgroundColor: colours.secondary}}
         inputContainerStyle={{}}
         inputStyle={{}}
         leftIconContainerStyle={{}}
