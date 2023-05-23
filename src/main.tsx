@@ -11,7 +11,7 @@ import { Platform } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./components/organisms/EventDetails";
 import { View, Text } from "react-native";
-import { colours } from "../theme/colours/colours";
+import { colours } from "./components/subatomic/colours/colours";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();

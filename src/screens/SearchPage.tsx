@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SearchBar } from '@rneui/themed';
 import { EventObject, mockEventClimbing, mockEventGaming, mockEventPainting } from "../utils/model/EventObject";
 import Event from "../components/organisms/Event";
-import { colours } from "../../theme/colours/colours";
+import { colours } from "../components/subatomic/colours/colours";
 
 const SearchPage = () => {
 
