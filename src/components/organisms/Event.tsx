@@ -4,7 +4,7 @@ import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
 import convertDate from "../../utils/util";
 import { Avatar } from 'react-native-elements';
-import { colours } from "../subatomic/colours/colours";
+import { colours } from "../subatoms/colours/colours";
 
 // Event component props
 interface EventProps {
