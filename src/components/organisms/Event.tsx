@@ -56,6 +56,7 @@ const Event: React.FC<EventProps> = (props) => {
           <Avatar
             size={32}
             rounded
+            title={event.attendees.length.toString()}
             icon={{ name: "people", type: "material" }}
             containerStyle={{ backgroundColor: "#9700b9" }}
           />

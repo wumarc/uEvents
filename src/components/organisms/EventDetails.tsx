@@ -47,7 +47,12 @@ const EventDetails = ({navigation}: any) => {
               />
             <Text style={styles.regular_text}> {event.location} </Text>
           </View>
-          <View >
+          <View style={styles.container}>
+            <Icon
+                color="grey"
+                name="person-outline"
+                size={30}
+              />
             <Text style={styles.regular_text}> {event.organizer} </Text>
           </View>
           <View>
