@@ -1,11 +1,11 @@
 import { View, Text, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import { SearchBar } from '@rneui/themed';
-import { EventObject, mockEventClimbing, mockEventGaming, mockEventPainting } from "../utils/model/EventObject";
-import Event from "../components/organisms/Event";
-import { colours } from "../components/subatomic/colours/colours";
+import { EventObject, mockEventClimbing, mockEventGaming, mockEventPainting } from "../../utils/model/EventObject";
+import Event from "../organisms/Event";
+import { colours } from "../subatomic/colours/colours";
 
-const SearchPage = () => {
+const Search = () => {
 
   const [filteredEvent, setFilteredEvent] = useState<EventObject[]>([]);
   const [allEvents, setAllEvents] = useState<EventObject[]>([
@@ -60,4 +60,4 @@ const SearchPage = () => {
     
 };
   
-export default SearchPage;
+export default Search;

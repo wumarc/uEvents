@@ -1,8 +1,8 @@
 import { View, Text, ScrollView } from "react-native";
-import { mockEventClimbing } from "../utils/model/EventObject";
-import Event from "../components/organisms/Event";
+import { mockEventClimbing } from "../../utils/model/EventObject";
+import Event from "../organisms/Event";
 
-const SavedEventsPage = () => {
+const SavedEvents = () => {
   return (
     <ScrollView
       style={{
@@ -16,4 +16,4 @@ const SavedEventsPage = () => {
   );
 };
 
-export default SavedEventsPage;
+export default SavedEvents;

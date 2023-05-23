@@ -1,8 +1,8 @@
-import HomePage from "./screens/HomePage";
+import Home from "./components/pages/Home";
 import Profile from "./components/pages/Profile";
-import SavedEventsPage from "./screens/SavedEventsPage";
-import SignedupEventsPage from "./screens/SignedupEventsPage";
-import SearchPage from "./screens/SearchPage";
+import SavedEvents from "./components/pages/SavedEvents";
+import EventsTickets from "./components/pages/EventsTickets";
+import Search from "./components/pages/Search";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -24,9 +24,9 @@ const MainView = () => {
     >
       <Tab.Screen
         name="Events"
-        component={SignedupEventsPage}
+        component={EventsTickets}
         options={{
-          tabBarLabel: "Events",
+          tabBarLabel: "Tickets",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="calendar" color={color} size={26} />
           ),
@@ -34,7 +34,7 @@ const MainView = () => {
       />
       <Tab.Screen
         name="Saved"
-        component={SavedEventsPage}
+        component={SavedEvents}
         options={{
           tabBarLabel: "Saved",
           tabBarIcon: ({ color }) => (
@@ -48,7 +48,7 @@ const MainView = () => {
       />
       <Tab.Screen
         name="Home"
-        component={HomePage}
+        component={Home}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
@@ -58,7 +58,7 @@ const MainView = () => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchPage}
+        component={Search}
         options={{
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => (

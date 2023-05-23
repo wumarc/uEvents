@@ -13,16 +13,16 @@ import { Button, Input } from "@rneui/base";
 import {
   useSateWithFireStore,
   useSateWithFireStoreArray,
-} from "../utils/useStateWithFirebase";
+} from "../../utils/useStateWithFirebase";
 import {
   defaultEvent,
   EventObject,
   mockEventClimbing,
-} from "../utils/model/EventObject";
-import { uid } from "../utils/util";
-import Event from "../components/organisms/Event";
+} from "../../utils/model/EventObject";
+import { uid } from "../../utils/util";
+import Event from "../organisms/Event";
 
-const HomePage = () => {
+const Home = () => {
   const [loading, dbListenedValue, set, add, remove] =
     useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
 
@@ -126,4 +126,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

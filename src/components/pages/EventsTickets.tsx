@@ -1,13 +1,13 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import Event from "../components/organisms/Event";
-import { mockEventClimbing } from "../utils/model/EventObject";
+import Event from "../organisms/Event";
+import { mockEventClimbing } from "../../utils/model/EventObject";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import EventDetails from "../components/organisms/EventDetails";;
+import EventDetails from "../organisms/EventDetails";;
 import { StyleSheet } from "react-native";
 
 let placeholders = ['1', '1', '1', '1', '1']
 
-const SignedupEventsPage = ({navigation}: any) => {
+const EventsTickets = ({navigation}: any) => {
   
   return (
     <ScrollView
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default SignedupEventsPage;
+export default EventsTickets;
