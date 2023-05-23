@@ -24,7 +24,7 @@ const EventsTickets = ({navigation}: any) => {
         return (
           <TouchableOpacity
             key={index}
-            onPress={() => {navigation.navigate('DetailedView')}}
+            onPress={() => {navigation.navigate('EventDetailsView')}}
           >
               <Event
                 key={index}

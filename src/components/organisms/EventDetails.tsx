@@ -1,7 +1,7 @@
 import { View, Text, Image, Button, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { EventObject, mockEventClimbing } from "../../utils/model/EventObject";
+import { mockEventClimbing } from "../../utils/model/EventObject";
 
 const EventDetails = ({navigation}: any) => {
 
@@ -56,7 +56,7 @@ const EventDetails = ({navigation}: any) => {
           <View>
             <Button 
               title="Attend"
-              // onPress={() => {navigation.navigate('SignupView')}}
+              // onPress={() => {navigation.navigate('EventSignUp')}}
             />
           </View>
       </View>

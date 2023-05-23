@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./components/organisms/EventDetails";
 import { View, Text } from "react-native";
 import { colours } from "./components/subatomic/colours/colours";
+import EventSignUp from "./components/pages/EventSignUp";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -84,18 +85,6 @@ const MainView = () => {
   );
 };
 
-const DetailedView = () => {
-  return <EventDetails />;
-};
-
-const SignupView = () => {
-  return (
-    <View>
-      <Text>Signup View</Text>
-    </View>
-  );
-};
-
 export default function Main() {
   return (
     <NavigationContainer>
@@ -110,8 +99,8 @@ export default function Main() {
             }}
           />
           {/* Any other view that adds a stack to the main view, we only have detailedView for events */}
-          <Stack.Screen name="DetailedView" component={DetailedView} />
-          <Stack.Screen name="SignupView" component={SignupView} />
+          <Stack.Screen name="EventDetailsView" component={EventDetails} />
+          <Stack.Screen name="EventSignUpView" component={EventSignUp} />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
