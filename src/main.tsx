@@ -1,5 +1,5 @@
 import HomePage from "./screens/HomePage";
-import ProfilePage from "./screens/ProfilePage";
+import Profile from "./components/pages/Profile";
 import SavedEventsPage from "./screens/SavedEventsPage";
 import SignedupEventsPage from "./screens/SignedupEventsPage";
 import SearchPage from "./screens/SearchPage";
@@ -68,7 +68,7 @@ const MainView = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfilePage}
+        component={Profile}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (

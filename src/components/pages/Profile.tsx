@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
-import { defaultStudent, Student } from "../utils/model/Student";
+import { defaultStudent, Student } from "../../utils/model/Student";
 import { Avatar } from "react-native-elements";
-import { useSateWithFireStore } from "../utils/useStateWithFirebase";
-import { getFirebaseUserID } from "../utils/util";
+import { useSateWithFireStore } from "../../utils/useStateWithFirebase";
+import { getFirebaseUserID } from "../../utils/util";
 
-const ProfileScreen = (props: any) => {
+const Profile = (props: any) => {
   const [loading, profile, setProfile] = useSateWithFireStore<Student>(
     "students" + "/" + getFirebaseUserID(),
     "info",
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default Profile;

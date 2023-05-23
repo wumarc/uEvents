@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./src/firebaseConfig";
-import SignInPage from "./src/screens/SignInPage";
+import SignIn from "./src/components/pages/SignIn";
 import Main from "./src/main";
 import { Loading } from "./src/screens/LoadingPage";
 import { View, Text } from "react-native";
@@ -20,6 +20,6 @@ export default function App() {
   } else if (user) {
     return <Main />;
   } else {
-    return <SignInPage />;
+    return <SignIn />;
   }
 }

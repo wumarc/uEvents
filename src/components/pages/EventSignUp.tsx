@@ -1,6 +1,6 @@
 import { View, Text } from "react-native"
 
-const AttendPage = () => {
+const EventSignUp = () => {
 
     return (
         <View>
@@ -9,3 +9,5 @@ const AttendPage = () => {
     )
     
 }
+
+export default EventSignUp;

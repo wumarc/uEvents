@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,7 +10,7 @@ import { Input } from "@rneui/base";
 // Accepted universities
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
-const SignInPage: FC = () => {
+const SignIn: FC = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -98,4 +98,4 @@ const SignInPage: FC = () => {
   }
 };
 
-export default SignInPage;
+export default SignIn;
