@@ -30,20 +30,28 @@ const Event: React.FC<EventProps> = (props) => {
     <View>
       <View style={styles.container}>
 
-        {/* Image */}
-        <View style={styles.image}>
-          <Image
-            style={{ width: 100, height: 100, borderRadius: 15}}
-            source={require("../../assets/octo.jpeg")}
-          />
-        </View>
+        {/* Event and Event Details */}
+        <View>
+          <View style={{flexDirection: "row"}}>
 
-        {/* Event Details */}
-        <View style={styles.eventDetails}>
-          <Text style={styles.title}>{event.name}</Text>
-          <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Date: </Text> {convertDate(new Date())}</Text>
-          <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Location: </Text> {event.location}</Text>
-          <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Price: </Text>Free on Mondays</Text>
+            {/* Image */}
+            <View style={styles.imageContainer}>
+              <Image
+                style={{ width: 100, height: 100, borderRadius: 15}}
+                source={require("../../assets/octo.jpeg")}
+              />
+            </View>
+
+            {/* Event Details */}
+            <View style={styles.eventDetails}>
+              <Text style={styles.title}>{event.name}</Text>
+              <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Date: </Text> {convertDate(new Date())}</Text>
+              <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Location: </Text> {event.location}</Text>
+              <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Price: </Text>Free on Mondays</Text>
+            </View>
+
+          </View>
+
         </View>
 
         {/* Event Participants Section */}
@@ -62,13 +70,13 @@ const Event: React.FC<EventProps> = (props) => {
             size={40}
             rounded
             icon={{ name: "bookmark", type: "material" }}
-            containerStyle={styles.buttonStyle}
+            // containerStyle={styles.buttonStyle}
             onPress={() => console.log("Save the event!")}
+            containerStyle={styles.buttonStyle}
           />
         </View>
 
       </View>
-    
     </View>
   );
 };
@@ -81,19 +89,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 14,
     borderRadius: 10,
-    marginHorizontal: 5,
     backgroundColor: "#cccccc",
     justifyContent: "space-between",
   },
-  image: {
+  imageContainer: {
     flexDirection: "column",
   },
   eventDetails: {
     flexDirection: "column",
+    paddingHorizontal: 10,
   },
   title: {
     fontSize: 19,
     fontWeight: "bold",
+    marginBottom: 5,
     color: colours.primary,
     // fontFamily: "Arial"
   },
@@ -102,7 +111,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   },
   buttonStyle: {
-    backgroundColor: colours.secondary,
+    borderStyle: "solid",
+    borderWidth: 3,
+    borderColor: colours.secondary,
   },
   eventDetailTitle: {
     fontWeight: "bold",

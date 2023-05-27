@@ -1,39 +1,37 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import Event from "../organisms/Event";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { mockEventClimbing } from "../../utils/model/EventObject";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import EventDetails from "../organisms/EventDetails";;
-import { StyleSheet } from "react-native";
+import { ScreenSpacing, Title } from "../subatoms/Spacing";
+import Event from "../organisms/Event";
 
 let placeholders = ['1', '1', '1', '1', '1']
 
 const EventsTickets = ({navigation}: any) => {
   
   return (
-    <ScrollView
-      style={{
-        height: "100%",
-        width: "100%",
-      }}
-    >
-      {/* Title of page */}
-      <View><Text>Events You Are Going To</Text></View>
+    <ScrollView style={styles.container}>      
+      <View>
 
-      {/* List of events, we will eventually replace placeholders with events from the db */}
-      {placeholders.map((item, index) => {
-        return (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {navigation.navigate('EventDetailsView')}}
-          >
-              <Event
-                key={index}
-                event={mockEventClimbing}
-              />
-          </TouchableOpacity>
-        );
-      })}
+        {/* Title of page */}
+        <View>
+          <Text style={styles.title}>Events You Are Going To</Text>
+        </View>
 
+        {/* List of events, we will eventually replace placeholders with events from the db */}
+        {placeholders.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              onPress={() => {navigation.navigate('EventDetailsView')}}
+            >
+                <Event
+                  key={index}
+                  event={mockEventClimbing}
+                />
+            </TouchableOpacity>
+          );
+        })}
+
+      </View>
     </ScrollView>
   );
 
@@ -41,7 +39,13 @@ const EventsTickets = ({navigation}: any) => {
 
 
 const styles = StyleSheet.create({
-  
+  container: {
+    padding: ScreenSpacing.paddingHorizontal,
+  },
+  title: {
+    fontSize: Title.fontSize,
+    fontWeight: Title.fontWeight,
+  }
 })
 
 
