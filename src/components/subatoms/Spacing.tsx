@@ -1,5 +1,4 @@
 
-
 export const ScreenSpacing = {
     marginHorizontal: 20,
     marginVertical: 20,

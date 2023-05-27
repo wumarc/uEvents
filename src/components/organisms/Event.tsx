@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
 import convertDate from "../../utils/util";
-import { Avatar } from 'react-native-elements';
+import { Avatar, colors } from 'react-native-elements';
 import { colours } from "../subatoms/colours/colours";
 
 // Event component props
@@ -39,11 +39,11 @@ const Event: React.FC<EventProps> = (props) => {
         </View>
 
         {/* Event Details */}
-        <View style={{flexDirection: "column"}}>
+        <View style={styles.eventDetails}>
           <Text style={styles.title}>{event.name}</Text>
-          <Text style={styles.date}>Date: {convertDate(new Date())}</Text>
-          <Text>Location: {event.location}</Text>
-          <Text>Price: </Text>
+          <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Date: </Text> {convertDate(new Date())}</Text>
+          <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Location: </Text> {event.location}</Text>
+          <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Price: </Text>Free on Mondays</Text>
         </View>
 
         {/* Event Participants Section */}
@@ -57,13 +57,6 @@ const Event: React.FC<EventProps> = (props) => {
             size={32}
             rounded
             title={event.attendees.length.toString()}
-            icon={{ name: "people", type: "material" }}
-            containerStyle={{ backgroundColor: "#9700b9" }}
-          />
-          {/* Bubble 2: TBD */}
-          <Avatar
-            size={32}
-            rounded
             icon={{ name: "people", type: "material" }}
             containerStyle={{ backgroundColor: "#9700b9" }}
           />
@@ -87,24 +80,33 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginTop: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 23,
+    paddingHorizontal: 8,
+    paddingVertical: 14,
     borderRadius: 10,
     marginHorizontal: 5,
-    backgroundColor: colours.secondary
+    backgroundColor: "#cccccc",
   },
   title: {
-    fontSize: 15,
+    fontSize: 19,
     fontWeight: "bold",
     color: colours.primary,
     // fontFamily: "Arial"
   },
-  date: {
+  eventDetailTitle: {
     fontWeight: "bold",
+    color: colours.primary,
+    fontSize: 15,
+  },
+  eventDetailswhite: {
     color: "white",
+    fontWeight: "bold"
   },
   organization: {
     fontWeight: "normal",
+  },
+  eventDetails: {
+    marginLeft: 10,
+    flexDirection: "column",
   }
 });
 

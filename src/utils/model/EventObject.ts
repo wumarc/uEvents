@@ -22,7 +22,7 @@ export const mockEventClimbing: EventObject = {
   attendees: [{name: "Bella", studentId: 360}, {name: "Normin", studentId: 293}, {name: "Cora", studentId: 44492}],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
-  location: "Morisset Library, University of Ottawa",
+  location: "Morisset Library",
   organizer: {
     name: "uOttawa Outdoors Club",
     events: [],
@@ -36,7 +36,7 @@ export const mockEventPainting: EventObject = {
   attendees: [{name: "Ola", studentId: 1111}],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
-  location: "Morisset Library, University of Ottawa",
+  location: "Morisset Library",
   organizer: {
     name: "Faculty of Arts",
     events: [],
@@ -50,7 +50,7 @@ export const mockEventGaming: EventObject = {
   attendees: [{name: "Mars", studentId: 10324}, {name: "Carmin", studentId: 93}, {name: "Hermin", studentId: 932}, {name: "Barty", studentId: 8345}],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
-  location: "Morisset Library, University of Ottawa",
+  location: "Morisset Library",
   organizer: {
     name: "uOttawa Outdoors Club",
     events: [],

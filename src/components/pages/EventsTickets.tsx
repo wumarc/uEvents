@@ -17,7 +17,7 @@ const EventsTickets = ({navigation}: any) => {
       }}
     >
       {/* Title of page */}
-      <View><Text>Your Signed Up Events</Text></View>
+      <View><Text>Events You Are Going To</Text></View>
 
       {/* List of events, we will eventually replace placeholders with events from the db */}
       {placeholders.map((item, index) => {
