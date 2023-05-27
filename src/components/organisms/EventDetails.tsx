@@ -30,15 +30,20 @@ const EventDetails = ({navigation}: any) => {
             style={{width: '100%', height: 300, borderRadius: 10}}
             resizeMethod="resize"
           />
+
+
+          {/* Event Details */}
+          
+          {/* Event Title */}
           <Text style={styles.title}> {event.title}</Text>
+
+          {/* Event Date */}
           <View style={styles.container}>
-            <Icon
-              color="grey"
-              name="event"
-              size={30}
-            />
-           <Text style={styles.regular_text}> {event.date} </Text>
+            <Icon color="grey" name="event" size={30} />
+            <Text style={styles.regular_text}> {event.date} </Text>
           </View>
+
+          {/* Event Location */}
           <View style={styles.container}>
             <Icon
                 color="grey"
@@ -56,6 +61,7 @@ const EventDetails = ({navigation}: any) => {
             <Text style={styles.regular_text}> {event.organizer} </Text>
           </View>
           <View>
+            <Text>About the event</Text>
             <Text style={styles.regular_text}> {event.description} </Text>
           </View>
           <View>
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   title: {
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: "bold",
     flexWrap: "wrap",
   },
