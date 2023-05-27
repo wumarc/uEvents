@@ -65,19 +65,43 @@ const SignIn: FC = () => {
   const SignUp = () => {
     return (
       <View>
-        <Input placeholder="Email" onChangeText={(value) => setEmail(value)} />
-        <Input
-          placeholder="Password"
-          onChangeText={(value) => setPassword(value)}
-        />
-        <Text>{error}</Text>
-        <Button
-          title="Sign up"
-          onPress={() => {
-            signUp();
-          }}
-        />
-        <Button title="Sign in" onPress={() => setIsSigningUp(false)} />
+
+        {/* Title */}
+        <View>
+          <Text>Create your student account</Text>
+        </View>
+
+        {/* Form */}
+        <View>
+          <Input placeholder="Email" onChangeText={(value) => setEmail(value)} />
+          <Input
+            placeholder="Password"
+            onChangeText={(value) => setPassword(value)}
+          />
+        </View>
+
+        {/* Button */}
+        <View>
+          <Text>{error}</Text>
+          <Button
+            color={styles.button.backgroundColor}
+            title="Sign up"
+            onPress={() => signUp()}
+          />
+        </View>
+
+        {/* Login Option */}
+        <View>
+          <Text>
+              Already have an account?
+              <Button 
+                title={"Sign in"}
+                type="clear"
+                onPress={() => setIsSigningUp(false)}
+              />
+          </Text>
+        </View>
+
       </View>
     )
   }
@@ -147,6 +171,7 @@ const SignIn: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginHorizontal: 100,
   },
   title: {
     fontSize: 20,

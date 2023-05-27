@@ -31,7 +31,7 @@ const Event: React.FC<EventProps> = (props) => {
       <View style={styles.container}>
 
         {/* Image */}
-        <View style={{flexDirection: "column"}}>
+        <View style={styles.image}>
           <Image
             style={{ width: 100, height: 100, borderRadius: 15}}
             source={require("../../assets/octo.jpeg")}
@@ -47,25 +47,23 @@ const Event: React.FC<EventProps> = (props) => {
         </View>
 
         {/* Event Participants Section */}
-        <View style={{
-            flexDirection: "column", 
-            // backgroundColor: "orange",
-            justifyContent: "space-between"
-        }}>
+        <View style={styles.buttons}>
           {/* Bubble 1: Friends who are going */}
           <Avatar
-            size={32}
+            size={40}
             rounded
             title={event.attendees.length.toString()}
             icon={{ name: "people", type: "material" }}
-            containerStyle={{ backgroundColor: "#9700b9" }}
+            containerStyle={styles.buttonStyle}
+            onPress={() => console.log("See who is going")}
           />
           {/* Bubble 3: Save event */}
           <Avatar
-            size={32}
+            size={40}
             rounded
-            icon={{ name: "favorite", type: "material" }}
-            containerStyle={{ backgroundColor: "#9700b9" }}
+            icon={{ name: "bookmark", type: "material" }}
+            containerStyle={styles.buttonStyle}
+            onPress={() => console.log("Save the event!")}
           />
         </View>
 
@@ -85,6 +83,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 5,
     backgroundColor: "#cccccc",
+    justifyContent: "space-between",
+  },
+  image: {
+    flexDirection: "column",
+  },
+  eventDetails: {
+    flexDirection: "column",
   },
   title: {
     fontSize: 19,
@@ -92,22 +97,25 @@ const styles = StyleSheet.create({
     color: colours.primary,
     // fontFamily: "Arial"
   },
+  buttons: {
+    flexDirection: "column",
+    justifyContent: "space-around"
+  },
+  buttonStyle: {
+    backgroundColor: colours.secondary,
+  },
   eventDetailTitle: {
     fontWeight: "bold",
     color: colours.primary,
+    flex: 1,
+    width: 1,
     fontSize: 15,
   },
   eventDetailswhite: {
     color: "white",
     fontWeight: "bold"
-  },
-  organization: {
-    fontWeight: "normal",
-  },
-  eventDetails: {
-    marginLeft: 10,
-    flexDirection: "column",
   }
+
 });
 
 export default Event;
