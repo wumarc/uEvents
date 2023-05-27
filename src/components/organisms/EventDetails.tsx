@@ -2,6 +2,7 @@ import { View, Text, Image, Button, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { mockEventClimbing } from "../../utils/model/EventObject";
+import EventDate from "../molecules/EventDate";
 
 const EventDetails = ({navigation}: any) => {
 
@@ -32,9 +33,7 @@ const EventDetails = ({navigation}: any) => {
             resizeMethod="resize"
           />
 
-
           {/* Event Details */}
-          
           {/* Event Title */}
           <Text style={styles.title}> {event.title}</Text>
 
@@ -68,7 +67,7 @@ const EventDetails = ({navigation}: any) => {
           <View>
             <Button 
               title="Attend"
-              // onPress={() => {navigation.navigate('EventSignUp')}}
+              onPress={() => {navigation.navigate('EventSignUpView')}}
             />
           </View>
       </View>
