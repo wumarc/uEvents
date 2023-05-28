@@ -48,7 +48,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@types/uuid": "^9.0.1"
+    "@types/uuid": "^9.0.1",
+    "react-native-asset": "^2.1.1"
   },
   "jest": {
     "preset": "jest-expo"
