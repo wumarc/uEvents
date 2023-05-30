@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import { Button } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { Image } from "react-native-elements";
@@ -85,20 +85,16 @@ const SignIn: FC = () => {
           <Text>{error}</Text>
           <Button
             color={styles.button.backgroundColor}
-            title="Sign up"
+            title="Sign Up"
             onPress={() => signUp()}
           />
         </View>
 
         {/* Login Option */}
         <View>
-          <Text>
-              Already have an account?
-              <Button 
-                title={"Sign in"}
-                type="clear"
-                onPress={() => setIsSigningUp(false)}
-              />
+          <Text style={styles.text}>
+              Already have an account? 
+              <Text onPress={() => setIsSigningUp(false)} style={styles.textButton}> Sign in</Text>
           </Text>
         </View>
 
@@ -129,7 +125,7 @@ const SignIn: FC = () => {
             <Text>{error}</Text>
             <Button
               color={styles.button.backgroundColor}
-              title="Sign in"
+              title="Sign In"
               onPress={() => {
                 signIn();
               }}
@@ -137,14 +133,12 @@ const SignIn: FC = () => {
           </View>
 
           {/* Sign up option */}
-          <Text>
-              Don't have an account? 
-              <Button 
-                title={"Sign up"}
-                type="clear"
-                onPress={() => setIsSigningUp(true)}
-              />
-          </Text>
+          <View>
+            <Text style={styles.text}>
+              Don't have an account?
+                <Text onPress={() => setIsSigningUp(true)} style={styles.textButton}> Sign Up</Text>
+            </Text>
+          </View>
         
         </View>
     )
@@ -155,7 +149,7 @@ const SignIn: FC = () => {
       <View style={styles.container}>
         <View>
           <Image
-                style={{ width: 300, height: 300, borderRadius: 15}}
+                style={{ width: 150, height: 150, borderRadius: 14}}
                 source={require("../../../assets/uevents.png")}
           />
         </View>
@@ -170,8 +164,7 @@ const SignIn: FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginHorizontal: 100,
+    flexDirection: "column",
   },
   title: {
     fontSize: 20,
@@ -179,6 +172,15 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: colours.primary,
+  },
+  text: {
+    color: "black",
+    fontSize: 15,
+  },
+  textButton: {
+    color: "blue",
+    fontWeight: "bold",
+    fontSize: 15,
   }
 });
 

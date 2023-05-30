@@ -14,7 +14,7 @@ export const EventSpacing = {
 }
 
 export const Title = {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
 }
 
