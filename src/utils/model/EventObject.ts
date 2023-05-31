@@ -17,14 +17,14 @@ export type EventObject = {
 
 export const mockEventClimbing: EventObject = {
   id: "1",
-  name: "Fall Hiking Trip Long Name Short Name Fall Hiking Trip Long Name Short Name",
+  name: "Adele concert viewing",
   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
   attendees: [{name: "Bella", studentId: 360}, {name: "Normin", studentId: 293}, {name: "Cora", studentId: 44492}],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
-  location: "Morisset Library, 2nd Floor, University of Ottawa, Ottawa, Ontario",
+  location: "Hamelin Hall, uOttawa",
   organizer: {
-    name: "uOttawa Outdoors Club",
+    name: "uOttawa adele association",
     events: [],
   },
 };

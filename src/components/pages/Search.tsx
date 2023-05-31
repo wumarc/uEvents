@@ -39,7 +39,7 @@ const Search = () => {
         loadingProps={{}}
         onChangeText={newVal => {setValue(newVal)}}
         placeholder="What event are you looking for?"
-        placeholderTextColor="#888"
+        placeholderTextColor="#8A4287"
         round
         value={value}
       />

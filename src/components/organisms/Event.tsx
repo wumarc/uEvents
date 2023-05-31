@@ -36,8 +36,8 @@ const Event: React.FC<EventProps> = (props) => {
           {/* Image */}
           <View style={styles.imageContainer}>
             <Image
-              style={{ width: 100, height: 100, borderRadius: 15}}
-              source={require("../../assets/octo.jpeg")}
+              style={{ width: 100, height: 130, borderRadius: 14}}
+              source={require("../../assets/Adele.jpg")}
             />
           </View>
 
@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 14,
     paddingHorizontal: 8,
     paddingVertical: 14,
     borderRadius: 10,
-    backgroundColor: "#cccccc",
+    backgroundColor: "#d9d9d9",
     justifyContent: "space-between",
   },
   imageContainer: {
