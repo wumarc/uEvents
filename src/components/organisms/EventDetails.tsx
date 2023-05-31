@@ -8,7 +8,7 @@ const EventDetails = ({navigation}: any) => {
 
   const [event, setEvent] = useState({
     title: mockEventClimbing.name,
-    date: "TUE, MAR 28 08:00 EDT",
+    date: "Wed, May 31 08:00 EDT",
     location: mockEventClimbing.location,
     organizer: mockEventClimbing.organizer.name,
     description: mockEventClimbing.description
