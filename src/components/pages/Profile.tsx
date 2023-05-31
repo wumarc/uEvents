@@ -7,6 +7,7 @@ import { defaultStudent, Student } from "../../utils/model/Student";
 import { Avatar } from "react-native-elements";
 import { useSateWithFireStore } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../utils/util";
+import { getAuth, signOut } from "firebase/auth";
 
 const Profile = (props: any) => {
   const [loading, profile, setProfile] = useSateWithFireStore<Student>(
@@ -17,6 +18,15 @@ const Profile = (props: any) => {
 
   if (loading) {
     return <Text>Loading</Text>;
+  }
+
+  const logout = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
   }
 
   return (
@@ -75,6 +85,16 @@ const Profile = (props: any) => {
           />
         </View>
       </View>
+          
+      {/* Log out button */}
+      <View>
+        <Button 
+          onPress={() => {logout()}}
+          title="Log out"
+          style={{ marginBottom: 10 }}
+        />
+      </View>
+
     </View>
   );
 };
