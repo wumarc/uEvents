@@ -13,6 +13,8 @@ import EventDetails from "./components/organisms/EventDetails";
 import { View, Text } from "react-native";
 import { colours } from "./components/subatoms/colours/colours";
 import EventSignUp from "./components/pages/EventSignUp";
+import { getAuth, signOut } from "firebase/auth";
+import { Button } from "react-native-elements";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -20,10 +22,8 @@ const Stack = createNativeStackNavigator();
 
 const MainView = () => {
   return (
-    <Tab.Navigator 
-      barStyle={{ backgroundColor: colours.secondary }}
-    >
-      <Tab.Screen
+    <Tab.Navigator barStyle={{ backgroundColor: colours.secondary }}>
+      {/* <Tab.Screen
         name="Events"
         component={EventsTickets}
         options={{
@@ -32,7 +32,7 @@ const MainView = () => {
             <MaterialCommunityIcons name="calendar" color={colours.primary} size={30} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Saved"
         component={SavedEvents}
@@ -42,7 +42,8 @@ const MainView = () => {
             <MaterialCommunityIcons
               name="calendar-heart"
               color={colours.primary}
-              size={30} />
+              size={30}
+            />
           ),
         }}
       />
@@ -52,7 +53,11 @@ const MainView = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={colours.primary} size={30} />
+            <MaterialCommunityIcons
+              name="home"
+              color={colours.primary}
+              size={30}
+            />
           ),
         }}
       />
@@ -62,11 +67,15 @@ const MainView = () => {
         options={{
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="magnify" color={colours.primary} size={30} />
+            <MaterialCommunityIcons
+              name="magnify"
+              color={colours.primary}
+              size={30}
+            />
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -78,8 +87,44 @@ const MainView = () => {
               size={30} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
+  );
+};
+
+const MainViewWithHeader = () => {
+  const logout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
+  return (
+    <View style={{ height: "100%" }}>
+      <View style={{ display: "flex", flexDirection: "row", height: "10%" }}>
+        {/* This is the header */}
+        <View style={{ width: "75%" }}>
+          <Text>uEvents</Text>
+        </View>
+        <View style={{ width: "25%" }}>
+          <Button
+            title="Logout"
+            style={{}}
+            onPress={() => {
+              logout();
+            }}
+          />
+        </View>
+      </View>
+      <View style={{ height: "90%" }}>
+        <MainView />
+      </View>
+    </View>
   );
 };
 
@@ -91,7 +136,7 @@ export default function Main() {
           {/* Main View */}
           <Stack.Screen
             name="MainView"
-            component={MainView}
+            component={MainViewWithHeader}
             options={{
               headerShown: false,
             }}
