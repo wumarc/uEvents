@@ -36,8 +36,7 @@ const Login = ({setIsSigningUp}: any) => {
         } catch (error: any) {
           setError(error.message);
         }
-      }
-
+    }
 
     return (
         <View>
@@ -70,9 +69,9 @@ const Login = ({setIsSigningUp}: any) => {
 
         {/* Sign up option */}
         <View>
-          <Text style={styles.text}>
+          <Text style={styles.switchPage}>
             Don't have an account?
-              <Text onPress={setIsSigningUp} style={styles.textButton}> Sign Up</Text>
+              <Text onPress={setIsSigningUp} style={styles.textButton}> Sign up</Text>
           </Text>
         </View>
       
@@ -93,8 +92,9 @@ const styles = StyleSheet.create({
     button: {
       backgroundColor: colours.primary,
     },
-    text: {
+    switchPage: {
       color: "black",
+      marginTop: 10,
       fontSize: 15,
     },
     textButton: {
