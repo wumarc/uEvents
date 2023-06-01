@@ -13,7 +13,7 @@ const EventsTickets = ({navigation}: any) => {
 
         {/* Title of page */}
         <View>
-          <Text style={styles.title}>Events You Are Going To</Text>
+          <Text style={styles.title}>Your events</Text>
         </View>
 
         {/* List of events, we will eventually replace placeholders with events from the db */}

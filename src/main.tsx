@@ -29,7 +29,7 @@ const MainView = () => {
         options={{
           tabBarLabel: "Tickets",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="calendar" color={color} size={26} />
+            <MaterialCommunityIcons name="calendar" color={colours.primary} size={30} />
           ),
         }}
       />
@@ -41,9 +41,8 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="calendar-heart"
-              color={color}
-              size={26}
-            />
+              color={colours.primary}
+              size={30} />
           ),
         }}
       />
@@ -53,7 +52,7 @@ const MainView = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialCommunityIcons name="home" color={colours.primary} size={30} />
           ),
         }}
       />
@@ -63,7 +62,7 @@ const MainView = () => {
         options={{
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="magnify" color={color} size={26} />
+            <MaterialCommunityIcons name="magnify" color={colours.primary} size={30} />
           ),
         }}
       />
@@ -75,9 +74,8 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account-circle"
-              color={color}
-              size={26}
-            />
+              color={colours.primary}
+              size={30} />
           ),
         }}
       />
