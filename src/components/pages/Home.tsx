@@ -19,7 +19,7 @@ import {
   EventObject,
   mockEventClimbing,
 } from "../../utils/model/EventObject";
-import { uid } from "../../utils/util";
+import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
 import Event from "../organisms/Event";
 
 const Home = () => {
@@ -120,7 +120,39 @@ const Home = () => {
       </Button>
       <FlatList
         data={dbListenedValue}
-        renderItem={({ item }) => <Event event={item} />}
+        renderItem={({ item }) => (
+          <Event
+            event={item}
+            saveEvent={() => {
+              for (let i = 0; i < dbListenedValue.length; i++) {
+                if (dbListenedValue[i]?.id == item.id) {
+                  let newEvent = dbListenedValue[i];
+                  if (newEvent == undefined) {
+                    // This should never happen
+                    return;
+                  }
+                  let flag = false;
+                  for (let i = 0; i < newEvent.saved.length; i++) {
+                    if (newEvent.saved[i] == getFirebaseUserIDOrEmpty()) {
+                      // Removing the user from the saved list
+                      flag = true;
+                      newEvent.saved.splice(i, 1);
+                      break;
+                    }
+                  }
+
+                  if (!flag) {
+                    // Adding the user to the saved list
+                    newEvent.saved.push(getFirebaseUserIDOrEmpty());
+                  }
+                  dbListenedValue[i] = newEvent;
+                  set(dbListenedValue);
+                  break;
+                }
+              }
+            }}
+          />
+        )}
       />
     </View>
   );

@@ -5,6 +5,11 @@ export function getFirebaseUserID(): string | undefined {
   return id;
 }
 
+export function getFirebaseUserIDOrEmpty(): string {
+  let id = auth.currentUser?.uid;
+  return id ? id : "";
+}
+
 /**
  * Returns a unique uid
  * TODO: I am not sure this is unique. Could use the GCP one instead

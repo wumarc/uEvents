@@ -3,17 +3,16 @@ import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
 import convertDate from "../../utils/util";
-import { Avatar, colors } from 'react-native-elements';
+import { Avatar, colors } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
 
 // Event component props
 interface EventProps {
   event: EventObject;
+  saveEvent: () => void;
 }
 
 const Event: React.FC<EventProps> = (props) => {
-  const [event, setEvent] = useState<EventObject>(props.event);
-
   // useEffect(() => {
   //   setEvent({
   //     name: props.name,
@@ -28,15 +27,13 @@ const Event: React.FC<EventProps> = (props) => {
 
   return (
     <View style={styles.container}>
-
       {/* Event and Event Details */}
       <View>
-        <View style={{flexDirection: "row"}}>
-
+        <View style={{ flexDirection: "row" }}>
           {/* Image */}
           <View style={styles.imageContainer}>
             <Image
-              style={{ width: 100, height: 130, borderRadius: 14}}
+              style={{ width: 100, height: 130, borderRadius: 14 }}
               source={require("../../assets/Adele.jpg")}
             />
           </View>
@@ -44,13 +41,21 @@ const Event: React.FC<EventProps> = (props) => {
           {/* Event Details */}
           <View style={styles.eventDetails}>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>{event.name}</Text>
+              <Text style={styles.title}>{props.event.name}</Text>
             </View>
-            <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Date: </Text> {convertDate(new Date())}</Text>
-            <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Location: </Text> {event.location}</Text>
-            <Text style={styles.eventDetailswhite}><Text style={styles.eventDetailTitle}>Price: </Text>Free on Mondays</Text>
+            <Text style={styles.eventDetailswhite}>
+              <Text style={styles.eventDetailTitle}>Date: </Text>{" "}
+              {convertDate(new Date())}
+            </Text>
+            <Text style={styles.eventDetailswhite}>
+              <Text style={styles.eventDetailTitle}>Location: </Text>{" "}
+              {props.event.location}
+            </Text>
+            <Text style={styles.eventDetailswhite}>
+              <Text style={styles.eventDetailTitle}>Price: </Text>Free on
+              Mondays
+            </Text>
           </View>
-
         </View>
       </View>
 
@@ -60,7 +65,7 @@ const Event: React.FC<EventProps> = (props) => {
         <Avatar
           size={40}
           rounded
-          title={event.attendees.length.toString()}
+          title={props.event.attendees.length.toString()}
           icon={{ name: "people", type: "material" }}
           containerStyle={styles.buttonStyle}
           onPress={() => console.log("See who is going")}
@@ -71,11 +76,13 @@ const Event: React.FC<EventProps> = (props) => {
           rounded
           icon={{ name: "bookmark", type: "material" }}
           // containerStyle={styles.buttonStyle}
-          onPress={() => console.log("Save the event!")}
+          onPress={() => {
+            console.log("Save the event!");
+            // props.saveEvent(); // TODO Fix this
+          }}
           containerStyle={styles.buttonStyle}
         />
       </View>
-
     </View>
   );
 };
@@ -112,7 +119,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   buttonStyle: {
     borderStyle: "solid",
@@ -128,9 +135,8 @@ const styles = StyleSheet.create({
   },
   eventDetailswhite: {
     color: "white",
-    fontWeight: "bold"
-  }
-
+    fontWeight: "bold",
+  },
 });
 
 export default Event;
