@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 
 const MainView = () => {
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: colours.secondary }}>
+    <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryBackground }}>
       {/* <Tab.Screen
         name="Events"
         component={EventsTickets}
