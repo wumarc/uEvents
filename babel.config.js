@@ -17,8 +17,8 @@ module.exports = function(api) {
     ],
   };
 };
-module.exports = function (api) {
-  return {
-    plugins: ['macros'],
-  }
-}
+// module.exports = function (api) {
+//   return {
+//     plugins: ['macros'],
+//   }
+// }

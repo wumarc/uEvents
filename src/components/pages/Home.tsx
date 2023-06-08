@@ -3,13 +3,13 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
   Pressable,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
-import { Button, Input } from "@rneui/base";
+import { Button, Input, Header } from "@rneui/base";
+import { Text } from "@rneui/themed";
 import {
   useSateWithFireStore,
   useSateWithFireStoreArray,
@@ -21,6 +21,7 @@ import {
 } from "../../utils/model/EventObject";
 import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
 import Event from "../organisms/Event";
+import EventDivider from "../atoms/Divider";
 
 const Home = () => {
   const [loading, dbListenedValue, set, add, remove] =
@@ -111,13 +112,15 @@ const Home = () => {
 
   return (
     <View>
-      <Button
+      {/* <Button
         onPress={() => {
           setAddingEvent(true);
         }}
       >
         Add test event
-      </Button>
+      </Button> */}
+
+      <Text style={styles.title}>Upcoming Events</Text>
       <FlatList
         data={dbListenedValue}
         renderItem={({ item }) => (
@@ -159,3 +162,11 @@ const Home = () => {
 };
 
 export default Home;
+
+
+export const styles = StyleSheet.create({
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+  }
+})

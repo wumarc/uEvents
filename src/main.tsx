@@ -26,6 +26,20 @@ const MainView = () => {
   return (
     <Tab.Navigator barStyle={{ backgroundColor: colours.secondary }}>
       <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="home"
+              color={colours.primary}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Events"
         component={EventsTickets}
         options={{
@@ -43,20 +57,6 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="calendar-heart"
-              color={colours.primary}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="home"
               color={colours.primary}
               size={30}
             />
@@ -111,6 +111,8 @@ export default function Main() {
           <Stack.Screen name="EventDetailsView" component={EventDetails} />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />
           <Stack.Screen name="EventConfirmationView" component={EventConfirmation} />
+          {/* <Stack.Screen name="ClubProfileView" component={} /> */}
+          {/* <Stack.Screen name="EventLocationView" component={} /> */}
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>

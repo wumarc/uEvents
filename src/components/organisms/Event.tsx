@@ -5,6 +5,7 @@ import { Text, Icon } from "@rneui/base";
 import convertDate from "../../utils/util";
 import { Avatar, colors } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
+import EventDivider from "../atoms/Divider";
 
 // Event component props
 interface EventProps {
@@ -27,62 +28,57 @@ const Event: React.FC<EventProps> = (props) => {
 
   return (
     <View style={styles.container}>
-      {/* Event and Event Details */}
-      <View>
-        <View style={{ flexDirection: "row" }}>
-          {/* Image */}
-          <View style={styles.imageContainer}>
-            <Image
-              style={{ width: 100, height: 130, borderRadius: 14 }}
-              source={require("../../assets/Adele.jpg")}
-            />
-          </View>
 
-          {/* Event Details */}
-          <View style={styles.eventDetails}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{props.event.name}</Text>
-            </View>
-            <Text style={styles.eventDetailswhite}>
-              <Text style={styles.eventDetailTitle}>Date: </Text>{" "}
-              {convertDate(new Date())}
-            </Text>
-            <Text style={styles.eventDetailswhite}>
-              <Text style={styles.eventDetailTitle}>Location: </Text>{" "}
-              {props.event.location}
-            </Text>
-            <Text style={styles.eventDetailswhite}>
-              <Text style={styles.eventDetailTitle}>Price: </Text>Free on
-              Mondays
-            </Text>
-          </View>
+      {/* Event Details and Image */}
+      <View style={{ flexDirection: "row" }}>
+        {/* Event Details */}
+        <View style={styles.eventDetails}>
+          <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
+          <Text style={styles.title}>{props.event.name}</Text>
+          <Text>uOttawa eGaming Club</Text>            
+          <Text>Free</Text>
         </View>
+
+        {/* Image */}
+        <View style={styles.imageContainer}>
+          <Image
+            style={{ width: 100, height: 130, borderRadius: 14 }}
+            source={require("../../assets/Adele.jpg")}
+          />
+        </View>
+
+      </View>
+      
+      {/* Number of participants, location and buttons */}
+      <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10,}}>
+        
+        {/* Number of participants and location */}
+        <View>
+          <Text style={styles.bottom}>{props.event.attendees.length.toString()} going • {props.event.location}</Text>
+        </View>
+
+        {/* Buttons */}
+        <View style={styles.buttons}>
+          <Icon
+            size={30}
+            type="material"
+            name= "bookmark-outline"
+            // containerStyle={styles.buttonStyle}
+            onPress={() => { console.log("Save the event!");
+              // props.saveEvent(); // TODO Fix this
+            }}
+          />
+          <Icon
+            size={30}
+            type="material"
+            name= "bookmark-outline"
+            onPress={() => {}}
+          />
+        </View>
+
       </View>
 
-      {/* Event Participants Section */}
-      <View style={styles.buttons}>
-        {/* Bubble 1: Friends who are going */}
-        <Avatar
-          size={40}
-          rounded
-          title={props.event.attendees.length.toString()}
-          icon={{ name: "people", type: "material" }}
-          containerStyle={styles.buttonStyle}
-          onPress={() => console.log("See who is going")}
-        />
-        {/* Bubble 3: Save event */}
-        <Avatar
-          size={40}
-          rounded
-          icon={{ name: "bookmark", type: "material" }}
-          // containerStyle={styles.buttonStyle}
-          onPress={() => {
-            console.log("Save the event!");
-            // props.saveEvent(); // TODO Fix this
-          }}
-          containerStyle={styles.buttonStyle}
-        />
-      </View>
+      <EventDivider />
     </View>
   );
 };
@@ -90,20 +86,20 @@ const Event: React.FC<EventProps> = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     marginTop: 14,
     paddingHorizontal: 8,
     paddingVertical: 14,
     borderRadius: 10,
-    backgroundColor: "#d9d9d9",
-    justifyContent: "space-between",
   },
   imageContainer: {
     flexDirection: "column",
+    width: "30%"
   },
   eventDetails: {
     flexDirection: "column",
     paddingHorizontal: 10,
+    width: "70%"
   },
   titleContainer: {
     flexDirection: "row",
@@ -111,32 +107,42 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   title: {
-    fontSize: 19,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 5,
-    color: colours.primary,
+    color: "black",
     // fontFamily: "Arial"
   },
   buttons: {
-    flexDirection: "column",
-    justifyContent: "space-around",
+    flexDirection: "row",
+    // justifyContent: "space-around",
   },
   buttonStyle: {
     borderStyle: "solid",
     borderWidth: 3,
-    borderColor: colours.secondary,
+    borderColor: "none",
   },
   eventDetailTitle: {
     fontWeight: "bold",
     color: colours.primary,
     flex: 1,
     width: 1,
-    fontSize: 15,
+    fontSize: 16,
+  },
+  eventDate: {
+    fontWeight: "700",
+    color: "grey",
+    fontSize: 16,
   },
   eventDetailswhite: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
+    marginVertical: 2,
+    paddingVertical: 2
   },
+  bottom: {
+    color: "grey",
+  }
 });
 
 export default Event;

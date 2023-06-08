@@ -3,18 +3,19 @@ import { Input } from '@rneui/themed';
 import { Button } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
 
-const EventSignUp = () => {
+const EventSignUp = ({navigation}: any) => {
 
     return (
         <View>
             <Text>Going?</Text>
             
             <Input/>
-            <Input />
+            <Input/>
 
             <Button
                 buttonStyle={styles.button}
                 title="Confirm"
+                onPress={() => {navigation.navigate('EventConfirmationView')}}
             />
         </View>
     )
