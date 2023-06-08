@@ -1,8 +1,9 @@
-import { View, Text, Image, Button, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { mockEventClimbing } from "../../utils/model/EventObject";
 import EventDate from "../molecules/EventDate";
+import { Button } from "react-native-elements";
 
 const EventDetails = ({navigation}: any) => {
 
@@ -26,50 +27,59 @@ const EventDetails = ({navigation}: any) => {
 
   return (
       <View style={styles.big_container}>
-         
-         <Image 
-            source={{uri: 'https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg'}}
-            style={{width: '100%', height: 300, borderRadius: 10}}
-            resizeMethod="resize"
+
+        {/* Event Details  */}
+        <View>
+          <ScrollView>
+
+            <Image 
+                source={{uri: 'https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg'}}
+                style={{width: '100%', height: 300, borderRadius: 10}}
+                resizeMethod="resize"
+              />
+
+              {/* Event Details */}
+              {/* Event Title */}
+              <Text style={styles.title}> {event.title}</Text>
+
+              {/* Event Date */}
+              <View style={styles.container}>
+                <Icon color="grey" name="event" size={30} />
+                <Text style={styles.regular_text}> {event.date} </Text>
+              </View>
+
+              {/* Event Location */}
+              <View style={styles.container}>
+                <Icon
+                    color="grey"
+                    name="place"
+                    size={30}
+                  />
+                <Text style={styles.regular_text}> {event.location} </Text>
+              </View>
+              <View style={styles.container}>
+                <Icon
+                    color="grey"
+                    name="person-outline"
+                    size={30}
+                  />
+                <Text style={styles.regular_text}> {event.organizer} </Text>
+              </View>
+              <View>
+                <Text>About the event</Text>
+                <Text style={styles.regular_text}> {event.description} </Text>
+              </View>
+          </ScrollView>
+        </View>
+
+        {/* Footer */}
+        <View style={{}}>
+          <Button 
+            title="Attend"
+            onPress={() => {navigation.navigate('EventSignUpView')}}
           />
+        </View>
 
-          {/* Event Details */}
-          {/* Event Title */}
-          <Text style={styles.title}> {event.title}</Text>
-
-          {/* Event Date */}
-          <View style={styles.container}>
-            <Icon color="grey" name="event" size={30} />
-            <Text style={styles.regular_text}> {event.date} </Text>
-          </View>
-
-          {/* Event Location */}
-          <View style={styles.container}>
-            <Icon
-                color="grey"
-                name="place"
-                size={30}
-              />
-            <Text style={styles.regular_text}> {event.location} </Text>
-          </View>
-          <View style={styles.container}>
-            <Icon
-                color="grey"
-                name="person-outline"
-                size={30}
-              />
-            <Text style={styles.regular_text}> {event.organizer} </Text>
-          </View>
-          <View>
-            <Text>About the event</Text>
-            <Text style={styles.regular_text}> {event.description} </Text>
-          </View>
-          <View>
-            <Button 
-              title="Attend"
-              onPress={() => {navigation.navigate('EventSignUpView')}}
-            />
-          </View>
       </View>
   ); 
 };

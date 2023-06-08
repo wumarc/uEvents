@@ -2,7 +2,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
-import convertDate from "../../utils/util";
+import {convertDate} from "../../utils/util";
 import { Avatar, colors } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
@@ -30,31 +30,30 @@ const Event: React.FC<EventProps> = (props) => {
     <View style={styles.container}>
 
       {/* Event Details and Image */}
-      <View style={{ flexDirection: "row" }}>
+      <View style={styles.row1}>
         {/* Event Details */}
         <View style={styles.eventDetails}>
           <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
           <Text style={styles.title}>{props.event.name}</Text>
-          <Text>uOttawa eGaming Club</Text>            
+          <Text>{props.event.organizer.name}</Text>            
           <Text>Free</Text>
         </View>
 
         {/* Image */}
-        <View style={styles.imageContainer}>
+        <View style={styles.image}>
           <Image
             style={{ width: 100, height: 130, borderRadius: 14 }}
             source={require("../../assets/Adele.jpg")}
           />
         </View>
-
       </View>
       
       {/* Number of participants, location and buttons */}
-      <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10,}}>
+      <View style={styles.row2}>
         
         {/* Number of participants and location */}
-        <View>
-          <Text style={styles.bottom}>{props.event.attendees.length.toString()} going • {props.event.location}</Text>
+        <View style={{flexDirection: "column", alignItems: "center"}}>
+          <Text style={{color:"grey"}}>{props.event.attendees.length.toString()} going • {props.event.location}</Text>
         </View>
 
         {/* Buttons */}
@@ -68,17 +67,10 @@ const Event: React.FC<EventProps> = (props) => {
               // props.saveEvent(); // TODO Fix this
             }}
           />
-          <Icon
-            size={30}
-            type="material"
-            name= "bookmark-outline"
-            onPress={() => {}}
-          />
         </View>
 
       </View>
 
-      <EventDivider />
     </View>
   );
 };
@@ -88,30 +80,30 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     marginTop: 14,
-    paddingHorizontal: 8,
+    paddingHorizontal: 15,
     paddingVertical: 14,
     borderRadius: 10,
   },
-  imageContainer: {
-    flexDirection: "column",
-    width: "30%"
+  row1: {
+    flexDirection: "row",
+  },
+  row2: {
+    flexDirection: "row",
+    justifyContent: "space-between", 
   },
   eventDetails: {
     flexDirection: "column",
-    paddingHorizontal: 10,
     width: "70%"
   },
-  titleContainer: {
-    flexDirection: "row",
-    flexShrink: 1,
-    flexWrap: "wrap",
+  image: {
+    flexDirection: "column",
+    width: "30%"
   },
   title: {
-    fontSize: 22,
+    fontSize: 21,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 3,
     color: "black",
-    // fontFamily: "Arial"
   },
   buttons: {
     flexDirection: "row",
@@ -130,8 +122,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   eventDate: {
-    fontWeight: "700",
-    color: "grey",
+    fontWeight: "bold",
+    color: colours.primary,
     fontSize: 16,
   },
   eventDetailswhite: {
@@ -139,9 +131,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 2,
     paddingVertical: 2
-  },
-  bottom: {
-    color: "grey",
   }
 });
 

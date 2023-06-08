@@ -18,27 +18,12 @@ import { Button } from "react-native-elements";
 import EventConfirmation from "./components/pages/EventConfirmation";
 // import 'react-native-gesture-handler';
 
-
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const MainView = () => {
   return (
     <Tab.Navigator barStyle={{ backgroundColor: colours.secondary }}>
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="home"
-              color={colours.primary}
-              size={30}
-            />
-          ),
-        }}
-      />
       <Tab.Screen
         name="Events"
         component={EventsTickets}
@@ -57,6 +42,20 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="calendar-heart"
+              color={colours.primary}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="home"
               color={colours.primary}
               size={30}
             />
@@ -108,7 +107,11 @@ export default function Main() {
             }}
           />
           {/* Any other view that adds a stack to the main view, we only have detailedView for events */}
-          <Stack.Screen name="EventDetailsView" component={EventDetails} />
+          <Stack.Screen 
+            name="EventDetailsView" 
+            component={EventDetails}
+            options={{ title: 'Event' }}
+          />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />
           <Stack.Screen name="EventConfirmationView" component={EventConfirmation} />
           {/* <Stack.Screen name="ClubProfileView" component={} /> */}

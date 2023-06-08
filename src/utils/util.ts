@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
 
 export function getFirebaseUserID(): string | undefined {
@@ -48,15 +49,13 @@ class StaticVariables {
   ];
 }
 
-const convertDate = (date: Date) => {
-  const dayOfWeek = StaticVariables.daysOfWeek[date.getUTCDay()];
-  const month = StaticVariables.monthsOfYear[date.getUTCMonth()];
-  const dayOfMonth = date.getUTCDate();
-  const hours = date.getUTCHours().toString().padStart(2, "0");
-  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
-  const ampm = hours >= "12" ? "P.M." : "A.M.";
+export const convertDate = (date: Date) => {
+  let dayOfWeek = StaticVariables.daysOfWeek[date.getDay()];
+  let month = StaticVariables.monthsOfYear[date.getMonth()];
+  let dayOfMonth = date.getDate();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let ampm = hours >= 12 ? "pm" : "am";
 
   return `${dayOfWeek}, ${month} ${dayOfMonth} • ${hours}:${minutes} ${ampm} `;
 };
-
-export default convertDate;
