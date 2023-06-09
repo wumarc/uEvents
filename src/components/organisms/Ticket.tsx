@@ -47,7 +47,7 @@ const Ticket = () => {
                 <Text>Organizer</Text>
                 <Text>eHub</Text>
             </View>
-
+            
         </View>
     );
 }

@@ -3,6 +3,7 @@ import { mockEventClimbing } from "../../utils/model/EventObject";
 import { ScreenSpacing } from "../subatoms/Spacing";
 import Event from "../organisms/Event";
 import Ticket from "../organisms/Ticket";
+import { Title } from "../subatoms/Spacing";
 
 let placeholders = ['1', '1', '1', '1', '1']
 

@@ -6,6 +6,7 @@ import {convertDate} from "../../utils/util";
 import { Avatar, colors } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
+import { Title, Subtitle, regularText } from "../subatoms/Spacing";
 
 // Event component props
 interface EventProps {
@@ -34,7 +35,14 @@ const Event: React.FC<EventProps> = (props) => {
         {/* Event Details */}
         <View style={styles.eventDetails}>
           <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
-          <Text style={styles.title}>{props.event.name}</Text>
+          <Text 
+            style={[
+              styles.title,
+              // Title
+            ]}
+          >
+            {props.event.name}
+          </Text>
           <Text>{props.event.organizer.name}</Text>            
           <Text>Free</Text>
         </View>
@@ -100,10 +108,7 @@ const styles = StyleSheet.create({
     width: "30%"
   },
   title: {
-    fontSize: 21,
-    fontWeight: "bold",
     marginBottom: 3,
-    color: "black",
   },
   buttons: {
     flexDirection: "row",

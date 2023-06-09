@@ -5,23 +5,23 @@ export const ScreenSpacing = {
     paddingVertical: 10,
 }
 
-export const fontSize = {
+const fontSize = {
     small: 14,
     medium: 16,
     large: 20,
 }
 
-export const fontWeight = {
+const fontWeight = {
     light: "300",
     normal: "400",
     bold: "700",
 }
 
-export const fontStyle = {
+const fontStyle = {
     regular: "Tahoma"
 }
 
-export const fontColour = {
+const fontColour = {
     primary: '#8A4287',
     secondary: '#D6A9D5',
     text: '#121212',
@@ -30,6 +30,7 @@ export const fontColour = {
 export const Title = {
     fontSize: fontSize.large,
     fontWeight: fontWeight.bold,
+    fontColour: "black",
 }
 
 export const Subtitle = {
