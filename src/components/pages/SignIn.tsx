@@ -9,7 +9,6 @@ import { Image } from "react-native-elements";
 import Login from "./Login";
 import Signup from "./Signup";
 import { StyleSheet } from "react-native";
-import { ScreenSpacing } from "../subatoms/Spacing";
 
 const SignIn: FC = () => {
 

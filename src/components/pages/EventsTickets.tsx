@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { mockEventClimbing } from "../../utils/model/EventObject";
-import { ScreenSpacing, Title } from "../subatoms/Spacing";
+import { ScreenSpacing } from "../subatoms/Spacing";
 import Event from "../organisms/Event";
 
 let placeholders = ['1', '1', '1', '1', '1']
