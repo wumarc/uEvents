@@ -32,9 +32,9 @@ const EventDetails = ({navigation}: any) => {
         <View>
           <ScrollView>
 
-            <Image 
+              <Image 
                 source={{uri: 'https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg'}}
-                style={{width: '100%', height: 300, borderRadius: 10}}
+                style={{width: '100%', height: 260, borderRadius: 10}}
                 resizeMethod="resize"
               />
 
@@ -66,7 +66,7 @@ const EventDetails = ({navigation}: any) => {
                 <Text style={styles.regular_text}> {event.organizer} </Text>
               </View>
               <View>
-                <Text>About the event</Text>
+                <Text style={styles.title}>About the event</Text>
                 <Text style={styles.regular_text}> {event.description} </Text>
               </View>
           </ScrollView>
@@ -81,20 +81,23 @@ const EventDetails = ({navigation}: any) => {
         </View>
 
       </View>
-  ); 
+  );
 };
 
 const styles = StyleSheet.create({
   big_container: {
-    marginHorizontal: 20,
-    marginVertical: 10,
+    paddingHorizontal: 7,
+    paddingVertical: 5,
+    backgroundColor: "red",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   container: {
     flexDirection: "row",
     alignItems: "stretch"
   },
   title: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
     flexWrap: "wrap",
   },

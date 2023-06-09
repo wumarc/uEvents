@@ -2,37 +2,16 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-nati
 import { mockEventClimbing } from "../../utils/model/EventObject";
 import { ScreenSpacing } from "../subatoms/Spacing";
 import Event from "../organisms/Event";
+import Ticket from "../organisms/Ticket";
 
 let placeholders = ['1', '1', '1', '1', '1']
 
 const EventsTickets = ({navigation}: any) => {
   
   return (
-    <ScrollView style={styles.container}>      
-      <View>
-
-        {/* Title of page */}
-        <View>
-          <Text style={styles.title}>Your events</Text>
-        </View>
-
-        {/* List of events, we will eventually replace placeholders with events from the db */}
-        {placeholders.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {navigation.navigate('EventDetailsView')}}
-            >
-                <Event
-                  key={index}
-                  event={mockEventClimbing}
-                />
-            </TouchableOpacity>
-          );
-        })}
-
-      </View>
-    </ScrollView>
+    <View>
+      <Ticket />
+    </View>
   );
 
 };
@@ -44,7 +23,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Title.fontSize,
-    fontWeight: Title.fontWeight,
+    // fontWeight: Title.fontWeight,
   }
 })
 

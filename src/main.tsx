@@ -15,7 +15,7 @@ import { colours } from "./components/subatoms/colours/colours";
 import EventSignUp from "./components/pages/EventSignUp";
 import { getAuth, signOut } from "firebase/auth";
 import { Button } from "react-native-elements";
-import EventConfirmation from "./components/pages/EventConfirmation";
+import ConfirmedEvent from "./components/pages/ConfirmedEvent";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -113,7 +113,7 @@ export default function Main() {
             options={{ title: 'Event' }}
           />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />
-          <Stack.Screen name="EventConfirmationView" component={EventConfirmation} />
+          <Stack.Screen name="ConfirmedEventView" component={ConfirmedEvent} />
           {/* <Stack.Screen name="ClubProfileView" component={} /> */}
           {/* <Stack.Screen name="EventLocationView" component={} /> */}
         </Stack.Navigator>
@@ -122,11 +122,10 @@ export default function Main() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colours.secondary,
-    paddingTop: Platform.OS === "android" ? 25 : 0,
+    // paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 });

@@ -13,7 +13,7 @@ const ConfirmedEvent = ({navigation}: any) =>  {
             <View style={styles.gif}>
                 <Image 
                     style={{width: 200, height: 200}}
-                    source={require('../../../assets/ticket.gif')} 
+                    // source={require('../../../assets/ticket.gif')} 
                 />
             </View>
             <Text style={styles.confirmedFontSize}> CONFIRMED (Old Font) {`\n`}</Text>
@@ -34,7 +34,7 @@ const ConfirmedEvent = ({navigation}: any) =>  {
 
 const styles = StyleSheet.create({
     baseText: {
-        fontFamily: colours.fontFamily,
+        // fontFamily: colours.fontFamily,
         paddingTop: 60
     },
     confirmedFontSize: {

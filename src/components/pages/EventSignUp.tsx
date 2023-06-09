@@ -15,7 +15,7 @@ const EventSignUp = ({navigation}: any) => {
             <Button
                 buttonStyle={styles.button}
                 title="Confirm"
-                onPress={() => {navigation.navigate('EventConfirmationView')}}
+                onPress={() => {navigation.navigate('ConfirmedEventView')}}
             />
         </View>
     )
