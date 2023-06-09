@@ -14,7 +14,7 @@ const fontSize = {
 const fontWeight = {
     light: "300",
     normal: "400",
-    bold: "700",
+    bold: '700',
 }
 
 const fontStyle = {
@@ -29,8 +29,8 @@ const fontColour = {
 
 export const Title = {
     fontSize: fontSize.large,
-    fontWeight: fontWeight.bold,
-    fontColour: "black",
+    // fontWeight: fontWeight.bold,
+    color: "black",
 }
 
 export const Subtitle = {
