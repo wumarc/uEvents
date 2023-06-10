@@ -23,14 +23,14 @@ const Stack = createNativeStackNavigator();
 
 const MainView = () => {
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: colours.secondary }}>
+    <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryPurple }}>
       <Tab.Screen
         name="Events"
         component={EventsTickets}
         options={{
           tabBarLabel: "Tickets",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="calendar" color={colours.primary} size={30} />
+            <MaterialCommunityIcons name="calendar" color={colours.primaryPurple} size={30} />
           ),
         }}
       />
@@ -42,7 +42,7 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="calendar-heart"
-              color={colours.primary}
+              color={colours.primaryPurple}
               size={30}
             />
           ),
@@ -56,7 +56,7 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="home"
-              color={colours.primary}
+              color={colours.primaryPurple}
               size={30}
             />
           ),
@@ -70,7 +70,7 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="magnify"
-              color={colours.primary}
+              color={colours.primaryPurple}
               size={30}
             />
           ),
@@ -84,7 +84,7 @@ const MainView = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account-circle"
-              color={colours.primary}
+              color={colours.primaryPurple}
               size={30} />
           ),
         }}
@@ -125,7 +125,7 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.secondary,
+    backgroundColor: colours.secondaryPurple,
     paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 });

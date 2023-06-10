@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        color: "white",
+        color: colours.whiteText,
         fontWeight: "500",
         marginBottom: 4
     },
     info: {
         fontSize: 18,
-        color: "black",
+        color: colours.blackText,
         fontWeight: "400",
     }
 });

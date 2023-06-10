@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         paddingHorizontal: 20,
         paddingVertical: 25,
-        backgroundColor: colours.primary,
+        backgroundColor: colours.primaryPurple,
         justifyContent: "space-evenly"
     },
     qr: {

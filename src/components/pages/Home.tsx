@@ -121,6 +121,7 @@ const Home = () => {
       </Button> */}
 
       <Text style={styles.title}>Upcoming Events</Text>
+
       <FlatList
         data={dbListenedValue}
         renderItem={({ item }) => (

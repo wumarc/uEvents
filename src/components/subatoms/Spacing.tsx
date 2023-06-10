@@ -1,3 +1,5 @@
+import { colours } from "./colours/colours"
+
 export const ScreenSpacing = {
     marginHorizontal: 10,
     marginVertical: 20,
@@ -30,7 +32,7 @@ const fontColour = {
 export const Title = {
     fontSize: fontSize.large,
     fontWeight: fontWeight.bold,
-    color: "black",
+    color: colours.blackText,
 }
 
 export const Subtitle = {

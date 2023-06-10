@@ -4,8 +4,9 @@ import { SearchBar } from '@rneui/themed';
 import { EventObject, mockEventClimbing, mockEventGaming, mockEventPainting } from "../../utils/model/EventObject";
 import Event from "../organisms/Event";
 import { colours } from "../subatoms/colours/colours";
+import { TouchableOpacity } from "react-native";
 
-const Search = () => {
+const Search = ({navigation}: any) => {
 
   const [filteredEvent, setFilteredEvent] = useState<EventObject[]>([]);
   const [allEvents, setAllEvents] = useState<EventObject[]>([
@@ -30,7 +31,7 @@ const Search = () => {
       {/* Search Bar */}
       <SearchBar
         platform="default"
-        containerStyle={{backgroundColor: colours.secondary}}
+        containerStyle={{backgroundColor: colours.secondaryPurple}}
         inputContainerStyle={{}}
         inputStyle={{}}
         leftIconContainerStyle={{}}
@@ -48,9 +49,16 @@ const Search = () => {
       <ScrollView>
         {filteredEvent.map((event, index) => {
           return (
-            <View key={index}>
-              <Event event={event} />
-            </View>
+
+            <TouchableOpacity
+              key={index}
+              onPress={() => {navigation.navigate('EventDetailsView')}}
+            >
+                <Event
+                  key={index}
+                  event={mockEventClimbing}
+                />
+            </TouchableOpacity>
           )}
         )}
       </ScrollView>
