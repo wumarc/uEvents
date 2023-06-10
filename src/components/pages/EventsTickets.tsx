@@ -10,22 +10,36 @@ let placeholders = ['1', '1', '1', '1', '1']
 const EventsTickets = ({navigation}: any) => {
   
   return (
-    <View>
-      <Ticket />
+    <View style={styles.container}>
+        <ScrollView
+          style={{backgroundColor: "blue"}}
+          horizontal
+          pagingEnabled
+          nestedScrollEnabled
+          showsHorizontalScrollIndicator={true}
+        >
+          {placeholders.map((child, index) => (
+            
+              <Ticket />
+            
+          ))}
+        </ScrollView>
     </View>
   );
 
 };
 
-
 const styles = StyleSheet.create({
   container: {
-    padding: ScreenSpacing.paddingHorizontal,
+    // padding: ScreenSpacing.paddingHorizontal,
+    flex: 1,
+    backgroundColor: 'red',
   },
-  title: {
-    fontSize: Title.fontSize,
-    // fontWeight: Title.fontWeight,
+  ticket: {
+    flex: 1,
+    justifyContent: 'center',
   }
+
 })
 
 

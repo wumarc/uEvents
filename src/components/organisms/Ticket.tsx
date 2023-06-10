@@ -35,7 +35,7 @@ const Ticket = () => {
 const styles = StyleSheet.create({
     container: {
         borderRadius: 30,
-        width: "90%",
+        width: "15%",
         height: "90%",
         borderWidth: 1,
         flexDirection: "column",
