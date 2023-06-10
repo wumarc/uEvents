@@ -2,65 +2,51 @@ import { Text } from "react-native-elements";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import QRCode from 'react-native-qrcode-svg';
-import TicketTitle from "../atoms/TicketTitle";
+import TicketDetail from "../atoms/TicketDetail";
+import { colours } from "../subatoms/colours/colours";
 
 const Ticket = () => {
     return (
-        <View style={style.container}>
+        <View style={styles.container}>
             
-            <QRCode 
-                value="http://awesome.link.qr"
-                size={160}
-            />
-
-            <View>
-                <TicketTitle title="Order Number"/>
-                <Text>8888888888</Text>
+            <View style={styles.qr}>
+                <QRCode 
+                    value="http://awesome.link.qr"
+                    size={160}
+                />
             </View>
 
-            <View>
-                <TicketTitle title="Name"/>
-                <Text>Marc WU</Text>
-            </View>
-            
-            <View>
-                <TicketTitle title="Event"/>
-                <Text>Fika Painting Night</Text>
-            </View>
-
-            <View>
-                <TicketTitle title="Date"/>
-                <Text>Wed, May 31 08:00 EDT</Text>
+            <View style={{}}>
+                <TicketDetail title="Ticket Number" info="# 123-456"/>
+                <TicketDetail title="Name" info="Marc WU"/>
+                <TicketDetail title="Event" info="Fika Painting Night"/>
+                <View style={{flexDirection: "row"}}>
+                    <TicketDetail style={{width: "50%", flexDirection: "column"}} title="Date" info="Wed, May 31 08:00 EDT"/>
+                    <TicketDetail style={{width: "50%", flexDirection: "column"}} title="Location" info="Stockholm, Sweden"/>
+                </View>
+                <TicketDetail title="Event Summary" info="This is a very cool event because Adele will be present"/>
+                <TicketDetail title="Organizer" info="eHub"/>
             </View>
 
-            <View>
-                <TicketTitle title="Location"/>
-                <Text>Stockholm, Sweden</Text>
-            </View>
-
-            <View>
-                <Text>Event Summary</Text>
-                <Text>Event Details</Text>
-            </View>
-
-            <View>
-                <Text>Organizer</Text>
-                <Text>eHub</Text>
-            </View>
-            
         </View>
     );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        borderColor: "black",
-        borderStyle: "solid",
-        width: "80%",
+        borderRadius: 30,
+        width: "90%",
         height: "90%",
         borderWidth: 1,
         flexDirection: "column",
-        // alignItems: "center",
+        paddingHorizontal: 20,
+        paddingVertical: 25,
+        backgroundColor: colours.primary,
+        justifyContent: "space-evenly"
+    },
+    qr: {
+        justifyContent: "center",
+        flexDirection: "row",
     }
 });
 

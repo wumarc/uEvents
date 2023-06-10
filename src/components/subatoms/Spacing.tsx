@@ -29,7 +29,7 @@ const fontColour = {
 
 export const Title = {
     fontSize: fontSize.large,
-    // fontWeight: fontWeight.bold,
+    fontWeight: fontWeight.bold,
     color: "black",
 }
 

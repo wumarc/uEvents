@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
 import {convertDate} from "../../utils/util";
-import { Avatar, colors } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
-import {Title, Subtitle, regularText } from "../subatoms/Spacing";
+import { Title } from "../subatoms/Spacing";
 
 // Event component props
 interface EventProps {
@@ -35,16 +34,11 @@ const Event: React.FC<EventProps> = (props) => {
         {/* Event Details */}
         <View style={styles.eventDetails}>
           <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
-          <Text 
-            style={
-              [styles.title,
-              {...Title},
-            ]}
-          >
+          <Text style={styles.title}>
             {props.event.name}
           </Text>
           <Text>{props.event.organizer.name}</Text>            
-          <Text style={{fontSize: 4}}>Free</Text>
+          <Text style={{}}>Free</Text>
         </View>
 
         {/* Image */}
@@ -109,7 +103,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 3,
-    
+    ...Title,
   },
   buttons: {
     flexDirection: "row",
@@ -125,7 +119,7 @@ const styles = StyleSheet.create({
     color: colours.primary,
     flex: 1,
     width: 1,
-    fontSize: 16,
+    fontSize: 18,
   },
   eventDate: {
     fontWeight: "bold",
