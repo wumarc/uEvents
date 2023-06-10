@@ -4,6 +4,10 @@ import { StyleSheet } from "react-native";
 import QRCode from 'react-native-qrcode-svg';
 import TicketDetail from "../atoms/TicketDetail";
 import { colours } from "../subatoms/colours/colours";
+import {Dimensions} from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Ticket = () => {
     return (
@@ -35,7 +39,7 @@ const Ticket = () => {
 const styles = StyleSheet.create({
     container: {
         borderRadius: 30,
-        width: "15%",
+        width: windowWidth * 0.9,
         height: "90%",
         borderWidth: 1,
         flexDirection: "column",
