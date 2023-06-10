@@ -24,7 +24,7 @@ const EventSignUp = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: colours.primary,
+        backgroundColor: colours.primaryPurple,
     }
 })
 
