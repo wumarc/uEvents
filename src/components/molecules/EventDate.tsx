@@ -19,7 +19,7 @@ const EventDate = ({date}) => {
                     onPress={() => console.log("onPress()")}
                     size={35}
                     type="material-community"
-                /> 
+                />
             </View>
 
             {/* Column 2: Date */}

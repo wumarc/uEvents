@@ -2,7 +2,7 @@ import { Text } from "react-native-elements";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import QRCode from 'react-native-qrcode-svg';
-import TicketDetail from "../atoms/TicketDetail";
+import TicketDetail from "../molecules/TicketDetail";
 import { colours } from "../subatoms/colours/colours";
 import {Dimensions} from 'react-native';
 
