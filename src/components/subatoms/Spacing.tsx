@@ -41,6 +41,6 @@ export const Subtitle = {
 }
 
 export const regularText = {
-    fontSize: fontSize.small,
+    fontSize: fontSize.medium,
     fontWeight: fontWeight.light
 }

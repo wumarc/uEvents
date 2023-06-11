@@ -5,7 +5,7 @@ import { mockEventClimbing } from "../../utils/model/EventObject";
 import EventDate from "../molecules/EventDate";
 import { Button } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
-import { Subtitle } from "../subatoms/Spacing";
+import { Subtitle, regularText } from "../subatoms/Spacing";
 import EventLocation from "../molecules/EventLocation";
 import EventOrganizer from "../molecules/EventOrganizer";
 
@@ -38,15 +38,13 @@ const EventDetails = ({navigation}: any) => {
 
               <Image 
                 source={{uri: 'https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg'}}
-                style={{width: '100%', height: 260, borderRadius: 10}}
+                style={{width: '100%', height: 220, borderRadius: 10}}
                 resizeMethod="resize"
               />
 
-              {/* Event Details */}
               {/* Event Title */}
               <Text style={styles.title}> {event.title}</Text>
 
-              {/* Event Date */}
               <View style={{flexDirection: "column"}}>
                 <EventDate prop={"date"}/>
                 <EventLocation prop={event.location}/>
@@ -55,8 +53,9 @@ const EventDetails = ({navigation}: any) => {
 
               <View>
                 <Text style={styles.title}>About the event</Text>
-                <Text style={styles.regular_text}> {event.description} </Text>
+                <Text style={regularText}> {event.description} </Text>
               </View>
+
           </ScrollView>
         </View>
 
@@ -83,6 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
   container: {
     paddingHorizontal: 7,
@@ -90,19 +90,14 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   title: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
     flexWrap: "wrap",
-  },
-  regular_text: {
-    fontSize: 18,
-    fontStyle: "normal"
   },
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 10,
-    
     paddingHorizontal: 5,
     alignItems: "center",
     backgroundColor: colours.secondaryGrey,
@@ -112,5 +107,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   }
 });
+
+
 
 export default EventDetails;
