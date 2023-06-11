@@ -6,6 +6,8 @@ import EventDate from "../molecules/EventDate";
 import { Button } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
 import { Subtitle } from "../subatoms/Spacing";
+import EventLocation from "../molecules/EventLocation";
+import EventOrganizer from "../molecules/EventOrganizer";
 
 const EventDetails = ({navigation}: any) => {
 
@@ -45,27 +47,12 @@ const EventDetails = ({navigation}: any) => {
               <Text style={styles.title}> {event.title}</Text>
 
               {/* Event Date */}
-              <View style={styles.container}>
+              <View style={{flexDirection: "column"}}>
                 <EventDate prop={"date"}/>
+                <EventLocation prop={event.location}/>
+                <EventOrganizer prop={event.organizer}/>
               </View>
 
-              {/* Event Location */}
-              <View style={styles.container}>
-                <Icon
-                    color="grey"
-                    name="place"
-                    size={30}
-                  />
-                <Text style={styles.regular_text}> {event.location} </Text>
-              </View>
-              <View style={styles.container}>
-                <Icon
-                    color="grey"
-                    name="person-outline"
-                    size={30}
-                  />
-                <Text style={styles.regular_text}> {event.organizer} </Text>
-              </View>
               <View>
                 <Text style={styles.title}>About the event</Text>
                 <Text style={styles.regular_text}> {event.description} </Text>

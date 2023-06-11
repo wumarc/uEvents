@@ -103,7 +103,9 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 3,
-    ...Title,
+    fontSize: 20,
+    fontWeight: "700",
+    color: colours.primaryPurple,
   },
   buttons: {
     flexDirection: "row",

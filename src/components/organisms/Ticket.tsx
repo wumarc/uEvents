@@ -25,8 +25,13 @@ const Ticket = () => {
                 <TicketDetail title="Name" info="Marc WU"/>
                 <TicketDetail title="Event" info="Fika Painting Night"/>
                 <View style={{flexDirection: "row"}}>
-                    <TicketDetail style={{width: "50%", flexDirection: "column"}} title="Date" info="Wed, May 31 08:00 EDT"/>
-                    <TicketDetail style={{width: "50%", flexDirection: "column"}} title="Location" info="Stockholm, Sweden"/>
+                    <View style={{width: "50%"}}>
+                        <TicketDetail title="Date" info="Wednesday, May 31 08:00 EDT"/>
+                    </View>
+                    <View style={{width: "50%"}}>
+                        <TicketDetail title="Location" info="STEM Building, University of Ottawa"/>
+                    </View>
+
                 </View>
                 <TicketDetail title="Event Summary" info="This is a very cool event because Adele will be present"/>
                 <TicketDetail title="Organizer" info="eHub"/>
@@ -46,6 +51,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 25,
         backgroundColor: colours.primaryPurple,
+        opacity: 0.9,
         justifyContent: "space-evenly"
     },
     qr: {
