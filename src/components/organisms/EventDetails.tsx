@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { mockEventClimbing } from "../../utils/model/EventObject";
 import EventDate from "../molecules/EventDate";
 import { Button } from "react-native-elements";
+import { colours } from "../subatoms/colours/colours";
+import { Subtitle } from "../subatoms/Spacing";
 
 const EventDetails = ({navigation}: any) => {
 
@@ -29,7 +31,7 @@ const EventDetails = ({navigation}: any) => {
       <View style={styles.big_container}>
 
         {/* Event Details  */}
-        <View>
+        <View style={styles.container}>
           <ScrollView>
 
               <Image 
@@ -44,8 +46,7 @@ const EventDetails = ({navigation}: any) => {
 
               {/* Event Date */}
               <View style={styles.container}>
-                <Icon color="grey" name="event" size={30} />
-                <Text style={styles.regular_text}> {event.date} </Text>
+                <EventDate prop={"date"}/>
               </View>
 
               {/* Event Location */}
@@ -73,8 +74,13 @@ const EventDetails = ({navigation}: any) => {
         </View>
 
         {/* Footer */}
-        <View style={{}}>
-          <Button 
+        <View style={styles.footer}>
+          <Text style={styles.price}>$10</Text>
+          <Button
+            buttonStyle={{
+              backgroundColor: colours.primaryPurple,
+              padding: 15
+            }}
             title="Attend"
             onPress={() => {navigation.navigate('EventSignUpView')}}
           />
@@ -86,13 +92,13 @@ const EventDetails = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
   big_container: {
-    paddingHorizontal: 7,
-    paddingVertical: 5,
-    backgroundColor: "red",
+    // backgroundColor: "red",
+    flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
   },
   container: {
+    paddingHorizontal: 7,
     flexDirection: "row",
     alignItems: "stretch"
   },
@@ -104,6 +110,19 @@ const styles = StyleSheet.create({
   regular_text: {
     fontSize: 18,
     fontStyle: "normal"
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    
+    paddingHorizontal: 5,
+    alignItems: "center",
+    backgroundColor: colours.secondaryGrey,
+  },
+  price: {
+    fontSize: 20,
+    fontWeight: "bold",
   }
 });
 

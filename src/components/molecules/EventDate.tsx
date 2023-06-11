@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { Icon } from '@rneui/themed';
 import { Text } from "react-native-elements";
 
-const EventDate = ({date}) => {
+const EventDate = ({prop}) => {
 
     return (
         <View style={styles.container}>
@@ -26,7 +26,7 @@ const EventDate = ({date}) => {
             <View style={styles.subcontainer}>
                 <Text style={styles.date}>Thursday, June 1, 2023</Text>
                 <Text style={styles.time}>6:30 p.m. - 10:30 p.m. EST</Text>
-            </View>     
+            </View>
 
         </View>
     )
