@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
         marginVertical: 4,
     },
     title: {
-        fontSize: 16,
-        color: colours.whiteText,
+        fontSize: 24,
+        color: colours.blackText,
         fontWeight: "500",
         marginBottom: 4
     },
     info: {
-        fontSize: 18,
-        color: colours.blackText,
+        fontSize: 16,
+        color: colours.primaryPurple,
         fontWeight: "400",
     }
 });

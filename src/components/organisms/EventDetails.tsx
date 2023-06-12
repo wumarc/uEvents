@@ -38,7 +38,7 @@ const EventDetails = ({navigation}: any) => {
 
               <Image 
                 source={{uri: 'https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg'}}
-                style={{width: '100%', height: 220, borderRadius: 10}}
+                style={{width: '100%', height: 220, borderRadius: 14}}
                 resizeMethod="resize"
               />
 

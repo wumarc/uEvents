@@ -16,7 +16,7 @@ const Ticket = () => {
             <View style={styles.qr}>
                 <QRCode 
                     value="http://awesome.link.qr"
-                    size={160}
+                    size={130}
                 />
             </View>
 
@@ -33,7 +33,7 @@ const Ticket = () => {
                     </View>
 
                 </View>
-                <TicketDetail title="Event Summary" info="This is a very cool event because Adele will be present"/>
+                <TicketDetail title="Event Summary" info="This is a very cool event because Adele will be present..."/>
                 <TicketDetail title="Organizer" info="eHub"/>
             </View>
 
@@ -43,14 +43,14 @@ const Ticket = () => {
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 30,
+        borderRadius: 14,
         width: windowWidth * 0.9,
         height: "90%",
         borderWidth: 1,
         flexDirection: "column",
         paddingHorizontal: 20,
         paddingVertical: 25,
-        backgroundColor: colours.primaryPurple,
+        backgroundColor: colours.secondaryGrey,
         opacity: 0.9,
         justifyContent: "space-evenly"
     },
