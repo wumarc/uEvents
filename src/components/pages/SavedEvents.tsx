@@ -17,7 +17,7 @@ const SavedEvents = () => {
   }
 
   return (
-    <ScrollView
+    <View
       style={{
         height: "100%",
         width: "100%",
@@ -32,6 +32,7 @@ const SavedEvents = () => {
         })}
         renderItem={({ item }) => (
           <Event
+            isSaved={true}
             event={item}
             saveEvent={() => {
               for (let i = 0; i < dbListenedValue.length; i++) {
@@ -64,7 +65,7 @@ const SavedEvents = () => {
           />
         )}
       />
-    </ScrollView>
+    </View>
   );
 };
 

@@ -2,7 +2,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
-import {convertDate} from "../../utils/util";
+import { convertDate } from "../../utils/util";
 import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
 import { Title } from "../subatoms/Spacing";
@@ -11,6 +11,7 @@ import { Title } from "../subatoms/Spacing";
 interface EventProps {
   event: EventObject;
   saveEvent: () => void;
+  isSaved: boolean;
 }
 
 const Event: React.FC<EventProps> = (props) => {
@@ -28,16 +29,13 @@ const Event: React.FC<EventProps> = (props) => {
 
   return (
     <View style={styles.container}>
-
       {/* Event Details and Image */}
       <View style={styles.row1}>
         {/* Event Details */}
         <View style={styles.eventDetails}>
           <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
-          <Text style={styles.title}>
-            {props.event.name}
-          </Text>
-          <Text>{props.event.organizer.name}</Text>            
+          <Text style={styles.title}>{props.event.name}</Text>
+          <Text>{props.event.organizer.name}</Text>
           <Text style={{}}>Free</Text>
         </View>
 
@@ -49,13 +47,15 @@ const Event: React.FC<EventProps> = (props) => {
           />
         </View>
       </View>
-      
+
       {/* Number of participants, location and buttons */}
       <View style={styles.row2}>
-        
         {/* Number of participants and location */}
-        <View style={{flexDirection: "column", alignItems: "center"}}>
-          <Text style={{color:"grey"}}>{props.event.attendees.length.toString()} going • {props.event.location}</Text>
+        <View style={{ flexDirection: "column", alignItems: "center" }}>
+          <Text style={{ color: "grey" }}>
+            {props.event.attendees.length.toString()} going •{" "}
+            {props.event.location}
+          </Text>
         </View>
 
         {/* Buttons */}
@@ -63,16 +63,17 @@ const Event: React.FC<EventProps> = (props) => {
           <Icon
             size={30}
             type="material"
-            name= "bookmark-outline"
+            name="bookmark-outline"
+            // Add filling if saved
+            color={props.isSaved ? colours.secondaryPurple : colours.greyText}
             // containerStyle={styles.buttonStyle}
-            onPress={() => { console.log("Save the event!");
-              // props.saveEvent(); // TODO Fix this
+            onPress={() => {
+              console.log("Save the event!");
+              props.saveEvent();
             }}
           />
         </View>
-
       </View>
-
     </View>
   );
 };
@@ -91,15 +92,15 @@ const styles = StyleSheet.create({
   },
   row2: {
     flexDirection: "row",
-    justifyContent: "space-between", 
+    justifyContent: "space-between",
   },
   eventDetails: {
     flexDirection: "column",
-    width: "70%"
+    width: "70%",
   },
   image: {
     flexDirection: "column",
-    width: "30%"
+    width: "30%",
   },
   title: {
     marginBottom: 3,
@@ -132,8 +133,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     marginVertical: 2,
-    paddingVertical: 2
-  }
+    paddingVertical: 2,
+  },
 });
 
 export default Event;

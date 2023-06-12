@@ -126,6 +126,7 @@ const Home = () => {
         data={dbListenedValue}
         renderItem={({ item }) => (
           <Event
+            isSaved={item?.saved?.includes(getFirebaseUserIDOrEmpty()) ?? false}
             event={item}
             saveEvent={() => {
               for (let i = 0; i < dbListenedValue.length; i++) {
@@ -164,10 +165,9 @@ const Home = () => {
 
 export default Home;
 
-
 export const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "bold",
-  }
-})
+  },
+});
