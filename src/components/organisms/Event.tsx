@@ -1,17 +1,15 @@
 import { Image, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
-import { EventObject } from "../../utils/model/EventObject";
 import { Text, Icon } from "@rneui/base";
-import { convertDate } from "../../utils/util";
+import { convertDate, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
 import { Title } from "../subatoms/Spacing";
+import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 
 // Event component props
 interface EventProps {
-  event: EventObject;
-  saveEvent: () => void;
-  isSaved: boolean;
+  id: string;
 }
 
 const Event: React.FC<EventProps> = (props) => {
@@ -27,6 +25,35 @@ const Event: React.FC<EventProps> = (props) => {
   //   });
   // }, [props]);
 
+  const [loading, event, setEvent] = useStateWithFireStoreDocument(
+    "events",
+    props.id
+  );
+
+  const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
+
+  const saveEvent = () => {
+    if (isSaved) {
+      // Remove from saved
+      setEvent({
+        ...event,
+        saved: event.saved.filter(
+          (userID) => userID !== getFirebaseUserIDOrEmpty()
+        ),
+      });
+    } else {
+      // Add to saved
+      setEvent({
+        ...event,
+        saved: [...event.saved, getFirebaseUserIDOrEmpty()],
+      });
+    }
+  };
+
+  if (loading || !event) {
+    return <Text>Loading</Text>;
+  }
+
   return (
     <View style={styles.container}>
       {/* Event Details and Image */}
@@ -34,8 +61,8 @@ const Event: React.FC<EventProps> = (props) => {
         {/* Event Details */}
         <View style={styles.eventDetails}>
           <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
-          <Text style={styles.title}>{props.event.name}</Text>
-          <Text>{props.event.organizer.name}</Text>
+          <Text style={styles.title}>{event.name}</Text>
+          <Text>{event.organizer.name}</Text>
           <Text style={{}}>Free</Text>
         </View>
 
@@ -53,8 +80,7 @@ const Event: React.FC<EventProps> = (props) => {
         {/* Number of participants and location */}
         <View style={{ flexDirection: "column", alignItems: "center" }}>
           <Text style={{ color: "grey" }}>
-            {props.event.attendees.length.toString()} going •{" "}
-            {props.event.location}
+            {event.attendees.length.toString()} going • {event.location}
           </Text>
         </View>
 
@@ -65,11 +91,10 @@ const Event: React.FC<EventProps> = (props) => {
             type="material"
             name="bookmark-outline"
             // Add filling if saved
-            color={props.isSaved ? colours.secondaryPurple : colours.greyText}
+            color={isSaved ? colours.secondaryPurple : colours.greyText}
             // containerStyle={styles.buttonStyle}
             onPress={() => {
-              console.log("Save the event!");
-              props.saveEvent();
+              saveEvent();
             }}
           />
         </View>

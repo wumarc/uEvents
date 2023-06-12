@@ -1,12 +1,54 @@
 import {
+  addDoc,
   arrayRemove,
   arrayUnion,
+  collection,
   doc,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useDocument } from "react-firebase-hooks/firestore";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { fireStore } from "../firebaseConfig";
+import { EventObject } from "./model/EventObject";
+
+export function useStateWithFireStoreCollection(pathToCollection: string) {
+  const [snap, loading, error] = useCollection(
+    collection(fireStore, pathToCollection)
+  );
+
+  if (error) {
+    throw error;
+  }
+
+  let value = snap?.docs.map((doc) => doc.data() as EventObject);
+
+  const add = (id: string, value: EventObject) => {
+    const document = doc(fireStore, pathToCollection + "/" + id);
+    setDoc(document, value);
+  };
+
+  return [loading, value, add] as const;
+}
+
+export function useStateWithFireStoreDocument(
+  pathToDocument: string,
+  id: string
+) {
+  const document = doc(fireStore, pathToDocument + "/" + id);
+  const [snap, loading, error] = useDocument(document);
+
+  if (error) {
+    throw error;
+  }
+
+  const set = (newVal: EventObject) => {
+    updateDoc(document, newVal);
+  };
+
+  let dbListenedValue: EventObject = snap?.data() as EventObject;
+
+  return [loading, dbListenedValue, set] as const;
+}
 
 export function useSateWithFireStore<T>(
   pathToId: string,

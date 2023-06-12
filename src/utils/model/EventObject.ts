@@ -7,7 +7,8 @@ export type EventObject = {
   name: string;
   description: string;
   attendees: string[];
-  saved: string[];
+  saved: string[]; // Ids of students who saved this event
+  tickets: string[]; // Ids of students who bought tickets
   location: string;
   organizer: Organizer;
   date: Date | null;
@@ -23,6 +24,7 @@ export const mockEventClimbing: EventObject = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
   attendees: [],
   saved: [],
+  tickets: [],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
   location: "Hamelin Hall, uOttawa",
@@ -39,6 +41,7 @@ export const mockEventPainting: EventObject = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
   attendees: [],
   saved: [],
+  tickets: [],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
   location: "Morisset Library",
@@ -55,6 +58,7 @@ export const mockEventGaming: EventObject = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
   attendees: [],
   saved: [],
+  tickets: [],
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
   location: "Morisset Library",
@@ -70,6 +74,7 @@ export const defaultEvent: EventObject = {
   description: "",
   attendees: [],
   saved: [],
+  tickets: [],
   date: null,
   time: null,
   location: "",

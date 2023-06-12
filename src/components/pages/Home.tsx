@@ -10,22 +10,17 @@ import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
 import { Text } from "@rneui/themed";
-import {
-  useSateWithFireStore,
-  useSateWithFireStoreArray,
-} from "../../utils/useStateWithFirebase";
-import {
-  defaultEvent,
-  EventObject,
-  mockEventClimbing,
-} from "../../utils/model/EventObject";
+import { useStateWithFireStoreCollection } from "../../utils/useStateWithFirebase";
+import { defaultEvent, EventObject } from "../../utils/model/EventObject";
 import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
 import Event from "../organisms/Event";
 import EventDivider from "../atoms/Divider";
 
 const Home = () => {
-  const [loading, dbListenedValue, set, add, remove] =
-    useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
+  // const [loading, dbListenedValue, set, add, remove] =
+  //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
+
+  const [loading, events, add] = useStateWithFireStoreCollection("events");
 
   const [addingEvent, setAddingEvent] = useState(false);
 
@@ -93,7 +88,7 @@ const Home = () => {
           onPress={() => {
             // Adding the event to the database
             newEvent.id = uid();
-            add(newEvent);
+            add(newEvent.id, newEvent);
             setAddingEvent(false);
           }}
         >
@@ -121,43 +116,9 @@ const Home = () => {
       </Button> */}
 
       <Text style={styles.title}>Upcoming Events</Text>
-
       <FlatList
-        data={dbListenedValue}
-        renderItem={({ item }) => (
-          <Event
-            isSaved={item?.saved?.includes(getFirebaseUserIDOrEmpty()) ?? false}
-            event={item}
-            saveEvent={() => {
-              for (let i = 0; i < dbListenedValue.length; i++) {
-                if (dbListenedValue[i]?.id == item.id) {
-                  let newEvent = dbListenedValue[i];
-                  if (newEvent == undefined) {
-                    // This should never happen
-                    return;
-                  }
-                  let flag = false;
-                  for (let i = 0; i < newEvent.saved.length; i++) {
-                    if (newEvent.saved[i] == getFirebaseUserIDOrEmpty()) {
-                      // Removing the user from the saved list
-                      flag = true;
-                      newEvent.saved.splice(i, 1);
-                      break;
-                    }
-                  }
-
-                  if (!flag) {
-                    // Adding the user to the saved list
-                    newEvent.saved.push(getFirebaseUserIDOrEmpty());
-                  }
-                  dbListenedValue[i] = newEvent;
-                  set(dbListenedValue);
-                  break;
-                }
-              }
-            }}
-          />
-        )}
+        data={events}
+        renderItem={({ item }) => <Event id={item.id} />}
       />
     </View>
   );

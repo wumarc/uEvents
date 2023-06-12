@@ -1,18 +1,16 @@
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { EventObject, mockEventClimbing } from "../../utils/model/EventObject";
-import { useSateWithFireStoreArray } from "../../utils/useStateWithFirebase";
+import {
+  useSateWithFireStoreArray,
+  useStateWithFireStoreCollection,
+} from "../../utils/useStateWithFirebase";
 import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import Event from "../organisms/Event";
 
 const SavedEvents = () => {
-  const [loading, dbListenedValue, set, add, remove] =
-    useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
+  const [loading, events, add] = useStateWithFireStoreCollection("events");
 
-  if (
-    loading ||
-    dbListenedValue == null ||
-    dbListenedValue.length == undefined
-  ) {
+  if (loading) {
     return <Text>Loading</Text>;
   }
 
@@ -24,46 +22,10 @@ const SavedEvents = () => {
       }}
     >
       <FlatList
-        data={dbListenedValue.filter((event) => {
-          if (event.saved == undefined) {
-            return false;
-          }
-          return event.saved.includes(getFirebaseUserIDOrEmpty());
-        })}
-        renderItem={({ item }) => (
-          <Event
-            isSaved={true}
-            event={item}
-            saveEvent={() => {
-              for (let i = 0; i < dbListenedValue.length; i++) {
-                if (dbListenedValue[i]?.id == item.id) {
-                  let newEvent = dbListenedValue[i];
-                  if (newEvent == undefined) {
-                    // This should never happen
-                    return;
-                  }
-                  let flag = false;
-                  for (let i = 0; i < newEvent.saved.length; i++) {
-                    if (newEvent.saved[i] == getFirebaseUserIDOrEmpty()) {
-                      // Removing the user from the saved list
-                      flag = true;
-                      newEvent.saved.splice(i, 1);
-                      break;
-                    }
-                  }
-
-                  if (!flag) {
-                    // Adding the user to the saved list
-                    newEvent.saved.push(getFirebaseUserIDOrEmpty());
-                  }
-                  dbListenedValue[i] = newEvent;
-                  set(dbListenedValue);
-                  break;
-                }
-              }
-            }}
-          />
+        data={events?.filter((event) =>
+          event.saved.includes(getFirebaseUserIDOrEmpty())
         )}
+        renderItem={({ item }) => <Event id={item.id} />}
       />
     </View>
   );
