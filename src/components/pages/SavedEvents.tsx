@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, ScrollView, FlatList } from "react-native";
-import { RootTabParamList } from "../../main";
+import { RootStackParamList } from "../../main";
 import { EventObject, mockEventClimbing } from "../../utils/model/EventObject";
 import {
   useSateWithFireStoreArray,
@@ -9,7 +9,7 @@ import {
 import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import Event from "../organisms/Event";
 
-type props = NativeStackScreenProps<RootTabParamList, "Saved">;
+type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
 
 const SavedEvents = ({ route, navigation }: props) => {

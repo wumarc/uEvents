@@ -12,14 +12,14 @@ import Ticket from "../organisms/Ticket";
 import { Title } from "../subatoms/Spacing";
 import { Dimensions } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootTabParamList } from "../../main";
+import { RootStackParamList } from "../../main";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 let placeholders = ["1", "1", "1"];
 
-type props = NativeStackScreenProps<RootTabParamList, "Events">;
+type props = NativeStackScreenProps<RootStackParamList, "Events">;
 // To access the type of user, use route.params.userType
 
 const EventsTickets = ({ route, navigation }: props) => {

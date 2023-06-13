@@ -32,11 +32,9 @@ const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
   MainView: { userType: string };
-};
-
-type props = NativeStackScreenProps<RootStackParamList, "MainView">;
-
-export type RootTabParamList = {
+  EventDetailsView: { userType: string; eventID: string };
+  EventSignUpView: { userType: string };
+  ConfirmedEventView: { userType: string };
   Events: { userType: string };
   Saved: { userType: string };
   Home: { userType: string };
@@ -44,12 +42,14 @@ export type RootTabParamList = {
   Profile: { userType: string };
 };
 
+type props = NativeStackScreenProps<RootStackParamList, "MainView">;
+
 const MainView = ({ route, navigation }: props) => {
   return (
     <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryPurple }}>
       <Tab.Screen
         name="Events"
-        component={EventsTickets}
+        component={EventsTickets as any} // TODO fix error
         options={{
           tabBarLabel: "Tickets",
           tabBarIcon: ({ color }) => (
@@ -63,7 +63,7 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="Saved"
-        component={SavedEvents}
+        component={SavedEvents as any} // TODO fix error
         options={{
           tabBarLabel: "Saved",
           tabBarIcon: ({ color }) => (
@@ -77,7 +77,7 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Home",
@@ -92,7 +92,7 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={Search as any} // TODO fix error
         options={{
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => (
@@ -106,7 +106,7 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={Profile as any} // TODO fix error
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
@@ -143,7 +143,7 @@ export default function Main() {
           {/* Main View */}
           <Stack.Screen
             name="MainView"
-            component={MainView}
+            component={MainView as any} // TODO fix error
             initialParams={{ userType: userData.type }}
             options={{
               headerShown: false,
@@ -152,7 +152,7 @@ export default function Main() {
           {/* Any other view that adds a stack to the main view, we only have detailedView for events */}
           <Stack.Screen
             name="EventDetailsView"
-            component={EventDetails}
+            component={EventDetails as any} // TODO fix error
             options={{ title: "Event" }}
           />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />

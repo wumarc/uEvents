@@ -17,9 +17,9 @@ import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
 import Event from "../organisms/Event";
 import EventDivider from "../atoms/Divider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootTabParamList } from "../../main";
+import { RootStackParamList } from "../../main";
 
-type props = NativeStackScreenProps<RootTabParamList, "Home">;
+type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
 
 const Home = ({ route, navigation }: props) => {
@@ -125,7 +125,10 @@ const Home = ({ route, navigation }: props) => {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              navigation.navigate("EventDetailsView");
+              navigation.navigate("EventDetailsView", {
+                userType: route.params.userType,
+                eventID: item.id,
+              });
             }}
           >
             <Event id={item.id} />
