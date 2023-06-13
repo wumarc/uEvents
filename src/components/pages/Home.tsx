@@ -87,7 +87,12 @@ const Home = ({ route, navigation }: props) => {
         />
         <Input
           placeholder="Organizer"
-          onChangeText={(value) => setNewEvent({ ...newEvent, organizer: "" })}
+          onChangeText={(value) =>
+            setNewEvent({
+              ...newEvent,
+              organizer: "G1CLkEL9BANpRnWFWIVxhjlXpNv2",
+            })
+          } // TODO Use real value of organizer
         />
         <Button
           onPress={() => {
@@ -128,6 +133,7 @@ const Home = ({ route, navigation }: props) => {
               navigation.navigate("EventDetailsView", {
                 userType: route.params.userType,
                 eventID: item.id,
+                organizerID: item.organizer,
               });
             }}
           >

@@ -32,7 +32,7 @@ const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
   MainView: { userType: string };
-  EventDetailsView: { userType: string; eventID: string };
+  EventDetailsView: { userType: string; eventID: string; organizerID: string };
   EventSignUpView: { userType: string };
   ConfirmedEventView: { userType: string };
   Events: { userType: string };

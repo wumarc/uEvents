@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { mockEventClimbing } from "../../utils/model/EventObject";
+import { EventObject, mockEventClimbing } from "../../utils/model/EventObject";
 import EventDate from "../molecules/EventDate";
 import { Button } from "react-native-elements";
 import { colours } from "../subatoms/colours/colours";
@@ -10,28 +10,26 @@ import EventLocation from "../molecules/EventLocation";
 import EventOrganizer from "../molecules/EventOrganizer";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../main";
+import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
+import { Organizer } from "../../utils/model/Organizer";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
 
 const EventDetails = ({ route, navigation }: props) => {
-  const [event, setEvent] = useState({
-    title: mockEventClimbing.name,
-    date: "Wed, May 31 08:00 EDT",
-    location: mockEventClimbing.location,
-    organizer: mockEventClimbing.organizer.name,
-    description: mockEventClimbing.description,
-  });
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    route.params.eventID
+  );
 
-  // useEffect(() => {
-  //   setEvent({
-  //     title: route.params.item.name,
-  //     date: route.params.item.date,
-  //     location: route.params.item.location,
-  //     organizer: route.params.item.organizer,
-  //     description: route.params.item.description
-  //   });
-  // }, [route]);
+  const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>(
+    "users",
+    route.params.organizerID
+  );
+
+  if (loading || loading2) {
+    return <Text>Loading</Text>;
+  }
 
   return (
     <View style={styles.big_container}>
@@ -47,12 +45,12 @@ const EventDetails = ({ route, navigation }: props) => {
           />
 
           {/* Event Title */}
-          <Text style={styles.title}> {event.title}</Text>
+          <Text style={styles.title}> {event.name}</Text>
 
           <View style={{ flexDirection: "column" }}>
             <EventDate prop={"date"} />
             <EventLocation prop={event.location} />
-            <EventOrganizer prop={event.organizer} />
+            <EventOrganizer prop={organizer.name} />
           </View>
 
           <View>
@@ -72,7 +70,9 @@ const EventDetails = ({ route, navigation }: props) => {
           }}
           title="Attend"
           onPress={() => {
-            navigation.navigate("EventSignUpView");
+            navigation.navigate("EventSignUpView", {
+              userType: route.params.userType,
+            });
           }}
         />
       </View>
