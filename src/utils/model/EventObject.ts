@@ -10,7 +10,7 @@ export type EventObject = {
   saved: string[]; // Ids of students who saved this event
   tickets: string[]; // Ids of students who bought tickets
   location: string;
-  organizer: Organizer;
+  organizer: string; // Id of the organizer
   date: Date | null;
   time?: Timestamp | null;
 };
@@ -28,10 +28,7 @@ export const mockEventClimbing: EventObject = {
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
   location: "Hamelin Hall, uOttawa",
-  organizer: {
-    name: "uOttawa adele association",
-    events: [],
-  },
+  organizer: "",
 };
 
 export const mockEventPainting: EventObject = {
@@ -45,10 +42,7 @@ export const mockEventPainting: EventObject = {
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
   location: "Morisset Library",
-  organizer: {
-    name: "Faculty of Arts",
-    events: [],
-  },
+  organizer: "",
 };
 
 export const mockEventGaming: EventObject = {
@@ -62,10 +56,7 @@ export const mockEventGaming: EventObject = {
   date: new Date("TUE, MAR 28 08:00 EDT"),
   time: null,
   location: "Morisset Library",
-  organizer: {
-    name: "uOttawa Outdoors Club",
-    events: [],
-  },
+  organizer: "",
 };
 
 export const defaultEvent: EventObject = {
@@ -78,8 +69,5 @@ export const defaultEvent: EventObject = {
   date: null,
   time: null,
   location: "",
-  organizer: {
-    name: "",
-    events: [],
-  },
+  organizer: "",
 };

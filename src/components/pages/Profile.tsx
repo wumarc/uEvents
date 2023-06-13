@@ -8,8 +8,13 @@ import { Avatar } from "react-native-elements";
 import { useSateWithFireStore } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootTabParamList } from "../../main";
 
-const Profile = (props: any) => {
+type props = NativeStackScreenProps<RootTabParamList, "Profile">;
+// To access the type of user, use route.params.userType
+
+const Profile = ({ route, navigation }: props) => {
   const [loading, profile, setProfile] = useSateWithFireStore<Student>(
     "students" + "/" + getFirebaseUserID(),
     "info",
@@ -22,12 +27,14 @@ const Profile = (props: any) => {
 
   const logout = () => {
     const auth = getAuth();
-    signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
-  }
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -85,16 +92,17 @@ const Profile = (props: any) => {
           />
         </View>
       </View>
-          
+
       {/* Log out button */}
       <View>
-        <Button 
-          onPress={() => {logout()}}
+        <Button
+          onPress={() => {
+            logout();
+          }}
           title="Log out"
           style={{ marginBottom: 10 }}
         />
       </View>
-
     </View>
   );
 };

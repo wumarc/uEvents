@@ -1,36 +1,45 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { mockEventClimbing } from "../../utils/model/EventObject";
 import { ScreenSpacing } from "../subatoms/Spacing";
 import Event from "../organisms/Event";
 import Ticket from "../organisms/Ticket";
 import { Title } from "../subatoms/Spacing";
-import {Dimensions} from 'react-native';
+import { Dimensions } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootTabParamList } from "../../main";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
-let placeholders = ['1', '1', '1']
+let placeholders = ["1", "1", "1"];
 
-const EventsTickets = ({navigation}: any) => {
-  
+type props = NativeStackScreenProps<RootTabParamList, "Events">;
+// To access the type of user, use route.params.userType
+
+const EventsTickets = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
-        <ScrollView
-          style={{}}
-          horizontal
-          pagingEnabled
-          nestedScrollEnabled
-          showsHorizontalScrollIndicator={true}
-        >
-          {placeholders.map((child, index) => (
-            <View style={styles.ticket} key={index}>
-              <Ticket/>
-            </View>
-          ))}
-        </ScrollView>
+      <ScrollView
+        style={{}}
+        horizontal
+        pagingEnabled
+        nestedScrollEnabled
+        showsHorizontalScrollIndicator={true}
+      >
+        {placeholders.map((child, index) => (
+          <View style={styles.ticket} key={index}>
+            <Ticket />
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({
@@ -40,10 +49,8 @@ const styles = StyleSheet.create({
   },
   ticket: {
     paddingHorizontal: windowWidth * 0.05,
-    justifyContent: 'center',
-  }
-
-})
-
+    justifyContent: "center",
+  },
+});
 
 export default EventsTickets;

@@ -54,6 +54,15 @@ export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(
   return [loading, dbListenedValue, set] as const;
 }
 
+export function addDocumentToCollection<T extends { [x: string]: any }>(
+  pathToCollection: string,
+  id: string,
+  value: T
+) {
+  return setDoc(doc(fireStore, pathToCollection + "/" + id), value);
+}
+
+/// Depreciated
 export function useSateWithFireStore<T>(
   pathToId: string,
   fieldName: string,
@@ -90,6 +99,7 @@ export function useSateWithFireStore<T>(
   return [loading, dbListenedValue, set] as const;
 }
 
+/// Depreciated
 export function useSateWithFireStoreArray<T>(
   pathToId: string,
   fieldName: string

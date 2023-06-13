@@ -1,6 +1,11 @@
 import { EventObject } from "./EventObject";
 
 export type Organizer = {
+  type: "organizer";
   name: string;
-  events: EventObject[];
+};
+
+export const defaultOrganizer: Organizer = {
+  type: "organizer",
+  name: "",
 };

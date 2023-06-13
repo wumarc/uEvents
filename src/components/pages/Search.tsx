@@ -11,8 +11,13 @@ import Event from "../organisms/Event";
 import { colours } from "../subatoms/colours/colours";
 import { TouchableOpacity } from "react-native";
 import { useStateWithFireStoreCollection } from "../../utils/useStateWithFirebase";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootTabParamList } from "../../main";
 
-const Search = ({ navigation }: any) => {
+type props = NativeStackScreenProps<RootTabParamList, "Search">;
+// To access the type of user, use route.params.userType
+
+const Search = ({ route, navigation }: props) => {
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
 

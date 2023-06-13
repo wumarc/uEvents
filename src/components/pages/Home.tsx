@@ -15,8 +15,13 @@ import { defaultEvent, EventObject } from "../../utils/model/EventObject";
 import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
 import Event from "../organisms/Event";
 import EventDivider from "../atoms/Divider";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootTabParamList } from "../../main";
 
-const Home = () => {
+type props = NativeStackScreenProps<RootTabParamList, "Home">;
+// To access the type of user, use route.params.userType
+
+const Home = ({ route, navigation }: props) => {
   // const [loading, dbListenedValue, set, add, remove] =
   //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
 
@@ -81,9 +86,7 @@ const Home = () => {
         />
         <Input
           placeholder="Organizer"
-          onChangeText={(value) =>
-            setNewEvent({ ...newEvent, organizer: { name: value, events: [] } })
-          }
+          onChangeText={(value) => setNewEvent({ ...newEvent, organizer: "" })}
         />
         <Button
           onPress={() => {
@@ -115,7 +118,6 @@ const Home = () => {
       >
         Add test event
       </Button> */}
-
       <Text style={styles.title}>Upcoming Events</Text>
       <FlatList
         data={events}

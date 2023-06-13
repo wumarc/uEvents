@@ -38,7 +38,7 @@ const Event: React.FC<EventProps> = (props) => {
       setEvent({
         ...event,
         saved: event.saved.filter(
-          (userID) => userID !== getFirebaseUserIDOrEmpty()
+          (userID: string) => userID !== getFirebaseUserIDOrEmpty()
         ),
       });
     } else {
