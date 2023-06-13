@@ -82,14 +82,12 @@ const EventDetails = ({ route, navigation }: props) => {
 
 const styles = StyleSheet.create({
   big_container: {
-    // backgroundColor: "red",
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
   },
   container: {
-    paddingHorizontal: 7,
+    paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "stretch",
   },
