@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   button: {
-    backgroundColor: colours.primary,
+    backgroundColor: colours.primaryPurple,
   },
   text: {
     color: "black",

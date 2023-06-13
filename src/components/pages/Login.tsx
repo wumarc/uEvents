@@ -43,7 +43,7 @@ const Login = ({setIsSigningUp}: any) => {
 
         {/* Title */}
         <View>
-          <Text>Login to your Student Account</Text>
+          <Text style={styles.text}>Login to your Student Account</Text>
         </View>
         
         {/* Form */}
@@ -90,17 +90,22 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
     },
     button: {
-      backgroundColor: colours.primary,
+      backgroundColor: colours.primaryPurple,
     },
     switchPage: {
-      color: "black",
+      color: colours.whiteText,
+      fontWeight: "600",
       marginTop: 10,
-      fontSize: 15,
+      fontSize: 14,
     },
     textButton: {
-      color: "blue",
+      color: colours.primaryPurple,
       fontWeight: "bold",
-      fontSize: 15,
+      fontSize: 14,
+    },
+    text: {
+      color: colours.whiteText,
+      fontWeight: "600",
     }
   });
 

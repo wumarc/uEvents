@@ -22,7 +22,7 @@ const ConfirmedEvent = ({navigation}: any) =>  {
             <View style={styles.bottom}>
                 <Image
                     style={{width: 120, height: 120}}
-                    source={require('../../../assets/uevents.png')}
+                    // source={require('../../../assets/uevents.png')}
                 />
             </View>
 
