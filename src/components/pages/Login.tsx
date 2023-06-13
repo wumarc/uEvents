@@ -53,12 +53,14 @@ const Login = ({setIsSigningUp}: any) => {
             onChangeText={(value) => setEmail(value)}
             autoCapitalize="none"
             selectionColor={colours.primaryPurple}
+            secureTextEntry={false}
           />
           <Input
             placeholder="Password"
             onChangeText={(value) => setPassword(value)}
             autoCapitalize="none"
             selectionColor={colours.primaryPurple}
+            secureTextEntry={true}
           />
         </View>
 

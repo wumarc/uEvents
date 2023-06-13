@@ -7,25 +7,21 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { Platform } from "react-native";
+import { Easing, SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./components/organisms/EventDetails";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { colours } from "./components/subatoms/colours/colours";
 import EventSignUp from "./components/pages/EventSignUp";
-import { getAuth, signOut } from "firebase/auth";
-import { Button } from "react-native-elements";
 import ConfirmedEvent from "./components/pages/ConfirmedEvent";
 import { getFirebaseUserIDOrEmpty } from "./utils/util";
 import {
   addDocumentToCollection,
   useStateWithFireStoreDocument,
 } from "./utils/useStateWithFirebase";
-import { defaultStudent, Student } from "./utils/model/Student";
-import { defaultOrganizer, Organizer } from "./utils/model/Organizer";
 import { AccountSelectionPage } from "./components/pages/AccountSelectionPage";
 import CreateEvent from "./components/pages/CreateEvent";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -145,7 +141,7 @@ export default function Main() {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator initialRouteName="MainView">
+        <Stack.Navigator initialRouteName="MainView" >
           {/* Main View */}
           <Stack.Screen
             name="MainView"
@@ -162,6 +158,7 @@ export default function Main() {
             options={{
               // headerLeft: () => (),
               title: "Event",
+              // Add transition effect to stacks
             }}
           />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />
