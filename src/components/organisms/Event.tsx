@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
 import { Text, Icon } from "@rneui/base";
 import { convertDate, getFirebaseUserIDOrEmpty } from "../../utils/util";
@@ -10,6 +10,8 @@ import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase"
 // Event component props
 interface EventProps {
   id: string;
+  navigation: any;
+  userType: string;
 }
 
 const Event: React.FC<EventProps> = (props) => {
@@ -55,52 +57,61 @@ const Event: React.FC<EventProps> = (props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        props.navigation.navigate("EventDetailsView", {
+          userType: props.userType,
+          eventID: props.id,
+          organizerID: event.organizer,
+        });
+      }}
+    >
+      <View style={styles.container}>
+        {/* Event Details and Image */}
+        <View style={styles.row1}>
+          {/* Event Details */}
+          <View style={styles.eventDetails}>
+            <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
+            <Text style={styles.title}>{event.name}</Text>
+            <Text>{event.organizer.name}</Text>
+            <Text style={{}}>Free</Text>
+          </View>
 
-      {/* Event Details and Image */}
-      <View style={styles.row1}>
-        {/* Event Details */}
-        <View style={styles.eventDetails}>
-          <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
-          <Text style={styles.title}>{event.name}</Text>
-          <Text>{event.organizer.name}</Text>
-          <Text style={{}}>Free</Text>
+          {/* Image */}
+          <View style={styles.image}>
+            <Image
+              style={{ width: 100, height: 130, borderRadius: 14 }}
+              source={require("../../assets/Adele.jpg")}
+            />
+          </View>
         </View>
 
-        {/* Image */}
-        <View style={styles.image}>
-          <Image
-            style={{ width: 100, height: 130, borderRadius: 14 }}
-            source={require("../../assets/Adele.jpg")}
-          />
+        {/* Number of participants, location and buttons */}
+        <View style={styles.row2}>
+          {/* Number of participants and location */}
+          <View style={{ flexDirection: "column", width: "90%" }}>
+            <Text style={{ color: "grey" }}>
+              {event.attendees.length.toString()} going • {event.location}
+            </Text>
+          </View>
+
+          {/* Buttons */}
+          <View style={styles.buttons}>
+            <Icon
+              size={30}
+              type="material"
+              name="bookmark-outline"
+              // Add filling if saved
+              color={isSaved ? colours.secondaryPurple : colours.greyText}
+              // containerStyle={styles.buttonStyle}
+              onPress={() => {
+                saveEvent();
+              }}
+            />
+          </View>
         </View>
       </View>
-
-      {/* Number of participants, location and buttons */}
-      <View style={styles.row2}>
-        {/* Number of participants and location */}
-        <View style={{ flexDirection: "column", width: "90%" }}>
-          <Text style={{ color: "grey" }}>
-            {event.attendees.length.toString()} going • {event.location}
-          </Text>
-        </View>
-
-        {/* Buttons */}
-        <View style={styles.buttons}>
-          <Icon
-            size={30}
-            type="material"
-            name="bookmark-outline"
-            // Add filling if saved
-            color={isSaved ? colours.secondaryPurple : colours.greyText}
-            // containerStyle={styles.buttonStyle}
-            onPress={() => {
-              saveEvent();
-            }}
-          />
-        </View>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -119,7 +130,7 @@ const styles = StyleSheet.create({
   row2: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 3
+    paddingTop: 3,
   },
   eventDetails: {
     flexDirection: "column",

@@ -127,18 +127,11 @@ const Home = ({ route, navigation }: props) => {
       <FlatList
         data={events}
         renderItem={({ item, index }) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {
-              navigation.navigate("EventDetailsView", {
-                userType: route.params.userType,
-                eventID: item.id,
-                organizerID: item.organizer,
-              });
-            }}
-          >
-            <Event id={item.id} />
-          </TouchableOpacity>
+          <Event
+            id={item.id}
+            navigation={navigation}
+            userType={route.params.userType}
+          />
         )}
       />
     </View>

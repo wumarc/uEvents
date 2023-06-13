@@ -50,6 +50,7 @@ const MainView = ({ route, navigation }: props) => {
       <Tab.Screen
         name="Events"
         component={EventsTickets as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Tickets",
           tabBarIcon: ({ color }) => (
@@ -64,6 +65,7 @@ const MainView = ({ route, navigation }: props) => {
       <Tab.Screen
         name="Saved"
         component={SavedEvents as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Saved",
           tabBarIcon: ({ color }) => (
@@ -93,6 +95,7 @@ const MainView = ({ route, navigation }: props) => {
       <Tab.Screen
         name="Search"
         component={Search as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => (
@@ -107,6 +110,7 @@ const MainView = ({ route, navigation }: props) => {
       <Tab.Screen
         name="Profile"
         component={Profile as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (

@@ -90,7 +90,13 @@ const Search = ({ route, navigation }: props) => {
 
       <FlatList
         data={events?.filter(filterEvents)}
-        renderItem={({ item }) => <Event id={item.id} />}
+        renderItem={({ item }) => (
+          <Event
+            id={item.id}
+            userType={route.params.userType}
+            navigation={navigation}
+          />
+        )}
       />
     </View>
   );

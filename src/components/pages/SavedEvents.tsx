@@ -31,7 +31,13 @@ const SavedEvents = ({ route, navigation }: props) => {
         data={events?.filter((event) =>
           event.saved.includes(getFirebaseUserIDOrEmpty())
         )}
-        renderItem={({ item }) => <Event id={item.id} />}
+        renderItem={({ item }) => (
+          <Event
+            id={item.id}
+            userType={route.params.userType}
+            navigation={navigation}
+          />
+        )}
       />
     </View>
   );
