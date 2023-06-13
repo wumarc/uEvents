@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
@@ -110,9 +111,8 @@ const Home = ({ route, navigation }: props) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       {/* <Button
-        onPress={() => {
           setAddingEvent(true);
         }}
       >
@@ -121,7 +121,16 @@ const Home = ({ route, navigation }: props) => {
       <Text style={styles.title}>Upcoming Events</Text>
       <FlatList
         data={events}
-        renderItem={({ item }) => <Event id={item.id} />}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              navigation.navigate("EventDetailsView");
+            }}
+          >
+            <Event id={item.id} />
+          </TouchableOpacity>
+        )}
       />
     </View>
   );
@@ -130,6 +139,7 @@ const Home = ({ route, navigation }: props) => {
 export default Home;
 
 export const styles = StyleSheet.create({
+  container: {},
   title: {
     fontSize: 25,
     fontWeight: "bold",

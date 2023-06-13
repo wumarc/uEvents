@@ -56,6 +56,7 @@ const Event: React.FC<EventProps> = (props) => {
 
   return (
     <View style={styles.container}>
+
       {/* Event Details and Image */}
       <View style={styles.row1}>
         {/* Event Details */}
@@ -78,7 +79,7 @@ const Event: React.FC<EventProps> = (props) => {
       {/* Number of participants, location and buttons */}
       <View style={styles.row2}>
         {/* Number of participants and location */}
-        <View style={{ flexDirection: "column", alignItems: "center" }}>
+        <View style={{ flexDirection: "column", width: "90%" }}>
           <Text style={{ color: "grey" }}>
             {event.attendees.length.toString()} going • {event.location}
           </Text>
@@ -118,6 +119,7 @@ const styles = StyleSheet.create({
   row2: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingTop: 3
   },
   eventDetails: {
     flexDirection: "column",
