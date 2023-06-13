@@ -102,6 +102,18 @@ const Profile = ({ route, navigation }: props) => {
           title="Log out"
           style={{ marginBottom: 10 }}
         />
+        {route.params.userType == "organizer" ? (
+          <Button
+            onPress={() => {
+              navigation.navigate("CreateEventView", {
+                userType: route.params.userType,
+              });
+            }}
+            title="Create Event"
+          />
+        ) : (
+          <View></View>
+        )}
       </View>
     </View>
   );

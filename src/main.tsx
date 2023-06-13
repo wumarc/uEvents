@@ -25,6 +25,7 @@ import {
 import { defaultStudent, Student } from "./utils/model/Student";
 import { defaultOrganizer, Organizer } from "./utils/model/Organizer";
 import { AccountSelectionPage } from "./components/pages/AccountSelectionPage";
+import CreateEvent from "./components/pages/CreateEvent";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -40,6 +41,7 @@ export type RootStackParamList = {
   Home: { userType: string };
   Search: { userType: string };
   Profile: { userType: string };
+  CreateEventView: { userType: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -164,6 +166,10 @@ export default function Main() {
           />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />
           <Stack.Screen name="ConfirmedEventView" component={ConfirmedEvent} />
+          <Stack.Screen
+            name="CreateEventView"
+            component={CreateEvent as any} // TODO fix error
+          />
           {/* <Stack.Screen name="ClubProfileView" component={} /> */}
         </Stack.Navigator>
       </SafeAreaView>
