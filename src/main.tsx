@@ -107,8 +107,8 @@ export default function Main() {
             }}
           />
           {/* Any other view that adds a stack to the main view, we only have detailedView for events */}
-          <Stack.Screen 
-            name="EventDetailsView" 
+          <Stack.Screen
+            name="EventDetailsView"
             component={EventDetails}
             options={{ title: 'Event' }}
           />

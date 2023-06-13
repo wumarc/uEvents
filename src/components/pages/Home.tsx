@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
@@ -16,7 +17,7 @@ import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
 import Event from "../organisms/Event";
 import EventDivider from "../atoms/Divider";
 
-const Home = () => {
+const Home = ({navigation}: any) => {
   // const [loading, dbListenedValue, set, add, remove] =
   //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
 
@@ -107,7 +108,7 @@ const Home = () => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       {/* <Button
         onPress={() => {
           setAddingEvent(true);
@@ -119,7 +120,14 @@ const Home = () => {
       <Text style={styles.title}>Upcoming Events</Text>
       <FlatList
         data={events}
-        renderItem={({ item }) => <Event id={item.id} />}
+        renderItem={({ item, index }) =>
+          <TouchableOpacity
+            key={index}
+            onPress={() => {navigation.navigate("EventDetailsView")}}
+          >
+            <Event id={item.id} />
+          </TouchableOpacity>
+        }
       />
     </View>
   );
@@ -128,6 +136,9 @@ const Home = () => {
 export default Home;
 
 export const styles = StyleSheet.create({
+  container: {
+    
+  },
   title: {
     fontSize: 25,
     fontWeight: "bold",
