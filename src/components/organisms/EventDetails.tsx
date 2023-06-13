@@ -78,16 +78,14 @@ const EventDetails = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
   big_container: {
-    // backgroundColor: "red",
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
   },
   container: {
-    paddingHorizontal: 7,
+    paddingHorizontal: 10,
     flexDirection: "row",
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   title: {
     fontSize: 25,
@@ -107,7 +105,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   }
 });
-
 
 
 export default EventDetails;

@@ -149,16 +149,24 @@ export default function Main() {
               headerShown: false,
             }}
           />
-          {/* Any other view that adds a stack to the main view, we only have detailedView for events */}
+          {/* Any other view that adds a stack to the main view */}
           <Stack.Screen
             name="EventDetailsView"
             component={EventDetails}
-            options={{ title: "Event" }}
+            options={{
+              // headerLeft: () => (),
+              title: "Event"
+            }}
           />
-          <Stack.Screen name="EventSignUpView" component={EventSignUp} />
-          <Stack.Screen name="ConfirmedEventView" component={ConfirmedEvent} />
+          <Stack.Screen 
+            name="EventSignUpView"
+            component={EventSignUp}
+          />
+          <Stack.Screen
+            name="ConfirmedEventView"
+            component={ConfirmedEvent}
+          />
           {/* <Stack.Screen name="ClubProfileView" component={} /> */}
-          {/* <Stack.Screen name="EventLocationView" component={} /> */}
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
