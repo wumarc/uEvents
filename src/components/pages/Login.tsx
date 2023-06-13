@@ -48,10 +48,17 @@ const Login = ({setIsSigningUp}: any) => {
         
         {/* Form */}
         <View>
-          <Input placeholder="Email" onChangeText={(value) => setEmail(value)} />
+          <Input 
+            placeholder="Email" 
+            onChangeText={(value) => setEmail(value)}
+            autoCapitalize="none"
+            selectionColor={colours.primaryPurple}
+          />
           <Input
             placeholder="Password"
             onChangeText={(value) => setPassword(value)}
+            autoCapitalize="none"
+            selectionColor={colours.primaryPurple}
           />
         </View>
 

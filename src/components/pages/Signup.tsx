@@ -50,10 +50,25 @@ const Signup = ({ setIsSigningUp }: any) => {
 
       {/* Form */}
       <View>
-        <Input placeholder="Email" onChangeText={(value) => setEmail(value)} />
+        <Input 
+          placeholder="Email" 
+          onChangeText={(value) => setEmail(value)} 
+          autoCapitalize="none"
+          selectionColor={colours.primaryPurple}
+        />
         <Input
           placeholder="Password"
           onChangeText={(value) => setPassword(value)}
+          autoCapitalize="none"
+          secureTextEntry={true}
+          selectionColor={colours.primaryPurple}
+        />
+        <Input
+          placeholder="Confirm your Password"
+          onChangeText={() => {}}
+          autoCapitalize="none"
+          secureTextEntry={true}
+          selectionColor={colours.primaryPurple}
         />
       </View>
 
