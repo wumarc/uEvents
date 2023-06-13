@@ -8,7 +8,8 @@ import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import Event from "../organisms/Event";
 
 const SavedEvents = () => {
-  const [loading, events, add] = useStateWithFireStoreCollection("events");
+  const [loading, events, add] =
+    useStateWithFireStoreCollection<EventObject>("events");
 
   if (loading) {
     return <Text>Loading</Text>;

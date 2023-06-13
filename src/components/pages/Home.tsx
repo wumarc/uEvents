@@ -20,7 +20,8 @@ const Home = () => {
   // const [loading, dbListenedValue, set, add, remove] =
   //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
 
-  const [loading, events, add] = useStateWithFireStoreCollection("events");
+  const [loading, events, add] =
+    useStateWithFireStoreCollection<EventObject>("events");
 
   const [addingEvent, setAddingEvent] = useState(false);
 

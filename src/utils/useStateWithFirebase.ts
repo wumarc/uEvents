@@ -4,14 +4,18 @@ import {
   arrayUnion,
   collection,
   doc,
+  DocumentData,
   setDoc,
   updateDoc,
+  WithFieldValue,
 } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { fireStore } from "../firebaseConfig";
 import { EventObject } from "./model/EventObject";
 
-export function useStateWithFireStoreCollection(pathToCollection: string) {
+export function useStateWithFireStoreCollection<T extends { [x: string]: any }>(
+  pathToCollection: string
+) {
   const [snap, loading, error] = useCollection(
     collection(fireStore, pathToCollection)
   );
@@ -20,9 +24,9 @@ export function useStateWithFireStoreCollection(pathToCollection: string) {
     throw error;
   }
 
-  let value = snap?.docs.map((doc) => doc.data() as EventObject);
+  let value = snap?.docs.map((doc) => doc.data() as T);
 
-  const add = (id: string, value: EventObject) => {
+  const add = (id: string, value: T) => {
     const document = doc(fireStore, pathToCollection + "/" + id);
     setDoc(document, value);
   };
@@ -30,7 +34,7 @@ export function useStateWithFireStoreCollection(pathToCollection: string) {
   return [loading, value, add] as const;
 }
 
-export function useStateWithFireStoreDocument(
+export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(
   pathToDocument: string,
   id: string
 ) {
@@ -41,11 +45,11 @@ export function useStateWithFireStoreDocument(
     throw error;
   }
 
-  const set = (newVal: EventObject) => {
+  const set = (newVal: T) => {
     updateDoc(document, newVal);
   };
 
-  let dbListenedValue: EventObject = snap?.data() as EventObject;
+  let dbListenedValue: T = snap?.data() as T;
 
   return [loading, dbListenedValue, set] as const;
 }

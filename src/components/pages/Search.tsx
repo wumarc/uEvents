@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { SearchBar } from "@rneui/themed";
 import {
@@ -10,30 +10,36 @@ import {
 import Event from "../organisms/Event";
 import { colours } from "../subatoms/colours/colours";
 import { TouchableOpacity } from "react-native";
+import { useStateWithFireStoreCollection } from "../../utils/useStateWithFirebase";
 
 const Search = ({ navigation }: any) => {
-  const [filteredEvent, setFilteredEvent] = useState<EventObject[]>([]);
-  const [allEvents, setAllEvents] = useState<EventObject[]>([
-    mockEventClimbing,
-    mockEventGaming,
-    mockEventPainting,
-  ]);
+  const [loading, events, add] =
+    useStateWithFireStoreCollection<EventObject>("events");
+
   const [value, setValue] = useState<string>("");
 
-  useEffect(() => {
-    setFilteredEvent(
-      allEvents.filter((event) =>
-        event.name.toLowerCase().includes(value.toLowerCase())
-      )
-    );
-    console.log("------------");
-    {
-      filteredEvent.map((event) => {
-        return console.log(event.name);
-      });
-    }
-    console.log("------------");
-  }, [value]);
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
+
+  // useEffect(() => {
+  //   setFilteredEvent(
+  //     allEvents.filter((event) =>
+  //       event.name.toLowerCase().includes(value.toLowerCase())
+  //     )
+  //   );
+  //   console.log("------------");
+  //   {
+  //     filteredEvent.map((event) => {
+  //       return console.log(event.name);
+  //     });
+  //   }
+  //   console.log("------------");
+  // }, [value]);
+
+  function filterEvents(event: EventObject): boolean {
+    return event.name.toLowerCase().includes(value.toLowerCase());
+  }
 
   return (
     <View>
@@ -57,7 +63,7 @@ const Search = ({ navigation }: any) => {
       />
 
       {/* Search Results */}
-      <ScrollView>
+      {/* <ScrollView>
         {filteredEvent.map((event, index) => {
           return (
             <TouchableOpacity
@@ -67,15 +73,20 @@ const Search = ({ navigation }: any) => {
               }}
             >
               <Event
-                isSaved={false} // TODO: Complete
-                saveEvent={() => {}} // TODO: Complete
+                isSaved={false} 
+                saveEvent={() => {}} 
                 key={index}
                 event={mockEventClimbing}
               />
             </TouchableOpacity>
           );
         })}
-      </ScrollView>
+      </ScrollView> */}
+
+      <FlatList
+        data={events?.filter(filterEvents)}
+        renderItem={({ item }) => <Event id={item.id} />}
+      />
     </View>
   );
 };
