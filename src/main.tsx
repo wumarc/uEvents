@@ -53,7 +53,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarLabel: "Tickets",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="calendar"
+              name="ticket"
               color={colours.primaryPurple}
               size={30}
             />
@@ -68,7 +68,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarLabel: "Saved",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="calendar-heart"
+              name="heart"
               color={colours.primaryPurple}
               size={30}
             />

@@ -51,7 +51,7 @@ const Search = ({ route, navigation }: props) => {
       {/* Search Bar */}
       <SearchBar
         platform="default"
-        containerStyle={{ backgroundColor: colours.secondaryPurple }}
+        containerStyle={{ backgroundColor: colours.secondaryGrey }}
         inputContainerStyle={{}}
         inputStyle={{}}
         leftIconContainerStyle={{}}
@@ -61,8 +61,8 @@ const Search = ({ route, navigation }: props) => {
         onChangeText={(newVal) => {
           setValue(newVal);
         }}
-        placeholder="What event are you looking for?"
-        placeholderTextColor="#8A4287"
+        placeholder="Search?"
+        placeholderTextColor="#121212"
         round
         value={value}
       />
