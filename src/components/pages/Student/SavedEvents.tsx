@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, ScrollView, FlatList } from "react-native";
-import { RootStackParamList } from "../../../main";
+import { RootStackParamList } from "./main";
 import {
   EventObject,
   mockEventClimbing,

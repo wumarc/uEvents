@@ -17,7 +17,7 @@ import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import EventDivider from "../../atoms/Divider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../main";
+import { RootStackParamList } from "./main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType

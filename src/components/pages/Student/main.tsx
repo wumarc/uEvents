@@ -1,27 +1,28 @@
-import Home from "./components/pages/Student/Home";
-import Profile from "./components/pages/Student/Profile";
-import SavedEvents from "./components/pages/Student/SavedEvents";
-import EventsTickets from "./components/pages/Student/EventsTickets";
-import Search from "./components/pages/Student/Search";
+import Home from "./Home";
+import Profile from "./Profile";
+import SavedEvents from "./SavedEvents";
+import EventsTickets from "./EventsTickets";
+import Search from "./Search";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Easing, SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import EventDetails from "./components/pages/Student/EventDetails";
+import EventDetails from "./EventDetails";
 import { View, Text, Platform } from "react-native";
-import { colours } from "./components/subatoms/colours/colours";
-import EventSignUp from "./components/pages/Student/EventSignUp";
-import ConfirmedEvent from "./components/pages/Student/ConfirmedEvent";
-import { getFirebaseUserIDOrEmpty } from "./utils/util";
+import { colours } from "../../subatoms/colours/colours";
+import EventSignUp from "./EventSignUp";
+import ConfirmedEvent from "./ConfirmedEvent";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import {
   addDocumentToCollection,
   useStateWithFireStoreDocument,
-} from "./utils/useStateWithFirebase";
-import { AccountSelectionPage } from "./components/pages/Common/AccountSelection";
-import CreateEvent from "./components/pages/EventOrganizer/CreateEvent";
+} from "../../../utils/useStateWithFirebase";
+import { AccountSelectionPage } from "../Common/AccountSelection";
+import CreateEvent from "../EventOrganizer/CreateEvent";
 import { CardStyleInterpolators } from "@react-navigation/stack";
+import { FC } from "react";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -124,20 +125,7 @@ const MainView = ({ route, navigation }: props) => {
   );
 };
 
-export default function Main() {
-  const [loading, userData, setUserData] = useStateWithFireStoreDocument(
-    "users",
-    getFirebaseUserIDOrEmpty()
-  );
-
-  if (loading) {
-    return <Text>Loading</Text>;
-  }
-
-  if (!userData) {
-    return <AccountSelectionPage />;
-  }
-
+const Main: FC<{ userType: string }> = (props) => {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
@@ -146,7 +134,7 @@ export default function Main() {
           <Stack.Screen
             name="MainView"
             component={MainView as any} // TODO fix error
-            initialParams={{ userType: userData.type }}
+            initialParams={{ userType: props.userType }}
             options={{
               headerShown: false,
             }}
@@ -172,7 +160,9 @@ export default function Main() {
       </SafeAreaView>
     </NavigationContainer>
   );
-}
+};
+
+export default Main;
 
 const styles = StyleSheet.create({
   container: {

@@ -12,7 +12,7 @@ import { Subtitle, regularText } from "../../subatoms/Spacing";
 import EventLocation from "../../molecules/EventLocation";
 import EventOrganizer from "../../molecules/EventOrganizer";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../main";
+import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Organizer } from "../../../utils/model/Organizer";
 

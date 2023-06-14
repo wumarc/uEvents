@@ -12,7 +12,7 @@ import Ticket from "../../organisms/Ticket";
 import { Title } from "../../subatoms/Spacing";
 import { Dimensions } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../main";
+import { RootStackParamList } from "./main";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

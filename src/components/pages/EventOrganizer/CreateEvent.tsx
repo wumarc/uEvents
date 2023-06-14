@@ -5,7 +5,7 @@ import { Button, Input, Header } from "@rneui/base";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
 import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../main";
+import { RootStackParamList } from "../Student/main";
 import { uid } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;

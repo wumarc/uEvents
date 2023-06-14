@@ -9,7 +9,7 @@ import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../main";
+import { RootStackParamList } from "./main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
