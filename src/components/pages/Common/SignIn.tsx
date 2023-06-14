@@ -1,9 +1,4 @@
 import { FC, useState } from "react";
-import { auth } from "../../../firebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import { View, SafeAreaView } from "react-native";
 import { Text } from "react-native-elements";
 import { Image } from "react-native-elements";
@@ -26,7 +21,7 @@ const SignIn: FC = () => {
         <View>
           <Image
             style={styles.imageSize}
-            source={require("../../assets/uevents_logo.png")}
+            source={require("../../../assets/uevents_logo.png")}
           />
           <Text style={styles.appName}>uEvents</Text>
         </View>

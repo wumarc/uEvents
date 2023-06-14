@@ -10,6 +10,9 @@ import { useState } from "react";
 import { colours } from "../../subatoms/colours/colours";
 import { StyleSheet } from "react-native";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
+import { defaultStudent, Student } from "../../../utils/model/Student";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
@@ -18,27 +21,31 @@ const Signup = ({ setIsSigningUp }: any) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  async function signUp() {
-    if (email === "" || password === "") {
+  async function signUp(validate: boolean): Promise<boolean> {
+    if (validate) {
       if (email === "" || password === "") {
-        setError("Email and password cannot be empty");
-        return;
+        if (email === "" || password === "") {
+          setError("Email and password cannot be empty");
+          return false;
+        }
+        return false;
       }
-      return;
-    }
 
-    // Only accept emails from accepted universities
-    if (!universities.some((university) => email.includes(university))) {
-      setError("Email must be from an accepted university");
-      return;
+      // Only accept emails from accepted universities
+      if (!universities.some((university) => email.includes(university))) {
+        setError("Email must be from an accepted university");
+        return false;
+      }
     }
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       setIsSigningUp(false);
+      return true;
     } catch (error: any) {
       setError(error.message);
     }
+    return false;
   }
 
   return (
@@ -77,8 +84,34 @@ const Signup = ({ setIsSigningUp }: any) => {
         <Text>{error}</Text>
         <Button
           color={styles.button.backgroundColor}
-          title="Sign Up"
-          onPress={() => signUp()}
+          title="Sign up as Student"
+          style={{ marginBottom: 10 }}
+          onPress={() => {
+            signUp(true).then((success) => {
+              if (!success) return;
+              addDocumentToCollection<Student>(
+                "users",
+                getFirebaseUserIDOrEmpty(),
+                defaultStudent
+              );
+            });
+          }}
+        />
+        <Button
+          color={styles.button.backgroundColor}
+          title="Sign up as Event Organizer"
+          style={{ marginBottom: 10 }}
+          onPress={() => {
+            // Don't validate email for organizers
+            signUp(false).then((success) => {
+              if (!success) return;
+              addDocumentToCollection<Organizer>(
+                "users",
+                getFirebaseUserIDOrEmpty(),
+                defaultOrganizer
+              );
+            });
+          }}
         />
       </View>
 

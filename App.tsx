@@ -1,15 +1,15 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebaseConfig";
-import SignIn from "./components/pages/Common/SignIn";
-import Main from "./components/pages/Student/main";
-import { Loading } from "./components/pages/Common/Loading";
+import { auth } from "./src/firebaseConfig";
+import SignIn from "./src/components/pages/Common/SignIn";
+import Main from "./src/components/pages/Student/main";
+import { Loading } from "./src/components/pages/Common/Loading";
 import { View, Text } from "react-native";
 import { FC, useState } from "react";
 import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
-import { useStateWithFireStoreDocument } from "./utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty } from "./utils/util";
-import { AccountSelectionPage } from "./components/pages/Common/AccountSelection";
+import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase";
+import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
+import { AccountSelectionPage } from "./src/components/pages/Common/AccountSelection";
 
 export default function App() {
   const [user, loading, error] = useAuthState(auth);
@@ -64,7 +64,11 @@ const AppInner: FC = () => {
   }
 
   if (!userData) {
-    return <AccountSelectionPage />;
+    return (
+      <View>
+        <Text>Error during login</Text>
+      </View>
+    );
   }
 
   return <Main userType={userData.type} />;

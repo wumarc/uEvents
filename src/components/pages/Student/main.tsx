@@ -7,21 +7,14 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Easing, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./EventDetails";
-import { View, Text, Platform } from "react-native";
+import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours/colours";
 import EventSignUp from "./EventSignUp";
 import ConfirmedEvent from "./ConfirmedEvent";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
-import {
-  addDocumentToCollection,
-  useStateWithFireStoreDocument,
-} from "../../../utils/useStateWithFirebase";
-import { AccountSelectionPage } from "../Common/AccountSelection";
 import CreateEvent from "../EventOrganizer/CreateEvent";
-import { CardStyleInterpolators } from "@react-navigation/stack";
 import { FC } from "react";
 // import 'react-native-gesture-handler';
 
