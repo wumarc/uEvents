@@ -1,7 +1,9 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./src/firebaseConfig";
 import SignIn from "./src/components/pages/Common/SignIn";
-import Main from "./src/components/pages/Student/main";
+import MainStudent from "./src/components/pages/Student/main";
+import MainOrganizer from "./src/components/pages/EventOrganizer/main";
+import MainAdmin from "./src/components/pages/Admin/main";
 import { Loading } from "./src/components/pages/Common/Loading";
 import { View, Text } from "react-native";
 import { FC, useState } from "react";
@@ -9,7 +11,7 @@ import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
 import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
-import { AccountSelectionPage } from "./src/components/pages/Common/AccountSelection";
+import { Error } from "./src/components/pages/Common/Error";
 
 export default function App() {
   const [user, loading, error] = useAuthState(auth);
@@ -64,12 +66,16 @@ const AppInner: FC = () => {
   }
 
   if (!userData) {
-    return (
-      <View>
-        <Text>Error during login</Text>
-      </View>
-    );
+    return <Error message="Could not get user type" />;
   }
 
-  return <Main userType={userData.type} />;
+  if (userData.type === "student") {
+    return <MainStudent userType={userData.type} />;
+  } else if (userData.type === "organizer") {
+    return <MainOrganizer userType={userData.type} />;
+  } else if (userData.type === "admin") {
+    return <MainAdmin userType={userData.type} />;
+  } else {
+    return <Error message="Could not get user type" />;
+  }
 };
