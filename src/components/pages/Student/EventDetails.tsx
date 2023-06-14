@@ -1,17 +1,20 @@
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { EventObject, mockEventClimbing } from "../../utils/model/EventObject";
-import EventDate from "../molecules/EventDate";
+import {
+  EventObject,
+  mockEventClimbing,
+} from "../../../utils/model/EventObject";
+import EventDate from "../../molecules/EventDate";
 import { Button } from "react-native-elements";
-import { colours } from "../subatoms/colours/colours";
-import { Subtitle, regularText } from "../subatoms/Spacing";
-import EventLocation from "../molecules/EventLocation";
-import EventOrganizer from "../molecules/EventOrganizer";
+import { colours } from "../../subatoms/colours/colours";
+import { Subtitle, regularText } from "../../subatoms/Spacing";
+import EventLocation from "../../molecules/EventLocation";
+import EventOrganizer from "../../molecules/EventOrganizer";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../main";
-import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
-import { Organizer } from "../../utils/model/Organizer";
+import { RootStackParamList } from "../../../main";
+import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { Organizer } from "../../../utils/model/Organizer";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType

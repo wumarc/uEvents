@@ -9,7 +9,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Easing, SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import EventDetails from "./components/organisms/EventDetails";
+import EventDetails from "./components/pages/Student/EventDetails";
 import { View, Text, Platform } from "react-native";
 import { colours } from "./components/subatoms/colours/colours";
 import EventSignUp from "./components/pages/Student/EventSignUp";
@@ -19,7 +19,7 @@ import {
   addDocumentToCollection,
   useStateWithFireStoreDocument,
 } from "./utils/useStateWithFirebase";
-import { AccountSelectionPage } from "./components/pages/Common/AccountSelectionPage";
+import { AccountSelectionPage } from "./components/pages/Common/AccountSelection";
 import CreateEvent from "./components/pages/EventOrganizer/CreateEvent";
 import { CardStyleInterpolators } from "@react-navigation/stack";
 // import 'react-native-gesture-handler';
