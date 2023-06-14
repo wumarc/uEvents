@@ -1,8 +1,8 @@
-import Home from "./components/pages/Home";
-import Profile from "./components/pages/Profile";
-import SavedEvents from "./components/pages/SavedEvents";
-import EventsTickets from "./components/pages/EventsTickets";
-import Search from "./components/pages/Search";
+import Home from "./components/pages/Student/Home";
+import Profile from "./components/pages/Student/Profile";
+import SavedEvents from "./components/pages/Student/SavedEvents";
+import EventsTickets from "./components/pages/Student/EventsTickets";
+import Search from "./components/pages/Student/Search";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
@@ -12,15 +12,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./components/organisms/EventDetails";
 import { View, Text, Platform } from "react-native";
 import { colours } from "./components/subatoms/colours/colours";
-import EventSignUp from "./components/pages/EventSignUp";
-import ConfirmedEvent from "./components/pages/ConfirmedEvent";
+import EventSignUp from "./components/pages/Student/EventSignUp";
+import ConfirmedEvent from "./components/pages/Student/ConfirmedEvent";
 import { getFirebaseUserIDOrEmpty } from "./utils/util";
 import {
   addDocumentToCollection,
   useStateWithFireStoreDocument,
 } from "./utils/useStateWithFirebase";
-import { AccountSelectionPage } from "./components/pages/AccountSelectionPage";
-import CreateEvent from "./components/pages/CreateEvent";
+import { AccountSelectionPage } from "./components/pages/Common/AccountSelectionPage";
+import CreateEvent from "./components/pages/EventOrganizer/CreateEvent";
 import { CardStyleInterpolators } from "@react-navigation/stack";
 // import 'react-native-gesture-handler';
 
@@ -141,7 +141,7 @@ export default function Main() {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator initialRouteName="MainView" >
+        <Stack.Navigator initialRouteName="MainView">
           {/* Main View */}
           <Stack.Screen
             name="MainView"

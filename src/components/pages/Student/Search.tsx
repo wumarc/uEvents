@@ -6,13 +6,13 @@ import {
   mockEventClimbing,
   mockEventGaming,
   mockEventPainting,
-} from "../../utils/model/EventObject";
-import Event from "../organisms/Event";
-import { colours } from "../subatoms/colours/colours";
+} from "../../../utils/model/EventObject";
+import Event from "../../organisms/Event";
+import { colours } from "../../subatoms/colours/colours";
 import { TouchableOpacity } from "react-native";
-import { useStateWithFireStoreCollection } from "../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../main";
+import { RootStackParamList } from "../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType

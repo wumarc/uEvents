@@ -5,14 +5,14 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { mockEventClimbing } from "../../utils/model/EventObject";
-import { ScreenSpacing } from "../subatoms/Spacing";
-import Event from "../organisms/Event";
-import Ticket from "../organisms/Ticket";
-import { Title } from "../subatoms/Spacing";
+import { mockEventClimbing } from "../../../utils/model/EventObject";
+import { ScreenSpacing } from "../../subatoms/Spacing";
+import Event from "../../organisms/Event";
+import Ticket from "../../organisms/Ticket";
+import { Title } from "../../subatoms/Spacing";
 import { Dimensions } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../main";
+import { RootStackParamList } from "../../../main";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

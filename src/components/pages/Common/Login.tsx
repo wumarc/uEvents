@@ -1,29 +1,26 @@
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import { Button } from "@rneui/themed";
 import { Input } from "@rneui/base";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../../firebaseConfig";
+import { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useState } from "react";
-import { colours } from "../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours/colours";
 import { StyleSheet } from "react-native";
-import { addDocumentToCollection } from "../../utils/useStateWithFirebase";
 
+// Accepted universities
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
-const Signup = ({ setIsSigningUp }: any) => {
+const Login = ({ setIsSigningUp }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  async function signUp() {
+  async function signIn() {
     if (email === "" || password === "") {
-      if (email === "" || password === "") {
-        setError("Email and password cannot be empty");
-        return;
-      }
+      setError("Email and password cannot be empty");
       return;
     }
 
@@ -34,8 +31,7 @@ const Signup = ({ setIsSigningUp }: any) => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setIsSigningUp(false);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       setError(error.message);
     }
@@ -45,30 +41,24 @@ const Signup = ({ setIsSigningUp }: any) => {
     <View>
       {/* Title */}
       <View>
-        <Text>Create your student account</Text>
+        <Text style={styles.text}>Login to your Student Account</Text>
       </View>
 
       {/* Form */}
       <View>
-        <Input 
-          placeholder="Email" 
-          onChangeText={(value) => setEmail(value)} 
+        <Input
+          placeholder="Email"
+          onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
+          secureTextEntry={false}
         />
         <Input
           placeholder="Password"
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
-          secureTextEntry={true}
           selectionColor={colours.primaryPurple}
-        />
-        <Input
-          placeholder="Confirm your Password"
-          onChangeText={() => {}}
-          autoCapitalize="none"
           secureTextEntry={true}
-          selectionColor={colours.primaryPurple}
         />
       </View>
 
@@ -77,18 +67,20 @@ const Signup = ({ setIsSigningUp }: any) => {
         <Text>{error}</Text>
         <Button
           color={styles.button.backgroundColor}
-          title="Sign Up"
-          onPress={() => signUp()}
+          title="Sign In"
+          onPress={() => {
+            signIn();
+          }}
         />
       </View>
 
-      {/* Login Option */}
+      {/* Sign up option */}
       <View>
-        <Text style={styles.text}>
-          Already have an account?
+        <Text style={styles.switchPage}>
+          Don't have an account?
           <Text onPress={setIsSigningUp} style={styles.textButton}>
             {" "}
-            Sign in
+            Sign up
           </Text>
         </Text>
       </View>
@@ -107,16 +99,21 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colours.primaryPurple,
   },
-  text: {
-    color: "black",
-    fontSize: 15,
+  switchPage: {
+    color: colours.whiteText,
+    fontWeight: "600",
     marginTop: 10,
+    fontSize: 14,
   },
   textButton: {
-    color: "blue",
+    color: colours.primaryPurple,
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 14,
+  },
+  text: {
+    color: colours.whiteText,
+    fontWeight: "600",
   },
 });
 
-export default Signup;
+export default Login;

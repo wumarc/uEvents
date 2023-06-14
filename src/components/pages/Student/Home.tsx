@@ -11,13 +11,13 @@ import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
 import { Text } from "@rneui/themed";
-import { useStateWithFireStoreCollection } from "../../utils/useStateWithFirebase";
-import { defaultEvent, EventObject } from "../../utils/model/EventObject";
-import { getFirebaseUserIDOrEmpty, uid } from "../../utils/util";
-import Event from "../organisms/Event";
-import EventDivider from "../atoms/Divider";
+import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
+import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
+import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
+import Event from "../../organisms/Event";
+import EventDivider from "../../atoms/Divider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../main";
+import { RootStackParamList } from "../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType

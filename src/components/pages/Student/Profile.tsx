@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
-import { defaultStudent, Student } from "../../utils/model/Student";
+import { defaultStudent, Student } from "../../../utils/model/Student";
 import { Avatar } from "react-native-elements";
-import { useSateWithFireStore } from "../../utils/useStateWithFirebase";
-import { getFirebaseUserID } from "../../utils/util";
+import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
+import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../main";
+import { RootStackParamList } from "../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType

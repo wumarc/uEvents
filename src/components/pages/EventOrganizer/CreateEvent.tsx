@@ -2,11 +2,11 @@ import { View } from "react-native";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
-import { addDocumentToCollection } from "../../utils/useStateWithFirebase";
-import { defaultEvent, EventObject } from "../../utils/model/EventObject";
+import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
+import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../main";
-import { uid } from "../../utils/util";
+import { RootStackParamList } from "../../../main";
+import { uid } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
