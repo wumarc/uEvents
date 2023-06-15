@@ -14,9 +14,10 @@ const EventSignUp = ({ navigation }: any) => {
         <Text style={styles.rsvp}>Complete your RSVP! {`\n`}</Text>
 
         <Text style={styles.backgroundText}>
-          This information will shared with "" administrators and the leaders of
-          your group. {`\n`}
+          This information will shared with the event organizer.{`\n`}
         </Text>
+
+        <Text>Please provide your personal information {`\n`}</Text>
 
         {/* first name input*/}
         <Text>First Name: </Text>

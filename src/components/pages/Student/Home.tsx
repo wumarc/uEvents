@@ -18,6 +18,7 @@ import Event from "../../organisms/Event";
 import EventDivider from "../../atoms/Divider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -52,6 +53,7 @@ const Home = ({ route, navigation }: props) => {
           />
         )}
       />
+      <Toast/>
     </View>
   );
 };

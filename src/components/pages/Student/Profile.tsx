@@ -10,6 +10,7 @@ import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
+import { colours } from "../../subatoms/colours/colours";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -67,8 +68,8 @@ const Profile = ({ route, navigation }: props) => {
       <View style={styles.studentInfo}>
         <View style={{ flexDirection: "column", flex: 1 }}>
           <Input
-            placeholder="Name"
-            defaultValue={profile.name ? profile.name : ""}
+            placeholder="Full Name"
+            defaultValue={profile.name ? profile.name : "Jacyob Jacques"}
             leftIcon={{
               type: "material",
               name: "person",
@@ -76,10 +77,11 @@ const Profile = ({ route, navigation }: props) => {
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
           <Input
-            placeholder="Student Id"
-            defaultValue={
-              profile.studentId.toString() ? profile.studentId.toString() : ""
-            }
+            placeholder="Student ID"
+            defaultValue="3000049494"
+            // defaultValue={
+            //   profile.studentId.toString() ? profile.studentId.toString() : ""
+            // }
             leftIcon={{
               type: "material",
               name: "credit-card",
@@ -90,12 +92,35 @@ const Profile = ({ route, navigation }: props) => {
               }
             }}
           />
+          <Input
+            placeholder=""
+            defaultValue="Marketing @ Telfer"
+            // defaultValue={
+            //   profile.studentId.toString() ? profile.studentId.toString() : ""
+            // }
+            leftIcon={{
+              type: "material",
+              name: "school",
+            }}
+          />
+          <Input
+            placeholder=""
+            defaultValue="Vegetarian"
+            // defaultValue={
+            //   profile.studentId.toString() ? profile.studentId.toString() : ""
+            // }
+            leftIcon={{
+              type: "material",
+              name: "restaurant-menu",
+            }}
+          />
         </View>
       </View>
 
       {/* Log out button */}
-      <View>
+      <View style={{flexDirection: "row"}}>
         <Button
+          color={colours.primaryPurple}
           onPress={() => {
             logout();
           }}
@@ -134,6 +159,10 @@ const styles = StyleSheet.create({
   saveButton: {
     flexDirection: "row",
     marginBottom: 10,
+  },
+  dropdown: {
+    borderColor: "#B7B7B7",
+    height: 50,
   },
 });
 

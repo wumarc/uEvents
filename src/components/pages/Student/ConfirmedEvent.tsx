@@ -5,31 +5,18 @@ import Event from "../../organisms/Event";
 const ConfirmedEvent = ({ navigation }: any) => {
   return (
     <View>
-      <Text style={styles.baseText}>
-        <Text style={styles.confirmedFontSize}>
-          {" "}
-          CONFIRMED (New Font) {`\n`}{" "}
-        </Text>
-        <Text style={styles.regularFontSize}> Enjoy Your Event! </Text>
-      </Text>
       <View style={styles.gif}>
         <Image
           style={{ width: 200, height: 200 }}
           source={require("../../../assets/animations/ticket.gif")}
         />
       </View>
-      <Text style={styles.confirmedFontSize}> CONFIRMED (Old Font) {`\n`}</Text>
-      <Text style={styles.regularFontSize}>
-        {" "}
-        Your have confirmed your ticket for "" event, on the day of "June 26th"!{" "}
+      <Text style={styles.regularFontSize}> 
+        You have successfully registered for the event!
       </Text>
-
-      <View style={styles.bottom}>
-        <Image
-          style={{ width: 120, height: 120 }}
-          // source={require('../../../assets/uevents.png')}
-        />
-      </View>
+      <Text style={styles.regularFontSize}>
+        You can find your event ticket on the event page
+      </Text>
     </View>
   );
 };

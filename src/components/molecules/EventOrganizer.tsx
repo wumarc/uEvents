@@ -18,7 +18,7 @@ const EventOrganizer = ({prop}: any) => {
             </View>
 
             {/* Column 2: Date */}
-            <View style={styles.subcontainer}>
+            <View style={styles.subcontainer2}>
                 <Text style={styles.building}>{prop}</Text>
             </View>
 
@@ -36,6 +36,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 8,
         paddingHorizontal: 10,
+    },
+    subcontainer2: {
+        flexDirection: "column",
+        justifyContent: "space-between",
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        width: "85%"
     },
     building: {
         fontSize: 18,

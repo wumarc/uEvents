@@ -1,11 +1,10 @@
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { useEffect, useState } from "react";
 import { Text, Icon } from "@rneui/base";
 import { convertDate, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
-import { Title } from "../subatoms/Spacing";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
+import Toast from "react-native-toast-message";
 
 // Event component props
 interface EventProps {
@@ -33,6 +32,15 @@ const Event: React.FC<EventProps> = (props) => {
   );
 
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
+  
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text1: "Your event has been saved!",
+      text2: "You can view your saved events in the saved page",
+    });
+    console.log("show toast")
+  }
 
   const saveEvent = () => {
     if (isSaved) {
@@ -105,7 +113,8 @@ const Event: React.FC<EventProps> = (props) => {
               color={isSaved ? colours.secondaryPurple : colours.greyText}
               // containerStyle={styles.buttonStyle}
               onPress={() => {
-                saveEvent();
+                saveEvent(),
+                showToast()
               }}
             />
           </View>
