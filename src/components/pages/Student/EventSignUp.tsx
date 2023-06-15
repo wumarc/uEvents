@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, TextInput, SafeAreaView } from "react-native";
-// import { Input } from '@rneui/themed';
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours/colours";
 import React from "react";
-import { Input } from "@rneui/base";
+import { StackActions } from "@react-navigation/native";
+import { Input } from "react-native-elements";
 
 const EventSignUp = ({ navigation }: any) => {
   const [number, onChangeNumber] = React.useState("");
@@ -11,36 +11,37 @@ const EventSignUp = ({ navigation }: any) => {
   return (
     <View>
       <View style={styles.margin}>
-        <Text style={styles.rsvp}>Complete your RSVP! {`\n`}</Text>
+        <Text style={styles.rsvp}>Complete your RSVP {`\n`}</Text>
 
-        <Text style={styles.backgroundText}>
-          This information will shared with the event organizer.{`\n`}
-        </Text>
+        <View>
+          <Text style={styles.backgroundText}>
+            This information will shared with the event organizer.
+          </Text>
+        </View>
 
-        <Text>Please provide your personal information {`\n`}</Text>
+        <View>
+          <Text>Name</Text>
+          <Input
+            style={{}}
+            onChangeText={onChangeNumber}
+            value={"Jaycob Jacques"}
+            placeholder="Full Name"
+            keyboardType="numeric"
+            maxLength={15}
+            numberOfLines={6}
+          />
 
-        {/* first name input*/}
-        <Text>First Name: </Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="First Name"
-          keyboardType="numeric"
-          maxLength={15}
-          numberOfLines={6}
-        />
+          <Text>Dietary Restrictions </Text>
+          <Input
+            style={{}}
+            // onChangeText={onChangeNumber}
+            value={"Vegetarian"}
+            placeholder="Diet"
+            keyboardType="numeric"
+            maxLength={15}
+          />
+        </View>
 
-        {/* last name input*/}
-        <Text>Last Name: </Text>
-        <TextInput
-          style={styles.input}
-          // onChangeText={onChangeNumber}
-          // value={number}
-          placeholder="Last Name"
-          keyboardType="numeric"
-          maxLength={15}
-        />
       </View>
 
       {/* confirm button */}
@@ -50,11 +51,10 @@ const EventSignUp = ({ navigation }: any) => {
           buttonStyle={styles.buttonText}
           // shape="rounded-pill"
           title="Confirm"
-          onPress={() => {
-            navigation.navigate("ConfirmedEventView");
-          }}
+          onPress={() => { navigation.dispatch(StackActions.pop(1)); }}
         />
       </View>
+
     </View>
   );
 };
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   rsvp: {
-    fontSize: 18,
+    fontSize: 25,
+    textAlign: "center",
   },
   buttonText: {
     backgroundColor: colours.primaryPurple,
@@ -75,13 +76,6 @@ const styles = StyleSheet.create({
     width: "90%",
     flexDirection: "column",
     marginVertical: 10,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    // borderWidth: 1,
-    padding: 10,
-    borderBottomWidth: 0.4,
   },
   backgroundText: {
     color: colours.darkGreyText,

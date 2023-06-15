@@ -13,7 +13,6 @@ import EventDetails from "./EventDetails";
 import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours/colours";
 import EventSignUp from "./EventSignUp";
-import ConfirmedEvent from "./ConfirmedEvent";
 import { FC } from "react";
 // import 'react-native-gesture-handler';
 
@@ -24,7 +23,6 @@ export type RootStackParamList = {
   MainView: { userType: string };
   EventDetailsView: { userType: string; eventID: string; organizerID: string };
   EventSignUpView: { userType: string };
-  ConfirmedEventView: { userType: string };
   Events: { userType: string };
   Saved: { userType: string };
   Home: { userType: string };
@@ -141,7 +139,6 @@ const Main: FC<{ userType: string }> = (props) => {
             }}
           />
           <Stack.Screen name="EventSignUpView" component={EventSignUp} />
-          <Stack.Screen name="ConfirmedEventView" component={ConfirmedEvent} />
           {/* <Stack.Screen name="ClubProfileView" component={} /> */}
         </Stack.Navigator>
       </SafeAreaView>

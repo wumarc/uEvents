@@ -35,11 +35,12 @@ const Event: React.FC<EventProps> = (props) => {
   
   const showToast = () => {
     Toast.show({
-      type: "success",
+      type: "info",
       text1: "Your event has been saved!",
       text2: "You can view your saved events in the saved page",
+      position: "bottom",
+      visibilityTime: 1800
     });
-    console.log("show toast")
   }
 
   const saveEvent = () => {

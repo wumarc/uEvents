@@ -15,6 +15,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Organizer } from "../../../utils/model/Organizer";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -32,6 +33,16 @@ const EventDetails = ({ route, navigation }: props) => {
 
   if (loading || loading2) {
     return <Text>Loading</Text>;
+  }
+
+  const showToast = () => {
+    Toast.show({
+      type: "info",
+      text1: "Your event has been saved!",
+      text2: "You can view your saved events in the saved page",
+      position: "bottom",
+      visibilityTime: 1800
+    });
   }
 
   return (
@@ -79,6 +90,9 @@ const EventDetails = ({ route, navigation }: props) => {
           }}
         />
       </View>
+
+      {/* Toast */}
+      <Toast/>
     </View>
   );
 };
