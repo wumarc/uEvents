@@ -1,9 +1,8 @@
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import {
   EventObject,
-  mockEventClimbing,
 } from "../../../utils/model/EventObject";
 import EventDate from "../../molecules/EventDate";
 import { Button } from "react-native-elements";
@@ -32,7 +31,7 @@ const EventDetails = ({ route, navigation }: props) => {
   );
 
   if (loading || loading2) {
-    return <Text>Loading</Text>;
+    return <ActivityIndicator/>;
   }
 
   const showToast = () => {

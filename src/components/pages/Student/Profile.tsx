@@ -11,6 +11,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { colours } from "../../subatoms/colours/colours";
+import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -23,7 +24,7 @@ const Profile = ({ route, navigation }: props) => {
   );
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
 
   const logout = () => {

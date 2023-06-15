@@ -5,6 +5,7 @@ import { colours } from "../subatoms/colours/colours";
 import EventDivider from "../atoms/Divider";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import Toast from "react-native-toast-message";
+import { Loading } from "../pages/Common/Loading";
 
 // Event component props
 interface EventProps {
@@ -62,7 +63,7 @@ const Event: React.FC<EventProps> = (props) => {
   };
 
   if (loading || !event) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
 
   return (

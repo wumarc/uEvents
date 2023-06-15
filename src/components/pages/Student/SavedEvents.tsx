@@ -14,6 +14,7 @@ import {
   getFirebaseUserIDOrEmpty,
 } from "../../../utils/util";
 import Event from "../../organisms/Event";
+import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
@@ -23,7 +24,7 @@ const SavedEvents = ({ route, navigation }: props) => {
     useStateWithFireStoreCollection<EventObject>("events");
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
 
   return (

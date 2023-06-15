@@ -62,7 +62,7 @@ const AppInner: FC = () => {
   );
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
 
   if (!userData) {
