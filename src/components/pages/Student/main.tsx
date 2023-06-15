@@ -138,7 +138,13 @@ const Main: FC<{ userType: string }> = (props) => {
               // Add transition effect to stacks
             }}
           />
-          <Stack.Screen name="EventSignUpView" component={EventSignUp} />
+          <Stack.Screen 
+            name="EventSignUpView" 
+            component={EventSignUp}
+            options={{
+              title: "Complete your RSVP",
+            }}
+          />
           {/* <Stack.Screen name="ClubProfileView" component={} /> */}
         </Stack.Navigator>
       </SafeAreaView>

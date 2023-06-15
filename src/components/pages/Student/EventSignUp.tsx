@@ -11,7 +11,6 @@ const EventSignUp = ({ navigation }: any) => {
   return (
     <View>
       <View style={styles.margin}>
-        <Text style={styles.rsvp}>Complete your RSVP {`\n`}</Text>
 
         <View>
           <Text style={styles.backgroundText}>
