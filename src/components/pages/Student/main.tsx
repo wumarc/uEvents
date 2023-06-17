@@ -14,6 +14,7 @@ import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours/colours";
 import EventSignUp from "./EventSignUp";
 import { FC } from "react";
+import { Text } from "react-native-elements";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -34,7 +35,10 @@ type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryPurple }}>
+    <Tab.Navigator 
+      barStyle={{ backgroundColor: colours.secondaryPurple }}
+      initialRouteName="Home"
+    >
       <Tab.Screen
         name="Events"
         component={EventsTickets as any} // TODO fix error
@@ -134,7 +138,9 @@ const Main: FC<{ userType: string }> = (props) => {
             component={EventDetails as any} // TODO fix error
             options={{
               // headerLeft: () => (),
-              title: "Event",
+              headerRight: () => <Text>Save</Text>,
+              title: "",
+              headerTransparent: true,
               // Add transition effect to stacks
             }}
           />

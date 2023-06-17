@@ -14,6 +14,7 @@ import { StyleSheet } from "react-native";
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
 const Login = ({ setIsSigningUp }: any) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -67,7 +68,7 @@ const Login = ({ setIsSigningUp }: any) => {
         <Text>{error}</Text>
         <Button
           color={styles.button.backgroundColor}
-          title="Sign In"
+          title="Log In"
           onPress={() => {
             signIn();
           }}

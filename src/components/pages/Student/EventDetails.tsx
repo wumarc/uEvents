@@ -15,6 +15,7 @@ import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Organizer } from "../../../utils/model/Organizer";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { StatusBar } from "react-native";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -34,18 +35,10 @@ const EventDetails = ({ route, navigation }: props) => {
     return <ActivityIndicator/>;
   }
 
-  const showToast = () => {
-    Toast.show({
-      type: "info",
-      text1: "Your event has been saved!",
-      text2: "You can view your saved events in the saved page",
-      position: "bottom",
-      visibilityTime: 1800
-    });
-  }
-
   return (
     <View style={styles.big_container}>
+      <StatusBar hidden />
+
       {/* Event Details  */}
       <View style={styles.container}>
         <ScrollView>
@@ -101,6 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+    paddingTop: 0,
   },
   container: {
     paddingHorizontal: 10,

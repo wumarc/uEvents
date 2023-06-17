@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { Button } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { auth } from "../../../firebaseConfig";
@@ -123,6 +123,10 @@ const Signup = ({ setIsSigningUp }: any) => {
             {" "}
             Sign in
           </Text>
+        </Text>
+        <Text>
+          By clicking Sign up, you are agreeing to uEvents' Terms of Service and are acknowledging that you have read
+          our Privacy Policy.
         </Text>
       </View>
     </View>

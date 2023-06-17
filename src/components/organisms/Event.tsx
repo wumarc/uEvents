@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
 import { convertDate, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours/colours";
@@ -6,6 +6,8 @@ import EventDivider from "../atoms/Divider";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import Toast from "react-native-toast-message";
 import { Loading } from "../pages/Common/Loading";
+import { Button, Card } from "react-native-elements";
+import DateCard from "../atoms/DateCard";
 
 // Event component props
 interface EventProps {
@@ -77,63 +79,81 @@ const Event: React.FC<EventProps> = (props) => {
       }}
     >
       <View style={styles.container}>
-        {/* Event Details and Image */}
-        <View style={styles.row1}>
-          {/* Event Details */}
-          <View style={styles.eventDetails}>
-            <Text style={styles.eventDate}>{convertDate(new Date())}</Text>
-            <Text style={styles.title}>{event.name}</Text>
-            <Text>{event.organizer.name}</Text>
-            <Text style={{}}>Free</Text>
-          </View>
 
-          {/* Image */}
-          <View style={styles.image}>
-            <Image
-              style={{ width: 100, height: 130, borderRadius: 14 }}
-              source={require("../../assets/Adele.jpg")}
-            />
-          </View>
+        {/* Image */}
+        <View style={styles.row1}>
+          <ImageBackground
+            style={{
+              width: "100%", 
+              height: 280,
+              borderRadius: 14,
+              opacity: 0.7,
+            }}
+            source={require("../../assets/Adele.jpg")}
+          >
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}>
+              <View>
+                <DateCard month={"JUN"} day={12}/>
+              </View>
+              <View>
+                <Icon
+                  size={40}
+                  type="material"
+                  name="bookmark-outline"
+                  // Add filling if saved
+                  color={isSaved ? colours.secondaryPurple : colours.greyText}
+                  // containerStyle={styles.buttonStyle}
+                  onPress={() => {
+                    saveEvent(),
+                    showToast()
+                  }}
+                />
+              </View>
+            </View>
+          </ImageBackground>
         </View>
 
-        {/* Number of participants, location and buttons */}
+        {/* Name, Location, Price */}
         <View style={styles.row2}>
-          {/* Number of participants and location */}
-          <View style={{ flexDirection: "column", width: "90%" }}>
-            <Text style={{ color: "grey" }}>
-              {event.attendees.length.toString()} going • {event.location}
+          {/* Name and Location */}
+          <View style={{width: "85%"}}>
+            <Text style={styles.title}>{event.name}</Text>
+            <Text>{event.location}</Text>
+          </View>
+
+          {/* Price */}
+          <View style={{
+            padding: 3,
+            justifyContent: "center",
+            borderRadius: 8,
+            backgroundColor: colours.primaryPurple,
+          }}>
+            <Text style={{
+              color: "white",
+              fontWeight: "bold",
+              padding: 5,
+            }}>
+              Free
             </Text>
           </View>
 
-          {/* Buttons */}
-          <View style={styles.buttons}>
-            <Icon
-              size={30}
-              type="material"
-              name="bookmark-outline"
-              // Add filling if saved
-              color={isSaved ? colours.secondaryPurple : colours.greyText}
-              // containerStyle={styles.buttonStyle}
-              onPress={() => {
-                saveEvent(),
-                showToast()
-              }}
-            />
-          </View>
         </View>
-      </View>
+
+      </View>      
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    borderRadius: 15,
     flexDirection: "column",
     marginTop: 14,
     paddingHorizontal: 15,
     paddingVertical: 14,
-    borderRadius: 10,
   },
   row1: {
     flexDirection: "row",
@@ -142,10 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 3,
-  },
-  eventDetails: {
-    flexDirection: "column",
-    width: "70%",
+    backgroundColor: colours.secondaryPurple
   },
   image: {
     flexDirection: "column",
@@ -156,15 +173,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: colours.primaryPurple,
-  },
-  buttons: {
-    flexDirection: "row",
-    // justifyContent: "space-around",
-  },
-  buttonStyle: {
-    borderStyle: "solid",
-    borderWidth: 3,
-    borderColor: "none",
   },
   eventDetailTitle: {
     fontWeight: "bold",
@@ -177,12 +185,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colours.primary,
     fontSize: 16,
-  },
-  eventDetailswhite: {
-    color: "black",
-    fontWeight: "bold",
-    marginVertical: 2,
-    paddingVertical: 2,
   },
 });
 
