@@ -17,17 +17,6 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = (props) => {
-  // useEffect(() => {
-  //   setEvent({
-  //     name: props.name,
-  //     description: props.description,
-  //     date: props.date,
-  //     time: props.time,
-  //     location: props.location,
-  //     organizer: props.organizer,
-  //     num_attendees: props.num_attendees,
-  //   });
-  // }, [props]);
 
   const [loading, event, setEvent] = useStateWithFireStoreDocument(
     "events",
@@ -96,24 +85,33 @@ const Event: React.FC<EventProps> = (props) => {
               <View style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
+                margin: 5
               }}>
+
                 <View>
                   <DateCard month={"JUN"} day={12}/>
                 </View>
+
                 <View>
                   <Icon
-                    size={40}
+                    size={25}
                     type="material"
-                    name="bookmark-outline"
-                    // Add filling if saved
+                    // name={isSaved ? "favorite" : "favorite_border"}
+                    name={"favorite"}
                     color={isSaved ? colours.secondaryPurple : colours.greyText}
-                    // containerStyle={styles.buttonStyle}
+                    containerStyle={{
+                      borderStyle: "solid",
+                      borderRadius: 50,
+                      padding: 5,
+                      backgroundColor: "white",
+                    }}
                     onPress={() => {
                       saveEvent(),
                       showToast()
                     }}
                   />
                 </View>
+
               </View>
             </ImageBackground>
           </View>
