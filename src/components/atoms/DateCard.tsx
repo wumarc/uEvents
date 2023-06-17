@@ -5,8 +5,8 @@ const DateCard = ({month, day}: any) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{month}</Text>
-            <Text style={styles.text}>{day}</Text>
+            <Text style={styles.text}>{month + " " + day}</Text>
+            <Text style={styles.text}>{"7:00 PM"}</Text>
         </View>
     )
 }

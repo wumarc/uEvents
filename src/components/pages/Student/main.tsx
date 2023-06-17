@@ -15,7 +15,6 @@ import { colours } from "../../subatoms/colours/colours";
 import EventSignUp from "./EventSignUp";
 import { FC } from "react";
 import { Text } from "react-native-elements";
-// import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -39,7 +38,7 @@ const MainView = ({ route, navigation }: props) => {
       barStyle={{ backgroundColor: colours.secondaryPurple }}
       initialRouteName="Home"
     >
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Events"
         component={EventsTickets as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
@@ -53,7 +52,7 @@ const MainView = ({ route, navigation }: props) => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Saved"
         component={SavedEvents as any} // TODO fix error

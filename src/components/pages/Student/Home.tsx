@@ -36,23 +36,23 @@ const Home = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
-      {/* <Button
-          setAddingEvent(true);
-        }}
-      >
-        Add test event
-      </Button> */}
       <Text style={styles.title}>Upcoming Events</Text>
-      <FlatList
-        data={events}
-        renderItem={({ item, index }) => (
-          <Event
-            id={item.id}
-            navigation={navigation}
-            userType={route.params.userType}
-          />
-        )}
-      />
+
+      <View style={styles.events}>
+        <FlatList
+          data={events}
+          renderItem={({ item, index }) => (
+            <View style={styles.event}>
+              <Event
+                id={item.id}
+                navigation={navigation}
+                userType={route.params.userType}
+              />
+            </View>
+          )}
+        />
+      </View>
+      
       <Toast/>
     </View>
   );
@@ -61,7 +61,15 @@ const Home = ({ route, navigation }: props) => {
 export default Home;
 
 export const styles = StyleSheet.create({
-  container: {},
+  container: {
+
+  },
+  events: {
+    marginHorizontal: 10,
+  },
+  event: {
+    marginVertical: 6,
+  },
   title: {
     fontSize: 25,
     fontWeight: "bold",

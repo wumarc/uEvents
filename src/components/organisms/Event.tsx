@@ -69,81 +69,84 @@ const Event: React.FC<EventProps> = (props) => {
   }
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        props.navigation.navigate("EventDetailsView", {
-          userType: props.userType,
-          eventID: props.id,
-          organizerID: event.organizer,
-        });
-      }}
-    >
-      <View style={styles.container}>
+    <View style={styles.container}>
 
-        {/* Image */}
-        <View style={styles.row1}>
-          <ImageBackground
-            style={{
-              width: "100%", 
-              height: 280,
-              borderRadius: 14,
-              opacity: 0.7,
-            }}
-            source={require("../../assets/Adele.jpg")}
-          >
-            <View style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}>
-              <View>
-                <DateCard month={"JUN"} day={12}/>
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.navigate("EventDetailsView", {
+            userType: props.userType,
+            eventID: props.id,
+            organizerID: event.organizer,
+          });
+        }}
+      >
+        <View>
+
+          {/* Image */}
+          <View style={styles.row1}>
+            <ImageBackground
+              style={{
+                width: "100%", 
+                height: 280,
+                // borderRadius: 14,
+                // opacity: 0.7,
+              }}
+              source={require("../../assets/Adele.jpg")}
+            >
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}>
+                <View>
+                  <DateCard month={"JUN"} day={12}/>
+                </View>
+                <View>
+                  <Icon
+                    size={40}
+                    type="material"
+                    name="bookmark-outline"
+                    // Add filling if saved
+                    color={isSaved ? colours.secondaryPurple : colours.greyText}
+                    // containerStyle={styles.buttonStyle}
+                    onPress={() => {
+                      saveEvent(),
+                      showToast()
+                    }}
+                  />
+                </View>
               </View>
-              <View>
-                <Icon
-                  size={40}
-                  type="material"
-                  name="bookmark-outline"
-                  // Add filling if saved
-                  color={isSaved ? colours.secondaryPurple : colours.greyText}
-                  // containerStyle={styles.buttonStyle}
-                  onPress={() => {
-                    saveEvent(),
-                    showToast()
-                  }}
-                />
-              </View>
+            </ImageBackground>
+          </View>
+
+          {/* Name, Location, Price */}
+          <View style={styles.row2}>
+            {/* Name and Location */}
+            <View style={{width: "85%"}}>
+              <Text style={styles.title}>{event.name}</Text>
+              <Text>{event.location}</Text>
             </View>
-          </ImageBackground>
-        </View>
 
-        {/* Name, Location, Price */}
-        <View style={styles.row2}>
-          {/* Name and Location */}
-          <View style={{width: "85%"}}>
-            <Text style={styles.title}>{event.name}</Text>
-            <Text>{event.location}</Text>
-          </View>
-
-          {/* Price */}
-          <View style={{
-            padding: 3,
-            justifyContent: "center",
-            borderRadius: 8,
-            backgroundColor: colours.primaryPurple,
-          }}>
-            <Text style={{
-              color: "white",
-              fontWeight: "bold",
-              padding: 5,
+            {/* Price */}
+            <View style={{
+              justifyContent: "center",
             }}>
-              Free
-            </Text>
+              <Text style={{
+                borderRadius: 5,
+                overflow: "hidden", // what does this do???
+                padding: 8,
+                color: "white",
+                fontWeight: "bold",
+                backgroundColor: "green",
+              }}>
+                Free
+              </Text>
+            </View>
+
           </View>
 
-        </View>
-
-      </View>      
-    </TouchableOpacity>
+        </View>      
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -151,9 +154,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
     flexDirection: "column",
-    marginTop: 14,
-    paddingHorizontal: 15,
-    paddingVertical: 14,
+    // backgroundColor: colours.primaryPurple,
   },
   row1: {
     flexDirection: "row",
@@ -161,8 +162,9 @@ const styles = StyleSheet.create({
   row2: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 3,
-    backgroundColor: colours.secondaryPurple
+    paddingHorizontal: 7,
+    paddingVertical: 5,
+    backgroundColor: colours.greyText,
   },
   image: {
     flexDirection: "column",
@@ -176,14 +178,14 @@ const styles = StyleSheet.create({
   },
   eventDetailTitle: {
     fontWeight: "bold",
-    color: colours.primary,
+    color: colours.primaryPurple,
     flex: 1,
     width: 1,
     fontSize: 18,
   },
   eventDate: {
     fontWeight: "bold",
-    color: colours.primary,
+    color: colours.primaryPurple,
     fontSize: 16,
   },
 });
