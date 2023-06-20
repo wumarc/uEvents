@@ -10,6 +10,7 @@ import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
+import CustomButton from "../../atoms/CustomButton";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -40,7 +41,7 @@ const Profile = ({ route, navigation }: props) => {
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.profileHeader}>
-        <Text h4>Your Profile</Text>
+        <Text h4>Your Organizer Profile</Text>
       </View>
 
       {/* Image Section */}
@@ -63,11 +64,11 @@ const Profile = ({ route, navigation }: props) => {
         />
       </View>
 
-      {/* Student Info Section */}
+      {/* Club Info Section */}
       <View style={styles.studentInfo}>
         <View style={{ flexDirection: "column", flex: 1 }}>
           <Input
-            placeholder="Name"
+            placeholder="Name of your organization"
             defaultValue={profile.name ? profile.name : ""}
             leftIcon={{
               type: "material",
@@ -76,31 +77,17 @@ const Profile = ({ route, navigation }: props) => {
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
           <Input
-            placeholder="Student Id"
-            defaultValue={
-              profile.studentId.toString() ? profile.studentId.toString() : ""
-            }
-            leftIcon={{
-              type: "material",
-              name: "credit-card",
-            }}
-            onChangeText={(value) => {
-              if (parseInt(value) != undefined) {
-                setProfile({ ...profile, studentId: parseInt(value) });
-              }
-            }}
+            placeholder="Description of your organization"
           />
+          
         </View>
       </View>
 
       {/* Log out button */}
-      <View>
-        <Button
-          onPress={() => {
-            logout();
-          }}
-          title="Log out"
-          style={{ marginBottom: 10 }}
+      <View style={{ marginBottom: 10 }}>
+        <CustomButton
+          buttonName="Log out"
+          onPressListener={() => {logout()}}
         />
       </View>
     </View>

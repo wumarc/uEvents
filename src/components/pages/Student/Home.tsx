@@ -15,7 +15,6 @@ import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFire
 import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
 import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import Event from "../../organisms/Event";
-import EventDivider from "../../atoms/Divider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";

@@ -7,6 +7,8 @@ import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Student/main";
 import { uid } from "../../../utils/util";
+import CustomButton from "../../atoms/CustomButton";
+
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
@@ -23,10 +25,17 @@ const CreateEvent = ({ route, navigation }: props) => {
         placeholder="Description"
         onChangeText={(value) => setEvent({ ...event, description: value })}
       />
+
+
       <Input
         placeholder="Date YYYY-MM-DD"
         onChangeText={(value) => setEvent({ ...event, date: new Date(value) })}
       />
+
+      
+
+
+
       <Input
         placeholder="Time HH:MM"
         onChangeText={(value) => {
@@ -42,6 +51,10 @@ const CreateEvent = ({ route, navigation }: props) => {
           setEvent({ ...event, time: Timestamp.fromDate(time) });
         }}
       />
+
+      
+
+
       <Input
         placeholder="Location"
         onChangeText={(value) => setEvent({ ...event, location: value })}
@@ -55,23 +68,22 @@ const CreateEvent = ({ route, navigation }: props) => {
           })
         } // TODO Use real value of organizer
       />
-      <Button
-        onPress={() => {
-          // Adding the event to the database
-          event.id = uid();
-          addDocumentToCollection<EventObject>("events", event.id, event);
-          navigation.pop();
-        }}
-      >
-        Add event
-      </Button>
-      <Button
-        onPress={() => {
-          navigation.pop();
-        }}
-      >
-        Cancel
-      </Button>
+
+      {/* Buttons */}
+      <View>
+        <CustomButton
+          buttonName={"Add Event"}
+          onPressListener={() => {
+              // Adding the event to the database
+              event.id = uid();
+              addDocumentToCollection<EventObject>("events", event.id, event);
+              navigation.pop();
+          }}
+        />
+      </View>
+      
+
+
     </View>
   );
 };

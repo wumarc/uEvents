@@ -8,6 +8,7 @@ import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours/colours";
 import CreateEvent from "../EventOrganizer/CreateEvent";
 import { FC } from "react";
+import Home from "./Home";
 import Profile from "./Profile";
 // import 'react-native-gesture-handler';
 
@@ -40,9 +41,8 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
-      {/* // TODO Add events page */}
-      {/* <Tab.Screen 
-        name="Events"
+      <Tab.Screen 
+        name="Home"
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
@@ -55,7 +55,7 @@ const MainView = ({ route, navigation }: props) => {
             />
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Profile"
         component={Profile as any} // TODO fix error
