@@ -26,26 +26,12 @@ type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 const MainView = ({ route, navigation }: props) => {
   return (
     <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryPurple }}>
-      <Tab.Screen
-        name="Create"
-        component={CreateEvent as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Create",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="plus-circle"
-              color={colours.primaryPurple}
-              size={30}
-            />
-          ),
-        }}
-      />
       <Tab.Screen 
         name="Home"
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
+          
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -88,6 +74,13 @@ const Main: FC<{ userType: string }> = (props) => {
             options={{
               headerShown: false,
             }}
+          />
+          {/* Create Event View */}
+          <Stack.Screen
+            name="CreateEventView"
+            component={CreateEvent as any} // TODO fix error
+            initialParams={{ userType: props.userType }}
+            // options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </SafeAreaView>

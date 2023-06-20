@@ -39,6 +39,7 @@ const Profile = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
+
       {/* Header Section */}
       <View style={styles.profileHeader}>
         <Text h4>Your Organizer Profile</Text>
@@ -71,13 +72,17 @@ const Profile = ({ route, navigation }: props) => {
             placeholder="Name of your organization"
             defaultValue={profile.name ? profile.name : ""}
             leftIcon={{
-              type: "material",
-              name: "person",
+              type: "ionicon",
+              name: "business",
             }}
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
           <Input
             placeholder="Description of your organization"
+            leftIcon={{
+              type: "ionicon",
+              name: "information",
+            }}
           />
           
         </View>
@@ -90,7 +95,9 @@ const Profile = ({ route, navigation }: props) => {
           onPressListener={() => {logout()}}
         />
       </View>
+
     </View>
+
   );
 };
 
