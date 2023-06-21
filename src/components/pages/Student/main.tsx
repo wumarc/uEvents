@@ -2,7 +2,6 @@ import Home from "./Home";
 import Profile from "./Profile";
 import SavedEvents from "./SavedEvents";
 import EventsTickets from "./EventsTickets";
-import Search from "./Search";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
@@ -15,6 +14,7 @@ import { colours } from "../../subatoms/colours/colours";
 import EventSignUp from "./EventSignUp";
 import { FC } from "react";
 import { Text } from "react-native-elements";
+import { useTheme } from "react-native-paper";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -33,35 +33,27 @@ export type RootStackParamList = {
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
+
+  const theme = useTheme();
+  theme.colors.secondaryContainer = 'transparent';
+
   return (
     <Tab.Navigator 
       barStyle={{ backgroundColor: colours.secondaryPurple }}
+      activeColor= {colours.primaryPurple}
+      inactiveColor={"white"}
       initialRouteName="Home"
     >
-      {/* <Tab.Screen
-        name="Events"
-        component={EventsTickets as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Tickets",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="ticket"
-              color={colours.primaryPurple}
-              size={30}
-            />
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Saved"
         component={SavedEvents as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
+        initialParams={{userType: route.params.userType}}
         options={{
           tabBarLabel: "Saved",
-          tabBarIcon: ({ color }) => (
+          title: "Saved",
+          tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name="heart"
+              name={focused ? "heart" : "heart-outline"}
               color={colours.primaryPurple}
               size={30}
             />
@@ -74,39 +66,24 @@ const MainView = ({ route, navigation }: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name="home"
+              name={focused ? "home" : "home-outline"}
               color={colours.primaryPurple}
               size={30}
             />
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Search"
-        component={Search as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Search",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="magnify"
-              color={colours.primaryPurple}
-              size={30}
-            />
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Profile"
         component={Profile as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Profile",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name="account-circle"
+              name={ focused ? "account-circle" : "account-circle-outline"}
               color={colours.primaryPurple}
               size={30}
             />
