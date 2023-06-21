@@ -6,6 +6,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
@@ -51,7 +52,7 @@ const Home = ({ route, navigation }: props) => {
         rightIconContainerStyle={{}}
         lightTheme
         loadingProps={{}}
-        // onChangeText={{}}
+        onChangeText={() => {}}
         placeholder="Search?"
         placeholderTextColor="#121212"
         round
@@ -59,8 +60,8 @@ const Home = ({ route, navigation }: props) => {
 
       {/* Faceted Search */}
       <View>
-        <ButtonGroup 
-          buttons={["All", "Sports", "Academic", "Social"]}
+        <ButtonGroup
+          buttons={["All", "Academic", "Cultural", "Religious"]}
           selectedIndex={selectedIndex}
           buttonContainerStyle={{
             borderRadius: 20,
@@ -69,12 +70,13 @@ const Home = ({ route, navigation }: props) => {
           containerStyle={{
             borderRadius: 20,
             borderWidth: 0,
+            backgroundColor: 'transparent',
           }}
           buttonStyle={{
             borderRadius: 20,
             borderWidth: 0,
             backgroundColor: colours.secondaryPurple,
-            marginHorizontal: 7,
+            marginHorizontal: 5,
           }}
           innerBorderStyle={{
             width: 0,

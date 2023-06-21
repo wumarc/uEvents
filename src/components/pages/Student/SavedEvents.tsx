@@ -15,6 +15,7 @@ import {
 } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
+import { StyleSheet } from "react-native";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
@@ -34,6 +35,10 @@ const SavedEvents = ({ route, navigation }: props) => {
         width: "100%",
       }}
     >
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Saved Events</Text>
+      </View>
+
       <FlatList
         data={events?.filter((event) =>
           event.saved.includes(getFirebaseUserIDOrEmpty())
@@ -49,5 +54,18 @@ const SavedEvents = ({ route, navigation }: props) => {
     </View>
   );
 };
+
+
+const styles = StyleSheet.create({
+  titleContainer: {
+    paddingTop: 25,
+    paddingLeft: 20
+  },
+  title: {
+    fontSize: 33,
+    fontWeight: "500",
+  }
+});
+
 
 export default SavedEvents;

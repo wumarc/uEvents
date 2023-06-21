@@ -122,9 +122,7 @@ const Profile = ({ route, navigation }: props) => {
       <View style={{flexDirection: "row"}}>
         <Button
           color={colours.primaryPurple}
-          onPress={() => {
-            logout();
-          }}
+          onPress={() => logout()}
           title="Log out"
           style={{ marginBottom: 10 }}
         />
