@@ -1,12 +1,10 @@
-import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
-import { convertDate, getFirebaseUserIDOrEmpty } from "../../utils/util";
+import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours/colours";
-import EventDivider from "../atoms/Divider";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import Toast from "react-native-toast-message";
 import { Loading } from "../pages/Common/Loading";
-import { Button, Card } from "react-native-elements";
 import DateCard from "../atoms/DateCard";
 
 // Event component props
@@ -60,6 +58,7 @@ const Event: React.FC<EventProps> = (props) => {
   return (
     <View style={styles.container}>
 
+
       <TouchableOpacity
         onPress={() => {
           props.navigation.navigate("EventDetailsView", {
@@ -95,15 +94,14 @@ const Event: React.FC<EventProps> = (props) => {
                 <View>
                   <Icon
                     size={25}
-                    type="material"
-                    // name={isSaved ? "favorite" : "favorite_border"}
-                    name={"favorite"}
-                    color={isSaved ? colours.secondaryPurple : colours.greyText}
+                    type="ionicon"
+                    name={isSaved ? "heart" : "heart-outline"}
+                    color={isSaved ? colours.secondaryPurple : "white"}
                     containerStyle={{
                       borderStyle: "solid",
                       borderRadius: 50,
                       padding: 5,
-                      backgroundColor: "white",
+                      backgroundColor: "#d1cfcf",
                     }}
                     onPress={() => {
                       saveEvent(),
@@ -160,9 +158,8 @@ const styles = StyleSheet.create({
   row2: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 7,
+    paddingHorizontal: 13,
     paddingVertical: 5,
-    backgroundColor: colours.greyText,
   },
   image: {
     flexDirection: "column",

@@ -83,7 +83,7 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Search"
         component={Search as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
@@ -97,7 +97,7 @@ const MainView = ({ route, navigation }: props) => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Profile"
         component={Profile as any} // TODO fix error

@@ -37,7 +37,7 @@ const EventDetails = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.big_container}>
-      <StatusBar hidden />
+      {/* <StatusBar hidden /> */}
 
       {/* Event Details  */}
       <View style={styles.container}>

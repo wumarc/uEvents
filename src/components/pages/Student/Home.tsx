@@ -18,6 +18,9 @@ import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { SearchBar } from "@rneui/themed";
+import { ButtonGroup } from "@rneui/themed";
+import { colours } from "../../subatoms/colours/colours";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -29,13 +32,60 @@ const Home = ({ route, navigation }: props) => {
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   if (loading) {
     return <Text>Loading</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Upcoming Events</Text>
+      
+      {/* Search bar */}
+      <SearchBar
+        platform="default"
+        // containerStyle={{ backgroundColor: colours.secon }}
+        inputContainerStyle={{}}
+        inputStyle={{}}
+        leftIconContainerStyle={{}}
+        rightIconContainerStyle={{}}
+        lightTheme
+        loadingProps={{}}
+        // onChangeText={{}}
+        placeholder="Search?"
+        placeholderTextColor="#121212"
+        round
+      />
+
+      {/* Faceted Search */}
+      <View>
+        <ButtonGroup 
+          buttons={["All", "Sports", "Academic", "Social"]}
+          selectedIndex={selectedIndex}
+          buttonContainerStyle={{
+            borderRadius: 20,
+            borderWidth: 0,
+          }}
+          containerStyle={{
+            borderRadius: 20,
+            borderWidth: 0,
+          }}
+          buttonStyle={{
+            borderRadius: 20,
+            borderWidth: 0,
+            backgroundColor: colours.secondaryPurple,
+            marginHorizontal: 7,
+          }}
+          innerBorderStyle={{
+            width: 0,
+          }}
+          textStyle={{
+            color: "white",
+          }}
+          selectedButtonStyle={{backgroundColor: colours.primaryPurple}}
+          onPress={(value) => { setSelectedIndex(value) }}
+        />
+      </View>
 
       <View style={styles.events}>
         <FlatList
@@ -64,7 +114,7 @@ export const styles = StyleSheet.create({
 
   },
   events: {
-    marginHorizontal: 10,
+    
   },
   event: {
     marginVertical: 6,
