@@ -69,6 +69,15 @@ const Profile = ({ route, navigation }: props) => {
       <View style={styles.studentInfo}>
         <View style={{ flexDirection: "column", flex: 1 }}>
           <Input
+            placeholder="Email"
+            defaultValue={profile.name ? profile.name : "jacyob@uottawa.ca"}
+            leftIcon={{
+              type: "material",
+              name: "mail",
+            }}
+            onChangeText={(value) => setProfile({ ...profile, name: value })}
+          />
+          <Input
             placeholder="Full Name"
             defaultValue={profile.name ? profile.name : "Jacyob Jacques"}
             leftIcon={{
@@ -93,7 +102,7 @@ const Profile = ({ route, navigation }: props) => {
               }
             }}
           />
-          <Input
+          {/* <Input
             placeholder=""
             defaultValue="Marketing @ Telfer"
             // defaultValue={
@@ -114,7 +123,7 @@ const Profile = ({ route, navigation }: props) => {
               type: "material",
               name: "restaurant-menu",
             }}
-          />
+          /> */}
         </View>
       </View>
 

@@ -17,6 +17,7 @@ const SignIn: FC = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
+
         {/* Image */}
         <View>
           <Image
@@ -47,10 +48,10 @@ const styles = StyleSheet.create({
   container: {
     // flexDirection is column by default
     flex: 1,
-    paddingHorizontal: "8%",
+    paddingHorizontal: "3%",
     justifyContent: "space-evenly",
     alignItems: "center",
-    paddingBottom: "20%",
+    paddingBottom: "10%",
   },
   appName: {
     fontSize: 40,
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
   },
   component: {
     width: "100%",
+    
   },
 });
 

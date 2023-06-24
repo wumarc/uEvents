@@ -13,6 +13,7 @@ import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
+import { Linking } from "react-native";
 
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
@@ -52,7 +53,7 @@ const Signup = ({ setIsSigningUp }: any) => {
     <View>
       {/* Title */}
       <View>
-        <Text>Create your student account</Text>
+        <Text style={styles.text}>Create your student account</Text>
       </View>
 
       {/* Form */}
@@ -62,6 +63,15 @@ const Signup = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
+          inputContainerStyle={{
+            backgroundColor: "#fff",
+            borderBottomWidth: 2,
+            borderColor: "#bfbfbf",
+            borderWidth: 2,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+          }}
         />
         <Input
           placeholder="Password"
@@ -69,6 +79,15 @@ const Signup = ({ setIsSigningUp }: any) => {
           autoCapitalize="none"
           secureTextEntry={true}
           selectionColor={colours.primaryPurple}
+          inputContainerStyle={{
+            backgroundColor: "#fff",
+            borderBottomWidth: 2,
+            borderColor: "#bfbfbf",
+            borderWidth: 2,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+          }}
         />
         <Input
           placeholder="Confirm your Password"
@@ -76,6 +95,15 @@ const Signup = ({ setIsSigningUp }: any) => {
           autoCapitalize="none"
           secureTextEntry={true}
           selectionColor={colours.primaryPurple}
+          inputContainerStyle={{
+            backgroundColor: "#fff",
+            borderBottomWidth: 2,
+            borderColor: "#bfbfbf",
+            borderWidth: 2,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+          }}
         />
       </View>
 
@@ -119,14 +147,12 @@ const Signup = ({ setIsSigningUp }: any) => {
       <View>
         <Text style={styles.text}>
           Already have an account?
-          <Text onPress={setIsSigningUp} style={styles.textButton}>
-            {" "}
-            Sign in
-          </Text>
+          <Text onPress={setIsSigningUp} style={styles.textButton}> Sign in</Text>
         </Text>
-        <Text>
-          By clicking Sign up, you are agreeing to uEvents' Terms of Service and are acknowledging that you have read
-          our Privacy Policy.
+        <Text style={styles.conditionsText}>
+          By clicking Sign up, you are agreeing to uEvents' 
+            <Text style={{color: colours.primaryPurple, fontWeight: "bold"}} onPress={() => Linking.openURL("https://www.uevents.org/terms")}> Terms of Service </Text>
+          and are acknowledging that you have read our Privacy Policy.
         </Text>
       </View>
     </View>
@@ -145,12 +171,17 @@ const styles = StyleSheet.create({
     backgroundColor: colours.primaryPurple,
   },
   text: {
-    color: "black",
+    color: "white",
     fontSize: 15,
     marginTop: 10,
   },
+  conditionsText: {
+    color: "white",
+    fontSize: 10,
+    marginTop: 10,
+  },
   textButton: {
-    color: "blue",
+    color: colours.primaryPurple,
     fontWeight: "bold",
     fontSize: 15,
   },

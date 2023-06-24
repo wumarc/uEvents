@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { colours } from "../../subatoms/colours/colours";
 import { StyleSheet } from "react-native";
+import CustomInput from "../../atoms/CustomInput";
 
 // Accepted universities
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
@@ -34,12 +35,13 @@ const Login = ({ setIsSigningUp }: any) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
-      setError(error.message);
+      // setError(error.message);
+      setError("Invalid email or password, please try again");
     }
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       {/* Title */}
       <View>
         <Text style={styles.text}>Login to your Student Account</Text>
@@ -47,25 +49,47 @@ const Login = ({ setIsSigningUp }: any) => {
 
       {/* Form */}
       <View>
+
         <Input
           placeholder="Email"
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
           secureTextEntry={false}
+          // inputStyle={{ outlineStyle: "none" }}
+          inputContainerStyle={{
+            backgroundColor: "#fff",
+            borderBottomWidth: 2,
+            borderColor: "#bfbfbf",
+            borderWidth: 2,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+          }}
         />
+
         <Input
           placeholder="Password"
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
           secureTextEntry={true}
+          inputContainerStyle={{
+            backgroundColor: "#fff",
+            borderBottomWidth: 2,
+            borderColor: "#bfbfbf",
+            borderWidth: 2,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+          }}
         />
+
       </View>
 
       {/* Button */}
       <View>
-        <Text>{error}</Text>
+        <Text style={styles.text} >{error}</Text>
         <Button
           color={styles.button.backgroundColor}
           title="Log In"
@@ -91,7 +115,7 @@ const Login = ({ setIsSigningUp }: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    width: "100%"
   },
   title: {
     fontSize: 20,
