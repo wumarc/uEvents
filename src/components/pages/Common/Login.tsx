@@ -42,20 +42,25 @@ const Login = ({ setIsSigningUp }: any) => {
 
   return (
     <View style={styles.container}>
+
       {/* Title */}
       <View>
-        <Text style={styles.text}>Login to your Student Account</Text>
+        <Text style={styles.text}>Login to your student account</Text>
       </View>
 
       {/* Form */}
-      <View>
-
+      <View style={{
+        width: '95%',
+      }}>
         <Input
           placeholder="Email"
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
           secureTextEntry={false}
+          containerStyle= {{
+            paddingHorizontal: 0,
+          }}
           // inputStyle={{ outlineStyle: "none" }}
           inputContainerStyle={{
             backgroundColor: "#fff",
@@ -67,13 +72,15 @@ const Login = ({ setIsSigningUp }: any) => {
             borderRadius: 6,
           }}
         />
-
         <Input
           placeholder="Password"
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
           secureTextEntry={true}
+          containerStyle= {{
+            paddingHorizontal: 0,
+          }}
           inputContainerStyle={{
             backgroundColor: "#fff",
             borderBottomWidth: 2,
@@ -84,12 +91,11 @@ const Login = ({ setIsSigningUp }: any) => {
             borderRadius: 6,
           }}
         />
-
       </View>
 
       {/* Button */}
-      <View>
-        <Text style={styles.text} >{error}</Text>
+      <View style={{width: '95%'}}>
+        <Text style={styles.textAlert} >{error}</Text>
         <Button
           color={styles.button.backgroundColor}
           title="Log In"
@@ -109,13 +115,16 @@ const Login = ({ setIsSigningUp }: any) => {
           </Text>
         </Text>
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%"
+    width: "95%",
+    marginHorizontal: "5%",
+    marginVertical: "2%",
   },
   title: {
     fontSize: 20,
@@ -137,8 +146,13 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colours.whiteText,
-    fontWeight: "600",
+    fontWeight: "bold",
+    paddingVertical: '2%',
   },
+  textAlert: {
+    color: 'red',
+    paddingVertical: '2%',
+  }
 });
 
 export default Login;

@@ -6,6 +6,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { StyleSheet } from "react-native";
 import { colours } from "../../subatoms/colours/colours";
+// import LinearGradient from 'react-native-linear-gradient'
 
 const SignIn: FC = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -18,8 +19,8 @@ const SignIn: FC = () => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
 
-        {/* Image */}
-        <View>
+        {/* uEvents Logo */}
+        <View style={styles.image}>
           <Image
             style={styles.imageSize}
             source={require("../../../assets/uevents_logo.png")}
@@ -28,7 +29,7 @@ const SignIn: FC = () => {
         </View>
 
         {/* Login | SignUp Component */}
-        <View style={styles.component}>
+        <View style={styles.form}>
           {isSigningUp ? (
             <Signup setIsSigningUp={signInHandler} />
           ) : (
@@ -36,7 +37,7 @@ const SignIn: FC = () => {
           )}
         </View>
       </View>
-    </SafeAreaView>
+    </SafeAreaView> 
   );
 };
 
@@ -48,10 +49,17 @@ const styles = StyleSheet.create({
   container: {
     // flexDirection is column by default
     flex: 1,
-    paddingHorizontal: "3%",
+    // paddingHorizontal: "3%",
     justifyContent: "space-evenly",
     alignItems: "center",
     paddingBottom: "10%",
+  },
+  image: {
+    // height: "40%",
+  },
+  form: {
+    // height: "65%",
+    width: "100%"
   },
   appName: {
     fontSize: 40,
@@ -63,10 +71,13 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 14,
   },
-  component: {
-    width: "100%",
-    
-  },
+  linearGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    height: 200,
+    width: 350,
+  }
 });
 
 export default SignIn;

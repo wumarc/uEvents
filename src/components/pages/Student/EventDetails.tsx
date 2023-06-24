@@ -16,6 +16,7 @@ import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFireba
 import { Organizer } from "../../../utils/model/Organizer";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { StatusBar } from "react-native";
+import { Input } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType

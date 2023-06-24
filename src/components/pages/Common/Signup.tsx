@@ -63,15 +63,7 @@ const Signup = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           selectionColor={colours.primaryPurple}
-          inputContainerStyle={{
-            backgroundColor: "#fff",
-            borderBottomWidth: 2,
-            borderColor: "#bfbfbf",
-            borderWidth: 2,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
+          inputContainerStyle={styles.inputContainerStyle}
         />
         <Input
           placeholder="Password"
@@ -79,31 +71,15 @@ const Signup = ({ setIsSigningUp }: any) => {
           autoCapitalize="none"
           secureTextEntry={true}
           selectionColor={colours.primaryPurple}
-          inputContainerStyle={{
-            backgroundColor: "#fff",
-            borderBottomWidth: 2,
-            borderColor: "#bfbfbf",
-            borderWidth: 2,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
+          inputContainerStyle={styles.inputContainerStyle}
         />
         <Input
-          placeholder="Confirm your Password"
+          placeholder="Confirm your password"
           onChangeText={() => {}}
           autoCapitalize="none"
           secureTextEntry={true}
           selectionColor={colours.primaryPurple}
-          inputContainerStyle={{
-            backgroundColor: "#fff",
-            borderBottomWidth: 2,
-            borderColor: "#bfbfbf",
-            borderWidth: 2,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
+          inputContainerStyle={styles.inputContainerStyle}
         />
       </View>
 
@@ -185,6 +161,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
   },
+  inputContainerStyle: {
+    backgroundColor: "#fff",
+    borderBottomWidth: 2,
+    borderColor: "#bfbfbf",
+    borderWidth: 2,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+  }
 });
 
 export default Signup;
