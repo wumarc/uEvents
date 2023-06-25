@@ -59,6 +59,7 @@ const Signup = ({ setIsSigningUp }: any) => {
 
       {/* Form */}
       <View style={{width: '95%'}}>
+
         <SelectList
           data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
           setSelected={(value: string) => setUserType(value)}
