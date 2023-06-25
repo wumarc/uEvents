@@ -10,7 +10,7 @@ import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;

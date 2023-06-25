@@ -1,6 +1,6 @@
 import { Text } from "@rneui/base";
 import { StyleSheet } from "react-native";
-import { colours } from "../subatoms/colours/colours";
+import { colours } from "../subatoms/colours";
 import { View } from "react-native";
 
 const TicketDetail = (prop) => {

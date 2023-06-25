@@ -1,5 +1,5 @@
 import { Button } from "@rneui/themed";
-import { colours } from "../subatoms/colours/colours";
+import { colours } from "../subatoms/colours";
 
 interface buttonProps {
     buttonName: string;

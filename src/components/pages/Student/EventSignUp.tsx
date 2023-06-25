@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 import React from "react";
 import { StackActions } from "@react-navigation/native";
 import { Input } from "react-native-elements";

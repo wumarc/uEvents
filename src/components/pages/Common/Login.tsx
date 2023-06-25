@@ -4,7 +4,7 @@ import { Input } from "@rneui/base";
 import { auth } from "../../../firebaseConfig";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 import { StyleSheet } from "react-native";
 import { signInText, inputStyle } from "./Styling";
 

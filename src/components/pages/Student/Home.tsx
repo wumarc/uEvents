@@ -21,7 +21,7 @@ import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
 import { ButtonGroup } from "@rneui/themed";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType

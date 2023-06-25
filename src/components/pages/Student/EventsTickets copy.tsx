@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { mockEventClimbing } from "../../../utils/model/EventObject";
-import { ScreenSpacing, Title } from "../../subatoms/Spacing";
+import { ScreenSpacing, Title } from "../../subatoms/Theme";
 import Event from "../../organisms/Event";
 
 let placeholders = ["1", "1", "1", "1", "1"];

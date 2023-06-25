@@ -6,10 +6,10 @@ import {
   StyleSheet,
 } from "react-native";
 import { mockEventClimbing } from "../../../utils/model/EventObject";
-import { ScreenSpacing } from "../../subatoms/Spacing";
+import { ScreenSpacing } from "../../subatoms/Theme";
 import Event from "../../organisms/Event";
 import Ticket from "../../organisms/Ticket";
-import { Title } from "../../subatoms/Spacing";
+import { Title } from "../../subatoms/Theme";
 import { Dimensions } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";

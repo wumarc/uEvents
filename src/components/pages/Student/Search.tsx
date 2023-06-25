@@ -8,7 +8,7 @@ import {
   mockEventPainting,
 } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 import { TouchableOpacity } from "react-native";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

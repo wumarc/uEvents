@@ -6,8 +6,8 @@ import {
 } from "../../../utils/model/EventObject";
 import EventDate from "../../molecules/EventDate";
 import { Button } from "react-native-elements";
-import { colours } from "../../subatoms/colours/colours";
-import { Subtitle, regularText } from "../../subatoms/Spacing";
+import { colours } from "../../subatoms/colours";
+import { Subtitle, regularText } from "../../subatoms/Theme";
 import EventLocation from "../../molecules/EventLocation";
 import EventOrganizer from "../../molecules/EventOrganizer";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

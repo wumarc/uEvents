@@ -1,6 +1,5 @@
-import { colours } from "../../subatoms/colours/colours"
-import { fontSize, fontWeight } from "../../subatoms/Spacing"
-
+import { colours } from "../../subatoms/colours"
+import { fontSize, fontWeight } from "../../subatoms/Theme"
 
 export const signInText = {
     color: colours.whiteText,

@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 import { FC } from "react";
 import Profile from "./Profile";
 // import 'react-native-gesture-handler';

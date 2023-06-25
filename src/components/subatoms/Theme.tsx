@@ -1,4 +1,4 @@
-import { colours } from "./colours/colours"
+import { colours } from "./colours"
 
 export const ScreenSpacing = {
     marginHorizontal: 10,

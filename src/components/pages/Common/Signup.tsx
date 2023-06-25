@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 import { StyleSheet } from "react-native";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
 import { defaultStudent, Student } from "../../../utils/model/Student";

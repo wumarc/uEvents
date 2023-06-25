@@ -5,7 +5,7 @@ import { Image } from "react-native-elements";
 import Login from "./Login";
 import Signup from "./Signup";
 import { StyleSheet } from "react-native";
-import { colours } from "../../subatoms/colours/colours";
+import { colours } from "../../subatoms/colours";
 // import LinearGradient from 'react-native-linear-gradient'
 
 const SignIn: FC = () => {
