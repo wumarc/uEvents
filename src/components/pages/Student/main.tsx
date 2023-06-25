@@ -1,6 +1,7 @@
 import Home from "./Home";
 import Profile from "./Profile";
 import SavedEvents from "./SavedEvents";
+import Forum from "./Forum";
 import EventsTickets from "./EventsTickets";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -68,11 +69,26 @@ const MainView = ({ route, navigation }: props) => {
           tabBarLabel: "Home",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name={focused ? "home" : "home-outline"}
+              name={focused ? "jellyfish" : "jellyfish-outline"}
               color={colours.primaryPurple}
               size={30}
             />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="Forum"
+        component={Forum as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "Forum",
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "chat-processing" : "chat-processing-outline"}
+              color={colours.primaryPurple}
+              size={30}
+            />
+          )
         }}
       />
       <Tab.Screen

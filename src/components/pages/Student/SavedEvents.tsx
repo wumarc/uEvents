@@ -1,18 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { RootStackParamList } from "./main";
-import {
-  EventObject,
-  mockEventClimbing,
-} from "../../../utils/model/EventObject";
+import { EventObject } from "../../../utils/model/EventObject";
 import {
   useSateWithFireStoreArray,
   useStateWithFireStoreCollection,
 } from "../../../utils/useStateWithFirebase";
-import {
-  getFirebaseUserID,
-  getFirebaseUserIDOrEmpty,
-} from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
 import { StyleSheet } from "react-native";
@@ -36,7 +30,7 @@ const SavedEvents = ({ route, navigation }: props) => {
       }}
     >
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Saved Events</Text>
+        <Text style={styles.title}>Your Saved Events</Text>
       </View>
 
       <FlatList
