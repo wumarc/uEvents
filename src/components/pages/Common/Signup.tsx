@@ -14,6 +14,7 @@ import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { Linking } from "react-native";
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
@@ -49,19 +50,30 @@ const Signup = ({ setIsSigningUp }: any) => {
     return false;
   }
 
+  const [userType, setUserType] = useState("");
+
   return (
-    <View>
+    <View style={styles.container}>
       {/* Title */}
       <View>
-        <Text style={styles.text}>Create your student account</Text>
+        <Text style={styles.text}>Create your account</Text>
       </View>
 
       {/* Form */}
-      <View>
+      <View style={{width: '95%'}}>
+        <SelectList
+          data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
+          setSelected={(value: string) => setUserType(value)}
+          save="value"
+          defaultOption={{key: '3', value:'Account Type'}}
+          boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
+          dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
+        />
         <Input
           placeholder="Email"
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
+          containerStyle= {{paddingHorizontal: 0}}
           selectionColor={colours.primaryPurple}
           inputContainerStyle={styles.inputContainerStyle}
         />
@@ -70,52 +82,40 @@ const Signup = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
           secureTextEntry={true}
-          selectionColor={colours.primaryPurple}
-          inputContainerStyle={styles.inputContainerStyle}
-        />
-        <Input
-          placeholder="Confirm your password"
-          onChangeText={() => {}}
-          autoCapitalize="none"
-          secureTextEntry={true}
+          containerStyle= {{paddingHorizontal: 0}}
           selectionColor={colours.primaryPurple}
           inputContainerStyle={styles.inputContainerStyle}
         />
       </View>
 
       {/* Button */}
-      <View>
+      <View style={{width: '95%'}}>
         <Text>{error}</Text>
         <Button
           color={styles.button.backgroundColor}
-          title="Sign up as Student"
+          title="Sign up"
           style={{ marginBottom: 10 }}
           onPress={() => {
-            signUp(true).then((success) => {
-              if (!success) return;
-              addDocumentToCollection<Student>(
-                "users",
-                getFirebaseUserIDOrEmpty(),
-                defaultStudent
-              );
-            });
-          }}
-        />
-        <Button
-          color={styles.button.backgroundColor}
-          title="Sign up as Event Organizer"
-          style={{ marginBottom: 10 }}
-          onPress={() => {
-            // Don't validate email for organizers
-            signUp(false).then((success) => {
-              if (!success) return;
-              addDocumentToCollection<Organizer>(
-                "users",
-                getFirebaseUserIDOrEmpty(),
-                defaultOrganizer
-              );
-            });
-          }}
+            userType === "Student" 
+              ? signUp(true).then((success) => {
+                  if (!success) return;
+                  addDocumentToCollection<Student>(
+                    "users",
+                    getFirebaseUserIDOrEmpty(),
+                    defaultStudent
+                  );
+                })
+              : // Don't validate email for organizers
+                signUp(false).then((success) => {
+                  if (!success) return;
+                  addDocumentToCollection<Organizer>(
+                    "users",
+                    getFirebaseUserIDOrEmpty(),
+                    defaultOrganizer
+                  );
+                });
+            }
+          }
         />
       </View>
 
@@ -131,13 +131,16 @@ const Signup = ({ setIsSigningUp }: any) => {
           and are acknowledging that you have read our Privacy Policy.
         </Text>
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    width: "95%",
+    marginHorizontal: "5%",
+    marginVertical: "2%",
   },
   title: {
     fontSize: 20,
@@ -148,8 +151,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 15,
+    fontSize: 14,
+    fontWeight: "bold",
     marginTop: 10,
+    paddingVertical: '2%',
   },
   conditionsText: {
     color: "white",
@@ -159,7 +164,7 @@ const styles = StyleSheet.create({
   textButton: {
     color: colours.primaryPurple,
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 14,
   },
   inputContainerStyle: {
     backgroundColor: "#fff",

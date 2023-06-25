@@ -45,7 +45,7 @@ const Login = ({ setIsSigningUp }: any) => {
 
       {/* Title */}
       <View>
-        <Text style={styles.text}>Login to your student account</Text>
+        <Text style={styles.text}>Login to your account</Text>
       </View>
 
       {/* Form */}
@@ -109,10 +109,7 @@ const Login = ({ setIsSigningUp }: any) => {
       <View>
         <Text style={styles.switchPage}>
           Don't have an account?
-          <Text onPress={setIsSigningUp} style={styles.textButton}>
-            {" "}
-            Sign up
-          </Text>
+          <Text onPress={setIsSigningUp} style={styles.textButton}> Sign up</Text>
         </Text>
       </View>
 
@@ -125,10 +122,6 @@ const styles = StyleSheet.create({
     width: "95%",
     marginHorizontal: "5%",
     marginVertical: "2%",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
   button: {
     backgroundColor: colours.primaryPurple,
