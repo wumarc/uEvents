@@ -1,16 +1,10 @@
 import {
   FlatList,
-  SafeAreaView,
-  StatusBar,
   StyleSheet,
   View,
-  Pressable,
-  TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
-import { Button, Input, Header } from "@rneui/base";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
@@ -22,6 +16,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
 import { ButtonGroup } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
+import CustomDropdown from "../../atoms/CustomDropdown";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -59,34 +54,19 @@ const Home = ({ route, navigation }: props) => {
       />
 
       {/* Faceted Search */}
-      <View>
-        <ButtonGroup
-          buttons={["All", "Academic", "Cultural", "Religious"]}
-          selectedIndex={selectedIndex}
-          buttonContainerStyle={{
-            borderRadius: 20,
-            borderWidth: 0,
-          }}
-          containerStyle={{
-            borderRadius: 20,
-            borderWidth: 0,
-            backgroundColor: 'transparent',
-          }}
-          buttonStyle={{
-            borderRadius: 20,
-            borderWidth: 0,
-            backgroundColor: colours.secondaryPurple,
-            marginHorizontal: 5,
-          }}
-          innerBorderStyle={{
-            width: 0,
-          }}
-          textStyle={{
-            color: "white",
-          }}
-          selectedButtonStyle={{backgroundColor: colours.primaryPurple}}
-          onPress={(value) => { setSelectedIndex(value) }}
-        />
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingVertical: 7,
+      }}>
+        <View style={{padding: 3, width: '50%'}}>
+          <Text>Event Type</Text>
+          <CustomDropdown/>
+        </View>
+        <View style={{padding: 3, width: '50%'}}>
+          <Text>Followed</Text>
+          <CustomDropdown/>
+        </View>
       </View>
 
       <View style={styles.events}>

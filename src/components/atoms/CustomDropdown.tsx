@@ -57,9 +57,8 @@ const styles = StyleSheet.create({
     backgroundColor: colours.secondaryPurple,
     borderRadius: 20,
     padding: 5,
-    marginTop: 120,// remove this
     alignItems: 'center',
-    width: 130,
+    width: '100%',
   },
   dropdown: {
     borderWidth: 0,
