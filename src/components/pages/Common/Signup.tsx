@@ -2,10 +2,7 @@ import { View, Text } from "react-native";
 import { Button } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { auth } from "../../../firebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { colours } from "../../subatoms/colours";
 import { StyleSheet } from "react-native";
@@ -15,7 +12,7 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { Linking } from "react-native";
 import { SelectList } from 'react-native-dropdown-select-list'
-import { inputStyle, signInText } from "./Styling";
+import { inputStyle, signInText, smallText } from "./Styling";
 
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
@@ -127,8 +124,9 @@ const Signup = ({ setIsSigningUp }: any) => {
         </Text>
         <Text style={styles.conditionsText}>
           By clicking Sign up, you are agreeing to uEvents' 
-            <Text style={{color: colours.primaryPurple, fontWeight: "bold"}} onPress={() => Linking.openURL("https://www.uevents.org/terms")}> Terms of Service </Text>
-          and are acknowledging that you have read our Privacy Policy.
+            <Text style={smallText} onPress={() => Linking.openURL("https://www.uevents.org/terms_and_conditions")}> Terms of Service </Text>
+          and are acknowledging that you have read our 
+            <Text style={smallText} onPress={() => Linking.openURL("https://www.uevents.org/privacy_policy")}> Privacy Policy</Text>.
         </Text>
       </View>
 

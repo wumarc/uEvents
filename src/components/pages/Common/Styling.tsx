@@ -8,6 +8,11 @@ export const signInText = {
     paddingVertical: '2%',
 }
 
+export const smallText = {
+    color: colours.primaryPurple, 
+    fontWeight: fontWeight.bold,
+}
+
 export const inputStyle = {
     backgroundColor: "#fff",
     borderBottomWidth: 2,
