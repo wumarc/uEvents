@@ -30,11 +30,13 @@ const SignIn: FC = () => {
 
         {/* Login | SignUp Component */}
         <View style={styles.form}>
-          {isSigningUp ? (
-            <Signup setIsSigningUp={signInHandler} />
-          ) : (
-            <Login setIsSigningUp={signInHandler} />
-          )}
+          <View style={styles.innerForm}>
+            {isSigningUp ? (
+              <Signup setIsSigningUp={signInHandler} />
+            ) : (
+              <Login setIsSigningUp={signInHandler} />
+            )}
+          </View>
         </View>
       </View>
     </SafeAreaView> 
@@ -60,6 +62,11 @@ const styles = StyleSheet.create({
   form: {
     // height: "65%",
     width: "100%"
+  },
+  innerForm: {
+    width: "95%",
+    marginHorizontal: "5%",
+    marginVertical: "2%",
   },
   appName: {
     fontSize: 40,

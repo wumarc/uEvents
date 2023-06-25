@@ -15,13 +15,16 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { Linking } from "react-native";
 import { SelectList } from 'react-native-dropdown-select-list'
+import { inputStyle, signInText } from "./Styling";
 
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
 const Signup = ({ setIsSigningUp }: any) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [userType, setUserType] = useState("");
 
   async function signUp(validate: boolean): Promise<boolean> {
     if (validate) {
@@ -50,13 +53,11 @@ const Signup = ({ setIsSigningUp }: any) => {
     return false;
   }
 
-  const [userType, setUserType] = useState("");
-
   return (
-    <View style={styles.container}>
+    <View>
       {/* Title */}
       <View>
-        <Text style={styles.text}>Create your account</Text>
+        <Text style={signInText}>Create your account</Text>
       </View>
 
       {/* Form */}
@@ -75,7 +76,7 @@ const Signup = ({ setIsSigningUp }: any) => {
           autoCapitalize="none"
           containerStyle= {{paddingHorizontal: 0}}
           selectionColor={colours.primaryPurple}
-          inputContainerStyle={styles.inputContainerStyle}
+          inputContainerStyle={inputStyle}
         />
         <Input
           placeholder="Password"
@@ -84,7 +85,7 @@ const Signup = ({ setIsSigningUp }: any) => {
           secureTextEntry={true}
           containerStyle= {{paddingHorizontal: 0}}
           selectionColor={colours.primaryPurple}
-          inputContainerStyle={styles.inputContainerStyle}
+          inputContainerStyle={inputStyle}
         />
       </View>
 
@@ -92,9 +93,8 @@ const Signup = ({ setIsSigningUp }: any) => {
       <View style={{width: '95%'}}>
         <Text>{error}</Text>
         <Button
-          color={styles.button.backgroundColor}
+          color={colours.primaryPurple}
           title="Sign up"
-          style={{ marginBottom: 10 }}
           onPress={() => {
             userType === "Student" 
               ? signUp(true).then((success) => {
@@ -123,7 +123,7 @@ const Signup = ({ setIsSigningUp }: any) => {
       <View>
         <Text style={styles.text}>
           Already have an account?
-          <Text onPress={setIsSigningUp} style={styles.textButton}> Sign in</Text>
+          <Text onPress={setIsSigningUp} style={{color: colours.primaryPurple}}> Sign in</Text>
         </Text>
         <Text style={styles.conditionsText}>
           By clicking Sign up, you are agreeing to uEvents' 
@@ -137,43 +137,14 @@ const Signup = ({ setIsSigningUp }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "95%",
-    marginHorizontal: "5%",
-    marginVertical: "2%",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  button: {
-    backgroundColor: colours.primaryPurple,
-  },
   text: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "bold",
+    ...signInText,
     marginTop: 10,
-    paddingVertical: '2%',
   },
   conditionsText: {
     color: "white",
     fontSize: 10,
     marginTop: 10,
-  },
-  textButton: {
-    color: colours.primaryPurple,
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-  inputContainerStyle: {
-    backgroundColor: "#fff",
-    borderBottomWidth: 2,
-    borderColor: "#bfbfbf",
-    borderWidth: 2,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 6,
   }
 });
 

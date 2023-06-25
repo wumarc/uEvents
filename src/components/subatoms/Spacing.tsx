@@ -7,26 +7,21 @@ export const ScreenSpacing = {
     paddingVertical: 10,
 }
 
-const fontSize = {
+export const fontSize = {
+    extraSmall: 10,
     small: 14,
     medium: 16,
     large: 20,
 }
 
-const fontWeight = {
+export const fontWeight = {
     light: "300",
     normal: "400",
-    bold: '700',
+    bold: "700" as "bold", // what is this weird ass error?
 }
 
 const fontStyle = {
     regular: "Tahoma"
-}
-
-const fontColour = {
-    primary: '#8A4287',
-    secondary: '#D6A9D5',
-    text: '#121212',
 }
 
 export const Title = {

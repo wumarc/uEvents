@@ -11,5 +11,5 @@ export const colours = {
     greyText: '#BFBFBF',
     darkGreyText: '#7a716e',
     whiteText: '#FFFFFF',
-    
+
 }

@@ -1,15 +1,12 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text} from "react-native";
 import { Button } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { auth } from "../../../firebaseConfig";
 import { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { colours } from "../../subatoms/colours/colours";
 import { StyleSheet } from "react-native";
-import CustomInput from "../../atoms/CustomInput";
+import { signInText, inputStyle } from "./Styling";
 
 // Accepted universities
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
@@ -41,17 +38,15 @@ const Login = ({ setIsSigningUp }: any) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
 
       {/* Title */}
       <View>
-        <Text style={styles.text}>Login to your account</Text>
+        <Text style={signInText}>Login to your account</Text>
       </View>
 
       {/* Form */}
-      <View style={{
-        width: '95%',
-      }}>
+      <View style={{width: '95%'}}>
         <Input
           placeholder="Email"
           onChangeText={(value) => setEmail(value)}
@@ -61,16 +56,7 @@ const Login = ({ setIsSigningUp }: any) => {
           containerStyle= {{
             paddingHorizontal: 0,
           }}
-          // inputStyle={{ outlineStyle: "none" }}
-          inputContainerStyle={{
-            backgroundColor: "#fff",
-            borderBottomWidth: 2,
-            borderColor: "#bfbfbf",
-            borderWidth: 2,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
+          inputContainerStyle={inputStyle}
         />
         <Input
           placeholder="Password"
@@ -81,15 +67,7 @@ const Login = ({ setIsSigningUp }: any) => {
           containerStyle= {{
             paddingHorizontal: 0,
           }}
-          inputContainerStyle={{
-            backgroundColor: "#fff",
-            borderBottomWidth: 2,
-            borderColor: "#bfbfbf",
-            borderWidth: 2,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
+          inputContainerStyle={inputStyle}
         />
       </View>
 
@@ -97,19 +75,17 @@ const Login = ({ setIsSigningUp }: any) => {
       <View style={{width: '95%'}}>
         <Text style={styles.textAlert} >{error}</Text>
         <Button
-          color={styles.button.backgroundColor}
+          color={colours.primaryPurple}
           title="Log In"
-          onPress={() => {
-            signIn();
-          }}
+          onPress={() => {signIn();}}
         />
       </View>
 
       {/* Sign up option */}
       <View>
-        <Text style={styles.switchPage}>
+        <Text style={signInText}>
           Don't have an account?
-          <Text onPress={setIsSigningUp} style={styles.textButton}> Sign up</Text>
+          <Text onPress={setIsSigningUp} style={{color: colours.primaryPurple}}> Sign up</Text>
         </Text>
       </View>
 
@@ -118,30 +94,6 @@ const Login = ({ setIsSigningUp }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "95%",
-    marginHorizontal: "5%",
-    marginVertical: "2%",
-  },
-  button: {
-    backgroundColor: colours.primaryPurple,
-  },
-  switchPage: {
-    color: colours.whiteText,
-    fontWeight: "600",
-    marginTop: 10,
-    fontSize: 14,
-  },
-  textButton: {
-    color: colours.primaryPurple,
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-  text: {
-    color: colours.whiteText,
-    fontWeight: "bold",
-    paddingVertical: '2%',
-  },
   textAlert: {
     color: 'red',
     paddingVertical: '2%',
