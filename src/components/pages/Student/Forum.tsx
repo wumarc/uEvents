@@ -16,16 +16,9 @@ const Forum = () => {
                     horizontal
                     pagingEnabled
                 >
-                    <View style={{
-                        flexDirection: 'row',
-                        backgroundColor: 'blue',
-                    }}>
-                        <View style={{margin: 7}}>
-                            <CustomDropdown/>
-                        </View>
-                        <View style={{margin: 7}}>
-                            <CustomDropdown/>
-                        </View>
+                    <View>
+                        <Text>free ice cream on TBT lawn!</Text>
+                        <Text>Come now! it will be here until 7 pm</Text>
                     </View>
 
                 </ScrollView>

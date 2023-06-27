@@ -56,8 +56,8 @@ const Event: React.FC<EventProps> = (props) => {
   }
 
   return (
+    
     <View style={styles.container}>
-
 
       <TouchableOpacity
         onPress={() => {
@@ -75,7 +75,7 @@ const Event: React.FC<EventProps> = (props) => {
             <ImageBackground
               style={{
                 width: "100%", 
-                height: 280,
+                height: 400,
                 // borderRadius: 14,
                 // opacity: 0.7,
               }}

@@ -1,50 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { colours } from '../subatoms/colours';
 
-const CustomDropdown = () => {
-  const dropdownOptions = [
-    { label: 'All', value: 'All'},
-    { label: 'On-campus', value: 'On-campus'},
-    { label: 'Off-campus', value: 'Off-campus'},
-  ];
+const CustomDropdown = ({dropdownOptions}: any) => {
 
-  const [selectedValue, setSelectedValue] = useState(dropdownOptions[0].value);
+  const [selectedValue, setSelectedValue] = useState("All"); // might need to fix this
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const renderDropdownItem = ({ item }) => (
+  const renderDropdownItem = ({item}: any) => (
     <TouchableOpacity
       style={styles.dropdownItem}
       onPress={() => {
-        setSelectedValue(item.value);
+        setSelectedValue(item);
         toggleDropdown();
       }}
     >
-        <Text style={{
-            color: 'white', 
-            fontSize: '15', 
-            fontWeight: '700',
-        }}>
-            {item.label}
-        </Text>
+      <Text style={styles.text}>{item}</Text>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
-        <Text style={{color: 'white', fontSize: '15', fontWeight: '700'}}>{selectedValue}</Text>
+        <Text style={styles.text}>{selectedValue}</Text>
       </TouchableOpacity>
       {isDropdownOpen && (
         <View style={styles.dropdownList}>
           <FlatList
             data={dropdownOptions}
             renderItem={renderDropdownItem}
-            keyExtractor={(item) => item.value}
+            keyExtractor={(item) => item}
           />
         </View>
       )}
@@ -65,7 +54,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   dropdownList: {
-    borderTopWidth: 1,
+    borderTopWidth: 0,
     borderColor: 'grey',
     maxHeight: 110,
   },
@@ -73,6 +62,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: colours.secondaryPurple,
   },
+  text: {
+    color: 'white', 
+    fontSize: 15,
+    fontWeight: '700'
+  }
 });
 
 export default CustomDropdown;

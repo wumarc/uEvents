@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -14,9 +14,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
-import { ButtonGroup } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
 import CustomDropdown from "../../atoms/CustomDropdown";
+import { Dimensions } from "react-native";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -40,15 +40,15 @@ const Home = ({ route, navigation }: props) => {
       {/* Search bar */}
       <SearchBar
         platform="default"
-        // containerStyle={{ backgroundColor: colours.secon }}
-        inputContainerStyle={{}}
+        inputContainerStyle={{borderRadius: 20}}
         inputStyle={{}}
-        leftIconContainerStyle={{}}
+        containerStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
+        // leftIconContainerStyle={{backgroundColor: 'green', padding: 3}}
         rightIconContainerStyle={{}}
         lightTheme
         loadingProps={{}}
         onChangeText={() => {}}
-        placeholder="Search?"
+        placeholder="Search all events..."
         placeholderTextColor="#121212"
         round
       />
@@ -57,23 +57,25 @@ const Home = ({ route, navigation }: props) => {
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        paddingVertical: 7,
+        paddingVertical: 7
       }}>
         <View style={{padding: 3, width: '50%'}}>
-          <Text>Event Type</Text>
-          <CustomDropdown/>
+          <Text style={styles.title}>Events Type:</Text>
+          <CustomDropdown dropdownOptions={['All', 'On-campus', 'Off-campus']} />
         </View>
         <View style={{padding: 3, width: '50%'}}>
-          <Text>Followed</Text>
-          <CustomDropdown/>
+          <Text style={styles.title}>Organizers:</Text>
+          <CustomDropdown dropdownOptions={['All', 'Followed', 'Unfollowed']} />
         </View>
       </View>
 
       <View style={styles.events}>
         <FlatList
           data={events}
-          renderItem={({ item, index }) => (
-            <View style={styles.event}>
+          renderItem={({item, index}) => (
+            <View 
+              style={styles.event}
+            >
               <Event
                 id={item.id}
                 navigation={navigation}
@@ -83,7 +85,7 @@ const Home = ({ route, navigation }: props) => {
           )}
         />
       </View>
-      
+
       <Toast/>
     </View>
   );
@@ -96,13 +98,15 @@ export const styles = StyleSheet.create({
 
   },
   events: {
-    
+
   },
   event: {
-    marginVertical: 6,
+    paddingVertical: 3,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 25,
+    fontSize: 16,
     fontWeight: "bold",
+    paddingStart: 4,
   },
 });
