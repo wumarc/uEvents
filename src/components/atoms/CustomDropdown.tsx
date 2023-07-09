@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { colours } from '../subatoms/colours';
 
-const CustomDropdown = ({dropdownOptions}: any) => {
+const CustomDropdown = ({dropdownOptions, dropdownName}: any) => {
 
   const [selectedValue, setSelectedValue] = useState("All"); // might need to fix this
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -26,7 +26,12 @@ const CustomDropdown = ({dropdownOptions}: any) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
-        <Text style={styles.text}>{selectedValue}</Text>
+        <Text style={styles.text}>
+          <Text style={{fontWeight: '300'}}>
+            {dropdownName}
+          </Text>
+        {selectedValue}
+        </Text>
       </TouchableOpacity>
       {isDropdownOpen && (
         <View style={styles.dropdownList}>
@@ -43,8 +48,8 @@ const CustomDropdown = ({dropdownOptions}: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colours.secondaryPurple,
-    borderRadius: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
     padding: 5,
     alignItems: 'center',
     width: '100%',
@@ -59,11 +64,11 @@ const styles = StyleSheet.create({
     maxHeight: 110,
   },
   dropdownItem: {
-    padding: 10,
-    backgroundColor: colours.secondaryPurple,
+    padding: 3,
+  //   backgroundColor: colours.secondaryPurple,
   },
   text: {
-    color: 'white', 
+    color: 'grey',
     fontSize: 15,
     fontWeight: '700'
   }

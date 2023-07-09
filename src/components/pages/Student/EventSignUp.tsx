@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
 import React from "react";

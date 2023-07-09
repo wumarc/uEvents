@@ -4,11 +4,9 @@ import {
   View,
 } from "react-native";
 import { useState } from "react";
-import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
-import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -16,7 +14,6 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
 import CustomDropdown from "../../atoms/CustomDropdown";
-import { Dimensions } from "react-native";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -34,43 +31,55 @@ const Home = ({ route, navigation }: props) => {
     return <Text>Loading</Text>;
   }
 
+  const showToast = (save: boolean) => {
+    // https://github.com/calintamas/react-native-toast-message/blob/945189fec9746b79d8b5b450e298ef391f8022fb/docs/custom-layouts.md
+    Toast.show({
+      type: "success",
+      text1: save ? "Event Saved" : "Event Unsaved",
+      position: "bottom",
+      bottomOffset: 130,
+      visibilityTime: 1800,
+    });
+  }
+
   return (
     <View style={styles.container}>
-      
+
       {/* Search bar */}
-      <SearchBar
-        platform="default"
-        inputContainerStyle={{borderRadius: 20}}
-        inputStyle={{}}
-        containerStyle={{ backgroundColor: "transparent", borderWidth: 0 }}
-        // leftIconContainerStyle={{backgroundColor: 'green', padding: 3}}
-        rightIconContainerStyle={{}}
-        lightTheme
-        loadingProps={{}}
-        onChangeText={() => {}}
-        placeholder="Search all events..."
-        placeholderTextColor="#121212"
-        round
-      />
+      <View>
+        <SearchBar
+          platform="default"
+          inputContainerStyle={{borderRadius: 20, backgroundColor: 'white', margin: 0}}
+          inputStyle={{}}
+          containerStyle={{ backgroundColor: colours.secondaryPurple, borderWidth: 0, borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+          // leftIconContainerStyle={{backgroundColor: 'green', padding: 3}}
+          rightIconContainerStyle={{}}
+          loadingProps={{}}
+          onChangeText={() => {}}
+          placeholder="Search all events..."
+          placeholderTextColor="#121212"
+        />
+      </View>
 
       {/* Faceted Search */}
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        paddingVertical: 7
+        paddingVertical: 3,
+        backgroundColor: colours.secondaryPurple
       }}>
         <View style={{padding: 3, width: '50%'}}>
-          <Text style={styles.title}>Events Type:</Text>
-          <CustomDropdown dropdownOptions={['All', 'On-campus', 'Off-campus']} />
+          <CustomDropdown dropdownName={'Event type'}  dropdownOptions={['All', 'On-campus', 'Off-campus']} />
         </View>
         <View style={{padding: 3, width: '50%'}}>
-          <Text style={styles.title}>Organizers:</Text>
-          <CustomDropdown dropdownOptions={['All', 'Followed', 'Unfollowed']} />
+          <CustomDropdown dropdownName={'Followed'} dropdownOptions={['All', 'Followed', 'Unfollowed']} />
         </View>
       </View>
 
+      {/* Event List*/}
       <View style={styles.events}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={events}
           renderItem={({item, index}) => (
             <View 
@@ -80,13 +89,16 @@ const Home = ({ route, navigation }: props) => {
                 id={item.id}
                 navigation={navigation}
                 userType={route.params.userType}
+                onSaveEvent={showToast}
               />
             </View>
           )}
         />
       </View>
 
+      {/* Toast */}
       <Toast/>
+      
     </View>
   );
 };
@@ -101,12 +113,13 @@ export const styles = StyleSheet.create({
 
   },
   event: {
-    paddingVertical: 3,
+    paddingVertical: "8%",
     justifyContent: 'center',
   },
   title: {
+    color: "white",
     fontSize: 16,
-    fontWeight: "bold",
-    paddingStart: 4,
+    fontWeight: "600",
+    paddingStart: 8,
   },
 });

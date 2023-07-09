@@ -12,6 +12,7 @@ interface EventProps {
   id: string;
   navigation: any;
   userType: string;
+  onSaveEvent: any;
 }
 
 const Event: React.FC<EventProps> = (props) => {
@@ -22,16 +23,6 @@ const Event: React.FC<EventProps> = (props) => {
   );
 
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
-  
-  const showToast = () => {
-    Toast.show({
-      type: "info",
-      text1: "Your event has been saved!",
-      text2: "You can view your saved events in the saved page",
-      position: "bottom",
-      visibilityTime: 1800
-    });
-  }
 
   const saveEvent = () => {
     if (isSaved) {
@@ -42,12 +33,14 @@ const Event: React.FC<EventProps> = (props) => {
           (userID: string) => userID !== getFirebaseUserIDOrEmpty()
         ),
       });
+      props.onSaveEvent(false);
     } else {
       // Add to saved
       setEvent({
         ...event,
         saved: [...event.saved, getFirebaseUserIDOrEmpty()],
       });
+      props.onSaveEvent(true);
     }
   };
 
@@ -103,10 +96,7 @@ const Event: React.FC<EventProps> = (props) => {
                       padding: 5,
                       backgroundColor: "#d1cfcf",
                     }}
-                    onPress={() => {
-                      saveEvent(),
-                      showToast()
-                    }}
+                    onPress={() => saveEvent() }
                   />
                 </View>
 

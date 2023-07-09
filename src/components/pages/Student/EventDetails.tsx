@@ -1,5 +1,4 @@
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
-import { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import {
   EventObject,
@@ -16,7 +15,6 @@ import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFireba
 import { Organizer } from "../../../utils/model/Organizer";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { StatusBar } from "react-native";
-import { Input } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -75,11 +73,23 @@ const EventDetails = ({ route, navigation }: props) => {
             backgroundColor: colours.primaryPurple,
             padding: 15,
           }}
-          title="Attend"
+          title="View on Web"
+          icon={{
+            name: 'external-link',
+            type: 'font-awesome',
+            size: 15,
+            color: 'white',
+          }}
+          // containerStyle= {{
+          //   width: 150,
+          //   marginHorizontal: 50,
+          //   marginVertical: 10,            
+          // }}
           onPress={() => {
-            navigation.navigate("EventSignUpView", {
-              userType: route.params.userType,
-            });
+            Linking.openURL("https://www.google.com");
+            // navigation.navigate("EventSignUpView", {
+            //   userType: route.params.userType,
+            // });
           }}
         />
       </View>
