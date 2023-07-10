@@ -11,7 +11,6 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { StatusBar } from "react-native";
 import DateCard from "../../atoms/DateCard";
 import { LinearGradient } from "expo-linear-gradient";
-import { color } from "@rneui/base";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -35,20 +34,20 @@ const EventDetails = ({ route, navigation }: props) => {
     <View style={styles.big_container}>
 
       {/* Event Details */}
-      <View>
-        <ScrollView>
+      <View style={{flex: 1}}>
+        <ScrollView style={{backgroundColor: colours.secondaryPurple}}>
           
           {/* Event Image */}
           <ImageBackground
-              style={{width : '100%', height: 400}}
-              source={{uri : "https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg"}}
+              style={{width : '100%', height: '100%'}}
+              source={{uri : "https://i.pinimg.com/originals/a2/cd/2c/a2cd2c7e4383e563cc6a65489968b5af.jpg"}}
           >
             <LinearGradient 
                 colors={['#00000000', '#6B556B']} 
                 style={{height : '100%', width : '100%', justifyContent: 'flex-end'}}
             >
               {/* Event name */}
-              <View>
+              <View style={{paddingHorizontal: 10}}>
                 <Text style={styles.title}>{event.name}</Text>
                 <Text style={{color: 'white'}}>{organizer.name}</Text>
               </View>
@@ -58,17 +57,13 @@ const EventDetails = ({ route, navigation }: props) => {
           {/* Event Description */}
           <LinearGradient
             colors={['#6B556B', '#D6A9D5']} 
-            style={{height : '100%', width : '100%'}}
+            style={{height : '100%', width : '100%', flexGrow: 1}}
           >
             <View style={{paddingHorizontal: 10}}>
                 {/* Event date */}
                 <View style={{flexDirection: 'row'}}>
-                  <View style={{flexDirection: 'column', width: '25%'}}>
-                    <DateCard line1={"29"} line2={"December"}/>
-                  </View>
-                  <View style={{flexDirection: 'row', width: '40%'}}>
-                    <DateCard line1={"Tuesday"} line2={"10:00 PM - End"}/>
-                  </View>
+                  <DateCard line1={"29"} line2={"December"}/>
+                  <DateCard line1={"Tuesday"} line2={"10:00 PM - End"}/>
                 </View>
                 
                 {/* Event location */}
@@ -81,7 +76,6 @@ const EventDetails = ({ route, navigation }: props) => {
                   <Text style={styles.title}>About the event</Text>
                   <Text style={regularText}>{event.description} </Text>
                 </View>
-
             </View>
           </LinearGradient>
 
@@ -139,7 +133,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     alignItems: "center",
-    backgroundColor: colours.secondaryGrey,
+    // backgroundColor: colours.secondaryGrey,
+    backgroundColor: colours.secondaryPurple,
   },
   price: {
     fontSize: 20,
