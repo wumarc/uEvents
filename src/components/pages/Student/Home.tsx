@@ -79,6 +79,7 @@ const Home = ({ route, navigation }: props) => {
       {/* Event List*/}
       <View style={styles.events}>
         <FlatList
+          contentContainerStyle={{paddingBottom: 200}}
           showsVerticalScrollIndicator={false}
           data={events}
           renderItem={({item, index}) => (
