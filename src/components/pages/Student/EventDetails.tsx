@@ -42,7 +42,7 @@ const EventDetails = ({ route, navigation }: props) => {
               style={{width : '100%', height: '100%'}}
               source={{uri : "https://i.pinimg.com/originals/a2/cd/2c/a2cd2c7e4383e563cc6a65489968b5af.jpg"}}
           >
-            <LinearGradient 
+            <LinearGradient
                 colors={['#00000000', '#6B556B']} 
                 style={{height : '100%', width : '100%', justifyContent: 'flex-end'}}
             >
@@ -56,7 +56,7 @@ const EventDetails = ({ route, navigation }: props) => {
 
           {/* Event Description */}
           <LinearGradient
-            colors={['#6B556B', '#D6A9D5']} 
+            colors={['#6B556B', colours.secondaryPurple]} 
             style={{height : '100%', width : '100%', flexGrow: 1}}
           >
             <View style={{paddingHorizontal: 10}}>
