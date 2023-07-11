@@ -17,15 +17,6 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
-  const [loading, profile, setProfile] = useSateWithFireStore<Student>(
-    "students" + "/" + getFirebaseUserID(),
-    "info",
-    defaultStudent
-  );
-
-  if (loading) {
-    return <Loading/>;
-  }
 
   const logout = () => {
     const auth = getAuth();
@@ -38,15 +29,24 @@ const Profile = ({ route, navigation }: props) => {
       });
   };
 
+  const [loading, profile, setProfile] = useSateWithFireStore<Student>(
+    "students" + "/" + getFirebaseUserID(),
+    "info",
+    defaultStudent
+  );
+
+  if (loading) { return <Loading/> }
+
   return (
     <View style={styles.container}>
+      
       {/* Header Section */}
       <View style={styles.profileHeader}>
         <Text h4>Your Profile</Text>
       </View>
 
       {/* Image Section */}
-      <View style={styles.profileImage}>
+      {/* <View style={styles.profileImage}> */}
         {/* <Image 
                     source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
                     style={{ 
@@ -55,19 +55,19 @@ const Profile = ({ route, navigation }: props) => {
                         borderRadius: 200/2,
                     }}
                 /> */}
-        <Avatar
+        {/* <Avatar
           source={{
             uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
           }}
           // showEditButton
           rounded
           size="xlarge"
-        />
-      </View>
+        /> */}
+      {/* </View> */}
 
       {/* Student Info Section */}
       <View style={styles.studentInfo}>
-        <View style={{ flexDirection: "column", flex: 1 }}>
+        <View style={{ flexDirection: "column", flex: 1}}>
           <Input
             placeholder="Email"
             defaultValue={profile.name ? profile.name : "jacyob@uottawa.ca"}
@@ -75,18 +75,37 @@ const Profile = ({ route, navigation }: props) => {
               type: "material",
               name: "mail",
             }}
+            label= "Email"
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
+
+          <Text>Change your Password</Text>
           <Input
-            placeholder="Full Name"
-            defaultValue={profile.name ? profile.name : "Jacyob Jacques"}
+            placeholder="Password"
+            defaultValue={profile.name ? profile.name : "Your old password"}
             leftIcon={{
               type: "material",
-              name: "person",
+              name: "lock",
             }}
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
           <Input
+            placeholder="Password"
+            defaultValue={profile.name ? profile.name : "Your new password"}
+            leftIcon={{
+              type: "material",
+              name: "lock",
+            }}
+            onChangeText={(value) => setProfile({ ...profile, name: value })}
+          />
+          <Button
+            color={colours.primaryPurple}
+            onPress={() => {}}
+            title="Reset password"
+            radius={15}
+            style={{marginBottom: 10}}
+          />
+          {/* <Input
             placeholder="Student ID"
             defaultValue="3000049494"
             // defaultValue={
@@ -101,53 +120,28 @@ const Profile = ({ route, navigation }: props) => {
                 setProfile({ ...profile, studentId: parseInt(value) });
               }
             }}
-          />
-          {/* <Input
-            placeholder=""
-            defaultValue="Marketing @ Telfer"
-            // defaultValue={
-            //   profile.studentId.toString() ? profile.studentId.toString() : ""
-            // }
-            leftIcon={{
-              type: "material",
-              name: "school",
-            }}
-          />
-          <Input
-            placeholder=""
-            defaultValue="Vegetarian"
-            // defaultValue={
-            //   profile.studentId.toString() ? profile.studentId.toString() : ""
-            // }
-            leftIcon={{
-              type: "material",
-              name: "restaurant-menu",
-            }}
           /> */}
         </View>
       </View>
 
       {/* Log out button */}
-      <View style={{flexDirection: "row"}}>
+      <View style={{marginBottom: 10}}>
         <Button
           color={colours.primaryPurple}
           onPress={() => logout()}
           title="Log out"
-          style={{ marginBottom: 10 }}
+          radius={15}
         />
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 0,
-    marginHorizontal: 0,
     paddingHorizontal: 8,
-    // backgroundColor: "red",
-    alignItems: "center",
+    flex: 1,
     justifyContent: "space-between",
   },
   profileHeader: {
@@ -163,15 +157,7 @@ const styles = StyleSheet.create({
   studentInfo: {
     flexDirection: "row",
     // backgroundColor: "green"
-  },
-  saveButton: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  dropdown: {
-    borderColor: "#B7B7B7",
-    height: 50,
-  },
+  }
 });
 
 export default Profile;

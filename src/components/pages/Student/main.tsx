@@ -143,7 +143,7 @@ const Main: FC<{ userType: string }> = (props) => {
               title: "Complete your RSVP",
             }}
           />
-          {/* <Stack.Screen name="ClubProfileView" component={} /> */}
+          {/* <Stack.Screen name="ChangePasswordView" component={ChangePassword} /> */}
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
