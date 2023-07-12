@@ -38,11 +38,32 @@ const EditEvent = ({ route, navigation }: props) => {
     return <Text>Loading</Text>;
   }
 
+  let categories = "";
+
+  if (!event.categories) {
+    event.categories = [];
+  }
+
+  for (const category of event.categories) {
+    categories += category + ",";
+  }
+  // Remove last comma
+  categories = categories.substring(0, categories.length - 1);
+
+  let timeString = "";
+  if (event.time) {
+    timeString += event.time.toDate().getFullYear() + ":";
+    timeString += event.time.toDate().getMonth() + ":";
+    timeString += event.time.toDate().getDate() + ":";
+    timeString += event.time.toDate().getHours() + ":";
+    timeString += event.time.toDate().getMinutes();
+  }
+
   return (
     <View style={styles.container}>
       <View>
         {found ? (
-          <Image style={{ height: 400, width: 300 }} source={{ uri: url }} />
+          <img style={{ maxWidth: 300, height: "auto" }} src={url} />
         ) : (
           <Text>No image found</Text>
         )}
@@ -64,20 +85,15 @@ const EditEvent = ({ route, navigation }: props) => {
           onChangeText={(value) => set({ ...event, description: value })}
         />
         <Input
-          defaultValue="0000-00-00"
-          placeholder="Date YYYY-MM-DD"
-          onChangeText={(value) => set({ ...event, date: new Date(value) })}
-        />
-        <Input
-          defaultValue="00:00"
-          placeholder="Time HH:MM"
+          defaultValue={timeString}
+          placeholder="Time YYYY:MM:DD:HH:MM"
           onChangeText={(value) => {
-            const [hours, minutes] = value.split(":");
+            const [year, month, day, hours, minutes] = value.split(":");
             // Convert to milliseconds
             const time = new Date(
-              0,
-              0,
-              0,
+              parseInt(year as string),
+              parseInt(month as string),
+              parseInt(day as string),
               parseInt(hours as string),
               parseInt(minutes as string)
             );
@@ -100,7 +116,7 @@ const EditEvent = ({ route, navigation }: props) => {
           }}
         />
         <Input
-          defaultValue=""
+          defaultValue={categories}
           placeholder={
             "Categories (Make sure you write the category exactly as it is in the list of categories!!!)"
           }

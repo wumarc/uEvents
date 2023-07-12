@@ -1,4 +1,13 @@
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  Linking,
+  ImageBackground,
+} from "react-native";
 import { EventObject } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
@@ -21,64 +30,67 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.eventID
   );
 
-  const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>(
-    "users",
-    route.params.organizerID
-  );
+  // const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>(
+  //   "users",
+  //   route.params.organizerID
+  // );
 
-  if (loading || loading2) {
-    return <ActivityIndicator/>;
+  if (loading) {
+    return <ActivityIndicator />;
   }
 
   return (
     <View style={styles.big_container}>
-
       {/* Event Details */}
-      <View style={{flex: 1}}>
-        <ScrollView style={{backgroundColor: colours.secondaryPurple}}>
-          
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ backgroundColor: colours.secondaryPurple }}>
           {/* Event Image */}
           <ImageBackground
-              style={{width : '100%', height: '100%'}}
-              source={{uri : "https://i.pinimg.com/originals/a2/cd/2c/a2cd2c7e4383e563cc6a65489968b5af.jpg"}}
+            style={{ width: "100%", height: "100%" }}
+            source={{
+              uri: "https://i.pinimg.com/originals/a2/cd/2c/a2cd2c7e4383e563cc6a65489968b5af.jpg",
+            }}
           >
             <LinearGradient
-                colors={['#00000000', '#6B556B']} 
-                style={{height : '100%', width : '100%', justifyContent: 'flex-end'}}
+              colors={["#00000000", "#6B556B"]}
+              style={{
+                height: "100%",
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
             >
               {/* Event name */}
-              <View style={{paddingHorizontal: 10}}>
+              <View style={{ paddingHorizontal: 10 }}>
                 <Text style={styles.title}>{event.name}</Text>
-                <Text style={{color: 'white'}}>{organizer.name}</Text>
+                <Text style={{ color: "white" }}>{event.organizer}</Text>
               </View>
             </LinearGradient>
           </ImageBackground>
 
           {/* Event Description */}
           <LinearGradient
-            colors={['#6B556B', colours.secondaryPurple]} 
-            style={{height : '100%', width : '100%', flexGrow: 1}}
+            colors={["#6B556B", colours.secondaryPurple]}
+            style={{ height: "100%", width: "100%", flexGrow: 1 }}
           >
-            <View style={{paddingHorizontal: 10}}>
-                {/* Event date */}
-                <View style={{flexDirection: 'row'}}>
-                  <DateCard line1={"29"} line2={"December"}/>
-                  <DateCard line1={"Tuesday"} line2={"10:00 PM - End"}/>
-                </View>
-                
-                {/* Event location */}
-                <View>
-                  <Text>{event.location}</Text>
-                </View>
+            <View style={{ paddingHorizontal: 10 }}>
+              {/* Event date */}
+              <View style={{ flexDirection: "row" }}>
+                <DateCard line1={"29"} line2={"December"} />
+                <DateCard line1={"Tuesday"} line2={"10:00 PM - End"} />
+              </View>
 
-                {/* Event description */}
-                <View>
-                  <Text style={styles.title}>About the event</Text>
-                  <Text style={regularText}>{event.description} </Text>
-                </View>
+              {/* Event location */}
+              <View>
+                <Text>{event.location}</Text>
+              </View>
+
+              {/* Event description */}
+              <View>
+                <Text style={styles.title}>About the event</Text>
+                <Text style={regularText}>{event.description} </Text>
+              </View>
             </View>
           </LinearGradient>
-
         </ScrollView>
       </View>
 
@@ -93,15 +105,15 @@ const EventDetails = ({ route, navigation }: props) => {
           }}
           title="View"
           icon={{
-            name: 'external-link',
-            type: 'font-awesome',
+            name: "external-link",
+            type: "font-awesome",
             size: 15,
-            color: 'white',
+            color: "white",
           }}
           // containerStyle= {{
           //   width: 150,
           //   marginHorizontal: 50,
-          //   marginVertical: 10,            
+          //   marginVertical: 10,
           // }}
           onPress={() => {
             Linking.openURL("https://www.google.com");
@@ -111,7 +123,6 @@ const EventDetails = ({ route, navigation }: props) => {
           }}
         />
       </View>
-
     </View>
   );
 };
@@ -125,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "600",
     flexWrap: "wrap",
-    color: 'white',
+    color: "white",
   },
   footer: {
     flexDirection: "row",

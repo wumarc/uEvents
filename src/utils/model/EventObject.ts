@@ -20,7 +20,6 @@ export type EventObject = {
   tickets: string[]; // Ids of students who bought tickets
   location: string;
   organizer: string; // Organizer name //TODO: Replace for id
-  date: Date | null;
   time?: Timestamp | null;
   categories: EventCategory[];
   onCampus: boolean;
@@ -81,7 +80,6 @@ export const defaultEvent: EventObject = {
   description: "",
   saved: [],
   tickets: [],
-  date: null,
   time: null,
   location: "",
   organizer: "",

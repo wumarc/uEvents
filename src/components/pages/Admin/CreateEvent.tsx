@@ -41,20 +41,14 @@ const CreateEvent = ({ route, navigation }: props) => {
           onChangeText={(value) => setEvent({ ...event, description: value })}
         />
         <Input
-          placeholder="Date YYYY-MM-DD"
-          onChangeText={(value) =>
-            setEvent({ ...event, date: new Date(value) })
-          }
-        />
-        <Input
-          placeholder="Time HH:MM"
+          placeholder="Time YYYY:MM:DD:HH:MM"
           onChangeText={(value) => {
-            const [hours, minutes] = value.split(":");
+            const [year, month, day, hours, minutes] = value.split(":");
             // Convert to milliseconds
             const time = new Date(
-              0,
-              0,
-              0,
+              parseInt(year as string),
+              parseInt(month as string),
+              parseInt(day as string),
               parseInt(hours as string),
               parseInt(minutes as string)
             );
@@ -178,7 +172,7 @@ const CreateEvent = ({ route, navigation }: props) => {
               // Adding the event to the database
               event.id = id;
               addDocumentToCollection<EventObject>("events", event.id, event);
-              navigation.navigate("AllEvents");
+              navigation.navigate("allEvents", {});
             }}
           />
         </View>

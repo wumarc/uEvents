@@ -12,6 +12,8 @@ import allEvents from "./allEvents";
 import CreateEvent from "./CreateEvent";
 import EditEvent from "./EditEvent";
 import UploadFile from "./UploadFile";
+import Preview from "./Preview";
+import EventDetails from "../Student/EventDetails";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -24,6 +26,7 @@ export type RootStackParamList = {
   createEvent: { userType: string };
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
+  Preview: { eventId: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -110,6 +113,14 @@ const Main: FC<{ userType: string }> = (props) => {
               options={{
                 headerShown: false,
               }}
+            />
+            <Stack.Screen
+              name="Preview"
+              component={Preview as any} // TODO fix error
+            />
+            <Stack.Screen
+              name="EventDetailsView"
+              component={EventDetails as any} // TODO fix error
             />
           </Stack.Navigator>
         </SafeAreaView>

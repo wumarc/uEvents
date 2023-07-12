@@ -80,6 +80,21 @@ const Profile = ({ route, navigation }: props) => {
                 Delete
               </Button>
             </View>
+            <View
+              style={{
+                marginLeft: 40,
+                height: 40,
+              }}
+            >
+              <Button
+                color="green"
+                onPress={() => {
+                  navigation.navigate("Preview", { eventId: item.id });
+                }}
+              >
+                View
+              </Button>
+            </View>
           </View>
         )}
       />
