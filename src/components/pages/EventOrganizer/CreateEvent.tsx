@@ -3,19 +3,21 @@ import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
-import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
+import {
+  defaultEvent,
+  EventCategory,
+  EventObject,
+} from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Student/main";
 import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
-import CustomInput from "../../atoms/CustomInput";
 import { StyleSheet } from "react-native";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
 
 const CreateEvent = ({ route, navigation }: props) => {
-  
   const [event, setEvent] = useState<EventObject>(defaultEvent);
 
   return (
@@ -31,7 +33,9 @@ const CreateEvent = ({ route, navigation }: props) => {
         />
         <Input
           placeholder="Date YYYY-MM-DD"
-          onChangeText={(value) => setEvent({ ...event, date: new Date(value) })}
+          onChangeText={(value) =>
+            setEvent({ ...event, date: new Date(value) })
+          }
         />
         <Input
           placeholder="Time HH:MM"
@@ -53,15 +57,25 @@ const CreateEvent = ({ route, navigation }: props) => {
           onChangeText={(value) => setEvent({ ...event, location: value })}
         />
 
-        <CustomInput
-          input={""}
+        <Input
           placeholder={"Organizer"}
-          onChangeListener={(value) => {
+          onChangeText={(value) => {
             setEvent({
               ...event,
-              organizer: "G1CLkEL9BANpRnWFWIVxhjlXpNv2",
-            })
-          }} // TODO Use real value of organizer
+              organizer: value,
+            });
+          }}
+        />
+
+        <Input
+          placeholder={"Categories"}
+          onChangeText={(value: string) => {
+            let categories = value.split(",") as EventCategory[];
+            setEvent({
+              ...event,
+              categories: categories,
+            });
+          }}
         />
 
         {/* Buttons */}
@@ -76,14 +90,10 @@ const CreateEvent = ({ route, navigation }: props) => {
             }}
           />
         </View>
-        
-
-
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -92,7 +102,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     margin: 15,
     padding: 20,
-  }
+  },
 });
 
 export default CreateEvent;

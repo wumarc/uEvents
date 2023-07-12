@@ -2,14 +2,17 @@ import { View, Text } from "react-native";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
-import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
+import {
+  addDocumentToCollection,
+  useStateWithFireStoreDocument,
+} from "../../../utils/useStateWithFirebase";
 import {
   defaultEvent,
   EventCategory,
   EventObject,
 } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../Student/main";
+import { RootStackParamList } from "../Admin/main";
 import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
@@ -17,30 +20,39 @@ import { StyleSheet } from "react-native";
 import { Slider, Switch } from "react-native-elements";
 import { ToggleButton } from "react-native-paper";
 
-type props = NativeStackScreenProps<RootStackParamList, "Search">;
+type props = NativeStackScreenProps<RootStackParamList, "EditEvent">;
 // To access the type of user, use route.params.userType
 
-const CreateEvent = ({ route, navigation }: props) => {
-  const [event, setEvent] = useState<EventObject>(defaultEvent);
+const EditEvent = ({ route, navigation }: props) => {
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    route.params.eventId
+  );
+
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
 
   return (
     <View style={styles.container}>
       <View>
         <Input
+          defaultValue={event.name}
           placeholder="Name"
-          onChangeText={(value) => setEvent({ ...event, name: value })}
+          onChangeText={(value) => set({ ...event, name: value })}
         />
         <Input
+          defaultValue={event.description}
           placeholder="Description"
-          onChangeText={(value) => setEvent({ ...event, description: value })}
+          onChangeText={(value) => set({ ...event, description: value })}
         />
         <Input
+          defaultValue="0000-00-00"
           placeholder="Date YYYY-MM-DD"
-          onChangeText={(value) =>
-            setEvent({ ...event, date: new Date(value) })
-          }
+          onChangeText={(value) => set({ ...event, date: new Date(value) })}
         />
         <Input
+          defaultValue="00:00"
           placeholder="Time HH:MM"
           onChangeText={(value) => {
             const [hours, minutes] = value.split(":");
@@ -52,23 +64,26 @@ const CreateEvent = ({ route, navigation }: props) => {
               parseInt(hours as string),
               parseInt(minutes as string)
             );
-            setEvent({ ...event, time: Timestamp.fromDate(time) });
+            set({ ...event, time: Timestamp.fromDate(time) });
           }}
         />
         <Input
+          defaultValue={event.location}
           placeholder="Location"
-          onChangeText={(value) => setEvent({ ...event, location: value })}
+          onChangeText={(value) => set({ ...event, location: value })}
         />
         <Input
+          defaultValue={event.organizer}
           placeholder={"Organizer"}
           onChangeText={(value) => {
-            setEvent({
+            set({
               ...event,
               organizer: value,
             });
           }}
         />
         <Input
+          defaultValue=""
           placeholder={
             "Categories (Make sure you write the category exactly as it is in the list of categories!!!)"
           }
@@ -76,7 +91,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             let categories = value
               .replace(" ", "")
               .split(",") as EventCategory[];
-            setEvent({
+            set({
               ...event,
               categories: categories,
             });
@@ -86,8 +101,9 @@ const CreateEvent = ({ route, navigation }: props) => {
           <Text>On Campus</Text>
         </View>
         <Switch
+          value={event.onCampus}
           onValueChange={(value) => {
-            setEvent({
+            set({
               ...event,
               onCampus: value,
             });
@@ -95,13 +111,14 @@ const CreateEvent = ({ route, navigation }: props) => {
         />
 
         <Input
+          defaultValue={event.food}
           placeholder={"food"}
           onChangeText={(value) => {
             let food: string | undefined = value;
             if (value == "") {
               food = undefined;
             }
-            setEvent({
+            set({
               ...event,
               food: food,
             });
@@ -115,7 +132,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               attire = undefined;
             }
-            setEvent({
+            set({
               ...event,
               attire: attire,
             });
@@ -129,7 +146,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               toBring = undefined;
             }
-            setEvent({
+            set({
               ...event,
               toBring: toBring,
             });
@@ -138,12 +155,13 @@ const CreateEvent = ({ route, navigation }: props) => {
 
         <Input
           placeholder={"Includes"}
+          defaultValue={event.includes}
           onChangeText={(value) => {
             let includes: string | undefined = value;
             if (value == "") {
               includes = undefined;
             }
-            setEvent({
+            set({
               ...event,
               includes: includes,
             });
@@ -151,31 +169,27 @@ const CreateEvent = ({ route, navigation }: props) => {
         />
 
         <Input
+          defaultValue={event.transportation}
           placeholder={"Transportation"}
           onChangeText={(value) => {
             let transport: string | undefined = value;
             if (value == "") {
               transport = undefined;
             }
-            setEvent({
+            set({
               ...event,
               transportation: transport,
             });
           }}
         />
 
-        {/* Buttons */}
-        <View>
-          <CustomButton
-            buttonName={"Add Event"}
-            onPressListener={() => {
-              // Adding the event to the database
-              event.id = uid();
-              addDocumentToCollection<EventObject>("events", event.id, event);
-              navigation.pop();
-            }}
-          />
-        </View>
+        <Button
+          onPress={() => {
+            navigation.pop();
+          }}
+        >
+          Done
+        </Button>
       </View>
     </View>
   );
@@ -191,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateEvent;
+export default EditEvent;

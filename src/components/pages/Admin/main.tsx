@@ -10,6 +10,7 @@ import { FC } from "react";
 import Profile from "./Profile";
 import allEvents from "./allEvents";
 import CreateEvent from "./CreateEvent";
+import EditEvent from "./EditEvent";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   Profile: { userType: string };
   allEvents: { userType: string };
   createEvent: { userType: string };
+  EditEvent: { eventId: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -90,6 +92,13 @@ const Main: FC<{ userType: string }> = (props) => {
               name="MainView"
               component={MainView as any} // TODO fix error
               initialParams={{ userType: props.userType }}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="EditEvent"
+              component={EditEvent as any} // TODO fix error
               options={{
                 headerShown: false,
               }}

@@ -3,6 +3,7 @@ import {
   arrayRemove,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   setDoc,
@@ -31,7 +32,12 @@ export function useStateWithFireStoreCollection<T extends { [x: string]: any }>(
     setDoc(document, value);
   };
 
-  return [loading, value, add] as const;
+  const del = (id: string) => {
+    const document = doc(fireStore, pathToCollection + "/" + id);
+    deleteDoc(document);
+  };
+
+  return [loading, value, add, del] as const;
 }
 
 export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(

@@ -20,7 +20,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
-  const [loading, events, add] =
+  const [loading, events, add, del] =
     useStateWithFireStoreCollection<EventObject>("events");
 
   if (loading) {
@@ -31,53 +31,60 @@ const Profile = ({ route, navigation }: props) => {
     <View>
       <FlatList
         data={events?.sort((a, b) => a.name.localeCompare(b.name))} // Sort by alphabetical order
-        renderItem={({ item }) => <EventItem event={item} />}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              margin: 10,
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              height: 40,
+            }}
+          >
+            <View
+              style={{
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>{item.name}</Text>
+            </View>
+
+            <View
+              style={{
+                marginLeft: 40,
+                height: 40,
+              }}
+            >
+              <Button
+                onPress={() => {
+                  navigation.navigate("EditEvent", { eventId: item.id });
+                }}
+              >
+                Edit
+              </Button>
+            </View>
+            <View
+              style={{
+                marginLeft: 40,
+                height: 40,
+              }}
+            >
+              <Button
+                color="error"
+                onPress={() => {
+                  del(item.id);
+                }}
+              >
+                Delete
+              </Button>
+            </View>
+          </View>
+        )}
       />
     </View>
   );
 };
 
 export default Profile;
-
-const EventItem: FC<{ event: EventObject }> = ({ event }) => {
-  return (
-    <View
-      style={{
-        margin: 10,
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        height: 40,
-      }}
-    >
-      <View
-        style={{
-          height: 40,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text>{event.name}</Text>
-      </View>
-
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        <Button onPress={() => {}}>Edit</Button>
-      </View>
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        <Button color="error" onPress={() => {}}>
-          Delete
-        </Button>
-      </View>
-    </View>
-  );
-};
