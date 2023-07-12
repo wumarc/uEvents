@@ -7,7 +7,7 @@ import MainAdmin from "./src/components/pages/Admin/main";
 import { Loading } from "./src/components/pages/Common/Loading";
 import { View, Text } from "react-native";
 import { FC, useState } from "react";
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
 import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
@@ -15,20 +15,20 @@ import { Error } from "./src/components/pages/Common/Error";
 
 export default function App() {
   const [user, loading, error] = useAuthState(auth);
-  const [splashLoaded, setSplashLoaded] = useState(false);
+  // const [splashLoaded, setSplashLoaded] = useState(false); // TODO Fix splash screen so it doesn't break the web version anymore
 
-  if (!splashLoaded) {
-    return (
-      <View style={styles.splash}>
-        <LottieView
-          source={require("./assets/splash.json")}
-          autoPlay
-          loop={false}
-          onAnimationFinish={() => setSplashLoaded(true)}
-        />
-      </View>
-    );
-  }
+  // if (!splashLoaded) {
+  //   return (
+  //     <View style={styles.splash}>
+  //       <LottieView
+  //         source={require("./assets/splash.json")}
+  //         autoPlay
+  //         loop={false}
+  //         onAnimationFinish={() => setSplashLoaded(true)}
+  //       />
+  //     </View>
+  //   );
+  // }
 
   if (loading) {
     return <Loading />;
@@ -62,7 +62,7 @@ const AppInner: FC = () => {
   );
 
   if (loading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   if (!userData) {
