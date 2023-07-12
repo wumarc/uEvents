@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import allEvents from "./allEvents";
 import CreateEvent from "./CreateEvent";
 import EditEvent from "./EditEvent";
+import UploadFile from "./UploadFile";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -19,9 +20,10 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   MainView: { userType: string };
   Profile: { userType: string };
-  allEvents: { userType: string };
+  allEvents: {};
   createEvent: { userType: string };
   EditEvent: { eventId: string };
+  UploadFile: { eventId: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -50,7 +52,6 @@ const MainView = ({ route, navigation }: props) => {
       <Tab.Screen
         name="allEvents"
         component={allEvents as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "All Events",
           tabBarIcon: ({ color }) => (
@@ -99,6 +100,13 @@ const Main: FC<{ userType: string }> = (props) => {
             <Stack.Screen
               name="EditEvent"
               component={EditEvent as any} // TODO fix error
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="UploadFile"
+              component={UploadFile as any} // TODO fix error
               options={{
                 headerShown: false,
               }}

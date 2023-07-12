@@ -9,7 +9,7 @@ import {
   EventObject,
 } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../Student/main";
+import { RootStackParamList } from "../Admin/main";
 import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
@@ -17,15 +17,21 @@ import { StyleSheet } from "react-native";
 import { Slider, Switch } from "react-native-elements";
 import { ToggleButton } from "react-native-paper";
 
-type props = NativeStackScreenProps<RootStackParamList, "Search">;
+type props = NativeStackScreenProps<RootStackParamList, "createEvent">;
 // To access the type of user, use route.params.userType
 
 const CreateEvent = ({ route, navigation }: props) => {
   const [event, setEvent] = useState<EventObject>(defaultEvent);
+  const [id, setId] = useState<string>(uid());
 
   return (
     <View style={styles.container}>
       <View>
+        <Button
+          onPress={() => navigation.navigate("UploadFile", { eventId: id })}
+        >
+          Upload image
+        </Button>
         <Input
           placeholder="Name"
           onChangeText={(value) => setEvent({ ...event, name: value })}
@@ -170,9 +176,9 @@ const CreateEvent = ({ route, navigation }: props) => {
             buttonName={"Add Event"}
             onPressListener={() => {
               // Adding the event to the database
-              event.id = uid();
+              event.id = id;
               addDocumentToCollection<EventObject>("events", event.id, event);
-              navigation.pop();
+              navigation.navigate("AllEvents");
             }}
           />
         </View>

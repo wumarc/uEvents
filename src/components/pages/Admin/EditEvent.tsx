@@ -30,7 +30,9 @@ const EditEvent = ({ route, navigation }: props) => {
     route.params.eventId
   );
 
-  const [loading2, url] = useStateWithFireStoreImage(route.params.eventId);
+  const [loading2, url, found] = useStateWithFireStoreImage(
+    route.params.eventId
+  );
 
   if (loading || loading2) {
     return <Text>Loading</Text>;
@@ -39,7 +41,18 @@ const EditEvent = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
       <View>
-        <Image style={{ height: 400, width: 300 }} source={{ uri: url }} />
+        {found ? (
+          <Image style={{ height: 400, width: 300 }} source={{ uri: url }} />
+        ) : (
+          <Text>No image found</Text>
+        )}
+        <Button
+          onPress={() =>
+            navigation.navigate("UploadFile", { eventId: route.params.eventId })
+          }
+        >
+          Upload image
+        </Button>
         <Input
           defaultValue={event.name}
           placeholder="Name"

@@ -18,14 +18,14 @@ import { ref } from "firebase/storage";
 
 export function useStateWithFireStoreImage(eventId: string) {
   const [url, loading, error] = useDownloadURL(
-    ref(storage, "events/" + eventId + ".jpeg")
+    ref(storage, "events/" + eventId)
   );
 
   if (error) {
-    throw error;
+    return [false, "", false] as const;
   }
 
-  return [loading, url] as const;
+  return [loading, url, true] as const;
 }
 
 export function useStateWithFireStoreCollection<T extends { [x: string]: any }>(
