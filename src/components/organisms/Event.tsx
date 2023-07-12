@@ -22,6 +22,8 @@ const Event: React.FC<EventProps> = (props) => {
     props.id
   );
 
+  const price = 10;
+  
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
 
   const saveEvent = () => {
@@ -122,15 +124,15 @@ const Event: React.FC<EventProps> = (props) => {
                 padding: 8,
                 color: "white",
                 fontWeight: "bold",
-                backgroundColor: "green",
+                backgroundColor: price > 0 ? colours.primaryPurple : "green",
               }}>
-                Free
+                { price > 0 ? "$" + price : "Free" }
               </Text>
             </View>
 
           </View>
 
-        </View>      
+        </View>
       </TouchableOpacity>
     </View>
   );
