@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
 import {
   addDocumentToCollection,
   useStateWithFireStoreDocument,
+  useStateWithFireStoreImage,
 } from "../../../utils/useStateWithFirebase";
 import {
   defaultEvent,
@@ -29,13 +30,16 @@ const EditEvent = ({ route, navigation }: props) => {
     route.params.eventId
   );
 
-  if (loading) {
+  const [loading2, url] = useStateWithFireStoreImage(route.params.eventId);
+
+  if (loading || loading2) {
     return <Text>Loading</Text>;
   }
 
   return (
     <View style={styles.container}>
       <View>
+        <Image style={{ height: 400, width: 300 }} source={{ uri: url }} />
         <Input
           defaultValue={event.name}
           placeholder="Name"
