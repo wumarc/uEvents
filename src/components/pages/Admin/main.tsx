@@ -8,6 +8,8 @@ import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours";
 import { FC } from "react";
 import Profile from "./Profile";
+import allEvents from "./allEvents";
+import CreateEvent from "./CreateEvent";
 // import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -16,13 +18,48 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   MainView: { userType: string };
   Profile: { userType: string };
+  allEvents: { userType: string };
+  createEvent: { userType: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryPurple }}>
+    <Tab.Navigator
+      barStyle={{ backgroundColor: colours.secondaryPurple }}
+      initialRouteName="allEvents"
+    >
+      <Tab.Screen
+        name="createEvent"
+        component={CreateEvent as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "Create",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="plus-circle"
+              color={colours.primaryPurple}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="allEvents"
+        component={allEvents as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "All Events",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="ticket"
+              color={colours.primaryPurple}
+              size={30}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Profile"
         component={Profile as any} // TODO fix error
@@ -38,22 +75,6 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
-      {/* // TODO Validation page */}
-      {/* <Tab.Screen
-        name="Validation"
-        component={EventsTickets as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Tickets",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="ticket"
-              color={colours.primaryPurple}
-              size={30}
-            />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 };
@@ -61,21 +82,21 @@ const MainView = ({ route, navigation }: props) => {
 const Main: FC<{ userType: string }> = (props) => {
   return (
     <>
-    <NavigationContainer>
-      <SafeAreaView style={styles.container}>
-        <Stack.Navigator initialRouteName="MainView">
-          {/* Main View */}
-          <Stack.Screen
-            name="MainView"
-            component={MainView as any} // TODO fix error
-            initialParams={{ userType: props.userType }}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </SafeAreaView>
-    </NavigationContainer>
+      <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+          <Stack.Navigator initialRouteName="MainView">
+            {/* Main View */}
+            <Stack.Screen
+              name="MainView"
+              component={MainView as any} // TODO fix error
+              initialParams={{ userType: props.userType }}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack.Navigator>
+        </SafeAreaView>
+      </NavigationContainer>
     </>
   );
 };
