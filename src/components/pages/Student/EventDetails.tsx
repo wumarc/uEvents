@@ -1,20 +1,16 @@
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import {
-  EventObject,
-} from "../../../utils/model/EventObject";
-import EventDate from "../../molecules/EventDate";
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground } from "react-native";
+import { EventObject } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
 import { Subtitle, regularText } from "../../subatoms/Theme";
-import EventLocation from "../../molecules/EventLocation";
-import EventOrganizer from "../../molecules/EventOrganizer";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Organizer } from "../../../utils/model/Organizer";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { StatusBar } from "react-native";
+import DateCard from "../../atoms/DateCard";
+import { LinearGradient } from "expo-linear-gradient";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -36,32 +32,53 @@ const EventDetails = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.big_container}>
-      {/* <StatusBar hidden /> */}
 
-      {/* Event Details  */}
-      <View style={styles.container}>
-        <ScrollView>
-          <Image
-            source={{
-              uri: "https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161-s1100-c50.jpg",
-            }}
-            style={{ width: "100%", height: 220, borderRadius: 14 }}
-            resizeMethod="resize"
-          />
+      {/* Event Details */}
+      <View style={{flex: 1}}>
+        <ScrollView style={{backgroundColor: colours.secondaryPurple}}>
+          
+          {/* Event Image */}
+          <ImageBackground
+              style={{width : '100%', height: '100%'}}
+              source={{uri : "https://i.pinimg.com/originals/a2/cd/2c/a2cd2c7e4383e563cc6a65489968b5af.jpg"}}
+          >
+            <LinearGradient
+                colors={['#00000000', '#6B556B']} 
+                style={{height : '100%', width : '100%', justifyContent: 'flex-end'}}
+            >
+              {/* Event name */}
+              <View style={{paddingHorizontal: 10}}>
+                <Text style={styles.title}>{event.name}</Text>
+                <Text style={{color: 'white'}}>{organizer.name}</Text>
+              </View>
+            </LinearGradient>
+          </ImageBackground>
 
-          {/* Event Title */}
-          <Text style={styles.title}> {event.name}</Text>
+          {/* Event Description */}
+          <LinearGradient
+            colors={['#6B556B', colours.secondaryPurple]} 
+            style={{height : '100%', width : '100%', flexGrow: 1}}
+          >
+            <View style={{paddingHorizontal: 10}}>
+                {/* Event date */}
+                <View style={{flexDirection: 'row'}}>
+                  <DateCard line1={"29"} line2={"December"}/>
+                  <DateCard line1={"Tuesday"} line2={"10:00 PM - End"}/>
+                </View>
+                
+                {/* Event location */}
+                <View>
+                  <Text>{event.location}</Text>
+                </View>
 
-          <View style={{ flexDirection: "column" }}>
-            <EventDate prop={"date"} />
-            <EventLocation prop={event.location} />
-            <EventOrganizer prop={organizer.name} />
-          </View>
+                {/* Event description */}
+                <View>
+                  <Text style={styles.title}>About the event</Text>
+                  <Text style={regularText}>{event.description} </Text>
+                </View>
+            </View>
+          </LinearGradient>
 
-          <View>
-            <Text style={styles.title}>About the event</Text>
-            <Text style={regularText}> {event.description} </Text>
-          </View>
         </ScrollView>
       </View>
 
@@ -72,8 +89,9 @@ const EventDetails = ({ route, navigation }: props) => {
           buttonStyle={{
             backgroundColor: colours.primaryPurple,
             padding: 15,
+            borderRadius: 15,
           }}
-          title="View on Web"
+          title="View"
           icon={{
             name: 'external-link',
             type: 'font-awesome',
@@ -94,8 +112,6 @@ const EventDetails = ({ route, navigation }: props) => {
         />
       </View>
 
-      {/* Toast */}
-      <Toast/>
     </View>
   );
 };
@@ -103,19 +119,13 @@ const EventDetails = ({ route, navigation }: props) => {
 const styles = StyleSheet.create({
   big_container: {
     flex: 1,
-    flexDirection: "column",
     justifyContent: "space-between",
-    paddingTop: 0,
-  },
-  container: {
-    paddingHorizontal: 10,
-    flexDirection: "row",
-    alignItems: "stretch",
   },
   title: {
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: "600",
     flexWrap: "wrap",
+    color: 'white',
   },
   footer: {
     flexDirection: "row",
@@ -123,7 +133,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     alignItems: "center",
-    backgroundColor: colours.secondaryGrey,
+    // backgroundColor: colours.secondaryGrey,
+    backgroundColor: colours.secondaryPurple,
   },
   price: {
     fontSize: 20,

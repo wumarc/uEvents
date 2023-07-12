@@ -1,28 +1,22 @@
 import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 
-const DateCard = ({month, day}: any) => {
-
+const DateCard = ({line1, line2}: any) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{month + " " + day}</Text>
-            <Text style={styles.text}>{"7:00 PM"}</Text>
+            <Text style={{fontWeight: 'bold'}}>{line1}</Text>
+            <Text>{line2}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: "white",
-        borderRadius: 5,
+        // alignItems: "center",
+        // backgroundColor: "white",
+        // borderRadius: 5,
         padding: 6,
     },
-    text: {
-        fontWeight: "bold",
-    }
 });
-
 
 export default DateCard;
