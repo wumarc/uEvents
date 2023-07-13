@@ -7,17 +7,23 @@ import { defaultStudent, Student } from "../../../utils/model/Student";
 import { Avatar } from "react-native-elements";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
-import { getAuth, signOut } from "firebase/auth";
+import {
+  User,
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  updatePassword,
+} from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { colours } from "../../subatoms/colours";
 import { Loading } from "../Common/Loading";
+import { auth } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
-
   const logout = () => {
     const auth = getAuth();
     signOut(auth)
@@ -35,11 +41,38 @@ const Profile = ({ route, navigation }: props) => {
     defaultStudent
   );
 
-  if (loading) { return <Loading/> }
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+  const updateUserPassword = () => {
+    let user = auth.currentUser;
+    if (user == null) {
+      return;
+    }
+    signInWithEmailAndPassword(auth, user.email as string, oldPassword)
+      .then((userCredential) => {
+        // Signed in
+        user = userCredential.user;
+        updatePassword(user, newPassword)
+          .then(() => {
+            // Update successful.
+            alert("Password updated successfully");
+          })
+          .catch((error) => {
+            alert("Could not update password");
+          });
+      })
+      .catch((error) => {
+        alert("You entered the old password incorrectly");
+      });
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>
-      
       {/* Header Section */}
       <View style={styles.profileHeader}>
         <Text h4>Your Profile</Text>
@@ -47,7 +80,7 @@ const Profile = ({ route, navigation }: props) => {
 
       {/* Image Section */}
       {/* <View style={styles.profileImage}> */}
-        {/* <Image 
+      {/* <Image 
                     source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
                     style={{ 
                         width: 200,
@@ -55,7 +88,7 @@ const Profile = ({ route, navigation }: props) => {
                         borderRadius: 200/2,
                     }}
                 /> */}
-        {/* <Avatar
+      {/* <Avatar
           source={{
             uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
           }}
@@ -67,7 +100,7 @@ const Profile = ({ route, navigation }: props) => {
 
       {/* Student Info Section */}
       <View style={styles.studentInfo}>
-        <View style={{ flexDirection: "column", flex: 1}}>
+        <View style={{ flexDirection: "column", flex: 1 }}>
           <Input
             placeholder="Email"
             defaultValue={profile.name ? profile.name : "jacyob@uottawa.ca"}
@@ -75,35 +108,35 @@ const Profile = ({ route, navigation }: props) => {
               type: "material",
               name: "mail",
             }}
-            label= "Email"
+            label="Email"
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
 
           <Text>Change your Password</Text>
           <Input
-            placeholder="Password"
-            defaultValue={profile.name ? profile.name : "Your old password"}
+            placeholder="Old Password"
             leftIcon={{
               type: "material",
               name: "lock",
             }}
-            onChangeText={(value) => setProfile({ ...profile, name: value })}
+            onChangeText={(value) => setOldPassword(value)}
           />
           <Input
-            placeholder="Password"
-            defaultValue={profile.name ? profile.name : "Your new password"}
+            placeholder="New Password"
             leftIcon={{
               type: "material",
               name: "lock",
             }}
-            onChangeText={(value) => setProfile({ ...profile, name: value })}
+            onChangeText={(value) => setNewPassword(value)}
           />
           <Button
             color={colours.primaryPurple}
-            onPress={() => {}}
+            onPress={() => {
+              updateUserPassword();
+            }}
             title="Reset password"
             radius={15}
-            style={{marginBottom: 10}}
+            style={{ marginBottom: 10 }}
           />
           {/* <Input
             placeholder="Student ID"
@@ -125,7 +158,7 @@ const Profile = ({ route, navigation }: props) => {
       </View>
 
       {/* Log out button */}
-      <View style={{marginBottom: 10}}>
+      <View style={{ marginBottom: 10 }}>
         <Button
           color={colours.primaryPurple}
           onPress={() => logout()}
@@ -133,7 +166,6 @@ const Profile = ({ route, navigation }: props) => {
           radius={15}
         />
       </View>
-
     </View>
   );
 };
@@ -157,7 +189,7 @@ const styles = StyleSheet.create({
   studentInfo: {
     flexDirection: "row",
     // backgroundColor: "green"
-  }
+  },
 });
 
 export default Profile;

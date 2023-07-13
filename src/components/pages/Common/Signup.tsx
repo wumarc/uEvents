@@ -11,17 +11,16 @@ import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { Linking } from "react-native";
-import { SelectList } from 'react-native-dropdown-select-list'
+import { SelectList } from "react-native-dropdown-select-list";
 import { inputStyle, signInText, smallText } from "./Styling";
 
 const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
 
 const Signup = ({ setIsSigningUp }: any) => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState("Student");
 
   async function signUp(validate: boolean): Promise<boolean> {
     if (validate) {
@@ -58,21 +57,20 @@ const Signup = ({ setIsSigningUp }: any) => {
       </View>
 
       {/* Form */}
-      <View style={{width: '95%'}}>
-
-        <SelectList
+      <View style={{ width: "95%" }}>
+        {/* <SelectList
           data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
           setSelected={(value: string) => setUserType(value)}
           save="value"
           defaultOption={{key: '3', value:'Account Type'}}
           boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
           dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
-        />
+        /> */}
         <Input
           placeholder="Email"
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
-          containerStyle= {{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0 }}
           selectionColor={colours.primaryPurple}
           inputContainerStyle={inputStyle}
         />
@@ -81,20 +79,20 @@ const Signup = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
           secureTextEntry={true}
-          containerStyle= {{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0 }}
           selectionColor={colours.primaryPurple}
           inputContainerStyle={inputStyle}
         />
       </View>
 
       {/* Button */}
-      <View style={{width: '95%'}}>
+      <View style={{ width: "95%" }}>
         <Text>{error}</Text>
         <Button
           color={colours.primaryPurple}
           title="Sign up"
           onPress={() => {
-            userType === "Student" 
+            userType === "Student"
               ? signUp(true).then((success) => {
                   if (!success) return;
                   addDocumentToCollection<Student>(
@@ -112,8 +110,7 @@ const Signup = ({ setIsSigningUp }: any) => {
                     defaultOrganizer
                   );
                 });
-            }
-          }
+          }}
         />
       </View>
 
@@ -121,16 +118,38 @@ const Signup = ({ setIsSigningUp }: any) => {
       <View>
         <Text style={styles.text}>
           Already have an account?
-          <Text onPress={setIsSigningUp} style={{color: colours.primaryPurple}}> Sign in</Text>
+          <Text
+            onPress={setIsSigningUp}
+            style={{ color: colours.primaryPurple }}
+          >
+            {" "}
+            Sign in
+          </Text>
         </Text>
         <Text style={styles.conditionsText}>
-          By clicking Sign up, you are agreeing to uEvents' 
-            <Text style={smallText} onPress={() => Linking.openURL("https://www.uevents.org/terms_and_conditions")}> Terms of Service </Text>
-          and are acknowledging that you have read our 
-            <Text style={smallText} onPress={() => Linking.openURL("https://www.uevents.org/privacy_policy")}> Privacy Policy</Text>.
+          By clicking Sign up, you are agreeing to uEvents'
+          <Text
+            style={smallText}
+            onPress={() =>
+              Linking.openURL("https://www.uevents.org/terms_and_conditions")
+            }
+          >
+            {" "}
+            Terms of Service{" "}
+          </Text>
+          and are acknowledging that you have read our
+          <Text
+            style={smallText}
+            onPress={() =>
+              Linking.openURL("https://www.uevents.org/privacy_policy")
+            }
+          >
+            {" "}
+            Privacy Policy
+          </Text>
+          .
         </Text>
       </View>
-
     </View>
   );
 };
@@ -144,7 +163,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 10,
     marginTop: 10,
-  }
+  },
 });
 
 export default Signup;
