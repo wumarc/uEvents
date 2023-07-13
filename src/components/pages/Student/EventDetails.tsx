@@ -15,8 +15,6 @@ import { Subtitle, regularText } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { Organizer } from "../../../utils/model/Organizer";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { StatusBar } from "react-native";
 import DateCard from "../../atoms/DateCard";
 import { LinearGradient } from "expo-linear-gradient";

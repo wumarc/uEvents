@@ -109,7 +109,7 @@ const Home = ({ route, navigation }: props) => {
       type: "success",
       text1: save ? "Event Saved" : "Event Unsaved",
       position: "bottom",
-      bottomOffset: 130,
+      bottomOffset: 0,
       visibilityTime: 1800,
     });
   };
@@ -124,6 +124,9 @@ const Home = ({ route, navigation }: props) => {
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           {useNativeDriver: true}
         )}
+        // refreshControl={
+        //   <RefreshControl refreshing={} onRefresh={} />
+        // }
         onMomentumScrollBegin={onMomentumScrollBegin}
         onMomentumScrollEnd={onMomentumScrollEnd}
         onScrollEndDrag={onScrollEndDrag}
