@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  View,
-  Animated
-} from "react-native";
+import { FlatList, ScrollView, StyleSheet, View, Animated } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -16,6 +10,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
 import { ButtonGroup } from "react-native-elements";
+import { searchAlgo } from "../../../utils/search";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -25,22 +20,24 @@ const CONTAINER_HEIGHT = 100;
 const Home = ({ route, navigation }: props) => {
   // const [loading, dbListenedValue, set, add, remove] =
   //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
-  
+
+  const [search, setSearch] = useState("");
+
   const scrollY = useRef(new Animated.Value(0)).current;
   const offsetAnim = useRef(new Animated.Value(0)).current;
-  const [focused, setFocused] = useState('home');
+  const [focused, setFocused] = useState("home");
   const clampedScroll = Animated.diffClamp(
     Animated.add(
       scrollY.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1],
-        extrapolateLeft: 'clamp',
+        extrapolateLeft: "clamp",
       }),
-      offsetAnim,
+      offsetAnim
     ),
     0,
     CONTAINER_HEIGHT
-  )
+  );
   var _clampedScrollValue = 0;
   var _offsetValue = 0;
   var _scrollValue = 0;
@@ -50,50 +47,52 @@ const Home = ({ route, navigation }: props) => {
       _scrollValue = value;
       _clampedScrollValue = Math.min(
         Math.max(_clampedScrollValue + diff, 0),
-        CONTAINER_HEIGHT,
-      )
+        CONTAINER_HEIGHT
+      );
     });
     offsetAnim.addListener(({ value }) => {
       _offsetValue = value;
-    })
+    });
   }, []);
 
   var scrollEndTimer = null;
   const onMomentumScrollBegin = () => {
-    clearTimeout(scrollEndTimer)
-  }
+    clearTimeout(scrollEndTimer);
+  };
   const onMomentumScrollEnd = () => {
-    const toValue = _scrollValue > CONTAINER_HEIGHT &&
-      _clampedScrollValue > (CONTAINER_HEIGHT) / 2
-      ? _offsetValue + CONTAINER_HEIGHT : _offsetValue - CONTAINER_HEIGHT;
+    const toValue =
+      _scrollValue > CONTAINER_HEIGHT &&
+      _clampedScrollValue > CONTAINER_HEIGHT / 2
+        ? _offsetValue + CONTAINER_HEIGHT
+        : _offsetValue - CONTAINER_HEIGHT;
 
     Animated.timing(offsetAnim, {
       toValue,
       duration: 500,
       useNativeDriver: true,
     }).start();
-  }
+  };
   const onScrollEndDrag = () => {
     scrollEndTimer = setTimeout(onMomentumScrollEnd, 250);
-  }
+  };
 
   const headerTranslate = clampedScroll.interpolate({
     inputRange: [0, CONTAINER_HEIGHT],
     outputRange: [0, -CONTAINER_HEIGHT],
-    extrapolate: 'clamp',
-  })
+    extrapolate: "clamp",
+  });
   const opacity = clampedScroll.interpolate({
     inputRange: [0, CONTAINER_HEIGHT - 20, CONTAINER_HEIGHT],
     outputRange: [1, 0.05, 0],
-    extrapolate: 'clamp',
-  })
+    extrapolate: "clamp",
+  });
   const bottomTabTranslate = clampedScroll.interpolate({
     inputRange: [0, CONTAINER_HEIGHT],
     outputRange: [0, CONTAINER_HEIGHT * 2],
-    extrapolate: 'clamp',
-  })
+    extrapolate: "clamp",
+  });
 
-  const [toggleSearchBar, setToggleSearchBar] = useState(false)
+  const [toggleSearchBar, setToggleSearchBar] = useState(false);
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
 
@@ -112,14 +111,13 @@ const Home = ({ route, navigation }: props) => {
       bottomOffset: 130,
       visibilityTime: 1800,
     });
-  }
+  };
 
   return (
     <View>
-
       {/* Event List*/}
       <Animated.FlatList
-        style={{paddingTop: 100}}
+        style={{ paddingTop: 100 }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: true }
@@ -128,13 +126,11 @@ const Home = ({ route, navigation }: props) => {
         onMomentumScrollEnd={onMomentumScrollEnd}
         onScrollEndDrag={onScrollEndDrag}
         scrollEventThrottle={1}
-        contentContainerStyle={{paddingBottom: 200}}
+        contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
-        data={events}
-        renderItem={({item, index}) => (
-          <View
-            style={styles.event}
-          >
+        data={searchAlgo(search, events as EventObject[])}
+        renderItem={({ item, index }) => (
+          <View style={styles.event}>
             <Event
               id={item.id}
               navigation={navigation}
@@ -147,24 +143,50 @@ const Home = ({ route, navigation }: props) => {
 
       {/* Search bar and Filter */}
       <Animated.View
-        style={[styles.view, { top: 0, transform: [{ translateY: headerTranslate }]}]}
+        style={[
+          styles.view,
+          { top: 0, transform: [{ translateY: headerTranslate }] },
+        ]}
       >
         <SearchBar
           platform="default"
-          inputContainerStyle={{borderRadius: 20, backgroundColor: 'white', margin: 0}}
-          inputStyle={{}}
-          containerStyle={{ backgroundColor: colours.secondaryPurple, borderWidth: 0, borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+          inputContainerStyle={{
+            borderRadius: 20,
+            backgroundColor: "white",
+            margin: 0,
+          }}
+          // inputStyle={{}}
+          containerStyle={{
+            backgroundColor: colours.secondaryPurple,
+            borderWidth: 0,
+            borderBottomColor: "transparent",
+            borderTopColor: "transparent",
+          }}
           // leftIconContainerStyle={{backgroundColor: 'green', padding: 3}}
           rightIconContainerStyle={{}}
-          loadingProps={{}}
-          onChangeText={() => {}}
+          // loadingProps={{}}
+          onChangeText={(value) => {
+            setSearch(value);
+          }}
           placeholder="Search events by name"
           placeholderTextColor="#121212"
+          value={search}
         />
-        <View style={{backgroundColor: colours.secondaryPurple}}>
+        <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtonGroup
-              buttons={["All", "Sports", "Academic", "Social", "Cultural", "Volunteering", "Religious", "Recreational", "Philotranphic", "Other"]}
+              buttons={[
+                "All",
+                "Sports",
+                "Academic",
+                "Social",
+                "Cultural",
+                "Volunteering",
+                "Religious",
+                "Recreational",
+                "Philotranphic",
+                "Other",
+              ]}
               selectedIndex={selectedIndex}
               buttonContainerStyle={{
                 borderRadius: 20,
@@ -177,7 +199,7 @@ const Home = ({ route, navigation }: props) => {
                 marginLeft: 0,
                 marginVertical: 0,
                 paddingBottom: 6,
-                marginBottom: 7
+                marginBottom: 7,
               }}
               buttonStyle={{
                 borderRadius: 16,
@@ -191,16 +213,17 @@ const Home = ({ route, navigation }: props) => {
               textStyle={{
                 color: "white",
               }}
-              selectedButtonStyle={{backgroundColor: 'grey'}}
-              onPress={(value) => { setSelectedIndex(value) }}
+              selectedButtonStyle={{ backgroundColor: "grey" }}
+              onPress={(value) => {
+                setSelectedIndex(value);
+              }}
             />
           </ScrollView>
         </View>
       </Animated.View>
 
       {/* Toast */}
-      <Toast/>
-
+      <Toast />
     </View>
   );
 };
@@ -209,14 +232,14 @@ export default Home;
 
 export const styles = StyleSheet.create({
   view: {
-    position: 'absolute',
+    position: "absolute",
     // left: 0,
     // right: 0,
     height: CONTAINER_HEIGHT,
   },
   event: {
     paddingVertical: "8%",
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   title: {
     color: "white",

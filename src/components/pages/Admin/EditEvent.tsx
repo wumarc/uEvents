@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, FlatList } from "react-native";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
@@ -20,6 +20,7 @@ import CustomInput from "../../atoms/CustomInput";
 import { StyleSheet } from "react-native";
 import { Slider, Switch } from "react-native-elements";
 import { ToggleButton } from "react-native-paper";
+import FirebaseImage from "../../organisms/FirebaseImage";
 
 type props = NativeStackScreenProps<RootStackParamList, "EditEvent">;
 // To access the type of user, use route.params.userType
@@ -30,11 +31,7 @@ const EditEvent = ({ route, navigation }: props) => {
     route.params.eventId
   );
 
-  const [loading2, url, found] = useStateWithFireStoreImage(
-    route.params.eventId
-  );
-
-  if (loading || loading2) {
+  if (loading) {
     return <Text>Loading</Text>;
   }
 
@@ -62,11 +59,10 @@ const EditEvent = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
       <View>
-        {found ? (
-          <img style={{ maxWidth: 300, height: "auto" }} src={url} />
-        ) : (
-          <Text>No image found</Text>
-        )}
+        <FlatList
+          data={event.images}
+          renderItem={({ item }) => <FirebaseImage id={item} />}
+        />
         <Button
           onPress={() =>
             navigation.navigate("UploadFile", { eventId: route.params.eventId })

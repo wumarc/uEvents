@@ -20,7 +20,7 @@ export type EventObject = {
   tickets: string[]; // Ids of students who bought tickets
   location: string;
   organizer: string; // Organizer name //TODO: Replace for id
-  time?: Timestamp | null;
+  time: Timestamp;
   categories: EventCategory[];
   onCampus: boolean;
   food?: string;
@@ -28,6 +28,7 @@ export type EventObject = {
   toBring?: string;
   includes?: string;
   transportation?: string;
+  images: string[];
 };
 
 // Mock data
@@ -80,9 +81,10 @@ export const defaultEvent: EventObject = {
   description: "",
   saved: [],
   tickets: [],
-  time: null,
+  time: new Timestamp(0, 0),
   location: "",
   organizer: "",
   categories: [],
   onCampus: false,
+  images: [],
 };

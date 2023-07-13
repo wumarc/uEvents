@@ -1,8 +1,11 @@
-import { View, Text } from "react-native";
-import { useState } from "react";
+import { View, Text, FlatList } from "react-native";
+import { FC, useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
-import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
+import {
+  addDocumentToCollection,
+  useStateWithFireStoreImage,
+} from "../../../utils/useStateWithFirebase";
 import {
   defaultEvent,
   EventCategory,
@@ -16,6 +19,9 @@ import CustomInput from "../../atoms/CustomInput";
 import { StyleSheet } from "react-native";
 import { Slider, Switch } from "react-native-elements";
 import { ToggleButton } from "react-native-paper";
+import { useDownloadURL } from "react-firebase-hooks/storage";
+import { ref } from "firebase/storage";
+import FirebaseImage from "../../organisms/FirebaseImage";
 
 type props = NativeStackScreenProps<RootStackParamList, "createEvent">;
 // To access the type of user, use route.params.userType
@@ -27,6 +33,10 @@ const CreateEvent = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
       <View>
+        <FlatList
+          data={event.images}
+          renderItem={({ item }) => <FirebaseImage id={item} />}
+        />
         <Button
           onPress={() => navigation.navigate("UploadFile", { eventId: id })}
         >
