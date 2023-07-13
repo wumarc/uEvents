@@ -30,6 +30,8 @@ export type EventObject = {
   includes?: string;
   transportation?: string;
   images: string[];
+  signUpLink?: string; // If undefined, no sign up link
+  originalLink: string;
 };
 
 // Mock data
@@ -89,4 +91,5 @@ export const defaultEvent: EventObject = {
   onCampus: false,
   images: [],
   price: 0,
+  originalLink: "",
 };

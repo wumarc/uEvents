@@ -240,6 +240,32 @@ const EditEvent = ({ route, navigation }: props) => {
           }}
         />
 
+        <Input
+          defaultValue={event.signUpLink ? event.signUpLink : ""}
+          placeholder={"Sign Up Link"}
+          onChangeText={(value) => {
+            let signUpLink: string | undefined = value;
+            if (value == "") {
+              signUpLink = undefined;
+            }
+            set({
+              ...event,
+              signUpLink: signUpLink,
+            });
+          }}
+        />
+
+        <Input
+          defaultValue={event.originalLink}
+          placeholder={"Original Link"}
+          onChangeText={(value) => {
+            set({
+              ...event,
+              originalLink: value,
+            });
+          }}
+        />
+
         <Button
           onPress={() => {
             navigation.pop();

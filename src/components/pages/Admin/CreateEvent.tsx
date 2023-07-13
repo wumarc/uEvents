@@ -183,6 +183,30 @@ const CreateEvent = ({ route, navigation }: props) => {
           }}
         />
 
+        <Input
+          placeholder={"Sign Up Link"}
+          onChangeText={(value) => {
+            let signUpLink: string | undefined = value;
+            if (value == "") {
+              signUpLink = undefined;
+            }
+            setEvent({
+              ...event,
+              signUpLink: signUpLink,
+            });
+          }}
+        />
+
+        <Input
+          placeholder={"Original Link"}
+          onChangeText={(value) => {
+            setEvent({
+              ...event,
+              originalLink: value,
+            });
+          }}
+        />
+
         {/* Buttons */}
         <View>
           <CustomButton
