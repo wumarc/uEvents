@@ -19,7 +19,8 @@ export type EventObject = {
   description: string;
   saved: string[]; // Ids of students who saved this event
   tickets: string[]; // Ids of students who bought tickets
-  location: string;
+  location: string; // Building name and room number
+  address: string;
   organizer: string; // Organizer name //TODO: Replace for id
   time: Timestamp;
   categories: EventCategory[];
@@ -92,4 +93,5 @@ export const defaultEvent: EventObject = {
   images: [],
   price: 0,
   originalLink: "",
+  address: "",
 };

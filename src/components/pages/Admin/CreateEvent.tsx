@@ -79,6 +79,10 @@ const CreateEvent = ({ route, navigation }: props) => {
           onChangeText={(value) => setEvent({ ...event, location: value })}
         />
         <Input
+          placeholder="Address"
+          onChangeText={(value) => setEvent({ ...event, address: value })}
+        />
+        <Input
           placeholder={"Organizer"}
           onChangeText={(value) => {
             setEvent({

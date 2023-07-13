@@ -130,6 +130,11 @@ const EditEvent = ({ route, navigation }: props) => {
           onChangeText={(value) => set({ ...event, location: value })}
         />
         <Input
+          defaultValue={event.address}
+          placeholder="Address"
+          onChangeText={(value) => set({ ...event, address: value })}
+        />
+        <Input
           defaultValue={event.organizer}
           placeholder={"Organizer"}
           onChangeText={(value) => {
