@@ -83,7 +83,7 @@ const Event: React.FC<EventProps> = (props) => {
               }}>
 
                 <View>
-                  <DateCard month={"JUN"} day={12}/>
+                  <DateCard month={"JUN"} day={12} />
                 </View>
 
                 <View>

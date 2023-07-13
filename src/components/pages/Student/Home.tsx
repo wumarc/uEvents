@@ -11,6 +11,7 @@ import { SearchBar } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
 import { ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
+import { EventCategory } from "../../../utils/model/EventObject";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -114,13 +115,14 @@ const Home = ({ route, navigation }: props) => {
   };
 
   return (
+
     <View>
       {/* Event List*/}
       <Animated.FlatList
         style={{ paddingTop: 100 }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true }
+          {useNativeDriver: true}
         )}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onMomentumScrollEnd={onMomentumScrollEnd}
@@ -175,18 +177,7 @@ const Home = ({ route, navigation }: props) => {
         <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtonGroup
-              buttons={[
-                "All",
-                "Sports",
-                "Academic",
-                "Social",
-                "Cultural",
-                "Volunteering",
-                "Religious",
-                "Recreational",
-                "Philotranphic",
-                "Other",
-              ]}
+              buttons={Object.values(EventCategory)}
               selectedIndex={selectedIndex}
               buttonContainerStyle={{
                 borderRadius: 20,
@@ -213,10 +204,8 @@ const Home = ({ route, navigation }: props) => {
               textStyle={{
                 color: "white",
               }}
-              selectedButtonStyle={{ backgroundColor: "grey" }}
-              onPress={(value) => {
-                setSelectedIndex(value);
-              }}
+              selectedButtonStyle={{backgroundColor: 'green'}}
+              onPress={(value) => { setSelectedIndex(value) }}
             />
           </ScrollView>
         </View>
