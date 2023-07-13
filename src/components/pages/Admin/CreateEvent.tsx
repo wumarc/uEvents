@@ -47,6 +47,15 @@ const CreateEvent = ({ route, navigation }: props) => {
           onChangeText={(value) => setEvent({ ...event, name: value })}
         />
         <Input
+          placeholder="Price"
+          onChangeText={(value) => {
+            setEvent({
+              ...event,
+              price: parseInt(value),
+            });
+          }}
+        />
+        <Input
           placeholder="Description"
           onChangeText={(value) => setEvent({ ...event, description: value })}
         />

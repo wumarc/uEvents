@@ -15,6 +15,7 @@ export enum EventCategory {
 export type EventObject = {
   id: string;
   name: string;
+  price: number;
   description: string;
   saved: string[]; // Ids of students who saved this event
   tickets: string[]; // Ids of students who bought tickets
@@ -87,4 +88,5 @@ export const defaultEvent: EventObject = {
   categories: [],
   onCampus: false,
   images: [],
+  price: 0,
 };

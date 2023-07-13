@@ -61,7 +61,25 @@ const EditEvent = ({ route, navigation }: props) => {
       <View>
         <FlatList
           data={event.images}
-          renderItem={({ item }) => <FirebaseImage id={item} />}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <FirebaseImage id={item} />
+              <Button
+                onPress={() => {
+                  event.images = event.images.filter((id) => id !== item);
+                  set(event);
+                }}
+              >
+                Delete
+              </Button>
+            </View>
+          )}
         />
         <Button
           onPress={() =>
@@ -74,6 +92,16 @@ const EditEvent = ({ route, navigation }: props) => {
           defaultValue={event.name}
           placeholder="Name"
           onChangeText={(value) => set({ ...event, name: value })}
+        />
+        <Input
+          defaultValue={event.price ? event.price.toString() : ""}
+          placeholder="Price"
+          onChangeText={(value) => {
+            set({
+              ...event,
+              price: parseInt(value),
+            });
+          }}
         />
         <Input
           defaultValue={event.description}
