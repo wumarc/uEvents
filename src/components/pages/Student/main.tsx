@@ -22,7 +22,12 @@ const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
   MainView: { userType: string };
-  EventDetailsView: { userType: string; eventID: string; organizerID: string };
+  EventDetailsView: {
+    userType: string;
+    eventID: string;
+    organizerID: string;
+    imageID: string;
+  };
   EventSignUpView: { userType: string };
   Events: { userType: string };
   Saved: { userType: string };
@@ -34,21 +39,20 @@ export type RootStackParamList = {
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
-
   const theme = useTheme();
-  theme.colors.secondaryContainer = 'transparent';
+  theme.colors.secondaryContainer = "transparent";
 
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
       barStyle={{ backgroundColor: colours.secondaryPurple }}
-      activeColor= {colours.primaryPurple}
+      activeColor={colours.primaryPurple}
       inactiveColor={"white"}
       initialRouteName="Home"
     >
       <Tab.Screen
         name="Saved"
         component={SavedEvents as any} // TODO fix error
-        initialParams={{userType: route.params.userType}}
+        initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Saved",
           title: "Saved",
@@ -99,7 +103,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name={ focused ? "account-circle" : "account-circle-outline"}
+              name={focused ? "account-circle" : "account-circle-outline"}
               color={colours.primaryPurple}
               size={30}
             />
@@ -136,8 +140,8 @@ const Main: FC<{ userType: string }> = (props) => {
               // Add transition effect to stacks
             }}
           />
-          <Stack.Screen 
-            name="EventSignUpView" 
+          <Stack.Screen
+            name="EventSignUpView"
             component={EventSignUp}
             options={{
               title: "Complete your RSVP",

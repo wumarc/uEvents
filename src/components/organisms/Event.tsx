@@ -70,6 +70,7 @@ const Event: React.FC<EventProps> = (props) => {
             userType: props.userType,
             eventID: props.id,
             organizerID: event.organizer,
+            imageID: props.imageId,
           });
         }}
       >

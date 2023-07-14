@@ -7,12 +7,20 @@ import {
   Linking,
   ImageBackground,
 } from "react-native";
-import { EventObject, extractMonth, extractDay, extractDayOfWeek } from "../../../utils/model/EventObject";
+import {
+  EventObject,
+  extractMonth,
+  extractDay,
+  extractDayOfWeek,
+} from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import {
+  useStateWithFireStoreDocument,
+  useStateWithFireStoreImage,
+} from "../../../utils/useStateWithFirebase";
 import DateCard from "../../atoms/DateCard";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -25,28 +33,24 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.eventID
   );
 
-  // const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>(
-  //   "users",
-  //   route.params.organizerID
-  // );
+  const [loading2, url, found] = useStateWithFireStoreImage(
+    route.params.imageID
+  );
 
-  if (loading) {
+  if (loading || loading2) {
     return <ActivityIndicator />;
   }
 
+  let image = { uri: url };
+
   return (
     <View style={styles.big_container}>
-
-      <View style={{flex: 1}}>
-        <ScrollView style={{backgroundColor: colours.secondaryPurple}}>
-
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ backgroundColor: colours.secondaryPurple }}>
           {/* Event Image */}
           <ImageBackground
             style={{ width: "100%", height: "50%" }}
-            source={{
-              // uri: event.images[0],
-              uri: 'https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FtcGxlfGVufDB8fDB8fHww&w=1000&q=80'
-            }}
+            source={image}
           >
             <LinearGradient
               colors={["#00000000", "#6B556B"]}
@@ -57,107 +61,147 @@ const EventDetails = ({ route, navigation }: props) => {
               }}
             >
               {/* Event name and organizer */}
-              <View style={{marginVertical: '2%', paddingHorizontal: '2.3%'}}>
-                <Text style={{...styles.title, paddingVertical: '0.5%'}}>{event.name}</Text>
-                <Text style={{
-                  color: '#e3e3e3', 
-                  fontSize: 16,
-                }}>
+              <View style={{ marginVertical: "2%", paddingHorizontal: "2.3%" }}>
+                <Text style={{ ...styles.title, paddingVertical: "0.5%" }}>
+                  {event.name}
+                </Text>
+                <Text
+                  style={{
+                    color: "#e3e3e3",
+                    fontSize: 16,
+                  }}
+                >
                   {event.organizer}
                 </Text>
               </View>
             </LinearGradient>
-
           </ImageBackground>
-          
+
           <LinearGradient
             colors={["#6B556B", colours.secondaryPurple]}
-            style={{ height: "100%", flexGrow: 1, paddingHorizontal: '2.3%'}}
+            style={{ height: "100%", flexGrow: 1, paddingHorizontal: "2.3%" }}
           >
             <View>
-
               {/* Event date and on/off-campus */}
-              <View style={{flexDirection: 'row', marginVertical: '2%', justifyContent: 'space-between'}}>
-                
-                <View style={{ flexDirection: "row", width: '70%'}}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginVertical: "2%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View style={{ flexDirection: "row", width: "70%" }}>
                   <DateCard
                     line1={extractDay(event.time)}
                     line2={extractMonth(event.time)}
-                    style={{width: '34%'}}
+                    style={{ width: "34%" }}
                   />
                   <Text>{"    "}</Text>
                   <DateCard
-                    line1={extractDayOfWeek(event.time)} 
+                    line1={extractDayOfWeek(event.time)}
                     line2={extractDayOfWeek(event.time)}
-                    style={{width: '34%'}}
+                    style={{ width: "34%" }}
                   />
                 </View>
 
-                <View style={{
-                  ...styles.price,
-                  backgroundColor: event.price > 0 ? colours.primaryPurple : 'green',
-                }}>
-                  <Text style={{
-                    color: 'white',
-                    fontWeight: '600',
-                    fontSize: 20,
-                  }}>
-                    {event.price > 0 ? '$'+event.price : 'Free'}
+                <View
+                  style={{
+                    ...styles.price,
+                    backgroundColor:
+                      event.price > 0 ? colours.primaryPurple : "green",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 20,
+                    }}
+                  >
+                    {event.price > 0 ? "$" + event.price : "Free"}
                   </Text>
                 </View>
-
               </View>
 
               {/* Location and Address */}
-              <View style={{marginVertical: '1%', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View
+                style={{
+                  marginVertical: "1%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
                 <View>
                   <View>
-                    <Text style={{ color: 'white', fontWeight: 'bold', paddingVertical: '0.5%', fontSize: 17}}>
-                        {event.location}
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        paddingVertical: "0.5%",
+                        fontSize: 17,
+                      }}
+                    >
+                      {event.location}
                     </Text>
                   </View>
                   <View>
-                    <Text style={{color: '#0645AD', fontWeight: '400', textDecorationLine: 'underline'}}>
-                        {event.address}
+                    <Text
+                      style={{
+                        color: "#0645AD",
+                        fontWeight: "400",
+                        textDecorationLine: "underline",
+                      }}
+                    >
+                      {event.address}
                     </Text>
                   </View>
                 </View>
-                
-                <View style={{justifyContent:'center', alignItems: 'center'}}>
-                    <Button
-                      type="clear"
-                      icon={{
-                        name: "external-link",
-                        type: "font-awesome",
-                        size: 22,
-                        color: "white",
-                      }}
-                      containerStyle= {{ backgroundColor: 'none' }}
-                      onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
-                    />
-                </View>
 
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Button
+                    type="clear"
+                    icon={{
+                      name: "external-link",
+                      type: "font-awesome",
+                      size: 22,
+                      color: "white",
+                    }}
+                    containerStyle={{ backgroundColor: "none" }}
+                    onPress={() => {
+                      Linking.openURL(
+                        "https://www.google.com/maps/search/?api=1&query=" +
+                          event.address
+                      );
+                    }}
+                  />
+                </View>
               </View>
 
               {/* Event Description */}
-              <View style={{marginVertical: '4%'}}>
+              <View style={{ marginVertical: "4%" }}>
                 <View>
-                  <Text style={{
-                    fontSize: 20,
-                    fontWeight: "600",
-                    flexWrap: "wrap",
-                    color: "white",
-                    paddingBottom: '1%',
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "600",
+                      flexWrap: "wrap",
+                      color: "white",
+                      paddingBottom: "1%",
+                    }}
+                  >
                     About the event
                   </Text>
                 </View>
                 <View>
-                  <Text style={{
-                    color: '#e3e3e3',
-                    fontWeight: '400',
-                    fontSize: 17,
-                  }}>
+                  <Text
+                    style={{
+                      color: "#e3e3e3",
+                      fontWeight: "400",
+                      fontSize: 17,
+                    }}
+                  >
                     {event.description}
                   </Text>
                 </View>
@@ -165,78 +209,168 @@ const EventDetails = ({ route, navigation }: props) => {
 
               {/* Food */}
               {event.food && (
-                <View style={{marginVertical: '2%'}}>
-                <View>
-                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>Food</Text>
+                <View style={{ marginVertical: "2%" }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        flexWrap: "wrap",
+                        color: "white",
+                        paddingBottom: "1%",
+                      }}
+                    >
+                      Food
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "#e3e3e3",
+                        fontWeight: "400",
+                        fontSize: 17,
+                      }}
+                    >
+                      {event.food}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={{color: '#e3e3e3', fontWeight: '400', fontSize: 17}}>{event.food}</Text>
-                </View>
-              </View>
               )}
 
               {/* Attire */}
               {event.attire && (
-                <View style={{marginVertical: '2%'}}>
-                <View>
-                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>What to Wear</Text>
+                <View style={{ marginVertical: "2%" }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        flexWrap: "wrap",
+                        color: "white",
+                        paddingBottom: "1%",
+                      }}
+                    >
+                      What to Wear
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "#e3e3e3",
+                        fontWeight: "400",
+                        fontSize: 17,
+                      }}
+                    >
+                      {event.attire}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={{color: '#e3e3e3', fontWeight: '400', fontSize: 17}}>{event.attire}</Text>
-                </View>
-              </View>
               )}
 
               {/* toBring */}
               {event.toBring && (
-                <View style={{marginVertical: '2%'}}>
-                <View>
-                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>What to Bring</Text>
+                <View style={{ marginVertical: "2%" }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        flexWrap: "wrap",
+                        color: "white",
+                        paddingBottom: "1%",
+                      }}
+                    >
+                      What to Bring
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "#e3e3e3",
+                        fontWeight: "400",
+                        fontSize: 17,
+                      }}
+                    >
+                      {event.toBring}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={{color: '#e3e3e3', fontWeight: '400', fontSize: 17}}>{event.toBring}</Text>
-                </View>
-              </View>
               )}
 
               {/* Includes */}
               {event.includes && (
-                <View style={{marginVertical: '2%'}}>
-                <View>
-                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>What's Included</Text>
+                <View style={{ marginVertical: "2%" }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        flexWrap: "wrap",
+                        color: "white",
+                        paddingBottom: "1%",
+                      }}
+                    >
+                      What's Included
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "#e3e3e3",
+                        fontWeight: "400",
+                        fontSize: 17,
+                      }}
+                    >
+                      {event.includes}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={{color: '#e3e3e3', fontWeight: '400', fontSize: 17}}>{event.includes}</Text>
-                </View>
-              </View>
               )}
 
               {/* Transportation */}
               {event.transportation && (
-                <View style={{marginVertical: '2%'}}>
-                <View>
-                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>Transportation</Text>
+                <View style={{ marginVertical: "2%" }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        flexWrap: "wrap",
+                        color: "white",
+                        paddingBottom: "1%",
+                      }}
+                    >
+                      Transportation
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "#e3e3e3",
+                        fontWeight: "400",
+                        fontSize: 17,
+                      }}
+                    >
+                      {event.transportation}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={{color: '#e3e3e3', fontWeight: '400', fontSize: 17}}>{event.transportation}</Text>
-                </View>
-              </View>
               )}
-
             </View>
           </LinearGradient>
-    
         </ScrollView>
       </View>
 
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={{
-          color: 'white', 
-          fontWeight: '600', 
-          fontSize: 19
-        }}>
-          {event.onCampus == true ? "On-Campus": "Off-Campus"}
+        <Text
+          style={{
+            color: "white",
+            fontWeight: "600",
+            fontSize: 19,
+          }}
+        >
+          {event.onCampus == true ? "On-Campus" : "Off-Campus"}
         </Text>
         <Button
           buttonStyle={{
@@ -244,9 +378,9 @@ const EventDetails = ({ route, navigation }: props) => {
             padding: 15,
             borderRadius: 15,
           }}
-          title= {event.signUpLink == null ? "No Sign Up Required" : "Sign Up"}
+          title={event.signUpLink == null ? "No Sign Up Required" : "Sign Up"}
           icon={{
-            name: event.signUpLink == null  ? "" : "external-link",
+            name: event.signUpLink == null ? "" : "external-link",
             type: "font-awesome",
             size: 15,
             color: "white",
@@ -264,7 +398,6 @@ const EventDetails = ({ route, navigation }: props) => {
           }}
         />
       </View>
-
     </View>
   );
 };
@@ -284,7 +417,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 10,
-    paddingHorizontal: '2.3%',
+    paddingHorizontal: "2.3%",
     alignItems: "center",
     // backgroundColor: colours.secondaryGrey,
     backgroundColor: colours.secondaryPurple,
@@ -292,10 +425,10 @@ const styles = StyleSheet.create({
   price: {
     backgroundColor: colours.primaryPurple,
     borderRadius: 25,
-    width: '25%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    width: "25%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default EventDetails;
