@@ -19,7 +19,7 @@ const SavedEvents = ({ route, navigation }: props) => {
     useStateWithFireStoreCollection<EventObject>("events");
 
   if (loading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
@@ -40,8 +40,10 @@ const SavedEvents = ({ route, navigation }: props) => {
         renderItem={({ item }) => (
           <Event
             id={item.id}
+            imageId={item.images[0] ?? ""}
             userType={route.params.userType}
             navigation={navigation}
+            onSaveEvent={() => {}}
           />
         )}
       />
@@ -49,17 +51,15 @@ const SavedEvents = ({ route, navigation }: props) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   titleContainer: {
     paddingTop: 25,
-    paddingLeft: 20
+    paddingLeft: 20,
   },
   title: {
     fontSize: 33,
     fontWeight: "500",
-  }
+  },
 });
-
 
 export default SavedEvents;
