@@ -137,6 +137,7 @@ const Home = ({ route, navigation }: props) => {
           <View style={styles.event}>
             <Event
               id={item.id}
+              imageId={item.images[0] ?? ""}
               navigation={navigation}
               userType={route.params.userType}
               onSaveEvent={showToast}

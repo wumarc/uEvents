@@ -18,6 +18,7 @@ import DateCard from "../atoms/DateCard";
 // Event component props
 interface EventProps {
   id: string;
+  imageId: string;
   navigation: any;
   userType: string;
   onSaveEvent: any;
@@ -31,7 +32,7 @@ const Event: React.FC<EventProps> = (props) => {
 
   const price = 10;
 
-  const [loading2, url, found] = useStateWithFireStoreImage(props.id);
+  const [loading2, url, found] = useStateWithFireStoreImage(props.imageId);
 
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
 
@@ -55,9 +56,11 @@ const Event: React.FC<EventProps> = (props) => {
     }
   };
 
-  if (loading || !event) {
+  if (loading || !event || loading2) {
     return <Loading />;
   }
+
+  let image = { uri: url };
 
   return (
     <View style={styles.container}>
@@ -77,10 +80,10 @@ const Event: React.FC<EventProps> = (props) => {
               style={{
                 width: "100%",
                 height: 400,
-                // borderRadius: 14,
+                borderRadius: 14,
                 // opacity: 0.7,
               }}
-              // source={require(url!)}
+              source={image}
             >
               <View
                 style={{
