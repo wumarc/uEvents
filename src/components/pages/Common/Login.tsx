@@ -87,6 +87,7 @@ const Login = ({ setIsSigningUp }: any) => {
           Don't have an account?
           <Text onPress={setIsSigningUp} style={{color: colours.primaryPurple}}> Sign up</Text>
         </Text>
+        <Text style={{color: 'white', fontSize: 13}}>If you forgot your password, email us at dev@uevents.org to reset it.</Text>
       </View>
 
     </View>

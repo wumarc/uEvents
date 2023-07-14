@@ -131,23 +131,13 @@ const Signup = ({ setIsSigningUp }: any) => {
           <Text
             style={smallText}
             onPress={() =>
-              Linking.openURL("https://www.uevents.org/terms_and_conditions")
+              Linking.openURL("https://uevents.webnode.page/privacy-policy/")
             }
           >
             {" "}
-            Terms of Service{" "}
+            Privacy Policy{" "}
           </Text>
-          and are acknowledging that you have read our
-          <Text
-            style={smallText}
-            onPress={() =>
-              Linking.openURL("https://www.uevents.org/privacy_policy")
-            }
-          >
-            {" "}
-            Privacy Policy
-          </Text>
-          .
+          and are acknowledging that you have read it.
         </Text>
       </View>
     </View>
