@@ -34,7 +34,7 @@ const Signup = ({ setIsSigningUp }: any) => {
 
       // Only accept emails from accepted universities
       if (!universities.some((university) => email.includes(university))) {
-        setError("Email must be from an accepted university");
+        setError("You must be an uOttawa student to sign up");
         return false;
       }
     }

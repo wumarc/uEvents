@@ -40,7 +40,7 @@ const Profile = ({ route, navigation }: props) => {
     "info",
     defaultStudent
   );
-    
+
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [email, setEmail] = useState(auth.currentUser?.email);
@@ -83,12 +83,12 @@ const Profile = ({ route, navigation }: props) => {
 
       {/* Image Section */}
       <View style={styles.profileImage}>
-      <Image 
+      <Image
           source={require('../../../assets/uevents_logo.png')}
-          style={{ 
-              width: 120,
-              height: 150,
-              borderRadius: 170/2,
+          style={{
+              width: 80,
+              height: 100,
+              // borderRadius: 100/2,
           }}
       />
         {/* <Avatar
