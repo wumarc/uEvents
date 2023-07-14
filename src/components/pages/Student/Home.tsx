@@ -115,14 +115,13 @@ const Home = ({ route, navigation }: props) => {
   };
 
   return (
-
     <View>
       {/* Event List*/}
       <Animated.FlatList
         style={{ paddingTop: 100 }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          {useNativeDriver: true}
+          { useNativeDriver: true }
         )}
         // refreshControl={
         //   <RefreshControl refreshing={} onRefresh={} />
@@ -207,8 +206,10 @@ const Home = ({ route, navigation }: props) => {
               textStyle={{
                 color: "white",
               }}
-              selectedButtonStyle={{backgroundColor: 'green'}}
-              onPress={(value) => { setSelectedIndex(value) }}
+              selectedButtonStyle={{ backgroundColor: "green" }}
+              onPress={(value) => {
+                setSelectedIndex(value);
+              }}
             />
           </ScrollView>
         </View>

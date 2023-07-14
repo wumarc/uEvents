@@ -1,4 +1,9 @@
-import { ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours";
@@ -16,14 +21,13 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = (props) => {
-
   const [loading, event, setEvent] = useStateWithFireStoreDocument(
     "events",
     props.id
   );
 
   const price = 10;
-  
+
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
 
   const saveEvent = () => {
@@ -46,14 +50,16 @@ const Event: React.FC<EventProps> = (props) => {
     }
   };
 
+  console.log("Event: ", event);
+  console.log("Loading: ", loading);
+  console.log("id" + props.id);
+
   if (loading || !event) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
-    
     <View style={styles.container}>
-
       <TouchableOpacity
         onPress={() => {
           props.navigation.navigate("EventDetailsView", {
@@ -64,24 +70,24 @@ const Event: React.FC<EventProps> = (props) => {
         }}
       >
         <View>
-
           {/* Image */}
           <View style={styles.row1}>
             <ImageBackground
               style={{
-                width: "100%", 
+                width: "100%",
                 height: 400,
                 // borderRadius: 14,
                 // opacity: 0.7,
               }}
               source={require("../../assets/Adele.jpg")}
             >
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                margin: 5
-              }}>
-
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  margin: 5,
+                }}
+              >
                 <View>
                   <DateCard month={"JUN"} day={12} />
                 </View>
@@ -98,10 +104,9 @@ const Event: React.FC<EventProps> = (props) => {
                       padding: 5,
                       backgroundColor: "#d1cfcf",
                     }}
-                    onPress={() => saveEvent() }
+                    onPress={() => saveEvent()}
                   />
                 </View>
-
               </View>
             </ImageBackground>
           </View>
@@ -109,29 +114,31 @@ const Event: React.FC<EventProps> = (props) => {
           {/* Name, Location, Price */}
           <View style={styles.row2}>
             {/* Name and Location */}
-            <View style={{width: "85%"}}>
+            <View style={{ width: "85%" }}>
               <Text style={styles.title}>{event.name}</Text>
               <Text>{event.location}</Text>
             </View>
 
             {/* Price */}
-            <View style={{
-              justifyContent: "center",
-            }}>
-              <Text style={{
-                borderRadius: 5,
-                overflow: "hidden", // what does this do???
-                padding: 8,
-                color: "white",
-                fontWeight: "bold",
-                backgroundColor: price > 0 ? colours.primaryPurple : "green",
-              }}>
-                { price > 0 ? "$" + price : "Free" }
+            <View
+              style={{
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  borderRadius: 5,
+                  overflow: "hidden", // what does this do???
+                  padding: 8,
+                  color: "white",
+                  fontWeight: "bold",
+                  backgroundColor: price > 0 ? colours.primaryPurple : "green",
+                }}
+              >
+                {price > 0 ? "$" + price : "Free"}
               </Text>
             </View>
-
           </View>
-
         </View>
       </TouchableOpacity>
     </View>

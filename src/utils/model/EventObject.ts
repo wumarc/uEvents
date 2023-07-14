@@ -62,19 +62,19 @@ export const extractMonth = (timestamp: Timestamp) => {
   const date = timestamp.toDate();
   const month = date.getMonth();
   return monthsOfYear[month];
-}
+};
 
 export const extractDay = (timestamp: Timestamp) => {
   const date = timestamp.toDate();
   const day = date.getDate();
   return day.toString();
-}
+};
 
 export const extractDayOfWeek = (timestamp: Timestamp) => {
   const date = timestamp.toDate();
   const day = date.getDay();
   return daysOfWeek[day];
-}
+};
 
 const daysOfWeek: string[] = [
   "Sunday",

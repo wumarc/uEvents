@@ -65,7 +65,34 @@ const UploadFile: FC<{ setImage: (id: string) => void }> = (props) => {
           upload();
         }}
       />
-      {done && <Text>Done</Text>}
+      {done && (
+        <Text
+          style={{
+            color: "green",
+            fontSize: 20,
+            marginLeft: 10,
+          }}
+        >
+          Done
+        </Text>
+      )}
+      {uploading && (
+        <Text
+          style={{
+            color: "red",
+            fontSize: 20,
+            marginLeft: 10,
+          }}
+        >
+          Uploading
+          {(
+            ((snapshot?.bytesTransferred ?? 0) /
+              (snapshot?.totalBytes ?? 1000000)) *
+            100
+          ).toPrecision(3)}
+          %
+        </Text>
+      )}
     </View>
   );
 };

@@ -7,6 +7,8 @@ import { StyleSheet } from "react-native";
 import { Input, Switch } from "react-native-elements";
 import FirebaseImage from "./FirebaseImage";
 import UploadFile from "./UploadFile";
+import { deleteObject, ref } from "firebase/storage";
+import { storage } from "../../firebaseConfig";
 
 const EventEditor: FC<{
   default: EventObject;
@@ -69,6 +71,13 @@ const EventEditor: FC<{
                   title="Delete"
                   onPress={() => {
                     // TODO: Delete from storage
+                    deleteObject(ref(storage, "events/" + item))
+                      .then(() => {
+                        alert("Image deleted");
+                      })
+                      .catch((error) => {
+                        alert("Error deleting image in database");
+                      });
                     event.images = event.images.filter((id) => id !== item);
                     props.set(event);
                   }}
@@ -116,6 +125,8 @@ const EventEditor: FC<{
         />
         <Input
           defaultValue={event.description}
+          multiline={true}
+          numberOfLines={8}
           label="Description (Mandatory)"
           onChangeText={(value) => props.set({ ...event, description: value })}
         />
@@ -201,6 +212,8 @@ const EventEditor: FC<{
 
         <Input
           label={"food (Optional)"}
+          multiline={true}
+          numberOfLines={4}
           onChangeText={(value) => {
             let food: string | undefined = value;
             if (value == "") {
@@ -215,6 +228,8 @@ const EventEditor: FC<{
 
         <Input
           label={"attire (Optional)"}
+          multiline={true}
+          numberOfLines={4}
           onChangeText={(value) => {
             let attire: string | undefined = value;
             if (value == "") {
@@ -229,6 +244,8 @@ const EventEditor: FC<{
 
         <Input
           label={"To Bring (Optional)"}
+          multiline={true}
+          numberOfLines={4}
           onChangeText={(value) => {
             let toBring: string | undefined = value;
             if (value == "") {
@@ -243,6 +260,8 @@ const EventEditor: FC<{
 
         <Input
           label={"Includes (Optional)"}
+          multiline={true}
+          numberOfLines={4}
           onChangeText={(value) => {
             let includes: string | undefined = value;
             if (value == "") {
@@ -257,6 +276,8 @@ const EventEditor: FC<{
 
         <Input
           label={"Transportation (Optional)"}
+          multiline={true}
+          numberOfLines={4}
           onChangeText={(value) => {
             let transport: string | undefined = value;
             if (value == "") {
