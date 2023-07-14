@@ -12,17 +12,22 @@ export enum EventCategory {
   TEAM = "Team",
 }
 
+/// Event object
+/// Optional fields are marked with a question mark. They can be undefined or empty to represent no value
 export type EventObject = {
-  id: string;
+  id: string; // Unique id for each event
   name: string;
-  price: number;
-  description: string;
+  priceMin: number; // If no max price is specified, this is the exact price
+  priceMax?: number;
+  priceDescription?: string; // If needed, a description of the different prices
+  description: string; // 750 characters max
   saved: string[]; // Ids of students who saved this event
   tickets: string[]; // Ids of students who bought tickets
   location: string; // Building name and room number
   address: string;
   organizer: string; // Organizer name //TODO: Replace for id
-  time: Timestamp;
+  startTime: Timestamp;
+  endTime?: Timestamp; // End time doesn't have to be specified
   categories: EventCategory[];
   onCampus: boolean;
   food?: string;

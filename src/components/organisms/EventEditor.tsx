@@ -1,34 +1,17 @@
 import { View, Text, FlatList, ScrollView } from "react-native";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Timestamp } from "firebase/firestore";
-import { Button, Input, Header } from "@rneui/base";
-import {
-  addDocumentToCollection,
-  useStateWithFireStoreImage,
-} from "../../../utils/useStateWithFirebase";
-import {
-  defaultEvent,
-  EventCategory,
-  EventObject,
-} from "../../../utils/model/EventObject";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../Admin/main";
-import { uid } from "../../../utils/util";
-import CustomButton from "../../atoms/CustomButton";
-import CustomInput from "../../atoms/CustomInput";
+import { EventCategory, EventObject } from "../../utils/model/EventObject";
+import CustomButton from "../atoms/CustomButton";
 import { StyleSheet } from "react-native";
-import { Slider, Switch } from "react-native-elements";
-import { ToggleButton } from "react-native-paper";
-import { useDownloadURL } from "react-firebase-hooks/storage";
-import { ref } from "firebase/storage";
-import FirebaseImage from "../../organisms/FirebaseImage";
+import { Input, Switch } from "react-native-elements";
+import FirebaseImage from "./FirebaseImage";
 
-type props = NativeStackScreenProps<RootStackParamList, "createEvent">;
-// To access the type of user, use route.params.userType
-
-const CreateEvent = ({ route, navigation }: props) => {
-  const [event, setEvent] = useState<EventObject>(defaultEvent);
-  const [id, setId] = useState<string>(uid());
+const EventEditor: FC<{
+  default: EventObject;
+  set: (newVal: EventObject) => null;
+}> = (props) => {
+  let event = props.default;
 
   return (
     <ScrollView style={styles.container}>
@@ -37,39 +20,45 @@ const CreateEvent = ({ route, navigation }: props) => {
           data={event.images}
           renderItem={({ item }) => <FirebaseImage id={item} />}
         />
+
         <Input
+          defaultValue={event.name}
           label="Name"
-          onChangeText={(value) => setEvent({ ...event, name: value })}
+          onChangeText={(value) => props.set({ ...event, name: value })}
         />
         <Input
+          defaultValue={event.priceMin?.toString()}
           label="Min Price (Mandatory). If no max price is specified, this is the exact price"
           onChangeText={(value) => {
-            setEvent({
+            props.set({
               ...event,
               priceMin: parseInt(value),
             });
           }}
         />
         <Input
+          defaultValue={event.priceMax?.toString()}
           label="Max Price (Optional)"
           onChangeText={(value) => {
-            setEvent({
+            props.set({
               ...event,
               priceMax: parseInt(value),
             });
           }}
         />
         <Input
+          defaultValue={event.priceDescription}
           multiline={true}
           numberOfLines={4}
           label="Price Description (Optional). If needed, a description of the different prices"
           onChangeText={(value) =>
-            setEvent({ ...event, priceDescription: value })
+            props.set({ ...event, priceDescription: value })
           }
         />
         <Input
-          placeholder="Description"
-          onChangeText={(value) => setEvent({ ...event, description: value })}
+          defaultValue={event.description}
+          label="Description (Mandatory)"
+          onChangeText={(value) => props.set({ ...event, description: value })}
         />
         <Input
           placeholder="Time YYYY:MM:DD:HH:MM"
@@ -83,21 +72,21 @@ const CreateEvent = ({ route, navigation }: props) => {
               parseInt(hours as string),
               parseInt(minutes as string)
             );
-            setEvent({ ...event, time: Timestamp.fromDate(time) });
+            props.set({ ...event, time: Timestamp.fromDate(time) });
           }}
         />
         <Input
           placeholder="Location"
-          onChangeText={(value) => setEvent({ ...event, location: value })}
+          onChangeText={(value) => props.set({ ...event, location: value })}
         />
         <Input
           placeholder="Address"
-          onChangeText={(value) => setEvent({ ...event, address: value })}
+          onChangeText={(value) => props.set({ ...event, address: value })}
         />
         <Input
           placeholder={"Organizer"}
           onChangeText={(value) => {
-            setEvent({
+            props.set({
               ...event,
               organizer: value,
             });
@@ -111,7 +100,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             let categories = value
               .replace(" ", "")
               .split(",") as EventCategory[];
-            setEvent({
+            props.set({
               ...event,
               categories: categories,
             });
@@ -122,7 +111,7 @@ const CreateEvent = ({ route, navigation }: props) => {
         </View>
         <Switch
           onValueChange={(value) => {
-            setEvent({
+            props.set({
               ...event,
               onCampus: value,
             });
@@ -136,7 +125,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               food = undefined;
             }
-            setEvent({
+            props.set({
               ...event,
               food: food,
             });
@@ -150,7 +139,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               attire = undefined;
             }
-            setEvent({
+            props.set({
               ...event,
               attire: attire,
             });
@@ -164,7 +153,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               toBring = undefined;
             }
-            setEvent({
+            props.set({
               ...event,
               toBring: toBring,
             });
@@ -178,7 +167,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               includes = undefined;
             }
-            setEvent({
+            props.set({
               ...event,
               includes: includes,
             });
@@ -192,7 +181,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               transport = undefined;
             }
-            setEvent({
+            props.set({
               ...event,
               transportation: transport,
             });
@@ -206,7 +195,7 @@ const CreateEvent = ({ route, navigation }: props) => {
             if (value == "") {
               signUpLink = undefined;
             }
-            setEvent({
+            props.set({
               ...event,
               signUpLink: signUpLink,
             });
@@ -216,7 +205,7 @@ const CreateEvent = ({ route, navigation }: props) => {
         <Input
           placeholder={"Original Link"}
           onChangeText={(value) => {
-            setEvent({
+            props.set({
               ...event,
               originalLink: value,
             });

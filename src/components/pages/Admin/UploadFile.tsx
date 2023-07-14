@@ -30,6 +30,7 @@ const UploadFile = ({ route, navigation }: props) => {
       const result = await uploadFile(reference, selectedFile, {
         contentType: "image/jpeg",
       }).then(() => {
+        console.log(event);
         if (!event.images) {
           event.images = [];
         }
