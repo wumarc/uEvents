@@ -40,8 +40,9 @@ const EventDetails = ({ route, navigation }: props) => {
   return (
     <View style={styles.big_container}>
 
-      <View style={{flex: 1}}>
-        <ScrollView style={{backgroundColor: colours.secondaryPurple}}>
+      {/* Event Details */}
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ backgroundColor: colours.secondaryPurple }}>
 
           {/* Event Image */}
           <ImageBackground
@@ -58,110 +59,50 @@ const EventDetails = ({ route, navigation }: props) => {
                 justifyContent: "flex-end",
               }}
             >
-              {/* Event name and organizer */}
-              <View style={{marginVertical: '2%', paddingHorizontal: '2.3%'}}>
-                <Text style={{...styles.title, paddingVertical: '0.5%'}}>{event.name}</Text>
-                <Text style={{
-                  color: '#e3e3e3', 
-                  fontSize: 16,
-                }}>
-                  {event.organizer}
-                </Text>
+              {/* Event name */}
+              <View style={{ paddingHorizontal: 10 }}>
+                <Text style={styles.title}>{event.name}</Text>
+                <Text style={{ color: "white" }}>{event.organizer}</Text>
               </View>
             </LinearGradient>
-
           </ImageBackground>
-          
+
+          {/* Event Description */}
           <LinearGradient
             colors={["#6B556B", colours.secondaryPurple]}
-            style={{ height: "100%", flexGrow: 1, paddingHorizontal: '2.3%'}}
+            style={{ height: "100%", width: "100%", flexGrow: 1 }}
           >
-            <View>
 
-              {/* Event date and on/off-campus */}
-              <View style={{flexDirection: 'row', marginVertical: '2%'}}>
-                
-                <View style={{ flexDirection: "row", width: '70%'}}>
-                  <DateCard
-                    line1={"29"} 
-                    line2={"December"}
-                    style={{width: '34%'}}
-                  />
-                  <Text>{"    "}</Text>
-                  <DateCard
-                    line1={"Tuesday"} 
-                    line2={"10:00 PM - 11:00 PM"}
-                    style={{width: '34%'}}
-                  />
-                </View>
-
-                <View style={styles.onOffCampus}>
-                  <Text style={{color: 'white', fontWeight: '600'}}>{event.onCampus == true ? "On-Campus": "Off-Campus"}</Text>
-                </View>
-
+            <View style={{ paddingHorizontal: 10 }}>
+              
+              {/* Event date */}
+              <View style={{ flexDirection: "row" }}>
+                <DateCard line1={"29"} line2={"December"} />
+                <DateCard line1={"Tuesday"} line2={"10:00 PM - End"} />
               </View>
 
-              {/* Location and Address */}
-              <View style={{marginVertical: '1%'}}>
-                <View>
-                  <Text style={{
-                    color: 'white', 
-                    fontWeight: 'bold', 
-                    paddingVertical: '0.5%', 
-                    fontSize: 17
-                  }}>
-                      {event.location}
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{
-                    color: '#e3e3e3',
-                    fontWeight: '400',
-                  }}>
-                      {event.address}
-                  </Text>
-                </View>
-              </View>
-
-              {/* Event Description */}
-              <View style={{marginVertical: '4%'}}>
-                <View>
-                  <Text style={{
-                    fontSize: 20,
-                    fontWeight: "600",
-                    flexWrap: "wrap",
-                    color: "white",
-                    paddingBottom: '1%',
-                  }}>
-                    About the event
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{
-                    color: '#e3e3e3',
-                    fontWeight: '400',
-                    fontSize: 17,
-                  }}>
-                    {event.description}
-                  </Text>
-                </View>
-              </View>
-
-              {/* Other Details */}
+              {/* Event location */}
               <View>
-                <View></View>
-                <View></View>
+                <Text>{event.location}</Text>
+              </View>
+
+              {/* Event description */}
+              <View>
+                <Text style={styles.title}>About the event</Text>
+                <Text style={regularText}>{event.description} </Text>
               </View>
 
             </View>
+            
           </LinearGradient>
-    
         </ScrollView>
       </View>
 
+
+
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.price}>{event.price > 0 ? '$'+event.price : 'Free'}</Text>
+        <Text style={styles.price}>$10</Text>
         <Button
           buttonStyle={{
             backgroundColor: colours.primaryPurple,
@@ -188,7 +129,6 @@ const EventDetails = ({ route, navigation }: props) => {
           }}
         />
       </View>
-
     </View>
   );
 };
@@ -216,16 +156,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white",
   },
-  onOffCampus: {
-    backgroundColor: colours.primaryPurple,
-    borderRadius: 25,
-    width: '30%', 
-    justifyContent: 'center', 
-    alignItems: 'center',
-    
-  }
 });
 
 export default EventDetails;
