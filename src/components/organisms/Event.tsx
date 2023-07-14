@@ -7,7 +7,10 @@ import {
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours";
-import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
+import {
+  useStateWithFireStoreDocument,
+  useStateWithFireStoreImage,
+} from "../../utils/useStateWithFirebase";
 import Toast from "react-native-toast-message";
 import { Loading } from "../pages/Common/Loading";
 import DateCard from "../atoms/DateCard";
@@ -27,6 +30,8 @@ const Event: React.FC<EventProps> = (props) => {
   );
 
   const price = 10;
+
+  const [loading2, url, found] = useStateWithFireStoreImage(props.id);
 
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
 
@@ -49,10 +54,6 @@ const Event: React.FC<EventProps> = (props) => {
       props.onSaveEvent(true);
     }
   };
-
-  console.log("Event: ", event);
-  console.log("Loading: ", loading);
-  console.log("id" + props.id);
 
   if (loading || !event) {
     return <Loading />;
@@ -79,7 +80,7 @@ const Event: React.FC<EventProps> = (props) => {
                 // borderRadius: 14,
                 // opacity: 0.7,
               }}
-              source={require("../../assets/Adele.jpg")}
+              // source={require(url!)}
             >
               <View
                 style={{
@@ -89,7 +90,8 @@ const Event: React.FC<EventProps> = (props) => {
                 }}
               >
                 <View>
-                  <DateCard month={"JUN"} day={12} />
+                  {/* <Text style={styles.line1}>{line1}</Text>
+                  <Text style={styles.line2}>{line2}</Text> */}
                 </View>
 
                 <View>
@@ -132,10 +134,11 @@ const Event: React.FC<EventProps> = (props) => {
                   padding: 8,
                   color: "white",
                   fontWeight: "bold",
-                  backgroundColor: price > 0 ? colours.primaryPurple : "green",
+                  backgroundColor:
+                    event.price > 0 ? colours.primaryPurple : "green",
                 }}
               >
-                {price > 0 ? "$" + price : "Free"}
+                {event.price > 0 ? "$" + event.price : "Free"}
               </Text>
             </View>
           </View>

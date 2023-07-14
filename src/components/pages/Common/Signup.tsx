@@ -34,7 +34,7 @@ const Signup = ({ setIsSigningUp }: any) => {
 
       // Only accept emails from accepted universities
       if (!universities.some((university) => email.includes(university))) {
-        setError("Email must be from an accepted university");
+        setError("You must be an uOttawa student to sign up");
         return false;
       }
     }
@@ -131,23 +131,13 @@ const Signup = ({ setIsSigningUp }: any) => {
           <Text
             style={smallText}
             onPress={() =>
-              Linking.openURL("https://www.uevents.org/terms_and_conditions")
+              Linking.openURL("https://uevents.webnode.page/privacy-policy/")
             }
           >
             {" "}
-            Terms of Service{" "}
+            Privacy Policy{" "}
           </Text>
-          and are acknowledging that you have read our
-          <Text
-            style={smallText}
-            onPress={() =>
-              Linking.openURL("https://www.uevents.org/privacy_policy")
-            }
-          >
-            {" "}
-            Privacy Policy
-          </Text>
-          .
+          and are acknowledging that you have read it.
         </Text>
       </View>
     </View>

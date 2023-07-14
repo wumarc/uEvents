@@ -43,6 +43,7 @@ const Profile = ({ route, navigation }: props) => {
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [email, setEmail] = useState(auth.currentUser?.email);
 
   const updateUserPassword = () => {
     let user = auth.currentUser;
@@ -57,6 +58,8 @@ const Profile = ({ route, navigation }: props) => {
           .then(() => {
             // Update successful.
             alert("Password updated successfully");
+            setOldPassword("");
+            setNewPassword("");
           })
           .catch((error) => {
             alert("Could not update password");
@@ -79,40 +82,34 @@ const Profile = ({ route, navigation }: props) => {
       </View>
 
       {/* Image Section */}
-      {/* <View style={styles.profileImage}> */}
-      {/* <Image 
-                    source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
-                    style={{ 
-                        width: 200,
-                        height: 200,
-                        borderRadius: 200/2,
-                    }}
-                /> */}
-      {/* <Avatar
-          source={{
-            uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
+      <View style={styles.profileImage}>
+      <Image
+          source={require('../../../assets/uevents_logo.png')}
+          style={{
+              width: 80,
+              height: 100,
+              // borderRadius: 100/2,
           }}
-          // showEditButton
-          rounded
-          size="xlarge"
+      />
+        {/* <Avatar
+            source={require('../../../assets/uevents_logo.png')}
+            rounded
+            size="xlarge"
         /> */}
-      {/* </View> */}
+      </View>
 
       {/* Student Info Section */}
       <View style={styles.studentInfo}>
-        <View style={{ flexDirection: "column", flex: 1 }}>
+        <View style={{ flexDirection: "column", flex: 1}}>
           <Input
             placeholder="Email"
-            defaultValue={profile.name ? profile.name : "jacyob@uottawa.ca"}
-            leftIcon={{
-              type: "material",
-              name: "mail",
-            }}
+            defaultValue={email!}
+            leftIcon={{type: "material", name: "mail"}}
             label="Email"
-            onChangeText={(value) => setProfile({ ...profile, name: value })}
+            disabled
           />
 
-          <Text>Change your Password</Text>
+          <Text style={{fontSize: 17}}>Change your Password</Text>
           <Input
             placeholder="Old Password"
             leftIcon={{
@@ -120,14 +117,22 @@ const Profile = ({ route, navigation }: props) => {
               name: "lock",
             }}
             onChangeText={(value) => setOldPassword(value)}
+            value={oldPassword}
+            autoCapitalize="none"
+            selectionColor={colours.primaryPurple}
+            secureTextEntry={true}
           />
           <Input
+            autoCapitalize="none"
             placeholder="New Password"
             leftIcon={{
               type: "material",
               name: "lock",
             }}
             onChangeText={(value) => setNewPassword(value)}
+            value={newPassword}
+            selectionColor={colours.primaryPurple}
+            secureTextEntry={true}
           />
           <Button
             color={colours.primaryPurple}
@@ -159,6 +164,7 @@ const Profile = ({ route, navigation }: props) => {
 
       {/* Log out button */}
       <View style={{ marginBottom: 10 }}>
+        <Text style={{fontSize: 11}}>If you have any questions or concerns about uEvents, email us at admin@uevents.org. If you are an event organizer and would like to post your own events on our platform, please email us at the same email address.</Text>
         <Button
           color={colours.primaryPurple}
           onPress={() => logout()}

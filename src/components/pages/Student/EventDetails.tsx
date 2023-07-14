@@ -8,9 +8,8 @@ import {
   ImageBackground,
 } from "react-native";
 import { EventObject, extractMonth, extractDay, extractDayOfWeek } from "../../../utils/model/EventObject";
-import { Button, Icon } from "react-native-elements";
+import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
-import { Subtitle, regularText } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
@@ -43,9 +42,10 @@ const EventDetails = ({ route, navigation }: props) => {
 
           {/* Event Image */}
           <ImageBackground
-            style={{ width: "100%", height: "20%" }}
+            style={{ width: "100%", height: "50%" }}
             source={{
-              uri: "https://i.pinimg.com/originals/a2/cd/2c/a2cd2c7e4383e563cc6a65489968b5af.jpg",
+              // uri: event.images[0],
+              uri: 'https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FtcGxlfGVufDB8fDB8fHww&w=1000&q=80'
             }}
           >
             <LinearGradient
@@ -88,7 +88,7 @@ const EventDetails = ({ route, navigation }: props) => {
                   <Text>{"    "}</Text>
                   <DateCard
                     line1={extractDayOfWeek(event.time)} 
-                    line2={"TBD"}
+                    line2={extractDayOfWeek(event.time)}
                     style={{width: '34%'}}
                   />
                 </View>
@@ -117,7 +117,7 @@ const EventDetails = ({ route, navigation }: props) => {
                     </Text>
                   </View>
                   <View>
-                    <Text style={{color: '#e3e3e3', fontWeight: '400'}}>
+                    <Text style={{color: '#0645AD', fontWeight: '400', textDecorationLine: 'underline'}}>
                         {event.address}
                     </Text>
                   </View>
@@ -134,7 +134,7 @@ const EventDetails = ({ route, navigation }: props) => {
                       }}
                       containerStyle= {{ backgroundColor: 'none' }}
                       onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
-                    />                  
+                    />
                 </View>
 
               </View>
@@ -179,7 +179,7 @@ const EventDetails = ({ route, navigation }: props) => {
               {event.attire && (
                 <View style={{marginVertical: '2%'}}>
                 <View>
-                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>Attire</Text>
+                  <Text style={{fontSize: 20, fontWeight: "600", flexWrap: "wrap", color: "white", paddingBottom: '1%'}}>What to Wear</Text>
                 </View>
                 <View>
                   <Text style={{color: '#e3e3e3', fontWeight: '400', fontSize: 17}}>{event.attire}</Text>
