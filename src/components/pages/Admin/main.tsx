@@ -11,7 +11,7 @@ import Profile from "./Profile";
 import allEvents from "./allEvents";
 import CreateEvent from "./CreateEvent";
 import EditEvent from "./EditEvent";
-import UploadFile from "./UploadFile";
+import UploadFile from "../../organisms/UploadFile";
 import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
 // import 'react-native-gesture-handler';
