@@ -40,50 +40,6 @@ export type EventObject = {
   originalLink: string;
 };
 
-// Mock data
-
-// export const mockEventClimbing: EventObject = {
-//   id: "1",
-//   name: "Adele concert viewing",
-//   description:
-//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
-//   attendees: [],
-//   saved: [],
-//   tickets: [],
-//   date: new Date("TUE, MAR 28 08:00 EDT"),
-//   time: null,
-//   location: "Hamelin Hall, uOttawa",
-//   organizer: "",
-// };
-
-// export const mockEventPainting: EventObject = {
-//   id: "1",
-//   name: "Fall Painting",
-//   description:
-//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
-//   attendees: [],
-//   saved: [],
-//   tickets: [],
-//   date: new Date("TUE, MAR 28 08:00 EDT"),
-//   time: null,
-//   location: "Morisset Library",
-//   organizer: "",
-// };
-
-// export const mockEventGaming: EventObject = {
-//   id: "1",
-//   name: "Game Night",
-//   description:
-//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis commodo elit. Etiam tincidunt dui quis sapien sagittis porttitor. Suspendisse ullamcorper, massa id volutpat sagittis, odio neque feugiat nibh, nec laoreet felis elit vel sem. Sed aliquet scelerisque pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi felis, egestas eu accumsan in, mollis ac nibh. Aenean et libero ut nunc molestie ullamcorper non sed urna. Sed placerat varius fringilla. Nulla facilisi.",
-//   attendees: [],
-//   saved: [],
-//   tickets: [],
-//   date: new Date("TUE, MAR 28 08:00 EDT"),
-//   time: null,
-//   location: "Morisset Library",
-//   organizer: "",
-// };
-
 export const defaultEvent: EventObject = {
   id: "1",
   name: "",
@@ -100,3 +56,47 @@ export const defaultEvent: EventObject = {
   originalLink: "",
   address: "",
 };
+
+// Utility functions
+export const extractMonth = (timestamp: Timestamp) => {
+  const date = timestamp.toDate();
+  const month = date.getMonth();
+  return monthsOfYear[month];
+}
+
+export const extractDay = (timestamp: Timestamp) => {
+  const date = timestamp.toDate();
+  const day = date.getDate();
+  return day.toString();
+}
+
+export const extractDayOfWeek = (timestamp: Timestamp) => {
+  const date = timestamp.toDate();
+  const day = date.getDay();
+  return daysOfWeek[day];
+}
+
+const daysOfWeek: string[] = [
+  "Sunday",
+  "Monday",
+  "Tueday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+const monthsOfYear: string[] = [
+  "January",
+  "Febuary",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September ",
+  "October",
+  "November",
+  "December",
+];
