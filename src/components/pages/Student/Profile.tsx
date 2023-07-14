@@ -82,24 +82,21 @@ const Profile = ({ route, navigation }: props) => {
       </View>
 
       {/* Image Section */}
-      {/* <View style={styles.profileImage}> */}
-      {/* <Image 
-                    source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
-                    style={{ 
-                        width: 200,
-                        height: 200,
-                        borderRadius: 200/2,
-                    }}
-                /> */}
-      {/* <Avatar
-          source={{
-            uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
+      <View style={styles.profileImage}>
+      <Image 
+          source={require('../../../assets/uevents_logo.png')}
+          style={{ 
+              width: 120,
+              height: 150,
+              borderRadius: 170/2,
           }}
-          // showEditButton
-          rounded
-          size="xlarge"
+      />
+        {/* <Avatar
+            source={require('../../../assets/uevents_logo.png')}
+            rounded
+            size="xlarge"
         /> */}
-      {/* </View> */}
+      </View>
 
       {/* Student Info Section */}
       <View style={styles.studentInfo}>
