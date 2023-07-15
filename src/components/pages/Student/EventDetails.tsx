@@ -7,12 +7,7 @@ import {
   Linking,
   ImageBackground,
 } from "react-native";
-import {
-  EventObject,
-  extractMonth,
-  extractDay,
-  extractDayOfWeek,
-} from "../../../utils/model/EventObject";
+import { EventObject, extractMonth, extractDay, extractDayOfWeek, extractTime } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -92,33 +87,28 @@ const EventDetails = ({ route, navigation }: props) => {
               >
                 <View style={{ flexDirection: "row", width: "70%" }}>
                   <DateCard
-                    line1={extractDay(event.time)}
-                    line2={extractMonth(event.time)}
-                    style={{ width: "34%" }}
+                    line1={extractDay(event.startTime)}
+                    line2={extractMonth(event.startTime)}
+                    style={{width: '34%'}}
                   />
                   <Text>{"    "}</Text>
                   <DateCard
-                    line1={extractDayOfWeek(event.time)}
-                    line2={extractDayOfWeek(event.time)}
-                    style={{ width: "34%" }}
+                    line1={extractDayOfWeek(event.startTime)}
+                    line2={extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End")}
+                    style={{width: '34%'}}
                   />
                 </View>
 
-                <View
-                  style={{
-                    ...styles.price,
-                    backgroundColor:
-                      event.price > 0 ? colours.primaryPurple : "green",
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 20,
-                    }}
-                  >
-                    {event.price > 0 ? "$" + event.price : "Free"}
+                <View style={{
+                  ...styles.price,
+                  backgroundColor: event.priceMin ? colours.primaryPurple : 'green',
+                }}>
+                  <Text style={{
+                    color: 'white',
+                    fontWeight: '600',
+                    fontSize: 20,
+                  }}>
+                    {event.priceMin ? event.priceMax ? '$'+event.priceMin+'- $'+event.priceMax : '$'+event.priceMin : 'Free'}
                   </Text>
                 </View>
               </View>

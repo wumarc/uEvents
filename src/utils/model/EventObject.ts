@@ -76,6 +76,16 @@ export const extractDayOfWeek = (timestamp: Timestamp) => {
   return daysOfWeek[day];
 };
 
+// Extract time in format HH:MM AM/PM
+export const extractTime = (timestamp: Timestamp) => {
+  const date = timestamp.toDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const ampm = hour >= 12 ? "PM" : "AM";
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${minute} ${ampm}`;
+}
+
 const daysOfWeek: string[] = [
   "Sunday",
   "Monday",
