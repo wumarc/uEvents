@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View, Animated } from "react-native";
+import { ScrollView, StyleSheet, View, Animated, StatusBar } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -199,6 +199,7 @@ const Home = ({ route, navigation }: props) => {
               textStyle={{ color: "white"}}
               selectedButtonStyle={{ backgroundColor: "green" }}
               onPress={(value) => setSelectedIndex(value)}
+              onPressOut={() => {}}
             />
           </ScrollView>
         </View>

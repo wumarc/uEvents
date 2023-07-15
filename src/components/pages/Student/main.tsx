@@ -7,7 +7,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EventDetails from "./EventDetails";
 import { Platform } from "react-native";
@@ -160,6 +160,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colours.secondaryPurple,
-    paddingTop: Platform.OS === "android" ? 25 : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
