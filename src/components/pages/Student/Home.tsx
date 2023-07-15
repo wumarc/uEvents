@@ -199,7 +199,6 @@ const Home = ({ route, navigation }: props) => {
               textStyle={{ color: "white"}}
               selectedButtonStyle={{ backgroundColor: "green" }}
               onPress={(value) => setSelectedIndex(value)}
-              onPressOut={() => {}}
             />
           </ScrollView>
         </View>

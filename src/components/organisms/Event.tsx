@@ -13,7 +13,7 @@ import {
 } from "../../utils/useStateWithFirebase";
 import Toast from "react-native-toast-message";
 import { Loading } from "../pages/Common/Loading";
-import DateCard from "../atoms/DateCard";
+import { extractMonth, extractDay } from "../../utils/model/EventObject";
 
 // Event component props
 interface EventProps {
@@ -93,9 +93,9 @@ const Event: React.FC<EventProps> = (props) => {
                   margin: 5,
                 }}
               >
-                <View>
-                  {/* <Text style={styles.line1}>{line1}</Text>
-                  <Text style={styles.line2}>{line2}</Text> */}
+                <View style={{backgroundColor: 'white', padding: '1%', borderRadius: 5}}>
+                  <Text style={{fontWeight: '600', fontSize: 14}}>{extractMonth(event.startTime)}</Text>
+                  <Text style={{fontWeight: '600', fontSize: 14}}>{extractDay(event.startTime)}</Text>
                 </View>
 
                 <View>
