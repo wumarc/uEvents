@@ -134,7 +134,7 @@ const Main: FC<{ userType: string }> = (props) => {
             component={EventDetails as any} // TODO fix error
             options={{
               // headerLeft: () => (),
-              headerRight: () => <Text>Save</Text>,
+              // headerRight: () => <Text>Save</Text>,
               title: "",
               headerTransparent: true,
               // Add transition effect to stacks

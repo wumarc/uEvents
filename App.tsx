@@ -12,9 +12,11 @@ import { StyleSheet } from "react-native";
 import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
 import { Error } from "./src/components/pages/Common/Error";
+import { LogBox } from "react-native";
 
 export default function App() {
   const [user, loading, error] = useAuthState(auth);
+  LogBox.ignoreAllLogs();
   // const [splashLoaded, setSplashLoaded] = useState(false); // TODO Fix splash screen so it doesn't break the web version anymore
 
   // if (!splashLoaded) {
