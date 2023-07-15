@@ -32,8 +32,6 @@ const Event: React.FC<EventProps> = (props) => {
 
   const price = 10;
 
-  const [loading2, url, found] = useStateWithFireStoreImage(props.imageId);
-
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
 
   const saveEvent = () => {
@@ -56,11 +54,15 @@ const Event: React.FC<EventProps> = (props) => {
     }
   };
 
-  if (loading || !event || loading2) {
+  if (loading || !event) {
     return <Loading />;
   }
 
-  let image = { uri: url };
+  let image = {
+    uri:
+      "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" +
+      props.imageId,
+  };
 
   return (
     <View style={styles.container}>

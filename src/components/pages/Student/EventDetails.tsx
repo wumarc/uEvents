@@ -33,15 +33,15 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.eventID
   );
 
-  const [loading2, url, found] = useStateWithFireStoreImage(
-    route.params.imageID
-  );
-
-  if (loading || loading2) {
+  if (loading) {
     return <ActivityIndicator />;
   }
 
-  let image = { uri: url };
+  let image = {
+    uri:
+      "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" +
+      route.params.imageID,
+  };
 
   return (
     <View style={styles.big_container}>
