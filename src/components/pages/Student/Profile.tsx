@@ -76,6 +76,7 @@ const Profile = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
+      
       {/* Header Section */}
       <View style={styles.profileHeader}>
         <Text h4>Your Profile</Text>
@@ -172,6 +173,7 @@ const Profile = ({ route, navigation }: props) => {
           radius={15}
         />
       </View>
+      
     </View>
   );
 };

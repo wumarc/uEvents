@@ -12,6 +12,7 @@ import {
   extractMonth,
   extractDay,
   extractDayOfWeek,
+  extractTime,
 } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
@@ -33,7 +34,11 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.eventID
   );
 
-  if (loading) {
+  const [loading2, url, found] = useStateWithFireStoreImage(
+    route.params.imageID
+  );
+
+  if (loading || loading2) {
     return <ActivityIndicator />;
   }
 
@@ -49,7 +54,7 @@ const EventDetails = ({ route, navigation }: props) => {
         <ScrollView style={{ backgroundColor: colours.secondaryPurple }}>
           {/* Event Image */}
           <ImageBackground
-            style={{ width: "100%", height: "50%" }}
+            style={{ height: 300, width: "100%", flexGrow: 1 }}
             source={image}
           >
             <LinearGradient
@@ -92,14 +97,18 @@ const EventDetails = ({ route, navigation }: props) => {
               >
                 <View style={{ flexDirection: "row", width: "70%" }}>
                   <DateCard
-                    line1={extractDay(event.time)}
-                    line2={extractMonth(event.time)}
+                    line1={extractDay(event.startTime)}
+                    line2={extractMonth(event.startTime)}
                     style={{ width: "34%" }}
                   />
                   <Text>{"    "}</Text>
                   <DateCard
-                    line1={extractDayOfWeek(event.time)}
-                    line2={extractDayOfWeek(event.time)}
+                    line1={extractDayOfWeek(event.startTime)}
+                    line2={
+                      extractTime(event.startTime) +
+                      " - " +
+                      (event.endTime ? extractTime(event.endTime!) : "End")
+                    }
                     style={{ width: "34%" }}
                   />
                 </View>
@@ -107,8 +116,9 @@ const EventDetails = ({ route, navigation }: props) => {
                 <View
                   style={{
                     ...styles.price,
-                    backgroundColor:
-                      event.price > 0 ? colours.primaryPurple : "green",
+                    backgroundColor: event.priceMin
+                      ? colours.primaryPurple
+                      : "green",
                   }}
                 >
                   <Text
@@ -118,7 +128,11 @@ const EventDetails = ({ route, navigation }: props) => {
                       fontSize: 20,
                     }}
                   >
-                    {event.price > 0 ? "$" + event.price : "Free"}
+                    {event.priceMin
+                      ? event.priceMax
+                        ? "$" + event.priceMin + "- $" + event.priceMax
+                        : "$" + event.priceMin
+                      : "Free"}
                   </Text>
                 </View>
               </View>
@@ -391,7 +405,9 @@ const EventDetails = ({ route, navigation }: props) => {
           //   marginVertical: 10,
           // }}
           onPress={() => {
-            Linking.openURL(event.signUpLink!);
+            if (event.signUpLink != null) {
+              Linking.openURL(event.signUpLink!);
+            }
             // navigation.navigate("EventSignUpView", {
             //   userType: route.params.userType,
             // });
@@ -419,7 +435,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: "2.3%",
     alignItems: "center",
-    // backgroundColor: colours.secondaryGrey,
     backgroundColor: colours.secondaryPurple,
   },
   price: {

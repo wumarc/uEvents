@@ -3,6 +3,7 @@ import { Organizer } from "./Organizer";
 import { Student } from "./Student";
 
 export enum EventCategory {
+  ALL = "All",
   SPORTS = "Sports",
   ARTS = "Arts",
   ACADEMICS = "Academics",
@@ -75,6 +76,16 @@ export const extractDayOfWeek = (timestamp: Timestamp) => {
   const day = date.getDay();
   return daysOfWeek[day];
 };
+
+// Extract time in format HH:MM AM/PM
+export const extractTime = (timestamp: Timestamp) => {
+  const date = timestamp.toDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const ampm = hour >= 12 ? "PM" : "AM";
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${minute} ${ampm}`;
+}
 
 const daysOfWeek: string[] = [
   "Sunday",

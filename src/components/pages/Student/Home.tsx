@@ -1,8 +1,8 @@
-import { FlatList, ScrollView, StyleSheet, View, Animated } from "react-native";
+import { ScrollView, StyleSheet, View, Animated, StatusBar } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
-import { defaultEvent, EventObject } from "../../../utils/model/EventObject";
+import { EventObject } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -73,6 +73,7 @@ const Home = ({ route, navigation }: props) => {
       useNativeDriver: true,
     }).start();
   };
+  
   const onScrollEndDrag = () => {
     scrollEndTimer = setTimeout(onMomentumScrollEnd, 250);
   };
@@ -85,11 +86,6 @@ const Home = ({ route, navigation }: props) => {
   const opacity = clampedScroll.interpolate({
     inputRange: [0, CONTAINER_HEIGHT - 20, CONTAINER_HEIGHT],
     outputRange: [1, 0.05, 0],
-    extrapolate: "clamp",
-  });
-  const bottomTabTranslate = clampedScroll.interpolate({
-    inputRange: [0, CONTAINER_HEIGHT],
-    outputRange: [0, CONTAINER_HEIGHT * 2],
     extrapolate: "clamp",
   });
 
@@ -160,22 +156,18 @@ const Home = ({ route, navigation }: props) => {
             backgroundColor: "white",
             margin: 0,
           }}
-          // inputStyle={{}}
           containerStyle={{
             backgroundColor: colours.secondaryPurple,
             borderWidth: 0,
             borderBottomColor: "transparent",
             borderTopColor: "transparent",
           }}
-          // leftIconContainerStyle={{backgroundColor: 'green', padding: 3}}
-          rightIconContainerStyle={{}}
-          // loadingProps={{}}
-          onChangeText={(value) => {
-            setSearch(value);
-          }}
+          onChangeText={(value) => { setSearch(value);}}
           placeholder="Search events by name"
           placeholderTextColor="#121212"
           value={search}
+          autoCapitalize="none"
+          selectionColor={colours.primaryPurple}
         />
         <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -204,13 +196,9 @@ const Home = ({ route, navigation }: props) => {
               innerBorderStyle={{
                 width: 0,
               }}
-              textStyle={{
-                color: "white",
-              }}
+              textStyle={{ color: "white"}}
               selectedButtonStyle={{ backgroundColor: "green" }}
-              onPress={(value) => {
-                setSelectedIndex(value);
-              }}
+              onPress={(value) => setSelectedIndex(value)}
             />
           </ScrollView>
         </View>
@@ -227,6 +215,7 @@ export default Home;
 export const styles = StyleSheet.create({
   view: {
     position: "absolute",
+    width: "100%",
     // left: 0,
     // right: 0,
     height: CONTAINER_HEIGHT,
