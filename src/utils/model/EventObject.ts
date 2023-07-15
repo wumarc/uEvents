@@ -3,6 +3,7 @@ import { Organizer } from "./Organizer";
 import { Student } from "./Student";
 
 export enum EventCategory {
+  ALL = "All",
   SPORTS = "Sports",
   ARTS = "Arts",
   ACADEMICS = "Academics",

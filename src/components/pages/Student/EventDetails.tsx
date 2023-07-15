@@ -28,13 +28,9 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.eventID
   );
 
-  const [loading2, url, found] = useStateWithFireStoreImage(
-    route.params.imageID
-  );
+  const [loading2, url, found] = useStateWithFireStoreImage(route.params.imageID);
 
-  if (loading || loading2) {
-    return <ActivityIndicator />;
-  }
+  if (loading || loading2) { return <ActivityIndicator />}
 
   let image = { uri: url };
 
@@ -44,7 +40,7 @@ const EventDetails = ({ route, navigation }: props) => {
         <ScrollView style={{ backgroundColor: colours.secondaryPurple }}>
           {/* Event Image */}
           <ImageBackground
-            style={{ width: "100%", height: "50%" }}
+            style={{height: 300, width: "100%", flexGrow: 1}}
             source={image}
           >
             <LinearGradient
@@ -167,6 +163,7 @@ const EventDetails = ({ route, navigation }: props) => {
                     }}
                   />
                 </View>
+                
               </View>
 
               {/* Event Description */}
@@ -381,13 +378,16 @@ const EventDetails = ({ route, navigation }: props) => {
           //   marginVertical: 10,
           // }}
           onPress={() => {
-            Linking.openURL(event.signUpLink!);
+            if(event.signUpLink != null) {
+              Linking.openURL(event.signUpLink!);
+            }
             // navigation.navigate("EventSignUpView", {
             //   userType: route.params.userType,
             // });
           }}
         />
       </View>
+
     </View>
   );
 };
@@ -409,7 +409,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: "2.3%",
     alignItems: "center",
-    // backgroundColor: colours.secondaryGrey,
     backgroundColor: colours.secondaryPurple,
   },
   price: {
