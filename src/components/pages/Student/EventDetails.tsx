@@ -357,6 +357,39 @@ const EventDetails = ({ route, navigation }: props) => {
                   </View>
                 </View>
               )}
+
+              {/* Original Link */}
+              {event.originalLink && (
+                <View style={{ marginVertical: "2%" }}>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "600",
+                      flexWrap: "wrap",
+                      color: "white",
+                      paddingBottom: "1%",
+                    }}
+                  >
+                    Original Link
+                  </Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      color: "blue",
+                      fontWeight: "400",
+                      fontSize: 12,
+                      textDecorationLine: "underline",
+                    }}
+                    onPress={() => Linking.openURL(event.originalLink)}
+                  >
+                    {event.originalLink}
+                  </Text>
+                </View>
+              </View>
+            )}
+
             </View>
           </LinearGradient>
         </ScrollView>
