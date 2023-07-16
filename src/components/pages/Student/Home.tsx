@@ -89,9 +89,7 @@ const Home = ({ route, navigation }: props) => {
     extrapolate: "clamp",
   });
 
-  const [toggleSearchBar, setToggleSearchBar] = useState(false);
-  const [loading, events, add] =
-    useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] =useStateWithFireStoreCollection<EventObject>("events");
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -109,6 +107,10 @@ const Home = ({ route, navigation }: props) => {
       visibilityTime: 1800,
     });
   };
+
+  const showFilteredResults = (index: number) => {
+    
+  }
 
   return (
     <View>

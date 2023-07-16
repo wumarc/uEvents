@@ -4,21 +4,21 @@ import SavedEvents from "./SavedEvents";
 import Forum from "./Forum";
 import EventsTickets from "./EventsTickets";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { TouchableOpacity, SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import EventDetails from "./EventDetails";
 import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours";
 import EventSignUp from "./EventSignUp";
 import { FC } from "react";
-import { Text } from "react-native-elements";
 import { useTheme } from "react-native-paper";
+import HeaderLeft from "../../molecules/HeaderLeft";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 
 export type RootStackParamList = {
   MainView: { userType: string };
@@ -133,11 +133,11 @@ const Main: FC<{ userType: string }> = (props) => {
             name="EventDetailsView"
             component={EventDetails as any} // TODO fix error
             options={{
-              // headerLeft: () => (),
               // headerRight: () => <Text>Save</Text>,
               title: "",
               headerTransparent: true,
-              // Add transition effect to stacks
+              headerTintColor: colours.primaryPurple,
+              // headerLeft: () => <HeaderLeft/>
             }}
           />
           <Stack.Screen

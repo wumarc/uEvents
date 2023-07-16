@@ -102,11 +102,11 @@ const Profile = ({ route, navigation }: props) => {
       {/* Student Info Section */}
       <View style={styles.studentInfo}>
         <View style={{ flexDirection: "column", flex: 1}}>
+          <Text style={{fontSize: 17}}>Email</Text>
           <Input
             placeholder="Email"
             defaultValue={email!}
             leftIcon={{type: "material", name: "mail"}}
-            label="Email"
             disabled
           />
 

@@ -143,37 +143,23 @@ const EventDetails = ({ route, navigation }: props) => {
                   marginVertical: "1%",
                   flexDirection: "row",
                   justifyContent: "space-between",
+                  width: "100%",
                 }}
               >
-                <View>
+                <View style={{width: '90%'}}>
                   <View>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontWeight: "bold",
-                        paddingVertical: "0.5%",
-                        fontSize: 17,
-                      }}
-                    >
+                    <Text style={{ color: "white", fontWeight: "bold", paddingVertical: "0.5%", fontSize: 17}}>
                       {event.location}
                     </Text>
                   </View>
                   <View>
-                    <Text
-                      style={{
-                        color: "#0645AD",
-                        fontWeight: "400",
-                        textDecorationLine: "underline",
-                      }}
-                    >
+                    <Text style={{ color: "#0645AD", fontWeight: "400", textDecorationLine: "underline"}}>
                       {event.address}
                     </Text>
                   </View>
                 </View>
 
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
+                <View style={{ justifyContent: "center", alignItems: "center" }}>
                   <Button
                     type="clear"
                     icon={{
@@ -191,6 +177,7 @@ const EventDetails = ({ route, navigation }: props) => {
                     }}
                   />
                 </View>
+                
               </View>
 
               {/* Event Description */}
