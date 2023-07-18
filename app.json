@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "slug": "uevents",
+    "extra": {
+      "eas": {
+        "projectId": "f1ddc887-9200-4a3b-ab25-46afcc0e6f76"
+      }
+    },
+    "android": {
+      "package": "com.uevents.dev.uevents",
+      "versionCode": 1
+    },
+    "ios": {
+      "bundleIdentifier": "com.uevents.dev.uevents"
+    },
+    "icon": "./assets/icon.png",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f1ddc887-9200-4a3b-ab25-46afcc0e6f76"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
+  }
+}
