@@ -165,7 +165,7 @@ const Profile = ({ route, navigation }: props) => {
 
       {/* Log out button */}
       <View style={{ marginBottom: 10 }}>
-        <Text style={{fontSize: 11}}>If you have any questions or concerns about uEvents, email us at admin@uevents.org. If you are an event organizer and would like to post your own events on our platform, please email us at the same email address.</Text>
+        <Text style={{fontSize: 11}}>If you wish to delete your uEvents account or have any questions about uEvents, email us at admin@uevents.org with your email.</Text>
         <Button
           color={colours.primaryPurple}
           onPress={() => logout()}
