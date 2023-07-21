@@ -95,9 +95,19 @@ const Event: React.FC<EventProps> = (props) => {
                   margin: 5,
                 }}
               >
-                <View style={{backgroundColor: 'white', padding: '1%', borderRadius: 5}}>
-                  <Text style={{fontWeight: '600', fontSize: 14}}>{extractMonth(event.startTime)}</Text>
-                  <Text style={{fontWeight: '600', fontSize: 14}}>{extractDay(event.startTime)}</Text>
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    padding: "1%",
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text style={{ fontWeight: "600", fontSize: 14 }}>
+                    {extractMonth(event.startTime)}
+                  </Text>
+                  <Text style={{ fontWeight: "600", fontSize: 14 }}>
+                    {extractDay(event.startTime)}
+                  </Text>
                 </View>
 
                 <View>
@@ -159,6 +169,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     flexDirection: "column",
     // backgroundColor: colours.primaryPurple,
+    maxWidth: 500,
+    marginHorizontal: "auto",
   },
   row1: {
     flexDirection: "row",

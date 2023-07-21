@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, View, Animated, StatusBar } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Animated,
+  StatusBar,
+} from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -28,7 +34,17 @@ const Home = ({ route, navigation }: props) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const offsetAnim = useRef(new Animated.Value(0)).current;
   const clampedScroll = Animated.diffClamp(
-  Animated.add( scrollY.interpolate({ inputRange: [0, 1], outputRange: [0, 1], extrapolateLeft: "clamp" }), offsetAnim ), 0, CONTAINER_HEIGHT);
+    Animated.add(
+      scrollY.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1],
+        extrapolateLeft: "clamp",
+      }),
+      offsetAnim
+    ),
+    0,
+    CONTAINER_HEIGHT
+  );
   var _clampedScrollValue = 0;
   var _offsetValue = 0;
   var _scrollValue = 0;
@@ -37,14 +53,21 @@ const Home = ({ route, navigation }: props) => {
     scrollY.addListener(({ value }) => {
       const diff = value - _scrollValue;
       _scrollValue = value;
-      _clampedScrollValue = Math.min( Math.max(_clampedScrollValue + diff, 0), CONTAINER_HEIGHT);
+      _clampedScrollValue = Math.min(
+        Math.max(_clampedScrollValue + diff, 0),
+        CONTAINER_HEIGHT
+      );
     });
-    offsetAnim.addListener(({ value }) => { _offsetValue = value });
+    offsetAnim.addListener(({ value }) => {
+      _offsetValue = value;
+    });
   }, []);
 
   var scrollEndTimer = null;
 
-  const onMomentumScrollBegin = () => { clearTimeout(scrollEndTimer) };
+  const onMomentumScrollBegin = () => {
+    clearTimeout(scrollEndTimer);
+  };
 
   const onMomentumScrollEnd = () => {
     const toValue =
@@ -53,9 +76,13 @@ const Home = ({ route, navigation }: props) => {
         ? _offsetValue + CONTAINER_HEIGHT
         : _offsetValue - CONTAINER_HEIGHT;
 
-    Animated.timing(offsetAnim, { toValue, duration: 500, useNativeDriver: true}).start();
+    Animated.timing(offsetAnim, {
+      toValue,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
   };
-  
+
   const onScrollEndDrag = () => {
     scrollEndTimer = setTimeout(onMomentumScrollEnd, 250);
   };
@@ -66,7 +93,8 @@ const Home = ({ route, navigation }: props) => {
     extrapolate: "clamp",
   });
 
-  const [loading, events, add] =useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] =
+    useStateWithFireStoreCollection<EventObject>("events");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (loading) {
@@ -85,10 +113,12 @@ const Home = ({ route, navigation }: props) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       {/* Event List*/}
       <Animated.FlatList
-        style={{ paddingTop: '27%' }}
+        style={{
+          paddingTop: 113, // MODIFIED
+        }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: true }
@@ -100,7 +130,7 @@ const Home = ({ route, navigation }: props) => {
         onMomentumScrollEnd={onMomentumScrollEnd}
         onScrollEndDrag={onScrollEndDrag}
         scrollEventThrottle={1}
-        contentContainerStyle={{ paddingBottom: 200 }}
+        // contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED
         showsVerticalScrollIndicator={false}
         data={searchAlgo(search, events as EventObject[])}
         renderItem={({ item, index }) => (
@@ -136,7 +166,9 @@ const Home = ({ route, navigation }: props) => {
             borderBottomColor: "transparent",
             borderTopColor: "transparent",
           }}
-          onChangeText={(value) => { setSearch(value);}}
+          onChangeText={(value) => {
+            setSearch(value);
+          }}
           placeholder="Search events by name"
           placeholderTextColor="#121212"
           value={search}
@@ -148,11 +180,24 @@ const Home = ({ route, navigation }: props) => {
             <ButtonGroup
               buttons={Object.values(EventCategory)}
               selectedIndex={selectedIndex}
-              buttonContainerStyle={{ borderRadius: 20, borderWidth: 0}}
-              containerStyle={{ borderWidth: 0, padding: 3, backgroundColor: colours.secondaryPurple, marginLeft: 0, marginVertical: 0, paddingBottom: 6, marginBottom: 7}}
-              buttonStyle={{borderRadius: 16, backgroundColor: colours.primaryPurple, marginHorizontal: 4, paddingHorizontal: 12}}
-              innerBorderStyle={{ width: 0}}
-              textStyle={{ color: "white"}}
+              buttonContainerStyle={{ borderRadius: 20, borderWidth: 0 }}
+              containerStyle={{
+                borderWidth: 0,
+                padding: 3,
+                backgroundColor: colours.secondaryPurple,
+                marginLeft: 0,
+                marginVertical: 0,
+                paddingBottom: 6,
+                marginBottom: 7,
+              }}
+              buttonStyle={{
+                borderRadius: 16,
+                backgroundColor: colours.primaryPurple,
+                marginHorizontal: 4,
+                paddingHorizontal: 12,
+              }}
+              innerBorderStyle={{ width: 0 }}
+              textStyle={{ color: "white" }}
               selectedButtonStyle={{ backgroundColor: "green" }}
               onPress={(value) => setSelectedIndex(value)}
             />
@@ -162,7 +207,7 @@ const Home = ({ route, navigation }: props) => {
 
       {/* Toast */}
       <Toast />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -174,10 +219,10 @@ export const styles = StyleSheet.create({
     width: "100%",
     // left: 0,
     // right: 0,
-    height: CONTAINER_HEIGHT,
+    // height: CONTAINER_HEIGHT, // MODIFIED
   },
   event: {
-    paddingVertical: "8%",
+    paddingVertical: 20, // MODIFIED
     justifyContent: "center",
   },
   title: {
