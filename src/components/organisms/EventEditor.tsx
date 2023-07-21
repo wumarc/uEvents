@@ -213,6 +213,7 @@ const EventEditor: FC<{
         <Input
           label={"food (Optional)"}
           multiline={true}
+          defaultValue={event.food}
           numberOfLines={4}
           onChangeText={(value) => {
             let food: string | undefined = value;
@@ -228,6 +229,7 @@ const EventEditor: FC<{
 
         <Input
           label={"attire (Optional)"}
+          defaultValue={event.attire}
           multiline={true}
           numberOfLines={4}
           onChangeText={(value) => {
@@ -244,6 +246,7 @@ const EventEditor: FC<{
 
         <Input
           label={"To Bring (Optional)"}
+          defaultValue={event.toBring}
           multiline={true}
           numberOfLines={4}
           onChangeText={(value) => {
@@ -261,6 +264,7 @@ const EventEditor: FC<{
         <Input
           label={"Includes (Optional)"}
           multiline={true}
+          defaultValue={event.includes}
           numberOfLines={4}
           onChangeText={(value) => {
             let includes: string | undefined = value;
@@ -277,6 +281,7 @@ const EventEditor: FC<{
         <Input
           label={"Transportation (Optional)"}
           multiline={true}
+          defaultValue={event.transportation}
           numberOfLines={4}
           onChangeText={(value) => {
             let transport: string | undefined = value;
@@ -292,6 +297,7 @@ const EventEditor: FC<{
 
         <Input
           label={"Sign Up Link (Optional)"}
+          defaultValue={event.signUpLink}
           onChangeText={(value) => {
             let signUpLink: string | undefined = value;
             if (value == "") {
@@ -306,6 +312,7 @@ const EventEditor: FC<{
 
         <Input
           label={"Original Link (Mandatory)"}
+          defaultValue={event.originalLink}
           onChangeText={(value) => {
             props.set({
               ...event,
