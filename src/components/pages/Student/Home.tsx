@@ -8,7 +8,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
-import { EventObject } from "../../../utils/model/EventObject";
+import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -123,9 +123,13 @@ const Home = ({ route, navigation }: props) => {
       )
     );
   }
-  filteredEvents = filteredEvents.filter(
-    (event) => event.startTime > Timestamp.now()
-  );
+  filteredEvents = filteredEvents.filter((event) => {
+    let startTime = nextStartTime(event.startTime, event.recurrence);
+    if (!startTime) {
+      return false;
+    }
+    return startTime.toMillis() > Timestamp.now().toMillis();
+  });
 
   return (
     // NOTE: This is weird but the flatlist is not scrollable if the view is not flex: 1

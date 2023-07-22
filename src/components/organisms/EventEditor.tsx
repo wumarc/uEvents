@@ -16,6 +16,7 @@ import UploadFile from "./UploadFile";
 import { deleteObject, ref } from "firebase/storage";
 import { storage } from "../../firebaseConfig";
 import { daysOfWeekArray, daysOfWeekBrief } from "../../utils/util";
+import { DatePicker } from "../atoms/DatePicker";
 
 const EventEditor: FC<{
   default: EventObject;
@@ -43,6 +44,10 @@ const EventEditor: FC<{
   const [signUpLinkError, setSignUpLinkError] = useState<string>("");
   const [originalLinkError, setOriginalLinkError] = useState<string>("");
 
+  const [recurrenceType, setRecurrenceType] = useState<number>(
+    recurrenceTypeArray.indexOf(props.default.recurrence.type)
+  );
+
   let event = props.default;
 
   let categories = "";
@@ -57,43 +62,6 @@ const EventEditor: FC<{
 
   // Remove last comma
   categories = categories.substring(0, categories.length - 1);
-
-  function toPrecision(value: number, precision: number) {
-    let valueStr = value.toString();
-    let final = "";
-    let i = 0;
-    for (let j = 0; j < valueStr.length; j++) {
-      final += valueStr[j];
-      i++;
-    }
-    for (; i < precision; i++) {
-      final = "0" + final;
-    }
-    return final;
-  }
-
-  let startTimeString = "";
-  if (event.startTime) {
-    startTimeString +=
-      toPrecision(event.startTime.toDate().getFullYear(), 4) + ":";
-    startTimeString +=
-      toPrecision(event.startTime.toDate().getMonth() + 1, 2) + ":";
-    startTimeString += toPrecision(event.startTime.toDate().getDate(), 2) + ":";
-    startTimeString +=
-      toPrecision(event.startTime.toDate().getHours(), 2) + ":";
-    startTimeString += toPrecision(event.startTime.toDate().getMinutes(), 2);
-  }
-
-  let endTimeString = "";
-  if (event.endTime) {
-    endTimeString +=
-      toPrecision(event.endTime?.toDate().getFullYear(), 4) + ":";
-    endTimeString +=
-      toPrecision(event.endTime?.toDate().getMonth() + 1, 2) + ":";
-    endTimeString += toPrecision(event.endTime?.toDate().getDate(), 2) + ":";
-    endTimeString += toPrecision(event.endTime?.toDate().getHours(), 2) + ":";
-    endTimeString += toPrecision(event.endTime?.toDate().getMinutes(), 2);
-  }
 
   return (
     <ScrollView style={styles.container}>
@@ -205,115 +173,32 @@ const EventEditor: FC<{
             });
           }}
         />
-        <Input
-          defaultValue={startTimeString}
-          errorMessage={startTimeError}
-          label="Start time (Mandatory) (Format: YYYY:MM:DD:HH:MM). If no end time is specified, this is the exact time"
-          onChangeText={(value) => {
-            const [year, month, day, hours, minutes] = value.split(":");
-            let yearInt: number;
-            let monthInt: number;
-            let dayInt: number;
-            let hoursInt: number;
-            let minutesInt: number;
-            try {
-              yearInt = parseInt(year as string);
-              monthInt = parseInt(month as string);
-              dayInt = parseInt(day as string);
-              hoursInt = parseInt(hours as string);
-              minutesInt = parseInt(minutes as string);
-            } catch (error) {
-              setStartTimeError("Invalid time format. Must be numbers");
-              return;
-            }
-            if (
-              yearInt < 2023 ||
-              yearInt > 2030 ||
-              monthInt < 1 ||
-              monthInt > 12 ||
-              dayInt < 1 ||
-              dayInt > 31 ||
-              hoursInt < 0 ||
-              hoursInt > 23 ||
-              minutesInt < 0 ||
-              minutesInt > 59
-            ) {
-              setStartTimeError("Invalid time format. Out of range");
-              return;
-            }
-            try {
-              const time = new Date(
-                yearInt,
-                monthInt - 1,
-                dayInt,
-                hoursInt,
-                minutesInt
-              );
-              setStartTimeError("");
-              props.set({ ...event, startTime: Timestamp.fromDate(time) });
-            } catch (error) {
-              setStartTimeError("Invalid time format. Invalid date");
-              return;
-            }
+        <DatePicker
+          label="Start Date (Mandatory) (Format: YYYY:MM:DD:HH:MM). If no end date is provided, this is the exact date"
+          default={event.startTime.toDate()}
+          set={(date) => {
+            props.set({
+              ...event,
+              startTime: Timestamp.fromDate(date),
+            });
           }}
         />
-        <Input
-          defaultValue={endTimeString}
-          errorMessage={endTimeError}
-          label="End time (Optional) (Format: YYYY:MM:DD:HH:MM)"
-          onChangeText={(value) => {
-            const [year, month, day, hours, minutes] = value.split(":");
-            let yearInt: number;
-            let monthInt: number;
-            let dayInt: number;
-            let hoursInt: number;
-            let minutesInt: number;
-            try {
-              yearInt = parseInt(year as string);
-              monthInt = parseInt(month as string);
-              dayInt = parseInt(day as string);
-              hoursInt = parseInt(hours as string);
-              minutesInt = parseInt(minutes as string);
-            } catch (error) {
-              setEndTimeError("Invalid time format. Must be numbers");
-              return;
-            }
-            if (
-              yearInt < 2023 ||
-              yearInt > 2030 ||
-              monthInt < 1 ||
-              monthInt > 12 ||
-              dayInt < 1 ||
-              dayInt > 31 ||
-              hoursInt < 0 ||
-              hoursInt > 23 ||
-              minutesInt < 0 ||
-              minutesInt > 59
-            ) {
-              setEndTimeError("Invalid time format. Out of range");
-              return;
-            }
-            try {
-              const time = new Date(
-                yearInt,
-                monthInt - 1,
-                dayInt,
-                hoursInt,
-                minutesInt
-              );
-              setEndTimeError("");
-              props.set({ ...event, endTime: Timestamp.fromDate(time) });
-            } catch (error) {
-              setEndTimeError("Invalid time format. Invalid date");
-              return;
-            }
+        <DatePicker
+          label="End Date (Optional) (Format: YYYY:MM:DD:HH:MM)"
+          default={event.endTime?.toDate()}
+          set={(date) => {
+            props.set({
+              ...event,
+              endTime: Timestamp.fromDate(date),
+            });
           }}
         />
         <Text>Recurrence Type (Mandatory)</Text>
         <ButtonGroup
           buttons={recurrenceTypeArray}
-          selectedIndex={recurrenceTypeArray.indexOf(event.recurrence.type)}
+          selectedIndex={recurrenceType}
           onPress={(index) => {
+            setRecurrenceType(index);
             props.set({
               ...event,
               recurrence: {
@@ -323,7 +208,7 @@ const EventEditor: FC<{
             });
           }}
         />
-        {event.recurrence.type == "Custom Weekly" ? (
+        {recurrenceType == 4 ? (
           <View>
             <Text>Select which days the event will recur on</Text>
             <ButtonGroup
@@ -353,6 +238,106 @@ const EventEditor: FC<{
               }}
             />
           </View>
+        ) : (
+          <></>
+        )}
+        {recurrenceType == 5 ? (
+          <View>
+            <FlatList
+              data={event.recurrence.customDates}
+              renderItem={({ item }) => (
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "80%",
+                    }}
+                  >
+                    <DatePicker
+                      label="Date (Format: YYYY:MM:DD:HH:MM)"
+                      default={item.toDate()}
+                      set={(date) => {
+                        props.set({
+                          ...event,
+                          recurrence: {
+                            ...event.recurrence,
+                            customDates: (
+                              event.recurrence.customDates as Timestamp[]
+                            ).map((value) => {
+                              if (value == item) {
+                                return Timestamp.fromDate(date);
+                              } else {
+                                return value;
+                              }
+                            }),
+                          },
+                        });
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      width: "20%",
+                      height: "100%",
+                    }}
+                  >
+                    <Button
+                      title="Delete"
+                      onPress={() => {
+                        props.set({
+                          ...event,
+                          recurrence: {
+                            ...event.recurrence,
+                            customDates: (
+                              event.recurrence.customDates as Timestamp[]
+                            ).filter((value) => value != item),
+                          },
+                        });
+                      }}
+                    />
+                  </View>
+                </View>
+              )}
+            />
+            <Button
+              title="Add Date"
+              onPress={() => {
+                if (!event.recurrence.customDates) {
+                  event.recurrence.customDates = [];
+                }
+                props.set({
+                  ...event,
+                  recurrence: {
+                    ...event.recurrence,
+                    customDates: [
+                      ...event.recurrence.customDates,
+                      new Timestamp(0, 0),
+                    ],
+                  },
+                });
+              }}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
+        {recurrenceType != 0 ? (
+          <DatePicker
+            label="Recurrence End Date (Mandatory) (Format: YYYY:MM:DD:HH:MM)"
+            default={event.recurrence.end?.toDate()}
+            set={(date) => {
+              props.set({
+                ...event,
+                recurrence: {
+                  ...event.recurrence,
+                  end: Timestamp.fromDate(date),
+                },
+              });
+            }}
+          />
         ) : (
           <></>
         )}

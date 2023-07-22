@@ -13,7 +13,13 @@ import {
 } from "../../utils/useStateWithFirebase";
 import Toast from "react-native-toast-message";
 import { Loading } from "../pages/Common/Loading";
-import { extractMonth, extractDay } from "../../utils/model/EventObject";
+import {
+  extractMonth,
+  extractDay,
+  nextStartTime,
+  nextEndTime,
+} from "../../utils/model/EventObject";
+import { Timestamp } from "firebase/firestore";
 
 // Event component props
 interface EventProps {
@@ -64,6 +70,13 @@ const Event: React.FC<EventProps> = (props) => {
       props.imageId,
   };
 
+  // True start time and end time
+  let startTime = nextStartTime(event.startTime, event.recurrence);
+  let endTime = undefined;
+  if (startTime != undefined) {
+    endTime = nextEndTime(event.startTime, startTime, event.endTime);
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -103,11 +116,12 @@ const Event: React.FC<EventProps> = (props) => {
                   }}
                 >
                   <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                    {extractMonth(event.startTime)}
+                    {extractMonth(startTime as Timestamp)}
                   </Text>
                   <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                    {extractDay(event.startTime)}
+                    {extractDay(startTime as Timestamp)}
                   </Text>
+                  {event.recurrence ? <Text>Recurring</Text> : <></>}
                 </View>
 
                 <View>

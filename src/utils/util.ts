@@ -40,3 +40,17 @@ export const daysOfWeekArray: daysOfWeekBrief[] = [
   "Fri",
   "Sat",
 ];
+
+export function toPrecision(value: number, precision: number) {
+  let valueStr = value.toString();
+  let final = "";
+  let i = 0;
+  for (let j = 0; j < valueStr.length; j++) {
+    final += valueStr[j];
+    i++;
+  }
+  for (; i < precision; i++) {
+    final = "0" + final;
+  }
+  return final;
+}

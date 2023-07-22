@@ -41,11 +41,13 @@ export class recurrence {
   constructor(
     type: recurrenceType,
     customDays?: daysOfWeekBrief[],
-    customDates?: Timestamp[]
+    customDates?: Timestamp[],
+    end?: Timestamp
   ) {
     this.type = type;
-    this.customDays = customDays;
-    this.customDates = customDates;
+    this.customDays = customDays ?? [];
+    this.customDates = customDates ?? [];
+    this.end = end;
   }
 }
 
@@ -96,6 +98,9 @@ export const nextStartTime = (
   let today = new Date();
   let startDate = startTime.toDate();
   let foundDate = new Date();
+  if (!recurrence) {
+    return startTime;
+  }
   switch (recurrence.type) {
     case "None":
       foundDate = startDate;
