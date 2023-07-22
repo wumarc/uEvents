@@ -19,6 +19,7 @@ import { ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Button } from "@rneui/base";
+import { Timestamp } from "firebase/firestore";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -122,6 +123,9 @@ const Home = ({ route, navigation }: props) => {
       )
     );
   }
+  filteredEvents = filteredEvents.filter(
+    (event) => event.startTime > Timestamp.now()
+  );
 
   return (
     <ScrollView>

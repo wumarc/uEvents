@@ -1,5 +1,5 @@
 import { View, Text, FlatList, ScrollView, Button } from "react-native";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { EventCategory, EventObject } from "../../utils/model/EventObject";
 import CustomButton from "../atoms/CustomButton";
@@ -15,6 +15,27 @@ const EventEditor: FC<{
   set: (newVal: EventObject) => void;
   children?: any;
 }> = (props) => {
+  // Error messages
+  const [nameError, setNameError] = useState<string>("");
+  const [priceMinError, setPriceMinError] = useState<string>("");
+  const [priceMaxError, setPriceMaxError] = useState<string>("");
+  const [priceDescriptionError, setPriceDescriptionError] =
+    useState<string>("");
+  const [descriptionError, setDescriptionError] = useState<string>("");
+  const [locationError, setLocationError] = useState<string>("");
+  const [addressError, setAddressError] = useState<string>("");
+  const [organizerError, setOrganizerError] = useState<string>("");
+  const [startTimeError, setStartTimeError] = useState<string>("");
+  const [endTimeError, setEndTimeError] = useState<string>("");
+  const [categoriesError, setCategoriesError] = useState<string>("");
+  const [foodError, setFoodError] = useState<string>("");
+  const [attireError, setAttireError] = useState<string>("");
+  const [toBringError, setToBringError] = useState<string>("");
+  const [includesError, setIncludesError] = useState<string>("");
+  const [transportationError, setTransportationError] = useState<string>("");
+  const [signUpLinkError, setSignUpLinkError] = useState<string>("");
+  const [originalLinkError, setOriginalLinkError] = useState<string>("");
+
   let event = props.default;
 
   let categories = "";
@@ -30,22 +51,41 @@ const EventEditor: FC<{
   // Remove last comma
   categories = categories.substring(0, categories.length - 1);
 
+  function toPrecision(value: number, precision: number) {
+    let valueStr = value.toString();
+    let final = "";
+    let i = 0;
+    for (let j = 0; j < valueStr.length; j++) {
+      final += valueStr[j];
+      i++;
+    }
+    for (; i < precision; i++) {
+      final = "0" + final;
+    }
+    return final;
+  }
+
   let startTimeString = "";
   if (event.startTime) {
-    startTimeString += event.startTime.toDate().getFullYear() + ":";
-    startTimeString += event.startTime.toDate().getMonth() + ":";
-    startTimeString += event.startTime.toDate().getDate() + ":";
-    startTimeString += event.startTime.toDate().getHours() + ":";
-    startTimeString += event.startTime.toDate().getMinutes();
+    startTimeString +=
+      toPrecision(event.startTime.toDate().getFullYear(), 4) + ":";
+    startTimeString +=
+      toPrecision(event.startTime.toDate().getMonth() + 1, 2) + ":";
+    startTimeString += toPrecision(event.startTime.toDate().getDate(), 2) + ":";
+    startTimeString +=
+      toPrecision(event.startTime.toDate().getHours(), 2) + ":";
+    startTimeString += toPrecision(event.startTime.toDate().getMinutes(), 2);
   }
 
   let endTimeString = "";
-  if (event.startTime) {
-    endTimeString += event.endTime?.toDate().getFullYear() + ":";
-    endTimeString += event.endTime?.toDate().getMonth() + ":";
-    endTimeString += event.endTime?.toDate().getDate() + ":";
-    endTimeString += event.endTime?.toDate().getHours() + ":";
-    endTimeString += event.endTime?.toDate().getMinutes();
+  if (event.endTime) {
+    endTimeString +=
+      toPrecision(event.endTime?.toDate().getFullYear(), 4) + ":";
+    endTimeString +=
+      toPrecision(event.endTime?.toDate().getMonth() + 1, 2) + ":";
+    endTimeString += toPrecision(event.endTime?.toDate().getDate(), 2) + ":";
+    endTimeString += toPrecision(event.endTime?.toDate().getHours(), 2) + ":";
+    endTimeString += toPrecision(event.endTime?.toDate().getMinutes(), 2);
   }
 
   return (
@@ -92,11 +132,13 @@ const EventEditor: FC<{
         <Input
           defaultValue={event.name}
           label="Name"
+          errorMessage={nameError}
           onChangeText={(value) => props.set({ ...event, name: value })}
         />
         <Input
           defaultValue={event.priceMin?.toString()}
           label="Min Price (Mandatory). If no max price is specified, this is the exact price"
+          errorMessage={priceMinError}
           onChangeText={(value) => {
             props.set({
               ...event,
@@ -107,6 +149,7 @@ const EventEditor: FC<{
         <Input
           defaultValue={event.priceMax?.toString()}
           label="Max Price (Optional)"
+          errorMessage={priceMaxError}
           onChangeText={(value) => {
             props.set({
               ...event,
@@ -116,6 +159,7 @@ const EventEditor: FC<{
         />
         <Input
           defaultValue={event.priceDescription}
+          errorMessage={priceDescriptionError}
           multiline={true}
           numberOfLines={4}
           label="Price Description (Optional). If needed, a description of the different prices"
@@ -125,6 +169,7 @@ const EventEditor: FC<{
         />
         <Input
           defaultValue={event.description}
+          errorMessage={descriptionError}
           multiline={true}
           numberOfLines={8}
           label="Description (Mandatory)"
@@ -132,16 +177,19 @@ const EventEditor: FC<{
         />
         <Input
           defaultValue={event.location}
+          errorMessage={locationError}
           label="Location"
           onChangeText={(value) => props.set({ ...event, location: value })}
         />
         <Input
           defaultValue={event.address}
+          errorMessage={addressError}
           label="Address"
           onChangeText={(value) => props.set({ ...event, address: value })}
         />
         <Input
           defaultValue={event.organizer}
+          errorMessage={organizerError}
           label={"Organizer"}
           onChangeText={(value) => {
             props.set({
@@ -152,38 +200,111 @@ const EventEditor: FC<{
         />
         <Input
           defaultValue={startTimeString}
+          errorMessage={startTimeError}
           label="Start time (Mandatory) (Format: YYYY:MM:DD:HH:MM). If no end time is specified, this is the exact time"
           onChangeText={(value) => {
             const [year, month, day, hours, minutes] = value.split(":");
-            // Convert to milliseconds
-            const time = new Date(
-              parseInt(year as string),
-              parseInt(month as string),
-              parseInt(day as string),
-              parseInt(hours as string),
-              parseInt(minutes as string)
-            );
-            props.set({ ...event, startTime: Timestamp.fromDate(time) });
+            let yearInt: number;
+            let monthInt: number;
+            let dayInt: number;
+            let hoursInt: number;
+            let minutesInt: number;
+            try {
+              yearInt = parseInt(year as string);
+              monthInt = parseInt(month as string);
+              dayInt = parseInt(day as string);
+              hoursInt = parseInt(hours as string);
+              minutesInt = parseInt(minutes as string);
+            } catch (error) {
+              setStartTimeError("Invalid time format. Must be numbers");
+              return;
+            }
+            if (
+              yearInt < 2023 ||
+              yearInt > 2030 ||
+              monthInt < 1 ||
+              monthInt > 12 ||
+              dayInt < 1 ||
+              dayInt > 31 ||
+              hoursInt < 0 ||
+              hoursInt > 23 ||
+              minutesInt < 0 ||
+              minutesInt > 59
+            ) {
+              setStartTimeError("Invalid time format. Out of range");
+              return;
+            }
+            try {
+              const time = new Date(
+                yearInt,
+                monthInt - 1,
+                dayInt,
+                hoursInt,
+                minutesInt
+              );
+              setStartTimeError("");
+              props.set({ ...event, startTime: Timestamp.fromDate(time) });
+            } catch (error) {
+              setStartTimeError("Invalid time format. Invalid date");
+              return;
+            }
           }}
         />
         <Input
           defaultValue={endTimeString}
+          errorMessage={endTimeError}
           label="End time (Optional) (Format: YYYY:MM:DD:HH:MM)"
           onChangeText={(value) => {
             const [year, month, day, hours, minutes] = value.split(":");
-            // Convert to milliseconds
-            const time = new Date(
-              parseInt(year as string),
-              parseInt(month as string),
-              parseInt(day as string),
-              parseInt(hours as string),
-              parseInt(minutes as string)
-            );
-            props.set({ ...event, endTime: Timestamp.fromDate(time) });
+            let yearInt: number;
+            let monthInt: number;
+            let dayInt: number;
+            let hoursInt: number;
+            let minutesInt: number;
+            try {
+              yearInt = parseInt(year as string);
+              monthInt = parseInt(month as string);
+              dayInt = parseInt(day as string);
+              hoursInt = parseInt(hours as string);
+              minutesInt = parseInt(minutes as string);
+            } catch (error) {
+              setEndTimeError("Invalid time format. Must be numbers");
+              return;
+            }
+            if (
+              yearInt < 2023 ||
+              yearInt > 2030 ||
+              monthInt < 1 ||
+              monthInt > 12 ||
+              dayInt < 1 ||
+              dayInt > 31 ||
+              hoursInt < 0 ||
+              hoursInt > 23 ||
+              minutesInt < 0 ||
+              minutesInt > 59
+            ) {
+              setEndTimeError("Invalid time format. Out of range");
+              return;
+            }
+            try {
+              const time = new Date(
+                yearInt,
+                monthInt - 1,
+                dayInt,
+                hoursInt,
+                minutesInt
+              );
+              setEndTimeError("");
+              props.set({ ...event, endTime: Timestamp.fromDate(time) });
+            } catch (error) {
+              setEndTimeError("Invalid time format. Invalid date");
+              return;
+            }
           }}
         />
         <Input
           defaultValue={categories}
+          errorMessage={categoriesError}
           label={
             "Categories (Optional, coma separated) (Make sure you write the category exactly as it is in the list of categories!!!)"
           }
@@ -212,6 +333,7 @@ const EventEditor: FC<{
 
         <Input
           label={"food (Optional)"}
+          errorMessage={foodError}
           multiline={true}
           defaultValue={event.food}
           numberOfLines={4}
@@ -229,6 +351,7 @@ const EventEditor: FC<{
 
         <Input
           label={"attire (Optional)"}
+          errorMessage={attireError}
           defaultValue={event.attire}
           multiline={true}
           numberOfLines={4}
@@ -246,6 +369,7 @@ const EventEditor: FC<{
 
         <Input
           label={"To Bring (Optional)"}
+          errorMessage={toBringError}
           defaultValue={event.toBring}
           multiline={true}
           numberOfLines={4}
@@ -263,6 +387,7 @@ const EventEditor: FC<{
 
         <Input
           label={"Includes (Optional)"}
+          errorMessage={includesError}
           multiline={true}
           defaultValue={event.includes}
           numberOfLines={4}
@@ -280,6 +405,7 @@ const EventEditor: FC<{
 
         <Input
           label={"Transportation (Optional)"}
+          errorMessage={transportationError}
           multiline={true}
           defaultValue={event.transportation}
           numberOfLines={4}
@@ -297,6 +423,7 @@ const EventEditor: FC<{
 
         <Input
           label={"Sign Up Link (Optional)"}
+          errorMessage={signUpLinkError}
           defaultValue={event.signUpLink}
           onChangeText={(value) => {
             let signUpLink: string | undefined = value;
@@ -312,6 +439,7 @@ const EventEditor: FC<{
 
         <Input
           label={"Original Link (Mandatory)"}
+          errorMessage={originalLinkError}
           defaultValue={event.originalLink}
           onChangeText={(value) => {
             props.set({

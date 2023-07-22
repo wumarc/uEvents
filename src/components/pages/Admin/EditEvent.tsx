@@ -32,13 +32,18 @@ const EditEvent = ({ route, navigation }: props) => {
     route.params.eventId
   );
 
+  const [temp, setTemp] = useState<EventObject>(event);
+
   if (loading) {
     return <Text>Loading</Text>;
   }
   return (
-    <EventEditor default={event} set={(newVal: EventObject) => set(newVal)}>
+    <EventEditor default={event} set={(newVal: EventObject) => setTemp(newVal)}>
       <Button
         onPress={() => {
+          if (temp) {
+            set(temp);
+          }
           navigation.pop();
         }}
       >

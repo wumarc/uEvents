@@ -107,13 +107,12 @@ export function searchAlgo(
   }
 
   // Sort the map by score or date if score is the same
-  // TODO Not sure if this works honestly
   let sortedMap = new Map(
     [...eventMap.entries()].sort((a, b) => {
       if (a[1] === b[1]) {
         return (
-          (eventList[a[0]] as EventObject).time?.toDate().getTime() -
-          (eventList[b[0]] as EventObject).time?.toDate().getTime()
+          (eventList[a[0]] as EventObject).startTime?.toDate().getTime() -
+          (eventList[b[0]] as EventObject).startTime?.toDate().getTime()
         );
       } else {
         return b[1] - a[1];
