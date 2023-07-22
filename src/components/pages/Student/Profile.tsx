@@ -136,21 +136,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: '2.3%',
     flex: 1,
     backgroundColor: colours.secondaryPurple,
-    // justifyContent: "space-between",
   },
   pageTitle: {
     flexDirection: "row",
     padding: '3%',
-  },
-  profileImage: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  studentInfo: {
-    flexDirection: "row",
-    // backgroundColor: "green"
-  },
+  }
 });
 
 export default Profile;
