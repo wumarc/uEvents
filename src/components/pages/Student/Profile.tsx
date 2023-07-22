@@ -4,7 +4,6 @@ import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
-import { Avatar } from "react-native-elements";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
 import {
@@ -19,11 +18,14 @@ import { RootStackParamList } from "./main";
 import { colours } from "../../subatoms/colours";
 import { Loading } from "../Common/Loading";
 import { auth } from "../../../firebaseConfig";
+import { Icon } from "@rneui/base";
+import SettingsButton from "../../molecules/SettingsButton";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
+  
   const logout = () => {
     const auth = getAuth();
     signOut(auth)
@@ -76,118 +78,69 @@ const Profile = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
-      
-      {/* Header Section */}
-      <View style={styles.profileHeader}>
-        <Text h4>Your Profile</Text>
-      </View>
-
-      {/* Image Section */}
-      <View style={styles.profileImage}>
-      <Image
-          source={require('../../../assets/uevents_logo.png')}
-          style={{
-              width: 80,
-              height: 100,
-              // borderRadius: 100/2,
-          }}
-      />
-        {/* <Avatar
-            source={require('../../../assets/uevents_logo.png')}
-            rounded
-            size="xlarge"
-        /> */}
-      </View>
-
-      {/* Student Info Section */}
-      <View style={styles.studentInfo}>
-        <View style={{ flexDirection: "column", flex: 1}}>
-          <Text style={{fontSize: 17}}>Email</Text>
-          <Input
-            placeholder="Email"
-            defaultValue={email!}
-            leftIcon={{type: "material", name: "mail"}}
-            disabled
-          />
-
-          <Text style={{fontSize: 17}}>Change your Password</Text>
-          <Input
-            placeholder="Old Password"
-            leftIcon={{
-              type: "material",
-              name: "lock",
-            }}
-            onChangeText={(value) => setOldPassword(value)}
-            value={oldPassword}
-            autoCapitalize="none"
-            selectionColor={colours.primaryPurple}
-            secureTextEntry={true}
-          />
-          <Input
-            autoCapitalize="none"
-            placeholder="New Password"
-            leftIcon={{
-              type: "material",
-              name: "lock",
-            }}
-            onChangeText={(value) => setNewPassword(value)}
-            value={newPassword}
-            selectionColor={colours.primaryPurple}
-            secureTextEntry={true}
-          />
-          <Button
-            color={colours.primaryPurple}
-            onPress={() => {
-              updateUserPassword();
-            }}
-            title="Reset password"
-            radius={15}
-            style={{ marginBottom: 10 }}
-          />
-          {/* <Input
-            placeholder="Student ID"
-            defaultValue="3000049494"
-            // defaultValue={
-            //   profile.studentId.toString() ? profile.studentId.toString() : ""
-            // }
-            leftIcon={{
-              type: "material",
-              name: "credit-card",
-            }}
-            onChangeText={(value) => {
-              if (parseInt(value) != undefined) {
-                setProfile({ ...profile, studentId: parseInt(value) });
-              }
-            }}
-          /> */}
+        
+        {/* Title */}
+        <View style={styles.pageTitle}>
+          <Text style={{fontSize: 33, fontWeight: '600', color: 'white'}}>Settings</Text>
         </View>
-      </View>
 
-      {/* Log out button */}
-      <View style={{ marginBottom: 10 }}>
-        <Text style={{fontSize: 11}}>If you wish to delete your uEvents account or have any questions about uEvents, email us at admin@uevents.org with your email.</Text>
-        <Button
-          color={colours.primaryPurple}
-          onPress={() => logout()}
-          title="Log out"
-          radius={15}
-        />
-      </View>
-      
+        {/* Settings */}
+        <View style={{marginTop: '10%'}}>
+
+          <SettingsButton buttonName={"Account Settings"}/>
+          <SettingsButton buttonName={"Privacy Policy"}/>
+          <SettingsButton buttonName={"Support"}/>
+          <SettingsButton buttonName={"Delete Account"}/>
+          
+          {/* Log Out Button */}
+          <Button
+            buttonStyle={{backgroundColor: colours.pastelSecondaryPurple}}
+            containerStyle={{borderRadius: 15}}
+            onPress={() => logout()}
+          >
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
+              
+              <View 
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  padding: 0,
+                  margin: 0
+                }}
+              >
+                <Icon
+                  reverse
+                  name='log-out-outline'
+                  type='ionicon'
+                  color='transparent'
+                  size={15}
+                  iconStyle={{fontSize: 30, color: 'red'}}
+                  // containerStyle={{padding: 0, margin: 2}}
+                />
+                <Text style={{fontSize: 20, fontWeight: '600', color: 'red'}}>
+                  Log Out
+                </Text>
+              </View>
+
+            </View>
+          </Button>
+          
+        </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 8,
+    paddingHorizontal: '2.3%',
     flex: 1,
-    justifyContent: "space-between",
+    backgroundColor: colours.secondaryPurple,
+    // justifyContent: "space-between",
   },
-  profileHeader: {
+  pageTitle: {
     flexDirection: "row",
-    justifyContent: "center",
-    paddingTop: 15,
+    padding: '3%',
   },
   profileImage: {
     flexDirection: "row",

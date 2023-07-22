@@ -11,7 +11,8 @@
       "versionCode": 1
     },
     "ios": {
-      "bundleIdentifier": "com.uevents.dev.uevents"
+      "bundleIdentifier": "com.uevents.dev.uevents",
+      "buildNumber": "1.0.1"
     },
     "icon": "./assets/icon.png",
     "runtimeVersion": {
