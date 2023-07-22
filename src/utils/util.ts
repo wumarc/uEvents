@@ -22,3 +22,21 @@ export function uid() {
     ""
   );
 }
+
+export type daysOfWeekBrief =
+  | "Sun"
+  | "Mon"
+  | "Tue"
+  | "Wed"
+  | "Thu"
+  | "Fri"
+  | "Sat";
+export const daysOfWeekArray: daysOfWeekBrief[] = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+];

@@ -1,14 +1,21 @@
 import { View, Text, FlatList, ScrollView, Button } from "react-native";
 import { FC, useState } from "react";
 import { Timestamp } from "firebase/firestore";
-import { EventCategory, EventObject } from "../../utils/model/EventObject";
+import {
+  EventCategory,
+  EventObject,
+  daysToInt,
+  recurrenceType,
+  recurrenceTypeArray,
+} from "../../utils/model/EventObject";
 import CustomButton from "../atoms/CustomButton";
 import { StyleSheet } from "react-native";
-import { Input, Switch } from "react-native-elements";
+import { ButtonGroup, Input, Switch } from "react-native-elements";
 import FirebaseImage from "./FirebaseImage";
 import UploadFile from "./UploadFile";
 import { deleteObject, ref } from "firebase/storage";
 import { storage } from "../../firebaseConfig";
+import { daysOfWeekArray, daysOfWeekBrief } from "../../utils/util";
 
 const EventEditor: FC<{
   default: EventObject;
@@ -302,6 +309,53 @@ const EventEditor: FC<{
             }
           }}
         />
+        <Text>Recurrence Type (Mandatory)</Text>
+        <ButtonGroup
+          buttons={recurrenceTypeArray}
+          selectedIndex={recurrenceTypeArray.indexOf(event.recurrence.type)}
+          onPress={(index) => {
+            props.set({
+              ...event,
+              recurrence: {
+                ...event.recurrence,
+                type: recurrenceTypeArray[index] as recurrenceType,
+              },
+            });
+          }}
+        />
+        {event.recurrence.type == "Custom Weekly" ? (
+          <View>
+            <Text>Select which days the event will recur on</Text>
+            <ButtonGroup
+              selectMultiple
+              buttons={[
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+              ]}
+              selectedIndexes={daysToInt(
+                event.recurrence.customDays as daysOfWeekBrief[]
+              )}
+              onPress={(indexes) => {
+                props.set({
+                  ...event,
+                  recurrence: {
+                    ...event.recurrence,
+                    customDays: indexes.map(
+                      (index: number) => daysOfWeekArray[index]
+                    ) as daysOfWeekBrief[],
+                  },
+                });
+              }}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
         <Input
           defaultValue={categories}
           errorMessage={categoriesError}
