@@ -1,12 +1,10 @@
 import Home from "./Home";
 import Profile from "./Profile";
 import SavedEvents from "./SavedEvents";
-import Forum from "./Forum";
-import EventsTickets from "./EventsTickets";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TouchableOpacity, SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import EventDetails from "./EventDetails";
 import { Platform } from "react-native";
@@ -14,7 +12,9 @@ import { colours } from "../../subatoms/colours";
 import EventSignUp from "./EventSignUp";
 import { FC } from "react";
 import { useTheme } from "react-native-paper";
-import HeaderLeft from "../../molecules/HeaderLeft";
+import PrivacyPolicy from "./PrivacyPolicy";
+import Support from "./Support";
+import AccountSettings from "./AccountSettings";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -147,6 +147,9 @@ const Main: FC<{ userType: string }> = (props) => {
               title: "Complete your RSVP",
             }}
           />
+          <Stack.Screen name="AccountSettingsView" component={AccountSettings} />
+          <Stack.Screen name="PrivacyPolicyView" component={PrivacyPolicy} />
+          <Stack.Screen name="SupportView" component={Support} />
           {/* <Stack.Screen name="ChangePasswordView" component={ChangePassword} /> */}
         </Stack.Navigator>
       </SafeAreaView>
