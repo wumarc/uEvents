@@ -9,3 +9,5 @@ export const defaultStudent: Student = {
   name: "",
   studentId: 0,
 };
+
+// TODO Add the tickets and liked events to student model
