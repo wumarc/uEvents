@@ -34,11 +34,11 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.eventID
   );
 
-  const [loading2, url, found] = useStateWithFireStoreImage(
-    route.params.imageID
-  );
+  // const [loading2, url, found] = useStateWithFireStoreImage(
+  //   route.params.imageID
+  // );
 
-  if (loading || loading2) {
+  if (loading) {
     return <ActivityIndicator />;
   }
 
@@ -146,20 +146,35 @@ const EventDetails = ({ route, navigation }: props) => {
                   width: "100%",
                 }}
               >
-                <View style={{width: '90%'}}>
+                <View style={{ width: "90%" }}>
                   <View>
-                    <Text style={{ color: "white", fontWeight: "bold", paddingVertical: "0.5%", fontSize: 17}}>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        paddingVertical: "0.5%",
+                        fontSize: 17,
+                      }}
+                    >
                       {event.location}
                     </Text>
                   </View>
                   <View>
-                    <Text style={{ color: "#0645AD", fontWeight: "400", textDecorationLine: "underline"}}>
+                    <Text
+                      style={{
+                        color: "#0645AD",
+                        fontWeight: "400",
+                        textDecorationLine: "underline",
+                      }}
+                    >
                       {event.address}
                     </Text>
                   </View>
                 </View>
 
-                <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
                   <Button
                     type="clear"
                     icon={{
@@ -177,7 +192,6 @@ const EventDetails = ({ route, navigation }: props) => {
                     }}
                   />
                 </View>
-                
               </View>
 
               {/* Event Description */}
@@ -361,35 +375,34 @@ const EventDetails = ({ route, navigation }: props) => {
               {/* Original Link */}
               {event.originalLink && (
                 <View style={{ marginVertical: "2%" }}>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: "600",
-                      flexWrap: "wrap",
-                      color: "white",
-                      paddingBottom: "1%",
-                    }}
-                  >
-                    Original Link
-                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        flexWrap: "wrap",
+                        color: "white",
+                        paddingBottom: "1%",
+                      }}
+                    >
+                      Original Link
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: "blue",
+                        fontWeight: "400",
+                        fontSize: 12,
+                        textDecorationLine: "underline",
+                      }}
+                      onPress={() => Linking.openURL(event.originalLink)}
+                    >
+                      {event.originalLink}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text
-                    style={{
-                      color: "blue",
-                      fontWeight: "400",
-                      fontSize: 12,
-                      textDecorationLine: "underline",
-                    }}
-                    onPress={() => Linking.openURL(event.originalLink)}
-                  >
-                    {event.originalLink}
-                  </Text>
-                </View>
-              </View>
-            )}
-
+              )}
             </View>
           </LinearGradient>
         </ScrollView>

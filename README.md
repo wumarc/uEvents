@@ -46,3 +46,5 @@ declare module '@env' {
 
 TODO Change the password for the admin account
 TODO Improve security rules by using firebase auth in the GCP bucket api request
+TODO Add functionality to delete users on the app itself
+TODO Recurring event support
