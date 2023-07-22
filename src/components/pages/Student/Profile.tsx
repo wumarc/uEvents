@@ -87,10 +87,22 @@ const Profile = ({ route, navigation }: props) => {
         {/* Settings */}
         <View style={{marginTop: '10%'}}>
 
-          <SettingsButton buttonName={"Account Settings"}/>
-          <SettingsButton buttonName={"Privacy Policy"}/>
-          <SettingsButton buttonName={"Support"}/>
-          <SettingsButton buttonName={"Delete Account"}/>
+          <SettingsButton 
+            buttonName={"Account Settings"}
+            onPressListener={ () => navigation.navigate("AccountSettingsView")}
+          />
+          <SettingsButton 
+            buttonName={"Privacy Policy"}
+            onPressListener={ () => navigation.navigate("PrivacyPolicyView")}
+          />
+          <SettingsButton 
+            buttonName={"Support"}
+            onPressListener={ () => navigation.navigate("SupportView")}
+          />
+          <SettingsButton 
+            buttonName={"Delete Account"}
+            onPressListener={ () => navigation.navigate("DeleteAccountView")}
+          />
           
           {/* Log Out Button */}
           <Button

@@ -142,14 +142,29 @@ const Main: FC<{ userType: string }> = (props) => {
           />
           <Stack.Screen
             name="EventSignUpView"
-            component={EventSignUp}
+            component={EventSignUp as any}
+            options={{title: "Complete your RSVP"}}
+          />
+          <Stack.Screen 
+            name="AccountSettingsView" 
+            component={AccountSettings as any}
+            options={{title: "Account Settings"}}
+          />
+          <Stack.Screen 
+            name="PrivacyPolicyView" 
+            component={PrivacyPolicy as any}
+            options={{title: "Privacy Policy"}}
+          />
+          <Stack.Screen 
+            name="SupportView" 
+            component={Support as any}
             options={{
-              title: "Complete your RSVP",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
+              title: "Support",
+              headerTintColor: 'white',
+              headerTitleStyle: {fontWeight: 'bold'}
             }}
           />
-          <Stack.Screen name="AccountSettingsView" component={AccountSettings} />
-          <Stack.Screen name="PrivacyPolicyView" component={PrivacyPolicy} />
-          <Stack.Screen name="SupportView" component={Support} />
           {/* <Stack.Screen name="ChangePasswordView" component={ChangePassword} /> */}
         </Stack.Navigator>
       </SafeAreaView>

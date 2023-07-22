@@ -3,7 +3,12 @@ import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
 import { colours } from "../subatoms/colours";
 
-const SettingsButton = ({buttonName, margin}: any) => {
+interface buttonProps {
+  buttonName: string;
+  onPressListener: any;
+}
+
+const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
 
     const iconSize= 15
     const fontSize= 30
@@ -30,7 +35,7 @@ const SettingsButton = ({buttonName, margin}: any) => {
         <Button
           buttonStyle={{backgroundColor: colours.pastelSecondaryPurple}}
           containerStyle={{borderRadius: 15}}
-          onPress={() => {}}
+          onPress={onPressListener}
         >
           
           <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
