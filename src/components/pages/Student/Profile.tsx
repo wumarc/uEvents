@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { useState } from "react";
-import { Button, Image, Text } from "@rneui/themed";
+import { Button, Dialog, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
@@ -8,6 +8,7 @@ import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
 import {
   User,
+  deleteUser,
   getAuth,
   signInWithEmailAndPassword,
   signOut,
@@ -17,15 +18,17 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { colours } from "../../subatoms/colours";
 import { Loading } from "../Common/Loading";
-import { auth } from "../../../firebaseConfig";
+import { auth, fireStore } from "../../../firebaseConfig";
 import { Icon } from "@rneui/base";
 import SettingsButton from "../../molecules/SettingsButton";
+import { deleteDoc, doc } from "firebase/firestore";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
-  
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
   const logout = () => {
     const auth = getAuth();
     signOut(auth)
@@ -78,81 +81,107 @@ const Profile = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
-        
-        {/* Title */}
-        <View style={styles.pageTitle}>
-          <Text style={{fontSize: 33, fontWeight: '600', color: 'white'}}>Settings</Text>
-        </View>
+      {/* Title */}
+      <View style={styles.pageTitle}>
+        <Text style={{ fontSize: 33, fontWeight: "600", color: "white" }}>
+          Settings
+        </Text>
+      </View>
 
-        {/* Settings */}
-        <View style={{marginTop: '10%'}}>
+      {/* Settings */}
+      <View style={{ marginTop: "10%" }}>
+        <SettingsButton
+          buttonName={"Account Settings"}
+          onPressListener={() => navigation.navigate("AccountSettingsView")}
+        />
+        <SettingsButton
+          buttonName={"Privacy Policy"}
+          onPressListener={() => navigation.navigate("PrivacyPolicyView")}
+        />
+        <SettingsButton
+          buttonName={"Support"}
+          onPressListener={() => navigation.navigate("SupportView")}
+        />
+        <SettingsButton
+          buttonName={"Delete Account"}
+          onPressListener={() => setConfirmDelete(true)}
+        />
 
-          <SettingsButton 
-            buttonName={"Account Settings"}
-            onPressListener={ () => navigation.navigate("AccountSettingsView")}
-          />
-          <SettingsButton 
-            buttonName={"Privacy Policy"}
-            onPressListener={ () => navigation.navigate("PrivacyPolicyView")}
-          />
-          <SettingsButton 
-            buttonName={"Support"}
-            onPressListener={ () => navigation.navigate("SupportView")}
-          />
-          <SettingsButton 
-            buttonName={"Delete Account"}
-            onPressListener={ () => navigation.navigate("DeleteAccountView")}
-          />
-          
-          {/* Log Out Button */}
-          <Button
-            buttonStyle={{backgroundColor: colours.pastelSecondaryPurple}}
-            containerStyle={{borderRadius: 15}}
-            onPress={() => logout()}
+        {/* Log Out Button */}
+        <Button
+          buttonStyle={{ backgroundColor: colours.pastelSecondaryPurple }}
+          containerStyle={{ borderRadius: 15 }}
+          onPress={() => logout()}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              flex: 1,
+            }}
           >
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
-              
-              <View 
-                style={{
-                  flexDirection: 'row', 
-                  alignItems: 'center',
-                  padding: 0,
-                  margin: 0
-                }}
-              >
-                <Icon
-                  reverse
-                  name='log-out-outline'
-                  type='ionicon'
-                  color='transparent'
-                  size={15}
-                  iconStyle={{fontSize: 30, color: 'red'}}
-                  // containerStyle={{padding: 0, margin: 2}}
-                />
-                <Text style={{fontSize: 20, fontWeight: '600', color: 'red'}}>
-                  Log Out
-                </Text>
-              </View>
-
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              <Icon
+                reverse
+                name="log-out-outline"
+                type="ionicon"
+                color="transparent"
+                size={15}
+                iconStyle={{ fontSize: 30, color: "red" }}
+                // containerStyle={{padding: 0, margin: 2}}
+              />
+              <Text style={{ fontSize: 20, fontWeight: "600", color: "red" }}>
+                Log Out
+              </Text>
             </View>
-          </Button>
-          
-        </View>
+          </View>
+        </Button>
+      </View>
 
+      <Dialog
+        isVisible={confirmDelete}
+        onBackdropPress={() => setConfirmDelete(false)}
+      >
+        <Dialog.Title title="Account Deletion" />
+        <Text>
+          Are you sure you want to delete your account? This action cannot be
+          reversed.
+        </Text>
+        <Dialog.Actions>
+          <Dialog.Button
+            onPress={() => {
+              deleteUser(auth.currentUser as User);
+              deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
+            }}
+          >
+            Yes
+          </Dialog.Button>
+          <Dialog.Button onPress={() => setConfirmDelete(false)}>
+            No
+          </Dialog.Button>
+        </Dialog.Actions>
+      </Dialog>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: '2.3%',
+    paddingHorizontal: "2.3%",
     flex: 1,
     backgroundColor: colours.secondaryPurple,
   },
   pageTitle: {
     flexDirection: "row",
-    padding: '3%',
-  }
+    padding: "3%",
+  },
 });
 
 export default Profile;

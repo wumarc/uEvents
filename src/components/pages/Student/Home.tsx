@@ -128,7 +128,8 @@ const Home = ({ route, navigation }: props) => {
   );
 
   return (
-    <ScrollView>
+    // NOTE: This is weird but the flatlist is not scrollable if the view is not flex: 1
+    <View style={{ flex: 1, flexDirection: "row" }}>
       {/* Event List*/}
       <Animated.FlatList
         style={{
@@ -222,7 +223,7 @@ const Home = ({ route, navigation }: props) => {
 
       {/* Toast */}
       <Toast />
-    </ScrollView>
+    </View>
   );
 };
 
