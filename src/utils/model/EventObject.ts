@@ -3,14 +3,15 @@ import { Organizer } from "./Organizer";
 import { Student } from "./Student";
 
 export enum EventCategory {
-  ALL = "All",
-  SPORTS = "Sports",
+  ALL = "All", // Not a real category, used to represent all categories. Don't assign to an event
   ARTS = "Arts",
-  ACADEMICS = "Academics",
-  PARTY = "Party",
-  FACULTY = "Faculty",
-  CULTURAL = "Cultural",
-  TEAM = "Team",
+  DESIGN = "Design",
+  BUSINESS = "Business",
+  SCIENCE = "Science",
+  SPORTS = "Sports",
+  GAMES = "Games",
+  SOCIAL_SCI = "Social Sci",
+  NIGHTLIFE = "Nightlife",
 }
 
 /// Event object
@@ -85,7 +86,7 @@ export const extractTime = (timestamp: Timestamp) => {
   const ampm = hour >= 12 ? "PM" : "AM";
   const hour12 = hour % 12 || 12;
   return `${hour12}:${minute} ${ampm}`;
-}
+};
 
 const daysOfWeek: string[] = [
   "Sunday",

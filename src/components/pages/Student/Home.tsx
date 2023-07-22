@@ -112,6 +112,17 @@ const Home = ({ route, navigation }: props) => {
     });
   };
 
+  // Filtered events
+  let filteredEvents = events as EventObject[];
+  filteredEvents = searchAlgo(search, filteredEvents);
+  if (selectedIndex !== 0) {
+    filteredEvents = filteredEvents.filter((event) =>
+      event.categories.includes(
+        Object.values(EventCategory)[selectedIndex] as EventCategory
+      )
+    );
+  }
+
   return (
     <ScrollView>
       {/* Event List*/}
@@ -132,7 +143,7 @@ const Home = ({ route, navigation }: props) => {
         scrollEventThrottle={1}
         // contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED
         showsVerticalScrollIndicator={false}
-        data={searchAlgo(search, events as EventObject[])}
+        data={filteredEvents}
         renderItem={({ item, index }) => (
           <View style={styles.event}>
             <Event

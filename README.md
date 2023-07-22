@@ -41,3 +41,9 @@ declare module '@env' {
 - `firebase login` with your uEvents personal gmail account
 - `npx expo export:web`
 - `firebase deploy --only web`
+
+## To Do
+
+TODO Change the password for the admin account
+TODO Improve security rules by using firebase auth in the GCP bucket api request
+TODO Add time filter and sort the events by date
