@@ -1,4 +1,5 @@
-import { EventObject } from "./model/EventObject";
+import { Timestamp } from "firebase/firestore";
+import { EventObject, nextStartTime, recurrence } from "./model/EventObject";
 
 export function searchAlgo(
   query: string,
@@ -110,9 +111,24 @@ export function searchAlgo(
   let sortedMap = new Map(
     [...eventMap.entries()].sort((a, b) => {
       if (a[1] === b[1]) {
+        let eventA = eventList[a[0]];
+        let eventB = eventList[b[0]];
+        let nextStartTimeA = nextStartTime(
+          eventA?.startTime as Timestamp,
+          eventA?.recurrence ?? new recurrence("None")
+        );
+        let nextStartTimeB = nextStartTime(
+          eventB?.startTime as Timestamp,
+          eventB?.recurrence ?? new recurrence("None")
+        );
+        if (nextStartTimeA === undefined) {
+          return 1;
+        }
+        if (nextStartTimeB === undefined) {
+          return -1;
+        }
         return (
-          (eventList[a[0]] as EventObject).startTime?.toDate().getTime() -
-          (eventList[b[0]] as EventObject).startTime?.toDate().getTime()
+          nextStartTimeA.toDate().getTime() - nextStartTimeB.toDate().getTime()
         );
       } else {
         return b[1] - a[1];

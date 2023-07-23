@@ -136,6 +136,9 @@ export const nextStartTime = (
         startDate.getHours(),
         startDate.getMinutes()
       );
+      if (nextMonthDate < today) {
+        nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
+      }
       foundDate = nextMonthDate;
       break;
     case "Custom Weekly":
@@ -146,13 +149,16 @@ export const nextStartTime = (
         startDate.getHours(),
         startDate.getMinutes()
       );
+
       while (
-        recurrence.customDays?.includes(
+        !recurrence.customDays?.includes(
           daysOfWeekArray[nextCustomWeekDate.getDay()] as daysOfWeekBrief
-        )
+        ) ||
+        nextCustomWeekDate < today
       ) {
         nextCustomWeekDate.setDate(nextCustomWeekDate.getDate() + 1);
       }
+
       foundDate = nextCustomWeekDate;
       break;
     case "Specific Dates":

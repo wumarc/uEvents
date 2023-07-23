@@ -121,6 +121,11 @@ const Event: React.FC<EventProps> = (props) => {
                   <Text style={{ fontWeight: "600", fontSize: 14 }}>
                     {extractDay(startTime as Timestamp)}
                   </Text>
+                  <Text>
+                    {startTime?.toDate().getHours() +
+                      ":" +
+                      startTime?.toDate().getMinutes()}
+                  </Text>
                   {event.recurrence ? <Text>Recurring</Text> : <></>}
                 </View>
 

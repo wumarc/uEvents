@@ -48,6 +48,18 @@ const EventEditor: FC<{
     recurrenceTypeArray.indexOf(props.default.recurrence.type)
   );
 
+  const [selectedDays, setSelectedDays] = useState<number[]>(
+    props.default.recurrence.customDays
+      ? daysToInt(props.default.recurrence.customDays)
+      : []
+  );
+
+  const [additionalDates, setAdditionalDates] = useState<Timestamp[]>(
+    props.default.recurrence.customDates
+      ? props.default.recurrence.customDates
+      : []
+  );
+
   let event = props.default;
 
   let categories = "";
@@ -222,14 +234,14 @@ const EventEditor: FC<{
                 "Friday",
                 "Saturday",
               ]}
-              selectedIndexes={daysToInt(
-                event.recurrence.customDays as daysOfWeekBrief[]
-              )}
+              selectedIndexes={selectedDays}
               onPress={(indexes) => {
+                setSelectedDays(indexes);
                 props.set({
                   ...event,
                   recurrence: {
                     ...event.recurrence,
+                    type: "Custom Weekly",
                     customDays: indexes.map(
                       (index: number) => daysOfWeekArray[index]
                     ) as daysOfWeekBrief[],
@@ -244,8 +256,8 @@ const EventEditor: FC<{
         {recurrenceType == 5 ? (
           <View>
             <FlatList
-              data={event.recurrence.customDates}
-              renderItem={({ item }) => (
+              data={additionalDates}
+              renderItem={({ item, index }) => (
                 <View
                   style={{
                     flexDirection: "row",
@@ -260,19 +272,14 @@ const EventEditor: FC<{
                       label="Date (Format: YYYY:MM:DD:HH:MM)"
                       default={item.toDate()}
                       set={(date) => {
+                        additionalDates[index] = Timestamp.fromDate(date);
+                        setAdditionalDates(additionalDates);
                         props.set({
                           ...event,
                           recurrence: {
                             ...event.recurrence,
-                            customDates: (
-                              event.recurrence.customDates as Timestamp[]
-                            ).map((value) => {
-                              if (value == item) {
-                                return Timestamp.fromDate(date);
-                              } else {
-                                return value;
-                              }
-                            }),
+                            type: "Specific Dates",
+                            customDates: additionalDates as Timestamp[],
                           },
                         });
                       }}
@@ -287,13 +294,15 @@ const EventEditor: FC<{
                     <Button
                       title="Delete"
                       onPress={() => {
+                        additionalDates.splice(index, 1);
+                        setAdditionalDates(additionalDates);
+
                         props.set({
                           ...event,
                           recurrence: {
                             ...event.recurrence,
-                            customDates: (
-                              event.recurrence.customDates as Timestamp[]
-                            ).filter((value) => value != item),
+                            type: "Specific Dates",
+                            customDates: additionalDates as Timestamp[],
                           },
                         });
                       }}
@@ -308,10 +317,12 @@ const EventEditor: FC<{
                 if (!event.recurrence.customDates) {
                   event.recurrence.customDates = [];
                 }
+                setAdditionalDates([...additionalDates, new Timestamp(0, 0)]);
                 props.set({
                   ...event,
                   recurrence: {
                     ...event.recurrence,
+                    type: "Specific Dates",
                     customDates: [
                       ...event.recurrence.customDates,
                       new Timestamp(0, 0),
