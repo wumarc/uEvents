@@ -11,7 +11,7 @@ interface buttonProps {
 const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
 
     const iconSize= 15
-    const fontSize= 30
+    const fontSize= 27
     const marginBottom = '4%'
     const settingName = [
         {"Account Settings": {icon: 'cog-outline', type: 'ionicon'}},
@@ -57,7 +57,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 iconStyle={{fontSize: fontSize}}
                 // containerStyle={{padding: 0, margin: 2}}
               />
-              <Text style={{fontSize: 20, fontWeight: '600', color: 'white'}}>
+              <Text style={{fontSize: 18, fontWeight: '600', color: 'white'}}>
                 {buttonName}
               </Text>
             </View>

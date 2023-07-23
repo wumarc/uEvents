@@ -134,10 +134,10 @@ const Profile = ({ route, navigation }: props) => {
                 type="ionicon"
                 color="transparent"
                 size={15}
-                iconStyle={{ fontSize: 30, color: "red" }}
+                iconStyle={{ fontSize: 27, color: "red" }}
                 // containerStyle={{padding: 0, margin: 2}}
               />
-              <Text style={{ fontSize: 20, fontWeight: "600", color: "red" }}>
+              <Text style={{ fontSize: 18, fontWeight: "600", color: "red" }}>
                 Log Out
               </Text>
             </View>
