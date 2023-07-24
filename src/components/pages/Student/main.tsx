@@ -100,10 +100,10 @@ const MainView = ({ route, navigation }: props) => {
         component={Profile as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Settings",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name={focused ? "account-circle" : "account-circle-outline"}
+              name={focused ? "cog" : "cog-outline"}
               color={colours.primaryPurple}
               size={30}
             />
@@ -148,19 +148,29 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen 
             name="AccountSettingsView" 
             component={AccountSettings as any}
-            options={{title: "Account Settings"}}
+            options={{
+              title: "Account Settings",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
+              headerTintColor: 'white',
+              headerTitleStyle: {fontWeight: 'bold'}
+            }}
           />
           <Stack.Screen 
             name="PrivacyPolicyView" 
             component={PrivacyPolicy as any}
-            options={{title: "Privacy Policy"}}
+            options={{
+              title: "Privacy Policy",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
+              headerTintColor: 'white',
+              headerTitleStyle: {fontWeight: 'bold'}
+            }}
           />
           <Stack.Screen 
             name="SupportView" 
             component={Support as any}
             options={{
-              headerStyle: {backgroundColor: colours.secondaryPurple},
               title: "Support",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
               headerTintColor: 'white',
               headerTitleStyle: {fontWeight: 'bold'}
             }}

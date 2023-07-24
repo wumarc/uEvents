@@ -1,12 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, ScrollView, FlatList} from "react-native";
-import { useState } from "react";
+import { View, Text, FlatList} from "react-native";
 import { RootStackParamList } from "./main";
 import { EventObject } from "../../../utils/model/EventObject";
-import {
-  useSateWithFireStoreArray,
-  useStateWithFireStoreCollection,
-} from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
     marginVertical: '3%',
   },
   title: {
-    fontSize: 33,
+    fontSize: 30,
     fontWeight: "500",
   },
 });

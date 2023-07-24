@@ -15,7 +15,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Admin/main";
 import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
-import CustomInput from "../../atoms/CustomInput";
+import CustomInput from "../../atoms/SettingsInput";
 import { StyleSheet } from "react-native";
 import { Slider, Switch } from "react-native-elements";
 import { ToggleButton } from "react-native-paper";
