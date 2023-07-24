@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
 import { colours } from "../../subatoms/colours";
 import { useState } from "react";
 import { auth } from "../../../firebaseConfig";
@@ -13,6 +13,8 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
+import { BottomSheet } from "@rneui/themed";
+import CustomInput from "../../atoms/CustomInput";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -27,6 +29,7 @@ const AccountSettings = () => {
     
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [isVisible, setIsVisible] = useState(false);
     const [email, setEmail] = useState(auth.currentUser?.email);
 
     const updateUserPassword = () => {
@@ -36,22 +39,18 @@ const AccountSettings = () => {
     }
     signInWithEmailAndPassword(auth, user.email as string, oldPassword)
         .then((userCredential) => {
-        // Signed in
-        user = userCredential.user;
-        updatePassword(user, newPassword)
-            .then(() => {
-            // Update successful.
-            alert("Password updated successfully");
-            setOldPassword("");
-            setNewPassword("");
+            // Signed in
+            user = userCredential.user;
+            updatePassword(user, newPassword)
+                .then(() => {
+                    alert("Password updated successfully");
+                    setIsVisible(false);
+                    setOldPassword("");
+                    setNewPassword("");
+                })
+                .catch((error) => alert("Could not update password"));
             })
-            .catch((error) => {
-            alert("Could not update password");
-            });
-        })
-        .catch((error) => {
-        alert("You entered the old password incorrectly");
-        });
+        .catch((error) => alert("You entered the old password incorrectly"));
     };
 
     return (
@@ -59,10 +58,60 @@ const AccountSettings = () => {
             <ScrollView>
                 <View style={styles.studentInfo}>
 
-                    <SettingsInput placeholder="Email" input={email!} disabled={true}/>
-                    <SettingsInput placeholder="Password" disabled={true} input={"***********"}/>
+                    <SettingsInput 
+                        placeholder="Email" 
+                        input={email!} 
+                        disabled={true}
+                    />
+                    <SettingsInput 
+                        placeholder="Password" 
+                        disabled={true} 
+                        input={"***********"}
+                    />
 
-                    <CustomButton buttonName="Change Password" onPressListener={() => updateUserPassword()}/>
+                    <CustomButton 
+                        buttonName="Change Password" 
+                        onPressListener={() => setIsVisible(true)}
+                    />
+                    
+                    <BottomSheet 
+                        modalProps={{
+                        }}
+                        backdropStyle={{backgroundColor: 'transparent'}}
+                        onBackdropPress={() => setIsVisible(false)}
+                        // containerStyle={{height: 100, backgroundColor: 'blue'}}
+                        isVisible={isVisible}
+                    >
+                        <View style={{
+                            backgroundColor: 'white', 
+                            paddingVertical: '6%',
+                            borderRadius: 15
+                        }}>
+                            <Text style={{
+                                fontSize: 17, 
+                                textAlign: 'center', 
+                                marginBottom: '5%'}}
+                            >
+                                Change your password
+                            </Text>
+                            <CustomInput
+                                input={oldPassword}
+                                placeholder="Enter old password"
+                                secureText={true}
+                                onChangeListener={(value: string) => setOldPassword(value)}
+                            />
+                            <CustomInput
+                                input={newPassword}
+                                secureText={true}
+                                placeholder="Enter your new Password"
+                                onChangeListener={(value: string) => setNewPassword(value)}
+                            />
+                            <CustomButton
+                                buttonName="Update Password" 
+                                onPressListener={() => updateUserPassword()}
+                            />
+                        </View>
+                    </BottomSheet>
 
                 </View>
             </ScrollView>

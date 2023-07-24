@@ -1,7 +1,6 @@
 import { ScrollView, View } from "react-native";
 import { useState } from "react";
 import { Button, Dialog, Image, Text } from "@rneui/themed";
-import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
@@ -18,6 +17,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { colours } from "../../subatoms/colours";
 import { Loading } from "../Common/Loading";
+import { Linking } from "react-native";
 import { auth, fireStore } from "../../../firebaseConfig";
 import { Icon } from "@rneui/base";
 import SettingsButton from "../../molecules/SettingsButton";
@@ -99,12 +99,13 @@ const Profile = ({ route, navigation }: props) => {
           />
           <SettingsButton
             buttonName={"Privacy Policy"}
-            onPressListener={() => navigation.navigate("PrivacyPolicyView")}
+            // onPressListener={() => navigation.navigate("PrivacyPolicyView")}
+            onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
           />
-          <SettingsButton
+          {/* <SettingsButton
             buttonName={"Support"}
             onPressListener={() => navigation.navigate("SupportView")}
-          />
+          /> */}
           <SettingsButton
             buttonName={"Delete Account"}
             onPressListener={() => setConfirmDelete(true)}

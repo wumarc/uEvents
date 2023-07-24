@@ -7,15 +7,18 @@ interface inputProps {
     input: string,
     placeholder: string,
     onChangeListener: any
+    secureText: boolean
 }
 
-const CustomInput = ({input, placeholder, onChangeListener}: inputProps) => {
+const CustomInput = ({input, placeholder, onChangeListener, secureText}: inputProps) => {
     return (
         <Input
             disabledInputStyle={{ backgroundColor: "#ddd" }}
+            secureTextEntry={secureText}
             value={input}
             onChangeText={onChangeListener}
             placeholder={placeholder}
+            autoCapitalize="none"
             inputContainerStyle={{
                 borderBottomWidth: 2,
                 borderColor: "#bfbfbf",
