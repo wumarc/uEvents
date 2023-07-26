@@ -22,6 +22,8 @@ import { auth, fireStore } from "../../../firebaseConfig";
 import { Icon } from "@rneui/base";
 import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
+import CustomButton from "../../atoms/CustomButton";
+import { BottomSheet } from "@rneui/base";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -148,6 +150,43 @@ const Profile = ({ route, navigation }: props) => {
             </View>
           </Button>
         </View>
+        
+        {/* Delete Account Confirmation */}
+        {/* <BottomSheet 
+            modalProps={{}}
+            backdropStyle={{backgroundColor: 'transparent'}}
+            containerStyle={{backgroundColor: 'transparent'}}
+            onBackdropPress={() => setConfirmDelete(false)}
+            // containerStyle={{height: 100, backgroundColor: 'blue'}}
+            isVisible={confirmDelete}
+        >
+            <View style={{
+                backgroundColor: 'white', 
+                paddingVertical: '6%',
+                borderRadius: 15
+            }}>
+                <Text style={{
+                    fontSize: 17,
+                    fontWeight: '500',
+                    textAlign: 'center', 
+                    marginBottom: '5%'}}
+                >
+                    Are you sure you want to delete your account? This action cannot be reversed.
+                </Text>
+                <CustomButton
+                    buttonName="Delete Account" 
+                    onPressListener={() => {
+                      deleteUser(auth.currentUser as User);
+                      deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
+                    }}
+                />
+                <CustomButton
+                    buttonName="Cancel"
+                    onPressListener={() => setConfirmDelete(false)}
+                />
+
+            </View>
+        </BottomSheet> */}
 
         <Dialog
           isVisible={confirmDelete}

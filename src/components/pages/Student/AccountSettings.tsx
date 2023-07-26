@@ -90,7 +90,7 @@ const AccountSettings = () => {
                         }}>
                             <Text style={{
                                 fontSize: 17,
-                                fontWeight: '600',
+                                fontWeight: '500',
                                 textAlign: 'center', 
                                 marginBottom: '5%'}}
                             >

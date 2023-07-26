@@ -13,6 +13,7 @@ const CustomButton = ({buttonName, onPressListener}: buttonProps) => {
             style={{
                 paddingHorizontal: 10,
                 borderRadius: 15,
+                marginVertical: '1%'
             }}
             color={colours.primaryPurple}
             title={buttonName}
