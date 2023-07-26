@@ -10,9 +10,14 @@ const CustomButton = ({buttonName, onPressListener}: buttonProps) => {
 
     return (
         <Button
-          color={colours.primaryPurple}
-          title={buttonName}
-          onPress={onPressListener}
+            style={{
+                paddingHorizontal: 10,
+                borderRadius: 15,
+            }}
+            color={colours.primaryPurple}
+            title={buttonName}
+            onPress={onPressListener}
+            
         />
     );
 

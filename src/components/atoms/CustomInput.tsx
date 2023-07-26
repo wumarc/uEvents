@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { Input } from "react-native-elements";
 import * as React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { colours } from "../subatoms/colours";
 
 interface inputProps {
     input: string,
@@ -17,6 +18,7 @@ const CustomInput = ({input, placeholder, onChangeListener, secureText}: inputPr
             secureTextEntry={secureText}
             value={input}
             onChangeText={onChangeListener}
+            selectionColor={colours.primaryPurple}
             placeholder={placeholder}
             autoCapitalize="none"
             inputContainerStyle={{

@@ -21,7 +21,7 @@ const Home = ({ navigation }: any) => {
             />
         </View>
 
-        <View style={{position: 'absolute', bottom: 0, right: 0}}>
+        {/* <View style={{position: 'absolute', bottom: 0, right: 0}}>
             <FAB
                 icon={{ name: "add", color: 'white' }}
                 placement="right"
@@ -29,7 +29,7 @@ const Home = ({ navigation }: any) => {
                 size="large"
                 onPress={() => navigation.navigate("CreateEventView")}
             />
-        </View>
+        </View> */}
 
         </>
     );

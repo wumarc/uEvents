@@ -10,7 +10,7 @@ import CreateEvent from "../EventOrganizer/CreateEvent";
 import { FC } from "react";
 import Home from "./Home";
 import Profile from "./Profile";
-// import 'react-native-gesture-handler';
+import { useTheme } from "react-native-paper";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,18 +24,41 @@ export type RootStackParamList = {
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
+
+  const theme = useTheme();
+  theme.colors.secondaryContainer = "transparent";
+
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: colours.secondaryPurple }}>
+    <Tab.Navigator 
+      barStyle={{ backgroundColor: colours.secondaryPurple }}
+      inactiveColor={"white"}
+      activeColor={colours.primaryPurple}
+      initialRouteName="Home"
+    >
       <Tab.Screen 
         name="Home"
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          
           tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name="home"
+              name={focused ? "calendar" : "calendar-outline"}
+              color={colours.primaryPurple}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CreateEvent"
+        component={CreateEvent as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "Create",
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "plus-circle" : "plus-circle-outline"}
               color={colours.primaryPurple}
               size={30}
             />
@@ -48,9 +71,9 @@ const MainView = ({ route, navigation }: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Profile",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name="account-circle"
+              name={focused ? "account-circle" : "account-circle-outline"}
               color={colours.primaryPurple}
               size={30}
             />

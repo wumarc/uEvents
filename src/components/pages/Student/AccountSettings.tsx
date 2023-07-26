@@ -78,6 +78,7 @@ const AccountSettings = () => {
                         modalProps={{
                         }}
                         backdropStyle={{backgroundColor: 'transparent'}}
+                        containerStyle={{backgroundColor: 'transparent'}}
                         onBackdropPress={() => setIsVisible(false)}
                         // containerStyle={{height: 100, backgroundColor: 'blue'}}
                         isVisible={isVisible}
@@ -88,7 +89,8 @@ const AccountSettings = () => {
                             borderRadius: 15
                         }}>
                             <Text style={{
-                                fontSize: 17, 
+                                fontSize: 17,
+                                fontWeight: '600',
                                 textAlign: 'center', 
                                 marginBottom: '5%'}}
                             >
@@ -96,20 +98,23 @@ const AccountSettings = () => {
                             </Text>
                             <CustomInput
                                 input={oldPassword}
-                                placeholder="Enter old password"
+                                placeholder="Enter your old password"
                                 secureText={true}
                                 onChangeListener={(value: string) => setOldPassword(value)}
                             />
                             <CustomInput
                                 input={newPassword}
                                 secureText={true}
-                                placeholder="Enter your new Password"
+                                placeholder="Enter your new password"
                                 onChangeListener={(value: string) => setNewPassword(value)}
                             />
-                            <CustomButton
-                                buttonName="Update Password" 
-                                onPressListener={() => updateUserPassword()}
-                            />
+                            <View>
+                                <CustomButton
+                                    buttonName="Update" 
+                                    onPressListener={() => updateUserPassword()}
+                                />
+                            </View>
+
                         </View>
                     </BottomSheet>
 

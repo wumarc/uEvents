@@ -39,6 +39,7 @@ export type RootStackParamList = {
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
+  
   const theme = useTheme();
   theme.colors.secondaryContainer = "transparent";
 
