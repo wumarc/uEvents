@@ -13,6 +13,7 @@ import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { colours } from "../../subatoms/colours";
+import InputWithLabel from "../../atoms/InputWithLabel";
 
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
@@ -26,23 +27,22 @@ const CreateEvent = ({ route, navigation }: props) => {
         <ScrollView>
 
           <Text style={{fontSize: 33, fontWeight: '600'}}>Create a new event</Text>
-        
-          <SettingsInput
-            placeholder="Event name"
+
+          <InputWithLabel
+            placeholder="Event Name"
             // onChangeText={(value) => setEvent({ ...event, name: value })}
           />
 
-          <SettingsInput
+          <InputWithLabel
             placeholder="Event Description"
             // onChangeText={(value) => setEvent({ ...event, name: value })}
           />
 
-          <SettingsInput placeholder="Price" />
-          <SettingsInput placeholder="Date" />
-          <SettingsInput placeholder="Location" />
-          <SettingsInput placeholder="Category" />
-          <SettingsInput placeholder="Sign up Link" />
-
+          <InputWithLabel placeholder="Price" />
+          <InputWithLabel placeholder="Date" />
+          <InputWithLabel placeholder="Location" />
+          <InputWithLabel placeholder="Category" />
+          <InputWithLabel placeholder="Signup Link" />
 
           {/*
           <Input

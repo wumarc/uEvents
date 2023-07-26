@@ -1,7 +1,6 @@
 import { View, Text, FlatList, ScrollView } from "react-native";
 import { FC, useState } from "react";
 import { Timestamp } from "firebase/firestore";
-import { Button, Input, Header } from "@rneui/base";
 import {
   addDocumentToCollection,
   useStateWithFireStoreImage,
