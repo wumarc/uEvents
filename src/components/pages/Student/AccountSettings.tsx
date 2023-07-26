@@ -77,8 +77,8 @@ const AccountSettings = () => {
                     <BottomSheet 
                         modalProps={{
                         }}
-                        backdropStyle={{backgroundColor: 'transparent'}}
-                        containerStyle={{backgroundColor: 'transparent'}}
+                        // backdropStyle={{backgroundColor: 'transparent'}}
+                        // containerStyle={{backgroundColor: 'transparent'}}
                         onBackdropPress={() => setIsVisible(false)}
                         // containerStyle={{height: 100, backgroundColor: 'blue'}}
                         isVisible={isVisible}
@@ -112,6 +112,7 @@ const AccountSettings = () => {
                                 <CustomButton
                                     buttonName="Update" 
                                     onPressListener={() => updateUserPassword()}
+                                    disabled={oldPassword === "" || newPassword === ""}
                                 />
                             </View>
 

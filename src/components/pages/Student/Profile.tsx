@@ -152,10 +152,10 @@ const Profile = ({ route, navigation }: props) => {
         </View>
         
         {/* Delete Account Confirmation */}
-        {/* <BottomSheet 
+        <BottomSheet 
             modalProps={{}}
-            backdropStyle={{backgroundColor: 'transparent'}}
-            containerStyle={{backgroundColor: 'transparent'}}
+            // backdropStyle={{backgroundColor: 'transparent'}}
+            // containerStyle={{backgroundColor: 'transparent'}}
             onBackdropPress={() => setConfirmDelete(false)}
             // containerStyle={{height: 100, backgroundColor: 'blue'}}
             isVisible={confirmDelete}
@@ -165,52 +165,33 @@ const Profile = ({ route, navigation }: props) => {
                 paddingVertical: '6%',
                 borderRadius: 15
             }}>
-                <Text style={{
-                    fontSize: 17,
-                    fontWeight: '500',
-                    textAlign: 'center', 
-                    marginBottom: '5%'}}
-                >
-                    Are you sure you want to delete your account? This action cannot be reversed.
-                </Text>
-                <CustomButton
-                    buttonName="Delete Account" 
-                    onPressListener={() => {
+                <Text style={{fontSize: 17, fontWeight: '500', textAlign: 'center', marginBottom: '5%'}} >Are you sure you want to delete your account? This action cannot be reversed.</Text>    
+                <Button
+                    style={{
+                        paddingHorizontal: 10,
+                        borderRadius: 15,
+                        marginVertical: '1%'
+                    }}
+                    color={colours.primaryPurple}
+                    title={"Delete Account"}
+                    onPress={() => {
                       deleteUser(auth.currentUser as User);
                       deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
                     }}
                 />
-                <CustomButton
-                    buttonName="Cancel"
-                    onPressListener={() => setConfirmDelete(false)}
+                <Button
+                    style={{
+                        paddingHorizontal: 10,
+                        borderRadius: 15,
+                        marginVertical: '1%'
+                    }}
+                    color={'transparent'}
+                    titleStyle={{color: colours.primaryPurple, fontWeight: '600'}}
+                    title={"Cancel"}
+                    onPress={() => setConfirmDelete(false)}
                 />
-
             </View>
-        </BottomSheet> */}
-
-        <Dialog
-          isVisible={confirmDelete}
-          onBackdropPress={() => setConfirmDelete(false)}
-        >
-          <Dialog.Title title="Account Deletion" />
-          <Text>
-            Are you sure you want to delete your account? This action cannot be
-            reversed.
-          </Text>
-          <Dialog.Actions>
-            <Dialog.Button
-              onPress={() => {
-                deleteUser(auth.currentUser as User);
-                deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
-              }}
-            >
-              Yes
-            </Dialog.Button>
-            <Dialog.Button onPress={() => setConfirmDelete(false)}>
-              No
-            </Dialog.Button>
-          </Dialog.Actions>
-        </Dialog>
+        </BottomSheet>
 
       </ScrollView>
       

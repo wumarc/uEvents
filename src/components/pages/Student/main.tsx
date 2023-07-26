@@ -19,7 +19,6 @@ import AccountSettings from "./AccountSettings";
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-
 export type RootStackParamList = {
   MainView: { userType: string };
   EventDetailsView: {

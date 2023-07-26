@@ -4,9 +4,10 @@ import { colours } from "../subatoms/colours";
 interface buttonProps {
     buttonName: string;
     onPressListener: any;
+    disabled?: boolean;
 }
 
-const CustomButton = ({buttonName, onPressListener}: buttonProps) => {
+const CustomButton = ({buttonName, onPressListener, disabled}: buttonProps) => {
 
     return (
         <Button
@@ -18,7 +19,7 @@ const CustomButton = ({buttonName, onPressListener}: buttonProps) => {
             color={colours.primaryPurple}
             title={buttonName}
             onPress={onPressListener}
-            
+            disabled={disabled}
         />
     );
 

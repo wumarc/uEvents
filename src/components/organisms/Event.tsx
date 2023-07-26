@@ -31,12 +31,11 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = (props) => {
+
   const [loading, event, setEvent] = useStateWithFireStoreDocument(
     "events",
     props.id
   );
-
-  const price = 10;
 
   const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
 
@@ -64,11 +63,7 @@ const Event: React.FC<EventProps> = (props) => {
     return <Loading />;
   }
 
-  let image = {
-    uri:
-      "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" +
-      props.imageId,
-  };
+  let image = { uri: "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" + props.imageId, };
 
   // True start time and end time
   let startTime = nextStartTime(event.startTime, event.recurrence);
@@ -116,15 +111,10 @@ const Event: React.FC<EventProps> = (props) => {
                   }}
                 >
                   <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                    {extractMonth(startTime as Timestamp)}
-                  </Text>
-                  <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                    {extractDay(startTime as Timestamp)}
+                    {extractMonth(startTime as Timestamp)} {extractDay(startTime as Timestamp)}
                   </Text>
                   <Text>
-                    {startTime?.toDate().getHours() +
-                      ":" +
-                      startTime?.toDate().getMinutes()}
+                    {startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}
                   </Text>
                   {event.recurrence ? <Text>Recurring</Text> : <></>}
                 </View>
@@ -157,11 +147,7 @@ const Event: React.FC<EventProps> = (props) => {
             </View>
 
             {/* Price */}
-            <View
-              style={{
-                justifyContent: "center",
-              }}
-            >
+            <View style={{justifyContent: "center"}} >
               <Text
                 style={{
                   borderRadius: 5,
@@ -188,7 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     flexDirection: "column",
     // backgroundColor: colours.primaryPurple,
-    maxWidth: 500,
+    maxWidth: '100%',
     marginHorizontal: "auto",
   },
   row1: {

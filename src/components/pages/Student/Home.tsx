@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Animated,
-  StatusBar,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
@@ -18,7 +17,6 @@ import { colours } from "../../subatoms/colours";
 import { ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
-import { Button } from "@rneui/base";
 import { Timestamp } from "firebase/firestore";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -150,7 +148,7 @@ const Home = ({ route, navigation }: props) => {
         onMomentumScrollEnd={onMomentumScrollEnd}
         onScrollEndDrag={onScrollEndDrag}
         scrollEventThrottle={1}
-        // contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED
+        contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED: why modified?
         showsVerticalScrollIndicator={false}
         data={filteredEvents}
         renderItem={({ item, index }) => (

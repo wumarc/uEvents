@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     marginVertical: '3%',
   },
   title: {
-    fontSize: 30,
-    fontWeight: "500",
+    fontSize: 33,
+    fontWeight: "600",
   },
 });
 
