@@ -18,6 +18,8 @@ import { ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
+import Toggle from "react-native-toggle-element"
+import { Icon } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -171,6 +173,13 @@ const Home = ({ route, navigation }: props) => {
           { top: 0, transform: [{ translateY: headerTranslate }] },
         ]}
       >
+        <Toggle
+          value={"toggleValue"}
+          containerStyle={{width: 200}}
+          // onPress={(newState) => setToggleValue(newState)}
+          leftComponent={<Icon type="feather" name='list' color='black'/>}
+          rightComponent={<Icon type="feather" name='square' color='black'/>}
+        />
         <SearchBar
           platform="default"
           inputContainerStyle={{
