@@ -40,7 +40,7 @@ const MainView = ({ route, navigation }: props) => {
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Events",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "calendar" : "calendar-outline"}

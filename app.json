@@ -1,6 +1,9 @@
 {
   "expo": {
     "slug": "uevents",
+    "splash": {
+      "image": "./assets/splash.png"
+    },
     "extra": {
       "eas": {
         "projectId": "f1ddc887-9200-4a3b-ab25-46afcc0e6f76"

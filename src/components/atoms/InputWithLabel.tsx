@@ -26,8 +26,8 @@ const InputWithLabel = ({input, placeholder, onChangeListener, secureText}: inpu
                 borderBottomWidth: 2,
                 borderColor: "#bfbfbf",
                 borderWidth: 2,
-                paddingVertical: 4,
-                paddingHorizontal: 10,
+                // paddingVertical: 4,
+                paddingHorizontal: 8,
                 borderRadius: 6,
                 underlineColor: "transparent"
             }}

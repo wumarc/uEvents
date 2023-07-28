@@ -15,7 +15,6 @@ import { StyleSheet } from "react-native";
 import { colours } from "../../subatoms/colours";
 import InputWithLabel from "../../atoms/InputWithLabel";
 
-
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
 
@@ -117,7 +116,7 @@ const CreateEvent = ({ route, navigation }: props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: '2.3%',
+    paddingHorizontal: '1%',
   },
 });
 
