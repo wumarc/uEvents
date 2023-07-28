@@ -32,25 +32,38 @@ const SignIn: FC = () => {
             <View><Text style={{fontSize: 25}}>Start Socializing Now</Text></View>
             <View><Text>Join a community of students and meet new people!</Text></View>
 
-            <View style={{flexDirection: 'row'}}>
-              <Button
-                style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
-                buttonStyle={{borderRadius: 30}}
-                color={colours.secondaryPurple}
-                title="Login"
-              />
-              <Button
-                style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
-                buttonStyle={{borderRadius: 30}}
-                color={colours.secondaryPurple}
-                title="Register"
-              />
+            <View style={{flexDirection: 'row', backgroundColor: 'red'}}>
+              <View style={{width: '50%'}}>
+                <Button
+                  style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
+                  buttonStyle={{width: '100%', borderRadius: 30}}
+                  containerStyle={{backgroundColor: 'green'}}
+                  color={colours.secondaryPurple}
+                  title="Login"
+                />
+              </View>
+              <View style={{width: '50%'}}>
+                <Button
+                  style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
+                  buttonStyle={{borderRadius: 30}}
+                  color={colours.secondaryPurple}
+                  title="Register"
+                />
+              </View>
             </View>
-            <View style={{backgroundColor: 'blue'}}>
+            <View style={{}}>
               <Button
-                style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
-                buttonStyle={{borderRadius: 30}}
-                color={colours.secondaryPurple}
+                style={{
+                  margin: 1,
+                  paddingVertical: '2%', 
+                  paddingHorizontal: '20%',
+                  borderWidth: 2,
+                  borderColor: colours.secondaryPurple,
+                  borderRadius: 30,
+                }}
+                containerStyle={{backgroundColor: 'green'}}
+                titleStyle={{color: colours.secondaryPurple, fontSize: 18, fontWeight: 'bold'}}
+                color={'transparent'}
                 title="Skip"
               />
             </View>
@@ -58,21 +71,9 @@ const SignIn: FC = () => {
 
         </View>
 
-        {/* uEvents Logo */}
-        {/* <View style={styles.image}>
-          <Image
-            style={styles.imageSize}
-            source={require("../../../assets/uevents_logo.png")}
-          />
-          <Text style={styles.appName}>{isSigningUp ? "Create an account" : "Login"}</Text>
-        </View> */}
-
-        {/* Login | SignUp Component */}
         {/* <View style={styles.form}>
           <View style={styles.innerForm}>
-            {isSigningUp ? (
-              <Signup setIsSigningUp={signInHandler} />
-            ) : (
+            {isSigningUp ? (<Signup setIsSigningUp={signInHandler} />) : (
               <Login setIsSigningUp={signInHandler} />
             )}
           </View>
