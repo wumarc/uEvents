@@ -9,7 +9,7 @@ import { StyleSheet } from "react-native";
 import { signInText, inputStyle } from "./Styling";
 
 // Accepted universities
-const universities = ["@uottawa.ca", "@cmail.carleton.ca"];
+const universities = ["@uottawa.ca"];
 
 const Login = ({ setIsSigningUp }: any) => {
 
