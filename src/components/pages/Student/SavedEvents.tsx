@@ -1,13 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, ScrollView, FlatList } from "react-native";
-import { useState } from "react";
+import { View, Text, FlatList } from "react-native";
 import { RootStackParamList } from "./main";
-import { EventObject } from "../../../utils/model/EventObject";
-import {
-  useSateWithFireStoreArray,
-  useStateWithFireStoreCollection,
-  useStateWithFireStoreDocument,
-} from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
@@ -70,8 +63,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 33,
-    fontWeight: "500",
+    fontWeight: "600",
   },
 });
 
 export default SavedEvents;
+function useStateWithFireStoreDocument<T>(
+  arg0: string,
+  arg1: string
+): [any, any, any] {
+  throw new Error("Function not implemented.");
+}

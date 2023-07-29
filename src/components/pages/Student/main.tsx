@@ -10,7 +10,7 @@ import EventDetails from "./EventDetails";
 import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours";
 import EventSignUp from "./EventSignUp";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useTheme } from "react-native-paper";
 import PrivacyPolicy from "./PrivacyPolicy";
 import Support from "./Support";
@@ -18,7 +18,6 @@ import AccountSettings from "./AccountSettings";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 export type RootStackParamList = {
   MainView: { userType: string };
@@ -38,19 +37,20 @@ export type RootStackParamList = {
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
-const MainView = ({ route, navigation }: props) => {
-  const theme = useTheme();
-  theme.colors.secondaryContainer = "transparent";
+const MainView = ({ route, navigation}: props) => {
+  
+  useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
 
   return (
     <Tab.Navigator
-      barStyle={{ backgroundColor: colours.secondaryPurple }}
+      barStyle={{backgroundColor: colours.secondaryPurple}}
       activeColor={colours.primaryPurple}
       inactiveColor={"white"}
       initialRouteName="Home"
     >
       <Tab.Screen
         name="Saved"
+        // listeners={{ tabPress: (e) => showHeader.saved }}
         component={SavedEvents as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
@@ -67,6 +67,7 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="Home"
+        // listeners={{ tabPress: (e) => showHeader.home }}
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
@@ -80,30 +81,16 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Forum"
-        component={Forum as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Forum",
-          tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "chat-processing" : "chat-processing-outline"}
-              color={colours.primaryPurple}
-              size={30}
-            />
-          )
-        }}
-      /> */}
       <Tab.Screen
         name="Profile"
+        // listeners={{ tabPress: (e) => showHeader.profile }}
         component={Profile as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Settings",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name={focused ? "account-circle" : "account-circle-outline"}
+              name={focused ? "cog" : "cog-outline"}
               color={colours.primaryPurple}
               size={30}
             />
@@ -114,7 +101,20 @@ const MainView = ({ route, navigation }: props) => {
   );
 };
 
+// This is a custom hook to show the header only on the home page
+// const customHeaderHook = () => {
+//   const [globalCurrentTab, setGlobalCurrentTab] = useState("Home");
+//   const home = () => {setGlobalCurrentTab("Home")}
+//   const saved = () => {setGlobalCurrentTab("Saved")}
+//   const profile = () => {setGlobalCurrentTab("Profile")}
+//   const getGlobalCurrentTab = () => {return globalCurrentTab}
+//   return {home, saved, profile, getGlobalCurrentTab}
+// }
+
 const Main: FC<{ userType: string }> = (props) => {
+  
+  // const showHeader = customHeaderHook();
+
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
@@ -124,7 +124,8 @@ const Main: FC<{ userType: string }> = (props) => {
             name="MainView"
             component={MainView as any} // TODO fix error
             initialParams={{ userType: props.userType }}
-            options={{
+            options={{ // TODO
+              // headerShown: showHeader.getGlobalCurrentTab() == "Home", // Show header only if you're on the home page
               headerShown: false,
             }}
           />
@@ -148,19 +149,29 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen 
             name="AccountSettingsView" 
             component={AccountSettings as any}
-            options={{title: "Account Settings"}}
+            options={{
+              title: "Account Settings",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
+              headerTintColor: 'white',
+              headerTitleStyle: {fontWeight: 'bold'}
+            }}
           />
           <Stack.Screen 
             name="PrivacyPolicyView" 
             component={PrivacyPolicy as any}
-            options={{title: "Privacy Policy"}}
+            options={{
+              title: "Privacy Policy",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
+              headerTintColor: 'white',
+              headerTitleStyle: {fontWeight: 'bold'}
+            }}
           />
           <Stack.Screen 
             name="SupportView" 
             component={Support as any}
             options={{
-              headerStyle: {backgroundColor: colours.secondaryPurple},
               title: "Support",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
               headerTintColor: 'white',
               headerTitleStyle: {fontWeight: 'bold'}
             }}

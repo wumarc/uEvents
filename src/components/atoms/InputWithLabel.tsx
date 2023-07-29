@@ -1,7 +1,5 @@
-import { View } from "react-native";
 import { Input } from "react-native-elements";
 import * as React from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colours } from "../subatoms/colours";
 
 interface inputProps {
@@ -11,9 +9,12 @@ interface inputProps {
     secureText: boolean
 }
 
-const CustomInput = ({input, placeholder, onChangeListener, secureText}: inputProps) => {
+const InputWithLabel = ({input, placeholder, onChangeListener, secureText}: inputProps) => {
     return (
         <Input
+            label={placeholder}
+            labelStyle={{color: 'grey', padding: '1%'}}
+            labelProps={{}}
             disabledInputStyle={{ backgroundColor: "#ddd" }}
             secureTextEntry={secureText}
             value={input}
@@ -25,20 +26,18 @@ const CustomInput = ({input, placeholder, onChangeListener, secureText}: inputPr
                 borderBottomWidth: 2,
                 borderColor: "#bfbfbf",
                 borderWidth: 2,
-                paddingVertical: 4,
-                paddingHorizontal: 10,
+                // paddingVertical: 4,
+                paddingHorizontal: 8,
                 borderRadius: 6,
                 underlineColor: "transparent"
             }}
             errorStyle={{}}
             errorProps={{}}
             inputStyle={{ outlineStyle: "none" }}
-            labelStyle={{}}
-            labelProps={{}}
             leftIconContainerStyle={{}}
             rightIconContainerStyle={{}}
         />
     );
 }
 
-export default CustomInput;
+export default InputWithLabel;

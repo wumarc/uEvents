@@ -1,7 +1,6 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useState } from "react";
 import { Button, Dialog, Image, Text } from "@rneui/themed";
-import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
@@ -18,10 +17,13 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { colours } from "../../subatoms/colours";
 import { Loading } from "../Common/Loading";
+import { Linking } from "react-native";
 import { auth, fireStore } from "../../../firebaseConfig";
 import { Icon } from "@rneui/base";
 import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
+import CustomButton from "../../atoms/CustomButton";
+import { BottomSheet } from "@rneui/base";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -81,93 +83,118 @@ const Profile = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
-      {/* Title */}
-      <View style={styles.pageTitle}>
-        <Text style={{ fontSize: 33, fontWeight: "600", color: "white" }}>
-          Settings
-        </Text>
-      </View>
 
-      {/* Settings */}
-      <View style={{ marginTop: "10%" }}>
-        <SettingsButton
-          buttonName={"Account Settings"}
-          onPressListener={() => navigation.navigate("AccountSettingsView")}
-        />
-        <SettingsButton
-          buttonName={"Privacy Policy"}
-          onPressListener={() => navigation.navigate("PrivacyPolicyView")}
-        />
-        <SettingsButton
-          buttonName={"Support"}
-          onPressListener={() => navigation.navigate("SupportView")}
-        />
-        <SettingsButton
-          buttonName={"Delete Account"}
-          onPressListener={() => setConfirmDelete(true)}
-        />
+      <ScrollView>
 
-        {/* Log Out Button */}
-        <Button
-          buttonStyle={{ backgroundColor: colours.pastelSecondaryPurple }}
-          containerStyle={{ borderRadius: 15 }}
-          onPress={() => logout()}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              flex: 1,
-            }}
+        {/* Title */}
+        <View style={styles.pageTitle}>
+          <Text style={{ fontSize: 33, fontWeight: "600", color: "white" }}>
+            Settings
+          </Text>
+        </View>
+
+        {/* Settings */}
+        <View style={{ marginTop: "10%" }}>
+          <SettingsButton
+            buttonName={"Account Settings"}
+            onPressListener={() => navigation.navigate("AccountSettingsView")}
+          />
+          <SettingsButton
+            buttonName={"Privacy Policy"}
+            // onPressListener={() => navigation.navigate("PrivacyPolicyView")}
+            onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
+          />
+          {/* <SettingsButton
+            buttonName={"Support"}
+            onPressListener={() => navigation.navigate("SupportView")}
+          /> */}
+          <SettingsButton
+            buttonName={"Delete Account"}
+            onPressListener={() => setConfirmDelete(true)}
+          />
+
+          {/* Log Out Button */}
+          <Button
+            buttonStyle={{ backgroundColor: colours.pastelSecondaryPurple }}
+            containerStyle={{ borderRadius: 15 }}
+            onPress={() => logout()}
           >
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "center",
-                padding: 0,
-                margin: 0,
+                justifyContent: "space-between",
+                flex: 1,
               }}
             >
-              <Icon
-                reverse
-                name="log-out-outline"
-                type="ionicon"
-                color="transparent"
-                size={15}
-                iconStyle={{ fontSize: 27, color: "red" }}
-                // containerStyle={{padding: 0, margin: 2}}
-              />
-              <Text style={{ fontSize: 18, fontWeight: "600", color: "red" }}>
-                Log Out
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: 0,
+                  margin: 0,
+                }}
+              >
+                <Icon
+                  reverse
+                  name="log-out-outline"
+                  type="ionicon"
+                  color="transparent"
+                  size={15}
+                  iconStyle={{ fontSize: 27, color: "red" }}
+                  // containerStyle={{padding: 0, margin: 2}}
+                />
+                <Text style={{ fontSize: 18, fontWeight: "600", color: "red" }}>
+                  Log Out
+                </Text>
+              </View>
             </View>
-          </View>
-        </Button>
-      </View>
+          </Button>
+        </View>
+        
+        {/* Delete Account Confirmation */}
+        <BottomSheet 
+            modalProps={{}}
+            // backdropStyle={{backgroundColor: 'transparent'}}
+            // containerStyle={{backgroundColor: 'transparent'}}
+            onBackdropPress={() => setConfirmDelete(false)}
+            // containerStyle={{height: 100, backgroundColor: 'blue'}}
+            isVisible={confirmDelete}
+        >
+            <View style={{
+                backgroundColor: 'white', 
+                paddingVertical: '6%',
+                borderRadius: 15
+            }}>
+                <Text style={{fontSize: 17, fontWeight: '500', textAlign: 'center', marginBottom: '5%'}} >Are you sure you want to delete your account? This action cannot be reversed.</Text>    
+                <Button
+                    style={{
+                        paddingHorizontal: 10,
+                        borderRadius: 15,
+                        marginVertical: '1%'
+                    }}
+                    color={colours.primaryPurple}
+                    title={"Delete Account"}
+                    onPress={() => {
+                      deleteUser(auth.currentUser as User);
+                      deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
+                    }}
+                />
+                <Button
+                    style={{
+                        paddingHorizontal: 10,
+                        borderRadius: 15,
+                        marginVertical: '1%'
+                    }}
+                    color={'transparent'}
+                    titleStyle={{color: colours.primaryPurple, fontWeight: '600'}}
+                    title={"Cancel"}
+                    onPress={() => setConfirmDelete(false)}
+                />
+            </View>
+        </BottomSheet>
 
-      <Dialog
-        isVisible={confirmDelete}
-        onBackdropPress={() => setConfirmDelete(false)}
-      >
-        <Dialog.Title title="Account Deletion" />
-        <Text>
-          Are you sure you want to delete your account? This action cannot be
-          reversed.
-        </Text>
-        <Dialog.Actions>
-          <Dialog.Button
-            onPress={() => {
-              deleteUser(auth.currentUser as User);
-              deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
-            }}
-          >
-            Yes
-          </Dialog.Button>
-          <Dialog.Button onPress={() => setConfirmDelete(false)}>
-            No
-          </Dialog.Button>
-        </Dialog.Actions>
-      </Dialog>
+      </ScrollView>
+      
     </View>
   );
 };

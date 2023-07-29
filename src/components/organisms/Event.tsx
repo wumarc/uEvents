@@ -7,11 +7,7 @@ import {
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours";
-import {
-  useStateWithFireStoreDocument,
-  useStateWithFireStoreImage,
-} from "../../utils/useStateWithFirebase";
-import Toast from "react-native-toast-message";
+import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import {
   extractMonth,
@@ -66,7 +62,7 @@ const Event: React.FC<EventProps> = (props) => {
             userType: props.userType,
             eventID: props.id,
             organizerID: event.organizer,
-            imageID: props.imageId,
+            imageID: "",
           });
         }}
       >
@@ -97,9 +93,7 @@ const Event: React.FC<EventProps> = (props) => {
                   }}
                 >
                   <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                    {extractMonth(startTime as Timestamp)}
-                  </Text>
-                  <Text style={{ fontWeight: "600", fontSize: 14 }}>
+                    {extractMonth(startTime as Timestamp)}{" "}
                     {extractDay(startTime as Timestamp)}
                   </Text>
                   <Text>
@@ -155,11 +149,7 @@ const Event: React.FC<EventProps> = (props) => {
             </View>
 
             {/* Price */}
-            <View
-              style={{
-                justifyContent: "center",
-              }}
-            >
+            <View style={{ justifyContent: "center" }}>
               <Text
                 style={{
                   borderRadius: 5,
@@ -186,7 +176,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     flexDirection: "column",
     // backgroundColor: colours.primaryPurple,
-    maxWidth: 500,
+    maxWidth: "100%",
     marginHorizontal: "auto",
   },
   row1: {
