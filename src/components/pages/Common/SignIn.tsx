@@ -18,6 +18,9 @@ const SignIn: FC = () => {
           <Stack.Screen 
             name="Welcome" 
             component={WelcomePage}
+            options={{
+              headerShown: false,
+            }}
           />
           <Stack.Screen 
             name="Login" 
@@ -33,6 +36,7 @@ const SignIn: FC = () => {
             options={{
               headerTintColor: colours.primaryPurple,
               headerBackTitleVisible: false,
+              headerTitle: 'Register',
             }}
           />
         </Stack.Navigator>
@@ -142,7 +146,6 @@ const Signup: FC = () => {
   )
 
 }
-
 
 const styles = StyleSheet.create({
   imageContainer: {
