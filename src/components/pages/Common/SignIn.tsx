@@ -32,52 +32,61 @@ const SignIn: FC = () => {
             <View><Text style={{fontSize: 25}}>Start Socializing Now</Text></View>
             <View><Text>Join a community of students and meet new people!</Text></View>
 
-            <View style={{flexDirection: 'row', backgroundColor: 'red'}}>
-              <View style={{width: '50%'}}>
+            <View style={{flexDirection: 'row', paddingHorizontal: '2.3%'}}>
+              
+              <View style={{flex: 1}}>
                 <Button
-                  style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
-                  buttonStyle={{width: '100%', borderRadius: 30}}
-                  containerStyle={{backgroundColor: 'green'}}
+                  style={{
+                    margin: 1,
+                    borderWidth: 2,
+                    borderColor: colours.secondaryPurple,
+                    borderRadius: 30,
+                  }}
+                  buttonStyle={{borderRadius: 30}}
+                  titleStyle={{fontSize: '20%'}}
                   color={colours.secondaryPurple}
                   title="Login"
+                  // onPress={() => navigator.navigate('Signup')}
                 />
               </View>
-              <View style={{width: '50%'}}>
+
+              <View style={{flex: 1}}>
                 <Button
-                  style={{margin: 1, paddingVertical: '2%', paddingHorizontal: '20%'}}
+                  style={{
+                    margin: 1,
+                    borderWidth: 2,
+                    borderColor: colours.secondaryPurple,
+                    borderRadius: 30,
+                  }}
+                  titleStyle={{fontSize: '20%'}}
                   buttonStyle={{borderRadius: 30}}
                   color={colours.secondaryPurple}
                   title="Register"
+                  // onPress={() => navigator.navigate('Signup')}
                 />
               </View>
+
             </View>
-            <View style={{}}>
+
+            <View style={{flexDirection: 'row', paddingHorizontal: '2.3%'}}>
               <Button
                 style={{
                   margin: 1,
-                  paddingVertical: '2%', 
-                  paddingHorizontal: '20%',
                   borderWidth: 2,
                   borderColor: colours.secondaryPurple,
                   borderRadius: 30,
                 }}
-                containerStyle={{backgroundColor: 'green'}}
+                containerStyle={{flex: 1}}
                 titleStyle={{color: colours.secondaryPurple, fontSize: 18, fontWeight: 'bold'}}
                 color={'transparent'}
                 title="Skip"
               />
             </View>
+
           </View>
 
         </View>
 
-        {/* <View style={styles.form}>
-          <View style={styles.innerForm}>
-            {isSigningUp ? (<Signup setIsSigningUp={signInHandler} />) : (
-              <Login setIsSigningUp={signInHandler} />
-            )}
-          </View>
-        </View> */}
     </SafeAreaView> 
   );
 };
@@ -94,6 +103,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     backgroundColor: 'white',
     justifyContent: 'space-evenly',
+    paddingBottom: '10%',
     alignItems: 'center',
   },
   image: {
