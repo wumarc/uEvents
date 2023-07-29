@@ -71,8 +71,6 @@ export type EventObject = {
   priceMax?: number;
   priceDescription?: string; // If needed, a description of the different prices
   description: string; // 750 characters max
-  saved: string[]; // Ids of students who saved this event
-  tickets: string[]; // Ids of students who bought tickets
   location: string; // Building name and room number
   address: string;
   organizer: string; // Organizer name //TODO: Replace for id
@@ -196,8 +194,6 @@ export const defaultEvent: EventObject = {
   id: "1",
   name: "",
   description: "",
-  saved: [],
-  tickets: [],
   startTime: new Timestamp(0, 0),
   location: "",
   organizer: "",

@@ -20,11 +20,11 @@ import {
   nextEndTime,
 } from "../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
+import { Student } from "../../utils/model/Student";
 
 // Event component props
 interface EventProps {
   id: string;
-  imageId: string;
   navigation: any;
   userType: string;
   onSaveEvent: any;
@@ -36,38 +36,19 @@ const Event: React.FC<EventProps> = (props) => {
     props.id
   );
 
-  const price = 10;
+  const [loading2, student, setStudent] =
+    useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
 
-  const isSaved = event?.saved.includes(getFirebaseUserIDOrEmpty());
-
-  const saveEvent = () => {
-    if (isSaved) {
-      // Remove from saved
-      setEvent({
-        ...event,
-        saved: event.saved.filter(
-          (userID: string) => userID !== getFirebaseUserIDOrEmpty()
-        ),
-      });
-      props.onSaveEvent(false);
-    } else {
-      // Add to saved
-      setEvent({
-        ...event,
-        saved: [...event.saved, getFirebaseUserIDOrEmpty()],
-      });
-      props.onSaveEvent(true);
-    }
-  };
-
-  if (loading || !event) {
+  if (loading || loading2 || !event) {
     return <Loading />;
   }
+
+  const isSaved = (student.saved ?? []).includes(props.id);
 
   let image = {
     uri:
       "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" +
-      props.imageId,
+      event.images[0],
   };
 
   // True start time and end time
@@ -141,7 +122,24 @@ const Event: React.FC<EventProps> = (props) => {
                       padding: 5,
                       backgroundColor: "#d1cfcf",
                     }}
-                    onPress={() => saveEvent()}
+                    onPress={() => {
+                      if (isSaved) {
+                        setStudent({
+                          ...student,
+                          saved: student.saved.filter(
+                            (eventID: string) => eventID !== props.id
+                          ),
+                        });
+                        props.onSaveEvent(false);
+                      }
+                      if (!isSaved) {
+                        setStudent({
+                          ...student,
+                          saved: [...(student.saved ?? []), props.id],
+                        });
+                        props.onSaveEvent(true);
+                      }
+                    }}
                   />
                 </View>
               </View>

@@ -1,12 +1,7 @@
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { SearchBar } from "@rneui/themed";
-import {
-  EventObject,
-  mockEventClimbing,
-  mockEventGaming,
-  mockEventPainting,
-} from "../../../utils/model/EventObject";
+import { EventObject } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { colours } from "../../subatoms/colours";
 import { TouchableOpacity } from "react-native";
