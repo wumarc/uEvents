@@ -1,9 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Animated,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Animated } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -18,7 +13,7 @@ import { Button, ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
-import Toggle from "react-native-toggle-element"
+import Toggle from "react-native-toggle-element";
 import { Icon } from "react-native-elements";
 import { color } from "@rneui/base";
 
@@ -65,7 +60,7 @@ const Home = ({ route, navigation }: props) => {
     });
   }, []);
 
-  var scrollEndTimer = null;
+  var scrollEndTimer: any = null;
 
   const onMomentumScrollBegin = () => {
     clearTimeout(scrollEndTimer);
@@ -173,12 +168,12 @@ const Home = ({ route, navigation }: props) => {
           { top: 0, transform: [{ translateY: headerTranslate }] },
         ]}
       >
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View>
             <Toggle
               value={"toggleValue"}
               trackBar={{
-                activeBackgroundColor: colours.primaryPurple, 
+                activeBackgroundColor: colours.primaryPurple,
                 inActiveBackgroundColor: colours.primaryPurple,
                 width: 80,
                 height: 45,
@@ -188,16 +183,20 @@ const Home = ({ route, navigation }: props) => {
                 borderColor: colours.primaryPurple,
               }}
               thumbButton={{
-                activeBackgroundColor: colours.secondaryPurple, 
-                inActiveBackgroundColor: colours.secondaryPurple
+                activeBackgroundColor: colours.secondaryPurple,
+                inActiveBackgroundColor: colours.secondaryPurple,
               }}
               // onPress={(newState) => setToggleValue(newState)}
-              leftComponent={<Icon size={18} type="feather" name='list' color={'white'}/>}
-              rightComponent={<Icon size={18} type="feather" name='square' color={'white'}/>}
+              leftComponent={
+                <Icon size={18} type="feather" name="list" color={"white"} />
+              }
+              rightComponent={
+                <Icon size={18} type="feather" name="square" color={"white"} />
+              }
             />
           </View>
           <View>
-            <Text style={{fontFamily: 'Zapfino'}}>uEvents</Text>
+            <Text style={{ fontFamily: "Zapfino" }}>uEvents</Text>
           </View>
           <View>
             <Button
@@ -205,11 +204,18 @@ const Home = ({ route, navigation }: props) => {
               containerStyle={{ margin: 5 }}
               disabledStyle={{
                 borderWidth: 2,
-                borderColor: "#00F"
+                borderColor: "#00F",
               }}
               disabledTitleStyle={{ color: "#00F" }}
               // linearGradientProps={null}
-              icon={<Icon type="ionicons" name="search-outline" size={15} color="#0FF" />}
+              icon={
+                <Icon
+                  type="ionicons"
+                  name="search-outline"
+                  size={15}
+                  color="#0FF"
+                />
+              }
               // iconContainerStyle={{ background: "#000" }}
               loadingProps={{ animating: true }}
               loadingStyle={{}}

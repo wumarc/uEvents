@@ -6,12 +6,13 @@ import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
 import { StyleSheet } from "react-native";
 import { Student } from "../../../utils/model/Student";
+import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
 
 const SavedEvents = ({ route, navigation }: props) => {
-  const [loading, student, setStudent] = useStateWithFireStoreDocument<Student>(
+  const [loading, student, setStudent] = useStateWithFireStoreDocument(
     "users",
     getFirebaseUserIDOrEmpty()
   );
@@ -68,9 +69,3 @@ const styles = StyleSheet.create({
 });
 
 export default SavedEvents;
-function useStateWithFireStoreDocument<T>(
-  arg0: string,
-  arg1: string
-): [any, any, any] {
-  throw new Error("Function not implemented.");
-}
