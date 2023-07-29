@@ -15,10 +15,9 @@ export const smallText = {
 
 export const inputStyle = {
     backgroundColor: "#fff",
-    borderBottomWidth: 2,
-    borderColor: "#bfbfbf",
-    borderWidth: 2,
-    paddingVertical: 4,
+    borderBottomWidth: 1,
+    borderColor: "black",
+    borderWidth: 1,
     paddingHorizontal: 10,
-    borderRadius: 6,
+    borderRadius: 10,
 }

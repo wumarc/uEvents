@@ -1,16 +1,31 @@
 import { FC, useState } from "react";
-import { View, SafeAreaView } from "react-native";
-import { Text } from "react-native-elements";
-import { Image } from "react-native-elements";
+import { View, SafeAreaView, Linking, StyleSheet } from "react-native";
+import { Text, Input, Image } from "react-native-elements";
 import { Button } from "@rneui/base";
-import { StyleSheet } from "react-native";
 import { colours } from "../../subatoms/colours";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { auth } from "../../../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
+import { defaultStudent, Student } from "../../../utils/model/Student";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
+import { inputStyle, signInText, smallText } from "./Styling";
+import { CheckBox } from "@rneui/themed";
 
+// Accepted universities
+const universities = ["@uottawa.ca"];
 const Stack = createNativeStackNavigator();
 
 const SignIn: FC = () => {
+
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
+  const signInHandler = () => {
+    setIsSigningUp(!isSigningUp);
+  };
 
   return (
      <NavigationContainer>
@@ -25,6 +40,7 @@ const SignIn: FC = () => {
           <Stack.Screen 
             name="Login" 
             component={Login}
+            initialParams={{ signInHandler: {signInHandler} }}
             options={{
               headerTintColor: colours.primaryPurple,
               headerBackTitleVisible: false,
@@ -33,6 +49,7 @@ const SignIn: FC = () => {
           <Stack.Screen 
             name="Signup"
             component={Signup}
+            initialParams={{ signInHandler: {signInHandler} }}
             options={{
               headerTintColor: colours.primaryPurple,
               headerBackTitleVisible: false,
@@ -46,12 +63,6 @@ const SignIn: FC = () => {
 };
 
 const WelcomePage: FC = ({navigation}: any) => {
-
-  const [isSigningUp, setIsSigningUp] = useState(false);
-
-  const signInHandler = () => {
-    setIsSigningUp(!isSigningUp);
-  };
 
   return (
     <SafeAreaView>
@@ -127,23 +138,217 @@ const WelcomePage: FC = ({navigation}: any) => {
 
 }
 
-const Login: FC = () => {
+const Login: FC = ({ setIsSigningUp }: any) => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  async function signIn() {
+    if (email === "" || password === "") {
+      setError("Email and password cannot be empty");
+      return;
+    }
+
+    // Only accept emails from accepted universities
+    if (!universities.some((university) => email.includes(university))) {
+      setError("Email must be from an accepted university");
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+      // setError(error.message);
+      setError("Invalid email or password, please try again");
+    }
+  }
 
   return (
-    <View>
+    <View style={{backgroundColor: 'white', flex: 1, paddingHorizontal: '3%', paddingTop: '25%'}}>
+      
+      {/* Form */}
+      <View>
+        <Input
+          label="Email"
+          placeholder="Email"
+          onChangeText={(value) => setEmail(value)}
+          labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
+          autoCapitalize="none"
+          containerStyle={{paddingHorizontal: 0}}
+          selectionColor={colours.primaryPurple}
+          inputContainerStyle={inputStyle}
+        />
+        <Input
+          label="Password"
+          placeholder="Password"
+          labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
+          containerStyle={{paddingHorizontal: 0}}
+          onChangeText={(value) => setPassword(value)}
+          autoCapitalize="none"
+          selectionColor={colours.primaryPurple}
+          secureTextEntry={true}
+          inputContainerStyle={inputStyle}
+        />
+        <Text onPress={() => {}}>Forgot password?</Text>
+        <Text style={styles.textAlert} >{error}</Text>
+      </View>
+
+      {/* Button */}
+      <View>
+        <Button
+          color={colours.primaryPurple}
+          title="Log In"
+          containerStyle={{borderRadius: 15}}
+          onPress={() => {signIn();}}
+        />
+        {/* <View style={{marginTop: '2%', justifyContent: 'center'}}>
+          <Text>
+            Don't have an account?
+            <Text onPress={setIsSigningUp} style={{color: colours.primaryPurple, fontWeight: '600'}}> Register</Text>
+          </Text>
+        </View> */}
+      </View>
 
     </View>
-  )
+  );
 
 }
 
-const Signup: FC = () => {
+const Signup: FC = ({ setIsSigningUp }: any) => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [error, setError] = useState("");
+  const [userType, setUserType] = useState("Student");
+
+  async function signUp(validate: boolean): Promise<boolean> {
+    if (validate) {
+      if (email === "" || password === "") {
+        if (email === "" || password === "") {
+          setError("Email and password cannot be empty");
+          return false;
+        }
+        return false;
+      }
+
+      // Only accept emails from accepted universities
+      if (!universities.some((university) => email.includes(university))) {
+        setError("You must be an uOttawa student to sign up");
+        return false;
+      }
+
+      if (!checked) {
+        setError("You must agree to the terms and conditions");
+        return false;
+      }
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setIsSigningUp(false);
+      return true;
+    } catch (error: any) {
+      setError(error.message);
+    }
+    return false;
+  }
 
   return (
-    <View>
+    
+      <View style={{backgroundColor: 'white', flex: 1, paddingHorizontal: '3%', paddingTop: '25%'}}>
+        
+        {/* Form */}
+        <View>
+          {/* <SelectList
+          data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
+          setSelected={(value: string) => setUserType(value)}
+          save="value"
+          defaultOption={{key: '3', value:'Account Type'}}
+          boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
+          dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
+        /> */}
+          <Input
+            label="Email"
+            placeholder="Email"
+            onChangeText={(value) => setEmail(value)}
+            labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
+            autoCapitalize="none"
+            containerStyle={{paddingHorizontal: 0}}
+            selectionColor={colours.primaryPurple}
+            inputContainerStyle={inputStyle}
+          />
+          <Input
+            label="Password"
+            placeholder="Password"
+            labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
+            containerStyle={{paddingHorizontal: 0}}
+            onChangeText={(value) => setPassword(value)}
+            autoCapitalize="none"
+            selectionColor={colours.primaryPurple}
+            secureTextEntry={true}
+            inputContainerStyle={inputStyle}
+          />
+          <Text style={styles.textAlert} >{error}</Text>
+          <CheckBox
+            checkedColor={colours.primaryPurple}
+            title={
+              <Text> I agree to comply with uEvents' 
+                <Text style={smallText} onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
+                >{" "}Privacy Policy{" "}</Text>
+              </Text>
+            }
+            containerStyle={{padding: 0, margin: 0}}
+            checked={checked}
+            onPress={() => setChecked(!checked)}
+          />  
+        </View>
 
-    </View>
-  )
+        <View>
+          <Button
+            color={colours.primaryPurple}
+            title="Sign up"
+            onPress={() => {
+              userType === "Student"
+                ? signUp(true).then((success) => {
+                    if (!success) return;
+                    addDocumentToCollection<Student>(
+                      "users",
+                      getFirebaseUserIDOrEmpty(),
+                      defaultStudent
+                    );
+                  })
+                : // Don't validate email for organizers
+                  signUp(false).then((success) => {
+                    if (!success) return;
+                    addDocumentToCollection<Organizer>(
+                      "users",
+                      getFirebaseUserIDOrEmpty(),
+                      defaultOrganizer
+                    );
+                  });
+            }}
+          />
+        </View>
+
+        {/* Login Option */}
+        {/* <View>
+          <Text>
+            Already have an account?
+            <Text
+              onPress={setIsSigningUp}
+              style={{ color: colours.primaryPurple }}
+            >
+              {" "}
+              Sign in
+            </Text>
+          </Text>
+        </View> */}
+
+      </View>
+    
+  );
 
 }
 
@@ -165,6 +370,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '110%',
   },
+  textAlert: {
+    color: 'red',
+    paddingVertical: '2%',
+  }
 });
 
 export default SignIn;
