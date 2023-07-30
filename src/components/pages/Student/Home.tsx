@@ -28,9 +28,11 @@ const Home = ({ route, navigation }: props) => {
 
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const offsetAnim = useRef(new Animated.Value(0)).current;
+
   const clampedScroll = Animated.diffClamp(
     Animated.add(
       scrollY.interpolate({
@@ -133,7 +135,7 @@ const Home = ({ route, navigation }: props) => {
     <View style={{ flex: 1, flexDirection: "row" }}>
       {/* Event List*/}
       <Animated.FlatList
-        style={{ paddingTop: 60}} // MODIFIED
+        style={{ paddingTop: headerHeight - 20 }} // MODIFIED
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: true }
@@ -162,51 +164,71 @@ const Home = ({ route, navigation }: props) => {
       />
 
       {/* Search bar and Filter */}
-      <Animated.View style={[ styles.view, {top: 0, transform: [{ translateY: headerTranslate }]}]} >
-        <View style={{flex: 1}}>
-          <SearchBar
-            platform="default"
-            inputContainerStyle={{
-              borderRadius: 20,
-              backgroundColor: "white",
-              margin: 0,
-            }}
-            containerStyle={{
-              backgroundColor: colours.secondaryPurple,
-              flex: 1,
-              borderBottomColor: "transparent",
-              borderTopColor: "transparent",
-            }}
-            onChangeText={(value) => {setSearch(value)}}
-            placeholder="Search events by name or category"
-            placeholderTextColor="#121212"
-            value={search}
-            autoCapitalize="none"
-            selectionColor={colours.primaryPurple}
-          />
+      <Animated.View
+        style={{
+          top: 0,
+          position: "absolute",
+          width: "100%",
+          flexDirection: "column",
+          display: "flex",
+          backgroundColor: colours.secondaryPurple,
+          transform: [{ translateY: headerTranslate }],
+        }}
+        onLayout={(event) => {
+          setHeaderHeight(event.nativeEvent.layout.height);
+        }}
+      >
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <View style={{ flexGrow: 1 }}>
+            <SearchBar
+              platform="default"
+              inputContainerStyle={{
+                borderRadius: 20,
+                backgroundColor: "white",
+                // margin: 0,
+              }}
+              containerStyle={{
+                backgroundColor: colours.secondaryPurple,
+                flex: 1,
+                borderBottomColor: "transparent",
+                borderTopColor: "transparent",
+              }}
+              onChangeText={(value) => {
+                setSearch(value);
+              }}
+              placeholder="Search events by name or category"
+              placeholderTextColor="#121212"
+              value={search}
+              autoCapitalize="none"
+              selectionColor={colours.primaryPurple}
+            />
+          </View>
+          <View style={{ flexGrow: 0 }}>
+            <Toggle
+              trackBar={{
+                activeBackgroundColor: colours.primaryPurple,
+                inActiveBackgroundColor: colours.primaryPurple,
+                width: 80,
+                // height: 45,
+              }}
+              trackBarStyle={{
+                borderColor: colours.primaryPurple,
+              }}
+              thumbButton={{
+                activeBackgroundColor: colours.secondaryPurple,
+                inActiveBackgroundColor: colours.secondaryPurple,
+              }}
+              onPress={() => setListView(!listView)}
+              leftComponent={
+                <Icon size={18} type="feather" name="list" color={"white"} />
+              }
+              rightComponent={
+                <Icon size={18} type="feather" name="square" color={"white"} />
+              }
+            />
+          </View>
         </View>
-        <View>
-          <Toggle
-            value={"toggleValue"}
-            trackBar={{
-              activeBackgroundColor: colours.primaryPurple, 
-              inActiveBackgroundColor: colours.primaryPurple,
-              width: 80,
-              height: 45
-            }}
-            trackBarStyle={{
-              borderColor: colours.primaryPurple,
-            }}
-            thumbButton={{
-              activeBackgroundColor: colours.secondaryPurple, 
-              inActiveBackgroundColor: colours.secondaryPurple
-            }}
-            onPress={() => setListView(!listView)}
-            leftComponent={<Icon size={18} type="feather" name='list' color={'white'}/>}
-            rightComponent={<Icon size={18} type="feather" name='square' color={'white'}/>}
-          />
-        </View>
-        {/* <View style={{ backgroundColor: colours.secondaryPurple }}>
+        <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtonGroup
               buttons={Object.values(EventCategory)}
@@ -233,11 +255,11 @@ const Home = ({ route, navigation }: props) => {
               onPress={(value) => setSelectedIndex(value)}
             />
           </ScrollView>
-        </View> */}
+        </View>
       </Animated.View>
 
       {/* Toast */}
-      <Toast/>
+      <Toast />
     </View>
   );
 };
@@ -248,9 +270,9 @@ export const styles = StyleSheet.create({
   view: {
     position: "absolute",
     width: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: "column",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: colours.secondaryPurple,
     // width: "100%",
     // left: 0,
