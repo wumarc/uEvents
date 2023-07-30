@@ -49,6 +49,24 @@ const Event: React.FC<EventProps> = (props) => {
       event.images[0],
   };
 
+  const saveEvent = () => {
+    if (isSaved) {
+      setStudent({
+        ...student,
+        saved: student.saved.filter((id) => id != props.id),
+      });
+
+      props.onSaveEvent(false);
+    }
+    if (!isSaved) {
+      setStudent({
+        ...student,
+        saved: [...student.saved, props.id],
+      });
+      props.onSaveEvent(true);
+    }
+  };
+
   // True start time and end time
   let startTime = nextStartTime(event.startTime, event.recurrence);
   let endTime = undefined;
@@ -69,57 +87,55 @@ const Event: React.FC<EventProps> = (props) => {
         }}
       >
         {/* Create view for different layout */}
-        {props.listView ? 
+        {props.listView ? (
           <View>
-              
-              {/* Image, event details, save button */}
-              <View style={{flexDirection: 'row', flex: 1}}>
-
-                {/* Image, Event Details */}
-                <View style={{flexDirection: 'row', backgroundColor: 'pink'}}>
-                  
-                  <View style={{width: '40%', height: '100%'}}>
-                    <Image source={image} style={{width: '100%', height: '100%'}} />
-                  </View>
-                  
-                  {/* Event Details */}
-                  <View style={{backgroundColor: 'yellow'}}>
-                    <Text>uOttawa Boxing Club</Text>
-                    <Text>Tuesday Boxing Session</Text>
-                    <Text>Montpetit Gym</Text>
-                  </View>
-
+            {/* Image, event details, save button */}
+            <View style={{ flexDirection: "row", flex: 1 }}>
+              {/* Image, Event Details */}
+              <View style={{ flexDirection: "row", backgroundColor: "pink" }}>
+                <View style={{ width: "40%", height: "100%" }}>
+                  <Image
+                    source={image}
+                    style={{ width: "100%", height: "100%" }}
+                  />
                 </View>
 
-                {/* Save button */}
-                <View>
-                    <Icon
-                      size={25}
-                      type="ionicon"
-                      name={isSaved ? "heart" : "heart-outline"}
-                      color={isSaved ? colours.secondaryPurple : "white"}
-                      containerStyle={{
-                        borderStyle: "solid",
-                        borderRadius: 50,
-                        padding: 5,
-                        backgroundColor: "#d1cfcf",
-                      }}
-                      onPress={() => saveEvent()}
-                    />
+                {/* Event Details */}
+                <View style={{ backgroundColor: "yellow" }}>
+                  <Text>uOttawa Boxing Club</Text>
+                  <Text>Tuesday Boxing Session</Text>
+                  <Text>Montpetit Gym</Text>
                 </View>
-
               </View>
 
+              {/* Save button */}
+              <View>
+                <Icon
+                  size={25}
+                  type="ionicon"
+                  name={isSaved ? "heart" : "heart-outline"}
+                  color={isSaved ? colours.secondaryPurple : "white"}
+                  containerStyle={{
+                    borderStyle: "solid",
+                    borderRadius: 50,
+                    padding: 5,
+                    backgroundColor: "#d1cfcf",
+                  }}
+                  onPress={() => saveEvent()}
+                />
+              </View>
+            </View>
 
-            {/* Date, Time, Price */} 
-            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-              
-              <View style={{backgroundColor: 'orange'}}>
-                <Text style={{fontSize: 20}}>March 15</Text>
-                <Text style={{fontSize: 20}}>09:00 P.M</Text>
+            {/* Date, Time, Price */}
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-around" }}
+            >
+              <View style={{ backgroundColor: "orange" }}>
+                <Text style={{ fontSize: 20 }}>March 15</Text>
+                <Text style={{ fontSize: 20 }}>09:00 P.M</Text>
               </View>
 
-              <View style={{justifyContent: "center"}} >
+              <View style={{ justifyContent: "center" }}>
                 <Text
                   style={{
                     borderRadius: 5,
@@ -134,11 +150,9 @@ const Event: React.FC<EventProps> = (props) => {
                   {event.price > 0 ? "$" + event.price : "Free"}
                 </Text>
               </View>
-              
             </View>
-
           </View>
-        :
+        ) : (
           <View>
             {/* Image */}
             <View style={styles.row1}>
@@ -166,10 +180,13 @@ const Event: React.FC<EventProps> = (props) => {
                     }}
                   >
                     <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                      {extractMonth(startTime as Timestamp)} {extractDay(startTime as Timestamp)}
+                      {extractMonth(startTime as Timestamp)}{" "}
+                      {extractDay(startTime as Timestamp)}
                     </Text>
                     <Text>
-                      {startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}
+                      {startTime?.toDate().getHours() +
+                        ":" +
+                        startTime?.toDate().getMinutes()}
                     </Text>
                     {event.recurrence ? <Text>Recurring</Text> : <></>}
                   </View>
@@ -202,7 +219,7 @@ const Event: React.FC<EventProps> = (props) => {
               </View>
 
               {/* Price */}
-              <View style={{justifyContent: "center"}} >
+              <View style={{ justifyContent: "center" }}>
                 <Text
                   style={{
                     borderRadius: 5,
@@ -219,8 +236,7 @@ const Event: React.FC<EventProps> = (props) => {
               </View>
             </View>
           </View>
-        }
-
+        )}
       </TouchableOpacity>
     </View>
   );
