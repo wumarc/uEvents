@@ -5,6 +5,7 @@ import {
   View,
 } from "react-native";
 import { Text, Icon } from "@rneui/base";
+import { Image } from "@rneui/themed";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
@@ -24,6 +25,7 @@ interface EventProps {
   navigation: any;
   userType: string;
   onSaveEvent: any;
+  listView: boolean;
 }
 
 const Event: React.FC<EventProps> = (props) => {
@@ -66,106 +68,159 @@ const Event: React.FC<EventProps> = (props) => {
           });
         }}
       >
-        <View>
-          {/* Image */}
-          <View style={styles.row1}>
-            <ImageBackground
-              style={{
-                width: "100%",
-                height: 400,
-                borderRadius: 14,
-                // opacity: 0.7,
-              }}
-              source={image}
-            >
-              <View
+        {/* Create view for different layout */}
+        {props.listView ? 
+          <View>
+              
+              {/* Image, event details, save button */}
+              <View style={{flexDirection: 'row', flex: 1}}>
+
+                {/* Image, Event Details */}
+                <View style={{flexDirection: 'row', backgroundColor: 'pink'}}>
+                  
+                  <View style={{width: '40%', height: '100%'}}>
+                    <Image source={image} style={{width: '100%', height: '100%'}} />
+                  </View>
+                  
+                  {/* Event Details */}
+                  <View style={{backgroundColor: 'yellow'}}>
+                    <Text>uOttawa Boxing Club</Text>
+                    <Text>Tuesday Boxing Session</Text>
+                    <Text>Montpetit Gym</Text>
+                  </View>
+
+                </View>
+
+                {/* Save button */}
+                <View>
+                    <Icon
+                      size={25}
+                      type="ionicon"
+                      name={isSaved ? "heart" : "heart-outline"}
+                      color={isSaved ? colours.secondaryPurple : "white"}
+                      containerStyle={{
+                        borderStyle: "solid",
+                        borderRadius: 50,
+                        padding: 5,
+                        backgroundColor: "#d1cfcf",
+                      }}
+                      onPress={() => saveEvent()}
+                    />
+                </View>
+
+              </View>
+
+
+            {/* Date, Time, Price */} 
+            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+              
+              <View style={{backgroundColor: 'orange'}}>
+                <Text style={{fontSize: 20}}>March 15</Text>
+                <Text style={{fontSize: 20}}>09:00 P.M</Text>
+              </View>
+
+              <View style={{justifyContent: "center"}} >
+                <Text
+                  style={{
+                    borderRadius: 5,
+                    overflow: "hidden", // what does this do???
+                    padding: 8,
+                    color: "white",
+                    fontWeight: "bold",
+                    backgroundColor:
+                      event.price > 0 ? colours.primaryPurple : "green",
+                  }}
+                >
+                  {event.price > 0 ? "$" + event.price : "Free"}
+                </Text>
+              </View>
+              
+            </View>
+
+          </View>
+        :
+          <View>
+            {/* Image */}
+            <View style={styles.row1}>
+              <ImageBackground
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  margin: 5,
+                  width: "100%",
+                  height: 400,
+                  borderRadius: 14,
+                  // opacity: 0.7,
                 }}
+                source={image}
               >
                 <View
                   style={{
-                    backgroundColor: "white",
-                    padding: "1%",
-                    borderRadius: 5,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    margin: 5,
                   }}
                 >
-                  <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                    {extractMonth(startTime as Timestamp)}{" "}
-                    {extractDay(startTime as Timestamp)}
-                  </Text>
-                  <Text>
-                    {startTime?.toDate().getHours() +
-                      ":" +
-                      startTime?.toDate().getMinutes()}
-                  </Text>
-                  {event.recurrence ? <Text>Recurring</Text> : <></>}
-                </View>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      padding: "1%",
+                      borderRadius: 5,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "600", fontSize: 14 }}>
+                      {extractMonth(startTime as Timestamp)} {extractDay(startTime as Timestamp)}
+                    </Text>
+                    <Text>
+                      {startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}
+                    </Text>
+                    {event.recurrence ? <Text>Recurring</Text> : <></>}
+                  </View>
 
-                <View>
-                  <Icon
-                    size={25}
-                    type="ionicon"
-                    name={isSaved ? "heart" : "heart-outline"}
-                    color={isSaved ? colours.secondaryPurple : "white"}
-                    containerStyle={{
-                      borderStyle: "solid",
-                      borderRadius: 50,
-                      padding: 5,
-                      backgroundColor: "#d1cfcf",
-                    }}
-                    onPress={() => {
-                      if (isSaved) {
-                        setStudent({
-                          ...student,
-                          saved: student.saved.filter(
-                            (eventID: string) => eventID !== props.id
-                          ),
-                        });
-                        props.onSaveEvent(false);
-                      }
-                      if (!isSaved) {
-                        setStudent({
-                          ...student,
-                          saved: [...(student.saved ?? []), props.id],
-                        });
-                        props.onSaveEvent(true);
-                      }
-                    }}
-                  />
+                  <View>
+                    <Icon
+                      size={25}
+                      type="ionicon"
+                      name={isSaved ? "heart" : "heart-outline"}
+                      color={isSaved ? colours.secondaryPurple : "white"}
+                      containerStyle={{
+                        borderStyle: "solid",
+                        borderRadius: 50,
+                        padding: 5,
+                        backgroundColor: "#d1cfcf",
+                      }}
+                      onPress={() => saveEvent()}
+                    />
+                  </View>
                 </View>
+              </ImageBackground>
+            </View>
+
+            {/* Name, Location, Price */}
+            <View style={styles.row2}>
+              {/* Name and Location */}
+              <View style={{ width: "85%" }}>
+                <Text style={styles.title}>{event.name}</Text>
+                <Text>{event.location}</Text>
               </View>
-            </ImageBackground>
-          </View>
 
-          {/* Name, Location, Price */}
-          <View style={styles.row2}>
-            {/* Name and Location */}
-            <View style={{ width: "85%" }}>
-              <Text style={styles.title}>{event.name}</Text>
-              <Text>{event.location}</Text>
-            </View>
-
-            {/* Price */}
-            <View style={{ justifyContent: "center" }}>
-              <Text
-                style={{
-                  borderRadius: 5,
-                  overflow: "hidden", // what does this do???
-                  padding: 8,
-                  color: "white",
-                  fontWeight: "bold",
-                  backgroundColor:
-                    event.price > 0 ? colours.primaryPurple : "green",
-                }}
-              >
-                {event.price > 0 ? "$" + event.price : "Free"}
-              </Text>
+              {/* Price */}
+              <View style={{justifyContent: "center"}} >
+                <Text
+                  style={{
+                    borderRadius: 5,
+                    overflow: "hidden", // what does this do???
+                    padding: 8,
+                    color: "white",
+                    fontWeight: "bold",
+                    backgroundColor:
+                      event.price > 0 ? colours.primaryPurple : "green",
+                  }}
+                >
+                  {event.price > 0 ? "$" + event.price : "Free"}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        }
+
       </TouchableOpacity>
     </View>
   );

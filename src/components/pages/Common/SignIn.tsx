@@ -14,6 +14,7 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { inputStyle, signInText, smallText } from "./Styling";
 import { CheckBox } from "@rneui/themed";
+import { SelectList } from 'react-native-dropdown-select-list'
 
 // Accepted universities
 const universities = ["@uottawa.ca"];
@@ -261,14 +262,14 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         
         {/* Form */}
         <View>
-          {/* <SelectList
-          data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
-          setSelected={(value: string) => setUserType(value)}
-          save="value"
-          defaultOption={{key: '3', value:'Account Type'}}
-          boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
-          dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
-        /> */}
+          <SelectList
+            data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
+            setSelected={(value: string) => setUserType(value)}
+            save="value"
+            defaultOption={{key: '3', value:'Account Type'}}
+            boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
+            dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
+          />
           <Input
             label="Email"
             placeholder="Email"
