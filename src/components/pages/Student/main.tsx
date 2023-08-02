@@ -15,6 +15,8 @@ import { useTheme } from "react-native-paper";
 import PrivacyPolicy from "./PrivacyPolicy";
 import Support from "./Support";
 import AccountSettings from "./AccountSettings";
+import OrganizerProfile from "./OrganizerProfile";
+import Organizers from "./Organizers";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -71,10 +73,26 @@ const MainView = ({ route, navigation}: props) => {
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Events",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "jellyfish" : "jellyfish-outline"}
+              color={colours.primaryPurple}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Organizers"
+        // listeners={{ tabPress: (e) => showHeader.profile }}
+        component={Organizers as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "Organizers",
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "office-building" : "office-building-outline"}
               color={colours.primaryPurple}
               size={30}
             />
@@ -171,6 +189,16 @@ const Main: FC<{ userType: string }> = (props) => {
             component={Support as any}
             options={{
               title: "Support",
+              headerStyle: {backgroundColor: colours.secondaryPurple},
+              headerTintColor: 'white',
+              headerTitleStyle: {fontWeight: 'bold'}
+            }}
+          />
+          <Stack.Screen
+            name="EventOrganizerView"
+            component={OrganizerProfile as any}
+            options={{
+              title: "Organizer Profile",
               headerStyle: {backgroundColor: colours.secondaryPurple},
               headerTintColor: 'white',
               headerTitleStyle: {fontWeight: 'bold'}

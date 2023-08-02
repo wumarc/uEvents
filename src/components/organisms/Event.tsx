@@ -87,7 +87,7 @@ const Event: React.FC<EventProps> = (props) => {
         }}
       >
         {/* Create view for different layout */}
-        {props.listView ? (
+        {props.listView ?(
           <View>
             {/* Image, event details, save button */}
             <View style={{ flexDirection: "row", flex: 1 }}>
@@ -227,8 +227,7 @@ const Event: React.FC<EventProps> = (props) => {
                     padding: 8,
                     color: "white",
                     fontWeight: "bold",
-                    backgroundColor:
-                      event.price > 0 ? colours.primaryPurple : "green",
+                    backgroundColor: event.price > 0 ? colours.primaryPurple : "green",
                   }}
                 >
                   {event.price > 0 ? "$" + event.price : "Free"}
@@ -266,8 +265,8 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 3,
     fontSize: 20,
-    fontWeight: "700",
-    color: colours.primaryPurple,
+    fontWeight: "500",
+    // color: colours.primaryPurple,
   },
   eventDetailTitle: {
     fontWeight: "bold",

@@ -75,6 +75,7 @@ const EventDetails = ({ route, navigation }: props) => {
                     color: "#e3e3e3",
                     fontSize: 16,
                   }}
+                  onPress={() => {navigation.navigate("EventOrganizerView")}}
                 >
                   {event.organizer}
                 </Text>
