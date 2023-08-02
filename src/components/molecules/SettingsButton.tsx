@@ -37,7 +37,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
           containerStyle={{borderRadius: 15}}
           onPress={onPressListener}
         >
-          
+
           <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
             
             <View 

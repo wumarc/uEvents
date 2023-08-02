@@ -1,6 +1,6 @@
 import { ScrollView, View } from "react-native";
 import { useState } from "react";
-import { Button, Dialog, Image, Text } from "@rneui/themed";
+import { Button, Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
@@ -88,8 +88,8 @@ const Profile = ({ route, navigation }: props) => {
 
         {/* Title */}
         <View style={styles.pageTitle}>
-          <Text style={{ fontSize: 33, fontWeight: "600", color: "white" }}>
-            Settings
+          <Text style={{ fontSize: 33, fontWeight: "600"}}>
+            Your Settings
           </Text>
         </View>
 
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: "2.3%",
     flex: 1,
-    backgroundColor: colours.secondaryPurple,
+    // backgroundColor: colours.secondaryPurple,
   },
   pageTitle: {
     flexDirection: "row",

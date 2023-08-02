@@ -1,8 +1,9 @@
 {
   "expo": {
+    "name": "uEvents",
     "slug": "uevents",
     "splash": {
-      "image": "./assets/splash.png"
+      "image": "./assets/icon.png"
     },
     "extra": {
       "eas": {

@@ -1,11 +1,9 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import { RootStackParamList } from "./main";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
-import { StyleSheet } from "react-native";
-import { Student } from "../../../utils/model/Student";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
@@ -28,31 +26,35 @@ const SavedEvents = ({ route, navigation }: props) => {
         width: "100%",
       }}
     >
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Your Saved Events</Text>
-      </View>
+      <ScrollView>
 
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        {(student.saved ?? []).length != 0 ? (
-          <FlatList
-            data={(student ?? []).saved}
-            renderItem={({ item }) => (
-              <Event
-                id={item}
-                userType={route.params.userType}
-                navigation={navigation}
-                onSaveEvent={() => {}}
-              />
-            )}
-          />
-        ) : (
-          <View style={{ paddingHorizontal: "10%" }}>
-            <Text style={{ fontSize: 19 }}>
-              You currently have no saved events
-            </Text>
-          </View>
-        )}
-      </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Your Saved Events</Text>
+        </View>
+
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          {(student.saved ?? []).length != 0 ? (
+            <FlatList
+              data={(student ?? []).saved}
+              renderItem={({ item }) => (
+                <Event
+                  id={item}
+                  userType={route.params.userType}
+                  navigation={navigation}
+                  onSaveEvent={() => {}}
+                />
+              )}
+            />
+          ) : (
+            <View style={{ paddingHorizontal: "10%" }}>
+              <Text style={{ fontSize: 19 }}>
+                You currently have no saved events
+              </Text>
+            </View>
+          )}
+        </View>
+
+      </ScrollView>
     </View>
   );
 };

@@ -46,8 +46,8 @@ const MainView = ({ route, navigation}: props) => {
   return (
     <Tab.Navigator
       barStyle={{backgroundColor: 'white'}}
-      activeColor={colours.primaryPurple}
-      inactiveColor={colours.primaryPurple}
+      activeColor={colours.secondaryPurple}
+      inactiveColor={colours.secondaryPurple}
       initialRouteName="Home"
     >
       <Tab.Screen
@@ -61,7 +61,7 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "heart" : "heart-outline"}
-              color={colours.primaryPurple}
+              color={colours.secondaryPurple}
               size={30}
             />
           ),
@@ -77,7 +77,7 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "jellyfish" : "jellyfish-outline"}
-              color={colours.primaryPurple}
+              color={colours.secondaryPurple}
               size={30}
             />
           ),
@@ -93,7 +93,7 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "office-building" : "office-building-outline"}
-              color={colours.primaryPurple}
+              color={colours.secondaryPurple}
               size={30}
             />
           ),
@@ -109,7 +109,7 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "cog" : "cog-outline"}
-              color={colours.primaryPurple}
+              color={colours.secondaryPurple}
               size={30}
             />
           ),

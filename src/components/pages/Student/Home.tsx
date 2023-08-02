@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, View, Animated } from "react-native";
-import { useEffect, useRef, useState } from "react";
+import { ScrollView, StyleSheet, View, FlatList } from "react-native";
+import { useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
@@ -9,18 +9,13 @@ import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
-import { Button, ButtonGroup } from "react-native-elements";
+import { ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
-import Toggle from "react-native-toggle-element";
-import { Icon } from "react-native-elements";
-import { color } from "@rneui/base";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
-
-const CONTAINER_HEIGHT = 100;
 
 const Home = ({ route, navigation }: props) => {
   // const [loading, dbListenedValue, set, add, remove] =
@@ -29,69 +24,6 @@ const Home = ({ route, navigation }: props) => {
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
-
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const offsetAnim = useRef(new Animated.Value(0)).current;
-
-  const clampedScroll = Animated.diffClamp(
-    Animated.add(
-      scrollY.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1],
-        extrapolateLeft: "clamp",
-      }),
-      offsetAnim
-    ),
-    0,
-    CONTAINER_HEIGHT
-  );
-  var _clampedScrollValue = 0;
-  var _offsetValue = 0;
-  var _scrollValue = 0;
-
-  useEffect(() => {
-    scrollY.addListener(({ value }) => {
-      const diff = value - _scrollValue;
-      _scrollValue = value;
-      _clampedScrollValue = Math.min(
-        Math.max(_clampedScrollValue + diff, 0),
-        CONTAINER_HEIGHT
-      );
-    });
-    offsetAnim.addListener(({ value }) => {
-      _offsetValue = value;
-    });
-  }, []);
-
-  var scrollEndTimer: any = null;
-
-  const onMomentumScrollBegin = () => {
-    clearTimeout(scrollEndTimer);
-  };
-
-  const onMomentumScrollEnd = () => {
-    const toValue =
-      _scrollValue > CONTAINER_HEIGHT &&
-      _clampedScrollValue > CONTAINER_HEIGHT / 2
-        ? _offsetValue + CONTAINER_HEIGHT
-        : _offsetValue - CONTAINER_HEIGHT;
-
-    Animated.timing(offsetAnim, {
-      toValue,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const onScrollEndDrag = () => {
-    scrollEndTimer = setTimeout(onMomentumScrollEnd, 250);
-  };
-
-  const headerTranslate = clampedScroll.interpolate({
-    inputRange: [0, CONTAINER_HEIGHT],
-    outputRange: [0, -CONTAINER_HEIGHT],
-    extrapolate: "clamp",
-  });
 
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
@@ -133,78 +65,45 @@ const Home = ({ route, navigation }: props) => {
   return (
     // NOTE: This is weird but the flatlist is not scrollable if the view is not flex: 1
     <View style={{ flex: 1, flexDirection: "row" }}>
-      {/* Event List*/}
-      <Animated.FlatList
-        style={{ paddingTop: headerHeight - 20 }} // MODIFIED
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true }
-        )}
-        // refreshControl={
-        //   <RefreshControl refreshing={} onRefresh={} />
-        // }
-        onMomentumScrollBegin={onMomentumScrollBegin}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        onScrollEndDrag={onScrollEndDrag}
-        scrollEventThrottle={1}
-        contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED: why modified?
-        showsVerticalScrollIndicator={false}
-        data={filteredEvents}
-        renderItem={({ item, index }) => (
-          <View style={styles.event}>
-            <Event
-              id={item.id}
-              navigation={navigation}
-              userType={route.params.userType}
-              onSaveEvent={showToast}
-              listView={listView}
-            />
-          </View>
-        )}
-      />
-
       {/* Search bar and Filter */}
-      <Animated.View
+      <View
         style={{
           top: 0,
           position: "absolute",
           width: "100%",
           flexDirection: "column",
           display: "flex",
-          backgroundColor: colours.secondaryPurple,
-          transform: [{ translateY: headerTranslate }],
-        }}
-        onLayout={(event) => {
-          setHeaderHeight(event.nativeEvent.layout.height);
+          backgroundColor: 'white'
         }}
       >
         <View style={{ display: "flex", flexDirection: "row" }}>
           <View style={{ flexGrow: 1 }}>
+            <View>
+              <Text style={styles.title}>Upcoming Events</Text>
+            </View>
             <SearchBar
               platform="default"
               inputContainerStyle={{
-                borderRadius: 20,
-                backgroundColor: "white",
-                // margin: 0,
+                borderRadius: 6,
+                height: 38,
+                backgroundColor: '#ebebeb',
               }}
               containerStyle={{
-                backgroundColor: colours.secondaryPurple,
+                backgroundColor: 'white',
                 flex: 1,
                 borderBottomColor: "transparent",
                 borderTopColor: "transparent",
               }}
-              onChangeText={(value) => {
-                setSearch(value);
-              }}
+              onChangeText={(value) => setSearch(value)}
               placeholder="Search events by name or category"
-              placeholderTextColor="#121212"
+              // placeholderTextColor="white"
               value={search}
               autoCapitalize="none"
               selectionColor={colours.primaryPurple}
             />
           </View>
         </View>
-        <View style={{ backgroundColor: colours.secondaryPurple }}>
+        {/* <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtonGroup
               buttons={Object.values(EventCategory)}
@@ -231,11 +130,35 @@ const Home = ({ route, navigation }: props) => {
               onPress={(value) => setSelectedIndex(value)}
             />
           </ScrollView>
-        </View>
-      </Animated.View>
+        </View> */}
+      </View>
+
+
+      {/* Event List*/}
+      <FlatList
+        style={{ paddingTop: headerHeight - 20 }} // MODIFIED
+        // refreshControl={
+        //   <RefreshControl refreshing={} onRefresh={} />
+        // }
+        scrollEventThrottle={1}
+        contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED: why modified?
+        showsVerticalScrollIndicator={false}
+        data={filteredEvents}
+        renderItem={({ item, index }) => (
+          <View style={styles.event}>
+            <Event
+              id={item.id}
+              navigation={navigation}
+              userType={route.params.userType}
+              onSaveEvent={showToast}
+              listView={listView}
+            />
+          </View>
+        )}
+      />
 
       {/* Toast */}
-      <Toast />
+      <Toast/>
     </View>
   );
 };
@@ -247,22 +170,18 @@ export const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     flexDirection: "column",
-    // justifyContent: "center",
-    // alignItems: "center",
     backgroundColor: colours.secondaryPurple,
-    // width: "100%",
-    // left: 0,
-    // right: 0,
-    // height: CONTAINER_HEIGHT, // MODIFIED
   },
   event: {
     paddingVertical: 20, // MODIFIED
     justifyContent: "center",
   },
   title: {
-    color: "white",
-    fontSize: 16,
+    fontSize: 33,
     fontWeight: "600",
-    paddingStart: 8,
+  },
+  titleContainer: {
+    paddingLeft: "3%",
+    marginVertical: "3%",
   },
 });
