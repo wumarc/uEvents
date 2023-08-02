@@ -203,30 +203,6 @@ const Home = ({ route, navigation }: props) => {
               selectionColor={colours.primaryPurple}
             />
           </View>
-          <View style={{ flexGrow: 0 }}>
-            <Toggle
-              trackBar={{
-                activeBackgroundColor: colours.primaryPurple,
-                inActiveBackgroundColor: colours.primaryPurple,
-                width: 80,
-                // height: 45,
-              }}
-              trackBarStyle={{
-                borderColor: colours.primaryPurple,
-              }}
-              thumbButton={{
-                activeBackgroundColor: colours.secondaryPurple,
-                inActiveBackgroundColor: colours.secondaryPurple,
-              }}
-              onPress={() => setListView(!listView)}
-              leftComponent={
-                <Icon size={18} type="feather" name="list" color={"white"} />
-              }
-              rightComponent={
-                <Icon size={18} type="feather" name="square" color={"white"} />
-              }
-            />
-          </View>
         </View>
         <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
