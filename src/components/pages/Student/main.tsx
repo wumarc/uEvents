@@ -45,9 +45,9 @@ const MainView = ({ route, navigation}: props) => {
 
   return (
     <Tab.Navigator
-      barStyle={{backgroundColor: colours.secondaryPurple}}
+      barStyle={{backgroundColor: 'white'}}
       activeColor={colours.primaryPurple}
-      inactiveColor={"white"}
+      inactiveColor={colours.primaryPurple}
       initialRouteName="Home"
     >
       <Tab.Screen
@@ -216,7 +216,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.secondaryPurple,
+    // backgroundColor: colours.secondaryPurple,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
