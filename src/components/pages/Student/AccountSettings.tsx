@@ -75,8 +75,7 @@ const AccountSettings = () => {
                     />
                     
                     <BottomSheet 
-                        modalProps={{
-                        }}
+                        modalProps={{}}
                         // backdropStyle={{backgroundColor: 'transparent'}}
                         // containerStyle={{backgroundColor: 'transparent'}}
                         onBackdropPress={() => setIsVisible(false)}
@@ -129,7 +128,7 @@ const AccountSettings = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colours.secondaryPurple,
+        backgroundColor: colours.primaryGrey,
         paddingHorizontal: '4%'
     },
     studentInfo: {

@@ -33,7 +33,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
     return (
       <View style={{marginBottom: marginBottom}}>
         <Button
-          buttonStyle={{backgroundColor: colours.pastelSecondaryPurple}}
+          buttonStyle={{backgroundColor: 'white'}}
           containerStyle={{borderRadius: 15}}
           onPress={onPressListener}
         >
@@ -54,10 +54,10 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 type={findTypebyKey(buttonName)}
                 color='transparent'
                 size={iconSize}
-                iconStyle={{fontSize: fontSize}}
+                iconStyle={{fontSize: fontSize, color: colours.secondaryPurple}}
                 // containerStyle={{padding: 0, margin: 2}}
               />
-              <Text style={{fontSize: 18, fontWeight: '600', color: 'white'}}>
+              <Text style={{fontSize: 18, fontWeight: '700', color: colours.secondaryPurple}}>
                 {buttonName}
               </Text>
             </View>
@@ -69,7 +69,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 type='ionicon'
                 color='transparent'
                 size={iconSize}
-                iconStyle={{fontSize: fontSize}}
+                iconStyle={{fontSize: fontSize, fontWeight: '600', color: colours.secondaryPurple}}
                 // containerStyle={{padding: 0, margin: 2}}
               />
             </View>

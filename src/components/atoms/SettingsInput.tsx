@@ -14,7 +14,7 @@ const SettingsInput = ({input, placeholder, onChangeListener, disabled}: inputPr
     return (
         <Input
             disabled={disabled}
-            disabledInputStyle={{ backgroundColor: colours.secondaryPurple }}
+            disabledInputStyle={{ backgroundColor: colours.white }}
             value={input}
             onChangeText={onChangeListener}
             placeholder={placeholder}
@@ -28,7 +28,7 @@ const SettingsInput = ({input, placeholder, onChangeListener, disabled}: inputPr
                 borderRadius: 6,
                 underlineColor: "transparent"
             }}
-            selectionColor={colours.primaryPurple}
+            selectionColor={colours.secondaryPurple}
             errorStyle={{}}
             errorProps={{}}
             inputStyle={{ outlineStyle: "none" }}

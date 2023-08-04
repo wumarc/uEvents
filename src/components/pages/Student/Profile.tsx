@@ -115,7 +115,7 @@ const Profile = ({ route, navigation }: props) => {
 
           {/* Log Out Button */}
           <Button
-            buttonStyle={{ backgroundColor: colours.pastelSecondaryPurple }}
+            buttonStyle={{backgroundColor: 'white'}}
             containerStyle={{ borderRadius: 15 }}
             onPress={() => logout()}
           >
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: "2.3%",
     flex: 1,
-    // backgroundColor: colours.secondaryPurple,
+    backgroundColor: colours.primaryGrey,
   },
   pageTitle: {
     flexDirection: "row",

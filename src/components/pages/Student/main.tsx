@@ -169,9 +169,8 @@ const Main: FC<{ userType: string }> = (props) => {
             component={AccountSettings as any}
             options={{
               title: "Account Settings",
-              headerStyle: {backgroundColor: colours.secondaryPurple},
-              headerTintColor: '#ededed',
-              headerTitleStyle: {fontWeight: 'bold'}
+              headerStyle: {backgroundColor: colours.primaryGrey},
+              headerTintColor: colours.black
             }}
           />
           <Stack.Screen
