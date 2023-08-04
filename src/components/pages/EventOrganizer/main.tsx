@@ -1,6 +1,6 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

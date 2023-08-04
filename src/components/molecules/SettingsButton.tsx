@@ -33,7 +33,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
     return (
       <View style={{marginBottom: marginBottom}}>
         <Button
-          buttonStyle={{backgroundColor: 'white'}}
+          buttonStyle={{backgroundColor: colours.white}}
           containerStyle={{borderRadius: 15}}
           onPress={onPressListener}
         >

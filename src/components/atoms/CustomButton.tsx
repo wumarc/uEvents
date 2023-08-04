@@ -16,7 +16,7 @@ const CustomButton = ({buttonName, onPressListener, disabled}: buttonProps) => {
                 borderRadius: 15,
                 marginVertical: '1%'
             }}
-            color={colours.primaryPurple}
+            color={colours.secondaryPurple}
             title={buttonName}
             onPress={onPressListener}
             disabled={disabled}

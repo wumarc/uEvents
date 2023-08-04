@@ -25,7 +25,7 @@ const AccountSettings = () => {
         "students" + "/" + getFirebaseUserID(),
         "info",
         defaultStudent
-      );
+    );
     
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");

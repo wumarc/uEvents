@@ -18,10 +18,7 @@ import { Button } from "react-native-elements";
 import { colours } from "../../subatoms/colours";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import {
-  useStateWithFireStoreDocument,
-  useStateWithFireStoreImage,
-} from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import DateCard from "../../atoms/DateCard";
 import { LinearGradient } from "expo-linear-gradient";
 

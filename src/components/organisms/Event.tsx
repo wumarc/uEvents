@@ -68,7 +68,18 @@ const Event: React.FC<EventProps> = (props) => {
   }
 
   return (
-      <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13}}>
+    <TouchableOpacity
+      onPress={() => {
+        props.navigation.navigate("EventDetailsView", {
+        userType: props.userType,
+        eventID: props.id,
+        organizerID: event.organizer,
+        imageID: "",
+      });
+      }}
+    >
+      <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13, backgroundColor: colours.white}}>
+        
         <View style={{backgroundColor: 'orange', width: '30%'}}>
            {/* <Image
              source={require('./1F604_color.png')}
@@ -79,7 +90,7 @@ const Event: React.FC<EventProps> = (props) => {
         <View style={{width: '70%'}}>
 
           <View>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>{event.name}</Text>
+            <Text style={{fontWeight: '500', fontSize: 20}}>{event.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -89,7 +100,7 @@ const Event: React.FC<EventProps> = (props) => {
                 style={{width: "100%", height: "100%"}}
               />
             </View> */}
-            <Text>{event.organizer}</Text>
+            <Text style={{color: colours.black}}>{event.organizer}</Text>
           </View>
           
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -115,31 +126,8 @@ const Event: React.FC<EventProps> = (props) => {
         </View>
 
       </View>
+    </TouchableOpacity>
   );
-
-    // <View style={styles.container}>
-    //   <TouchableOpacity
-    //     style={{flexDirection: 'row', width: '100%'}}
-    //     onPress={() => {
-    //       props.navigation.navigate("EventDetailsView", {
-    //         userType: props.userType,
-    //         eventID: props.id,
-    //         organizerID: event.organizer,
-    //         imageID: "",
-    //       });
-    //     }}
-    //   >
-
-        {/* Event emoji */}
-        // <View style={{width: '30%', height: '60%', flex: 1, backgroundColor: 'orange'}}>
-        //   <Image
-        //     source={require('./1F604_color.png')}
-        //     style={{width: "100%", height: "100%" }}
-        //   />
-        // </View>
-
-      // </TouchableOpacity>
-    // </View>
   
 };
 

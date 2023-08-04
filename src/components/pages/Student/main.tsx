@@ -9,14 +9,14 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import EventDetails from "./EventDetails";
 import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours";
-import EventSignUp from "./EventSignUp";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useTheme } from "react-native-paper";
 import PrivacyPolicy from "./PrivacyPolicy";
 import Support from "./Support";
 import AccountSettings from "./AccountSettings";
 import OrganizerProfile from "./OrganizerProfile";
 import Organizers from "./Organizers";
+import HeaderLeft from "../../molecules/HeaderLeft";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -35,6 +35,7 @@ export type RootStackParamList = {
   Home: { userType: string };
   Search: { userType: string };
   Profile: { userType: string };
+  HeaderLeft: { userType: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -119,19 +120,7 @@ const MainView = ({ route, navigation}: props) => {
   );
 };
 
-// This is a custom hook to show the header only on the home page
-// const customHeaderHook = () => {
-//   const [globalCurrentTab, setGlobalCurrentTab] = useState("Home");
-//   const home = () => {setGlobalCurrentTab("Home")}
-//   const saved = () => {setGlobalCurrentTab("Saved")}
-//   const profile = () => {setGlobalCurrentTab("Profile")}
-//   const getGlobalCurrentTab = () => {return globalCurrentTab}
-//   return {home, saved, profile, getGlobalCurrentTab}
-// }
-
 const Main: FC<{ userType: string }> = (props) => {
-  
-  // const showHeader = customHeaderHook();
 
   return (
     <NavigationContainer>
@@ -143,7 +132,6 @@ const Main: FC<{ userType: string }> = (props) => {
             component={MainView as any} // TODO fix error
             initialParams={{ userType: props.userType }}
             options={{ // TODO
-              // headerShown: showHeader.getGlobalCurrentTab() == "Home", // Show header only if you're on the home page
               headerShown: false,
             }}
           />
@@ -151,47 +139,30 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="EventDetailsView"
             component={EventDetails as any} // TODO fix error
-            options={{
-              // headerRight: () => <Text>Save</Text>,
-              title: "",
-              headerTransparent: true,
-              headerTintColor: colours.primaryPurple,
-              // headerLeft: () => <HeaderLeft/>
-            }}
-          />
-          <Stack.Screen
-            name="EventSignUpView"
-            component={EventSignUp as any}
-            options={{title: "Complete your RSVP"}}
+            options={ ({navigation}) => ({
+              title: "Event Details",
+              headerStyle: {backgroundColor: colours.primaryGrey},
+              headerTintColor: colours.black,
+              headerLeft: () => <HeaderLeft navigation={navigation}/>
+            })}
           />
           <Stack.Screen 
             name="AccountSettingsView" 
             component={AccountSettings as any}
-            options={{
+            options={ ({navigation}) => ({
               title: "Account Settings",
               headerStyle: {backgroundColor: colours.primaryGrey},
-              headerTintColor: colours.black
-            }}
+              headerTintColor: colours.black,
+              headerLeft: () => <HeaderLeft navigation={navigation}/>
+            })}
           />
           <Stack.Screen
             name="PrivacyPolicyView" 
             component={PrivacyPolicy as any}
-            options={{
-              title: "Privacy Policy",
-              headerStyle: {backgroundColor: colours.secondaryPurple},
-              headerTintColor: 'white',
-              headerTitleStyle: {fontWeight: 'bold'}
-            }}
           />
           <Stack.Screen 
             name="SupportView" 
             component={Support as any}
-            options={{
-              title: "Support",
-              headerStyle: {backgroundColor: colours.secondaryPurple},
-              headerTintColor: 'white',
-              headerTitleStyle: {fontWeight: 'bold'}
-            }}
           />
           <Stack.Screen
             name="EventOrganizerView"
@@ -203,7 +174,6 @@ const Main: FC<{ userType: string }> = (props) => {
               headerTitleStyle: {fontWeight: 'bold'}
             }}
           />
-          {/* <Stack.Screen name="ChangePasswordView" component={ChangePassword} /> */}
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
