@@ -45,28 +45,11 @@ const MainView = ({ route, navigation}: props) => {
 
   return (
     <Tab.Navigator
-      barStyle={{backgroundColor: 'white'}}
+      barStyle={{backgroundColor: '#f7f7f7'}}
       activeColor={colours.secondaryPurple}
-      inactiveColor={colours.secondaryPurple}
+      inactiveColor={'#979797'}
       initialRouteName="Home"
     >
-      <Tab.Screen
-        name="Saved"
-        // listeners={{ tabPress: (e) => showHeader.saved }}
-        component={SavedEvents as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Saved",
-          title: "Saved",
-          tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "heart" : "heart-outline"}
-              color={colours.secondaryPurple}
-              size={30}
-            />
-          ),
-        }}
-      />
       <Tab.Screen
         name="Home"
         // listeners={{ tabPress: (e) => showHeader.home }}
@@ -77,7 +60,7 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "jellyfish" : "jellyfish-outline"}
-              color={colours.secondaryPurple}
+              color={focused ? colours.secondaryPurple : '#979797'}
               size={30}
             />
           ),
@@ -93,7 +76,24 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "office-building" : "office-building-outline"}
-              color={colours.secondaryPurple}
+              color={focused ? colours.secondaryPurple : '#979797'}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Saved"
+        // listeners={{ tabPress: (e) => showHeader.saved }}
+        component={SavedEvents as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "Saved",
+          title: "Saved",
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "heart" : "heart-outline"}
+              color={focused ? colours.secondaryPurple : '#979797'}
               size={30}
             />
           ),
@@ -109,7 +109,7 @@ const MainView = ({ route, navigation}: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "cog" : "cog-outline"}
-              color={colours.secondaryPurple}
+              color={focused ? colours.secondaryPurple : '#979797'}
               size={30}
             />
           ),
@@ -170,11 +170,11 @@ const Main: FC<{ userType: string }> = (props) => {
             options={{
               title: "Account Settings",
               headerStyle: {backgroundColor: colours.secondaryPurple},
-              headerTintColor: 'white',
+              headerTintColor: '#ededed',
               headerTitleStyle: {fontWeight: 'bold'}
             }}
           />
-          <Stack.Screen 
+          <Stack.Screen
             name="PrivacyPolicyView" 
             component={PrivacyPolicy as any}
             options={{
@@ -216,7 +216,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: colours.secondaryPurple,
+    backgroundColor: '#ededed',
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar } from "react-native";
 import { useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -9,10 +9,11 @@ import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { SearchBar } from "@rneui/themed";
 import { colours } from "../../subatoms/colours";
-import { ButtonGroup } from "react-native-elements";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
+import Toggle  from 'react-native-toggle-element'
+import { Icon } from "@rneui/themed";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -22,11 +23,10 @@ const Home = ({ route, navigation }: props) => {
   //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
 
   const [search, setSearch] = useState("");
-  const [listView, setListView] = useState(false);
+  const [listView, setListView] = useState(true);
   const [headerHeight, setHeaderHeight] = useState(0);
 
-  const [loading, events, add] =
-    useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (loading) {
@@ -64,9 +64,40 @@ const Home = ({ route, navigation }: props) => {
 
   return (
     // NOTE: This is weird but the flatlist is not scrollable if the view is not flex: 1
-    <View style={{ flex: 1, flexDirection: "row" }}>
+    <View style={{flex: 1, paddingHorizontal: '2.3%', backgroundColor: '#ededed'}}>
+      {/* backgroundColor: '#ededed' */}
+      <StatusBar translucent  />
+
+      {/* Event title */}
+      <View>
+        <Text style={styles.title}>Upcoming Events</Text>
+      </View>
+
+      {/* Search Bar */}
+      
+      {/* List */}
+      <FlatList
+        style={{ paddingTop: headerHeight - 20 }} // MODIFIED
+        contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED: why modified?
+        showsVerticalScrollIndicator={false}
+        data={filteredEvents}
+        renderItem={({ item, index }) => (
+          <View style={styles.event}>
+            <Event
+              id={item.id}
+              navigation={navigation}
+              userType={route.params.userType}
+              onSaveEvent={showToast}
+              listView={listView}
+            />
+          </View>
+        )}
+      />
+
+
+      
       {/* Search bar and Filter */}
-      <View
+      {/* <View
         style={{
           top: 0,
           position: "absolute",
@@ -101,8 +132,32 @@ const Home = ({ route, navigation }: props) => {
               autoCapitalize="none"
               selectionColor={colours.primaryPurple}
             />
+            <View style={{ flexGrow: 0 }}>
+            <Toggle
+              trackBar={{
+                activeBackgroundColor: colours.primaryPurple,
+                inActiveBackgroundColor: colours.primaryPurple,
+                width: 80,
+                // height: 45,
+              }}
+              trackBarStyle={{
+                borderColor: colours.primaryPurple,
+              }}
+              thumbButton={{
+                activeBackgroundColor: colours.secondaryPurple,
+                inActiveBackgroundColor: colours.secondaryPurple,
+              }}
+              onPress={() => setListView(!listView)}
+              leftComponent={
+                <Icon size={18} type="feather" name="list" color={"white"} />
+              }
+              rightComponent={
+                <Icon size={18} type="feather" name="square" color={"white"} />
+              }
+            />
           </View>
-        </View>
+          </View>
+        </View> */}
         {/* <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtonGroup
@@ -131,11 +186,11 @@ const Home = ({ route, navigation }: props) => {
             />
           </ScrollView>
         </View> */}
-      </View>
+      {/* </View> */}
 
 
       {/* Event List*/}
-      <FlatList
+      {/* <FlatList
         style={{ paddingTop: headerHeight - 20 }} // MODIFIED
         // refreshControl={
         //   <RefreshControl refreshing={} onRefresh={} />
@@ -155,7 +210,7 @@ const Home = ({ route, navigation }: props) => {
             />
           </View>
         )}
-      />
+      /> */}
 
       {/* Toast */}
       <Toast/>
@@ -173,8 +228,10 @@ export const styles = StyleSheet.create({
     backgroundColor: colours.secondaryPurple,
   },
   event: {
-    paddingVertical: 20, // MODIFIED
-    justifyContent: "center",
+    // paddingVertical: 20, // MODIFIED
+    // justifyContent: "center",
+    // margin: 1
+    marginVertical: '2%',
   },
   title: {
     fontSize: 33,

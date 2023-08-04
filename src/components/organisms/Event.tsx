@@ -1,11 +1,5 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
-import { Image } from "@rneui/themed";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours } from "../subatoms/colours";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
@@ -16,7 +10,6 @@ import {
   nextStartTime,
   nextEndTime,
 } from "../../utils/model/EventObject";
-import { Timestamp } from "firebase/firestore";
 import { Student } from "../../utils/model/Student";
 
 // Event component props
@@ -75,210 +68,86 @@ const Event: React.FC<EventProps> = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          props.navigation.navigate("EventDetailsView", {
-            userType: props.userType,
-            eventID: props.id,
-            organizerID: event.organizer,
-            imageID: "",
-          });
-        }}
-      >
-        {/* Create view for different layout */}
-        {props.listView ?(
+      <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13}}>
+        <View style={{backgroundColor: 'orange', width: '30%'}}>
+           {/* <Image
+             source={require('./1F604_color.png')}
+             style={{width: "100%", height: "30%"}}
+           /> */}
+        </View>
+
+        <View style={{width: '70%'}}>
+
           <View>
-            {/* Image, event details, save button */}
-            <View style={{ flexDirection: "row", flex: 1 }}>
-              {/* Image, Event Details */}
-              <View style={{ flexDirection: "row", backgroundColor: "pink" }}>
-                <View style={{ width: "40%", height: "100%" }}>
-                  <Image
-                    source={image}
-                    style={{ width: "100%", height: "100%" }}
-                  />
-                </View>
-
-                {/* Event Details */}
-                <View style={{ backgroundColor: "yellow" }}>
-                  <Text>uOttawa Boxing Club</Text>
-                  <Text>Tuesday Boxing Session</Text>
-                  <Text>Montpetit Gym</Text>
-                </View>
-              </View>
-
-              {/* Save button */}
-              <View>
-                <Icon
-                  size={25}
-                  type="ionicon"
-                  name={isSaved ? "heart" : "heart-outline"}
-                  color={isSaved ? colours.secondaryPurple : "white"}
-                  containerStyle={{
-                    borderStyle: "solid",
-                    borderRadius: 50,
-                    padding: 5,
-                    backgroundColor: "#d1cfcf",
-                  }}
-                  onPress={() => saveEvent()}
-                />
-              </View>
-            </View>
-
-            {/* Date, Time, Price */}
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
-            >
-              <View style={{ backgroundColor: "orange" }}>
-                <Text style={{ fontSize: 20 }}>March 15</Text>
-                <Text style={{ fontSize: 20 }}>09:00 P.M</Text>
-              </View>
-
-              <View style={{ justifyContent: "center" }}>
-                <Text
-                  style={{
-                    borderRadius: 5,
-                    overflow: "hidden", // what does this do???
-                    padding: 8,
-                    color: "white",
-                    fontWeight: "bold",
-                    backgroundColor:
-                      event.price > 0 ? colours.primaryPurple : "green",
-                  }}
-                >
-                  {event.price > 0 ? "$" + event.price : "Free"}
-                </Text>
-              </View>
-            </View>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{event.name}</Text>
           </View>
-        ) : (
-          <View>
-            {/* Image */}
-            <View style={styles.row1}>
-              <ImageBackground
-                style={{
-                  width: "100%",
-                  height: 400,
-                  borderRadius: 14,
-                  // opacity: 0.7,
-                }}
-                source={image}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    margin: 5,
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      padding: "1%",
-                      borderRadius: 5,
-                    }}
-                  >
-                    <Text style={{ fontWeight: "600", fontSize: 14 }}>
-                      {extractMonth(startTime as Timestamp)}{" "}
-                      {extractDay(startTime as Timestamp)}
-                    </Text>
-                    <Text>
-                      {startTime?.toDate().getHours() +
-                        ":" +
-                        startTime?.toDate().getMinutes()}
-                    </Text>
-                    {event.recurrence ? <Text>Recurring</Text> : <></>}
-                  </View>
 
-                  <View>
-                    <Icon
-                      size={25}
-                      type="ionicon"
-                      name={isSaved ? "heart" : "heart-outline"}
-                      color={isSaved ? colours.secondaryPurple : "white"}
-                      containerStyle={{
-                        borderStyle: "solid",
-                        borderRadius: 50,
-                        padding: 5,
-                        backgroundColor: "#d1cfcf",
-                      }}
-                      onPress={() => saveEvent()}
-                    />
-                  </View>
-                </View>
-              </ImageBackground>
-            </View>
-
-            {/* Name, Location, Price */}
-            <View style={styles.row2}>
-              {/* Name and Location */}
-              <View style={{ width: "85%" }}>
-                <Text style={styles.title}>{event.name}</Text>
-                <Text>{event.location}</Text>
-              </View>
-
-              {/* Price */}
-              <View style={{ justifyContent: "center" }}>
-                <Text
-                  style={{
-                    borderRadius: 5,
-                    overflow: "hidden", // what does this do???
-                    padding: 8,
-                    color: "white",
-                    fontWeight: "bold",
-                    backgroundColor: event.price > 0 ? colours.primaryPurple : "green",
-                  }}
-                >
-                  {event.price > 0 ? "$" + event.price : "Free"}
-                </Text>
-              </View>
-            </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {/* <View style={{width: '10%', height: '20%', backgroundColor: 'green'}}>
+              <Image
+                source={{uri:'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg'}}
+                style={{width: "100%", height: "100%"}}
+              />
+            </View> */}
+            <Text>{event.organizer}</Text>
           </View>
-        )}
-      </TouchableOpacity>
-    </View>
+          
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name='time-outline'
+              type='ionicon'
+              color='black'
+            />
+            <Text>{startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}</Text>
+            <Text> - </Text>
+            <Text>{startTime?.toDate().getDay().toString()}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name='location-outline'
+              type='ionicon'
+              color='black'
+            />
+            <Text>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
+          </View>
+
+        </View>
+
+      </View>
   );
+
+    // <View style={styles.container}>
+    //   <TouchableOpacity
+    //     style={{flexDirection: 'row', width: '100%'}}
+    //     onPress={() => {
+    //       props.navigation.navigate("EventDetailsView", {
+    //         userType: props.userType,
+    //         eventID: props.id,
+    //         organizerID: event.organizer,
+    //         imageID: "",
+    //       });
+    //     }}
+    //   >
+
+        {/* Event emoji */}
+        // <View style={{width: '30%', height: '60%', flex: 1, backgroundColor: 'orange'}}>
+        //   <Image
+        //     source={require('./1F604_color.png')}
+        //     style={{width: "100%", height: "100%" }}
+        //   />
+        // </View>
+
+      // </TouchableOpacity>
+    // </View>
+  
 };
 
 const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
-    flexDirection: "column",
-    // backgroundColor: colours.primaryPurple,
+    borderWidth: 1,
     maxWidth: "100%",
-    marginHorizontal: "auto",
-  },
-  row1: {
-    flexDirection: "row",
-  },
-  row2: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 13,
-    paddingVertical: 5,
-  },
-  image: {
-    flexDirection: "column",
-    width: "30%",
-  },
-  title: {
-    marginBottom: 3,
-    fontSize: 20,
-    fontWeight: "500",
-    // color: colours.primaryPurple,
-  },
-  eventDetailTitle: {
-    fontWeight: "bold",
-    color: colours.primaryPurple,
-    flex: 1,
-    width: 1,
-    fontSize: 18,
-  },
-  eventDate: {
-    fontWeight: "bold",
-    color: colours.primaryPurple,
-    fontSize: 16,
   },
 });
 

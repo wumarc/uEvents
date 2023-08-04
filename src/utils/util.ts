@@ -41,6 +41,58 @@ export const daysOfWeekArray: daysOfWeekBrief[] = [
   "Sat",
 ];
 
+export const eventDate = [
+  "Today",
+  "Tomorrow",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+  "Next Monday",
+  "Next Tuesday",
+  "Next Wednesday",
+  "Next Thursday",
+  "Next Friday",
+  "Next Saturday",
+  "Next Sunday"
+]
+
+function describeDate(eventDate: any) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const inTwoWeeks = new Date(today);
+  inTwoWeeks.setDate(inTwoWeeks.getDate() + 14);
+
+  eventDate = new Date(eventDate);
+  eventDate.setHours(0, 0, 0, 0);
+
+  if (eventDate.getTime() === tomorrow.getTime()) {
+    return 'tomorrow';
+  }
+
+  if (eventDate > tomorrow && eventDate <= inTwoWeeks) {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayString = daysOfWeek[eventDate.getDay()];
+
+    if (eventDate.getTime() - today.getTime() <= 7 * 24 * 60 * 60 * 1000) {
+      return dayString;
+    }
+
+    return 'Next ' + dayString;
+  }
+
+  // Format the date for dates beyond two weeks
+  const day = String(eventDate.getDate()).padStart(2, '0');
+  const month = String(eventDate.getMonth() + 1).padStart(2, '0');
+  const year = eventDate.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 export function toPrecision(value: number, precision: number) {
   let valueStr = value.toString();
   let final = "";
