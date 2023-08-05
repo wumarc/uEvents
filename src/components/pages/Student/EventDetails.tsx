@@ -97,6 +97,25 @@ const EventDetails = ({ route, navigation }: props) => {
             </View>
           </View>
 
+          {/* Organizer */}
+          <View>
+            <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Organizer</Text>
+            
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
+              {/* Icon / name */}
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Icon
+                  name='calendar-outline'
+                  type='ionicon'
+                  color= {colours.textGrey}
+                />
+                <Text>{event.organizer}</Text>
+              </View>
+            </View>
+
+          </View>
+
         </ScrollView>
 
       <View style={styles.footer}>
