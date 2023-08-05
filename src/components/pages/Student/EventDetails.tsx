@@ -36,87 +36,87 @@ const EventDetails = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
 
-        <ScrollView style={{paddingHorizontal: '5%', paddingBottom: 100}}>
+      <ScrollView style={{paddingHorizontal: '5%', paddingBottom: 100}}>
 
-          {/* Image */}
-          <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.2 }}>
-            <Image
-              source={require('./1F3A5_color.png')}
-              style={{width: '100%', height: '100%'}}
-              resizeMode="contain"
-            />
+        {/* Image */}
+        <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.2 }}>
+          <Image
+            source={require('./1F3A5_color.png')}
+            style={{width: '100%', height: '100%'}}
+            resizeMode="contain"
+          />
+        </View>
+
+        {/* Title */}
+        <View style={{marginVertical: 15}}>
+          <Text style={{fontSize: 20, fontWeight: '600', color: colours.titleGrey}}>{event.name}</Text>
+        </View>
+
+        {/* Date */}
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', width: '40%'}}>
+            <Icon
+                name='calendar-outline'
+                type='ionicon'
+                color= {colours.textGrey}
+              />
+            <Text style={{color: colours.textGrey}}>Today</Text>
           </View>
-
-          {/* Title */}
-          <View style={{marginVertical: 15}}>
-            <Text style={{fontSize: 20, fontWeight: '600', color: colours.titleGrey}}>{event.name}</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+                name='time-outline'
+                type='ionicon'
+                color= {colours.textGrey}
+              />
+            <Text style={{color: colours.textGrey}}>08:00 PM</Text>
+            {/* extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End") */}
           </View>
+        </View>
 
-          {/* Date */}
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flexDirection: 'row', alignItems: 'center', width: '40%'}}>
-              <Icon
-                  name='calendar-outline'
-                  type='ionicon'
-                  color= {colours.textGrey}
-                />
-              <Text style={{color: colours.textGrey}}>Today</Text>
+        {/* Description */}
+        <View style={styles.margin}>
+          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Description</Text>
+          <Text style={{color: colours.textGrey, fontSize: 17}}>Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. Activities include guided nature hikes, fishing, kayaking, campfire nights, stargazing, and outdoor cooking workshops. Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. {event.description}</Text>
+        </View>
+
+        {/* Other information */}
+        <View style={styles.margin}>
+          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Other Information</Text>
+          <Text style={{color: colours.textGrey, fontSize: 17}}>If you are vegetarian, please let us know by sending us an email</Text>
+        </View>
+
+        {/* Location */}
+        <View>
+          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Location</Text>
+          <View>
+            <View style={{backgroundColor: colours.primaryGrey, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color: colours.textGrey, fontWeight: 'bold'}}>{event.location}</Text>
+              <Text style={{color: colours.textGrey, marginTop: 10}}>{event.address}100 Bank Street</Text>
+              <Text style={{color: colours.textGrey}}>Ottawa, ON, K1N5P9</Text>
             </View>
+          </View>
+        </View>
+
+        {/* Organizer */}
+        <View>
+          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Organizer</Text>
+          
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
+            {/* Icon / name */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Icon
-                  name='time-outline'
-                  type='ionicon'
-                  color= {colours.textGrey}
-                />
-              <Text style={{color: colours.textGrey}}>08:00 PM</Text>
-              {/* extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End") */}
+                name='calendar-outline'
+                type='ionicon'
+                color= {colours.textGrey}
+              />
+              <Text>{event.organizer}</Text>
             </View>
           </View>
 
-          {/* Description */}
-          <View style={styles.margin}>
-            <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Description</Text>
-            <Text style={{color: colours.textGrey, fontSize: 17}}>Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. Activities include guided nature hikes, fishing, kayaking, campfire nights, stargazing, and outdoor cooking workshops. Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. {event.description}</Text>
-          </View>
+        </View>
 
-          {/* Other information */}
-          <View style={styles.margin}>
-            <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Other Information</Text>
-            <Text style={{color: colours.textGrey, fontSize: 17}}>If you are vegetarian, please let us know by sending us an email</Text>
-          </View>
-
-          {/* Location */}
-          <View>
-            <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Location</Text>
-            <View>
-              <View style={{backgroundColor: colours.primaryGrey, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: colours.textGrey, fontWeight: 'bold'}}>{event.location}</Text>
-                <Text style={{color: colours.textGrey, marginTop: 10}}>{event.address}100 Bank Street</Text>
-                <Text style={{color: colours.textGrey}}>Ottawa, ON, K1N5P9</Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Organizer */}
-          <View>
-            <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Organizer</Text>
-            
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-
-              {/* Icon / name */}
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Icon
-                  name='calendar-outline'
-                  type='ionicon'
-                  color= {colours.textGrey}
-                />
-                <Text>{event.organizer}</Text>
-              </View>
-            </View>
-
-          </View>
-
-        </ScrollView>
+      </ScrollView>
 
       <View style={styles.footer}>
         <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>

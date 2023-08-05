@@ -7,10 +7,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
 import { colours } from "../../subatoms/colours";
 import CreateEvent from "../EventOrganizer/CreateEvent";
-import { FC } from "react";
+import { FC, useState } from "react";
 import Home from "./Home";
 import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
+import { StatusBar } from "react-native";
+import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -30,9 +32,9 @@ const MainView = ({ route, navigation }: props) => {
 
   return (
     <Tab.Navigator 
-      barStyle={{ backgroundColor: colours.secondaryPurple }}
-      inactiveColor={"white"}
-      activeColor={colours.primaryPurple}
+      barStyle={{backgroundColor: '#f7f7f7'}}
+      activeColor={colours.secondaryPurple}
+      inactiveColor={'#979797'}
       initialRouteName="Home"
     >
       <Tab.Screen 
@@ -44,7 +46,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "calendar" : "calendar-outline"}
-              color={colours.primaryPurple}
+              color={focused? colours.secondaryPurple : '#979797'}
               size={30}
             />
           ),
@@ -59,7 +61,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "plus-circle" : "plus-circle-outline"}
-              color={colours.primaryPurple}
+              color={focused? colours.secondaryPurple : '#979797'}
               size={30}
             />
           ),
@@ -74,7 +76,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "account-circle" : "account-circle-outline"}
-              color={colours.primaryPurple}
+              color={focused? colours.secondaryPurple : '#979797'}
               size={30}
             />
           ),
@@ -85,6 +87,9 @@ const MainView = ({ route, navigation }: props) => {
 };
 
 const Main: FC<{ userType: string }> = (props) => {
+
+  const [form, setForm] = useState({});
+
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
@@ -94,9 +99,7 @@ const Main: FC<{ userType: string }> = (props) => {
             name="MainView"
             component={MainView as any} // TODO fix error
             initialParams={{ userType: props.userType }}
-            options={{
-              headerShown: false,
-            }}
+            options={{ headerShown: false}}
           />
           {/* Create Event View */}
           <Stack.Screen
@@ -104,6 +107,51 @@ const Main: FC<{ userType: string }> = (props) => {
             component={CreateEvent as any} // TODO fix error
             initialParams={{ userType: props.userType }}
             // options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Step1"
+            component={Step1 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step2"
+            component={Step2 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step3"
+            component={Step3 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step4"
+            component={Step4 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step5"
+            component={Step5 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step6"
+            component={Step6 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step7"
+            component={Step7 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step8"
+            component={Step8 as any}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Step9"
+            component={Step9 as any}
+            options={{ headerShown: true }}
           />
         </Stack.Navigator>
       </SafeAreaView>
@@ -116,7 +164,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.secondaryPurple,
-    paddingTop: Platform.OS === "android" ? 25 : 0,
+    backgroundColor: '#ededed',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
