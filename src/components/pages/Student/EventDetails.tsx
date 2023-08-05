@@ -48,50 +48,59 @@ const EventDetails = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
 
-      {/* Image */}
-      <View>
-        {/* <Image source={image} /> */}
-      </View>
+      <ScrollView>
 
-      {/* Title */}
-      <View style={{marginVertical: 15}}>
-        <Text style={{fontSize: 20, fontWeight: '600'}}>{event.name}</Text>
-      </View>
-
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flexDirection: 'row', alignItems: 'center', width: '40%'}}>
-          <Icon
-              name='calendar-outline'
-              type='ionicon'
-              color= {colours.textGrey}
-            />
-          <Text style={{color: colours.textGrey}}>Today</Text>
+        {/* Image */}
+        <View style={{justifyContent: 'center', width: '100%', height: '35%'}}>
+          <Image
+            source={require('./1F3A5_color.png')}
+            style={{width: "100%", height: "100%"}}
+            resizeMode="contain"
+          />
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
-              name='time-outline'
-              type='ionicon'
-              color= {colours.textGrey}
-            />
-          <Text style={{color: colours.textGrey}}>08:00 PM</Text>
+
+        {/* Title */}
+        <View style={{marginVertical: 15}}>
+          <Text style={{fontSize: 20, fontWeight: '600'}}>{event.name}</Text>
         </View>
-      </View>
 
-      {/* Description */}
-      <View style={styles.margin}>
-        <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10}}>Description</Text>
-        <Text style={{color: colours.textGrey, fontSize: 17}}>Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. Activities include guided nature hikes, fishing, kayaking, campfire nights, stargazing, and outdoor cooking workshops. {event.description}</Text>
-      </View>
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', width: '40%'}}>
+            <Icon
+                name='calendar-outline'
+                type='ionicon'
+                color= {colours.textGrey}
+              />
+            <Text style={{color: colours.textGrey}}>Today</Text>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+                name='time-outline'
+                type='ionicon'
+                color= {colours.textGrey}
+              />
+            <Text style={{color: colours.textGrey}}>08:00 PM</Text>
+          </View>
+        </View>
 
-      <View style={styles.margin}>
-        <Text style={{fontSize: 18, fontWeight: '600'}}>Location</Text>
-      </View>
+        {/* Description */}
+        <View style={styles.margin}>
+          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10}}>Description</Text>
+          <Text style={{color: colours.textGrey, fontSize: 17}}>Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. Activities include guided nature hikes, fishing, kayaking, campfire nights, stargazing, and outdoor cooking workshops. {event.description}</Text>
+        </View>
 
-      <View style={styles.margin}>
-        <Text style={{fontSize: 18, fontWeight: '600'}}>Other Information</Text>
-      </View>
+        <View style={styles.margin}>
+          <Text style={{fontSize: 18, fontWeight: '600'}}>Location</Text>
+        </View>
 
-      <View></View>
+        <View style={styles.margin}>
+          <Text style={{fontSize: 18, fontWeight: '600'}}>Other Information</Text>
+        </View>
+
+        <View></View>
+
+      </ScrollView>
+
     </View>
 
     // <View style={styles.big_container}>
