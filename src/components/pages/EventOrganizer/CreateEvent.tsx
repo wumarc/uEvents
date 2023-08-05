@@ -13,6 +13,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { Step1 } from "./EventCreationSteps";
 import { Button } from "react-native-elements";
+import { colours } from "../../subatoms/colours";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
@@ -23,6 +24,7 @@ const CreateEvent = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
+
         <ScrollView>
 
           {/* <Text style={{fontSize: 33, fontWeight: '600'}}>Create a new event</Text> */}
@@ -44,8 +46,8 @@ const CreateEvent = ({ route, navigation }: props) => {
             />
           </View> */}
 
-
         </ScrollView>
+
     </View>
   );
 };
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: '1%',
-  },
+  }
 });
 
 export default CreateEvent;
