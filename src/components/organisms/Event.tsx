@@ -11,6 +11,7 @@ import {
   nextEndTime,
 } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
+import { Image } from "@rneui/base";
 
 // Event component props
 interface EventProps {
@@ -80,10 +81,11 @@ const Event: React.FC<EventProps> = (props) => {
     >
       <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13, backgroundColor: colours.white}}>
         
-        <View style={{backgroundColor: 'orange', width: '30%'}}>
+        <View style={{justifyContent: 'center', alignItems: 'center', width: '30%'}}>
            {/* <Image
              source={require('./1F604_color.png')}
-             style={{width: "100%", height: "30%"}}
+             style={{width: "100%", height: "100%"}}
+             resizeMode="contain"
            /> */}
         </View>
 

@@ -1,26 +1,10 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
-import {
-  EventObject,
-  extractMonth,
-  extractDay,
-  extractDayOfWeek,
-  extractTime,
-} from "../../../utils/model/EventObject";
-import { Button } from "react-native-elements";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
+import { EventObject } from "../../../utils/model/EventObject";
 import { colours } from "../../subatoms/colours";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import DateCard from "../../atoms/DateCard";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image } from "@rneui/base";
-import { Icon } from "@rneui/base";
+import { Image, Icon, Button } from "@rneui/base";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -48,7 +32,7 @@ const EventDetails = ({ route, navigation }: props) => {
   return (
     <View style={styles.container}>
 
-      <ScrollView>
+      <ScrollView style={{paddingHorizontal: '5%'}}>
 
         {/* Image */}
         <View style={{justifyContent: 'center', width: '100%', height: '35%'}}>
@@ -61,9 +45,10 @@ const EventDetails = ({ route, navigation }: props) => {
 
         {/* Title */}
         <View style={{marginVertical: 15}}>
-          <Text style={{fontSize: 20, fontWeight: '600'}}>{event.name}</Text>
+          <Text style={{fontSize: 20, fontWeight: '600', color: colours.titleGrey}}>{event.name}</Text>
         </View>
 
+        {/* Date and location */}
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row', alignItems: 'center', width: '40%'}}>
             <Icon
@@ -83,23 +68,56 @@ const EventDetails = ({ route, navigation }: props) => {
           </View>
         </View>
 
+        {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name='location-outline'
+            type='ionicon'
+            color= {colours.textGrey}
+          />
+          <Text>{event.location}</Text>
+        </View> */}
+
         {/* Description */}
         <View style={styles.margin}>
-          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10}}>Description</Text>
+          <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10, color: colours.titleGrey}}>Description</Text>
           <Text style={{color: colours.textGrey, fontSize: 17}}>Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. Activities include guided nature hikes, fishing, kayaking, campfire nights, stargazing, and outdoor cooking workshops. {event.description}</Text>
         </View>
 
         <View style={styles.margin}>
-          <Text style={{fontSize: 18, fontWeight: '600'}}>Location</Text>
+          <Text style={{fontSize: 18, fontWeight: '600', color: colours.titleGrey}}>Location</Text>
         </View>
 
         <View style={styles.margin}>
-          <Text style={{fontSize: 18, fontWeight: '600'}}>Other Information</Text>
+          <Text style={{fontSize: 18, fontWeight: '600', color: colours.titleGrey}}>Other Information</Text>
         </View>
 
         <View></View>
 
       </ScrollView>
+
+      <View style={styles.footer}>
+        <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>
+          {event.onCampus == true ? "On-Campus" : "Off-Campus"}
+        </Text>
+        <Button
+          buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+          title={event.signUpLink == null ? "No Signup" : "Sign Up"}
+          disabled={event.signUpLink == null}
+          icon={{
+            name: event.signUpLink == null ? "" : "external-link",
+            type: "font-awesome",
+            size: 15,
+            color: "white",
+          }}
+          titleStyle={{ fontSize: 15, fontWeight: "600" }}
+          // containerStyle= {{
+          //   width: 150,
+          //   marginHorizontal: 50,
+          //   marginVertical: 10,
+          // }}
+          onPress={() => {if (event.signUpLink != null) { Linking.openURL(event.signUpLink!);}}}
+        />
+      </View>
 
     </View>
 
@@ -191,324 +209,12 @@ const EventDetails = ({ route, navigation }: props) => {
     //               </Text>
     //             </View>
     //           </View>
-
-              
-    //           <View
-    //             style={{
-    //               marginVertical: "1%",
-    //               flexDirection: "row",
-    //               justifyContent: "space-between",
-    //               width: "100%",
-    //             }}
-    //           >
-    //             <View style={{ width: "90%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "white",
-    //                     fontWeight: "bold",
-    //                     paddingVertical: "0.5%",
-    //                     fontSize: 17,
-    //                   }}
-    //                 >
-    //                   {event.location}
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "#0645AD",
-    //                     fontWeight: "400",
-    //                     textDecorationLine: "underline",
-    //                   }}
-    //                 >
-    //                   {event.address}
-    //                 </Text>
-    //               </View>
-    //             </View>
-
-    //             <View
-    //               style={{ justifyContent: "center", alignItems: "center" }}
-    //             >
-    //               <Button
-    //                 type="clear"
-    //                 icon={{
-    //                   name: "external-link",
-    //                   type: "font-awesome",
-    //                   size: 22,
-    //                   color: "white",
-    //                 }}
-    //                 containerStyle={{ backgroundColor: "none" }}
-    //                 onPress={() => {
-    //                   Linking.openURL(
-    //                     "https://www.google.com/maps/search/?api=1&query=" +
-    //                       event.address
-    //                   );
-    //                 }}
-    //               />
-    //             </View>
-    //           </View>
-
-              
-    //           <View style={{ marginVertical: "4%" }}>
-    //             <View>
-    //               <Text
-    //                 style={{
-    //                   fontSize: 20,
-    //                   fontWeight: "600",
-    //                   flexWrap: "wrap",
-    //                   color: "white",
-    //                   paddingBottom: "1%",
-    //                 }}
-    //               >
-    //                 About the event
-    //               </Text>
-    //             </View>
-    //             <View>
-    //               <Text
-    //                 style={{
-    //                   color: "#e3e3e3",
-    //                   fontWeight: "400",
-    //                   fontSize: 17,
-    //                 }}
-    //               >
-    //                 {event.description}
-    //               </Text>
-    //             </View>
-    //           </View>
-
-              
-    //           {event.food && (
-    //             <View style={{ marginVertical: "2%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 20,
-    //                     fontWeight: "600",
-    //                     flexWrap: "wrap",
-    //                     color: "white",
-    //                     paddingBottom: "1%",
-    //                   }}
-    //                 >
-    //                   Food
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "#e3e3e3",
-    //                     fontWeight: "400",
-    //                     fontSize: 17,
-    //                   }}
-    //                 >
-    //                   {event.food}
-    //                 </Text>
-    //               </View>
-    //             </View>
-    //           )}
-
-    //           {/* Attire */}
-    //           {event.attire && (
-    //             <View style={{ marginVertical: "2%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 20,
-    //                     fontWeight: "600",
-    //                     flexWrap: "wrap",
-    //                     color: "white",
-    //                     paddingBottom: "1%",
-    //                   }}
-    //                 >
-    //                   What to Wear
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "#e3e3e3",
-    //                     fontWeight: "400",
-    //                     fontSize: 17,
-    //                   }}
-    //                 >
-    //                   {event.attire}
-    //                 </Text>
-    //               </View>
-    //             </View>
-    //           )}
-
-              
-    //           {event.toBring && (
-    //             <View style={{ marginVertical: "2%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 20,
-    //                     fontWeight: "600",
-    //                     flexWrap: "wrap",
-    //                     color: "white",
-    //                     paddingBottom: "1%",
-    //                   }}
-    //                 >
-    //                   What to Bring
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "#e3e3e3",
-    //                     fontWeight: "400",
-    //                     fontSize: 17,
-    //                   }}
-    //                 >
-    //                   {event.toBring}
-    //                 </Text>
-    //               </View>
-    //             </View>
-    //           )}
-
-              
-    //           {event.includes && (
-    //             <View style={{ marginVertical: "2%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 20,
-    //                     fontWeight: "600",
-    //                     flexWrap: "wrap",
-    //                     color: "white",
-    //                     paddingBottom: "1%",
-    //                   }}
-    //                 >
-    //                   What's Included
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "#e3e3e3",
-    //                     fontWeight: "400",
-    //                     fontSize: 17,
-    //                   }}
-    //                 >
-    //                   {event.includes}
-    //                 </Text>
-    //               </View>
-    //             </View>
-    //           )}
-
-              
-    //           {event.transportation && (
-    //             <View style={{ marginVertical: "2%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 20,
-    //                     fontWeight: "600",
-    //                     flexWrap: "wrap",
-    //                     color: "white",
-    //                     paddingBottom: "1%",
-    //                   }}
-    //                 >
-    //                   Transportation
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "#e3e3e3",
-    //                     fontWeight: "400",
-    //                     fontSize: 17,
-    //                   }}
-    //                 >
-    //                   {event.transportation}
-    //                 </Text>
-    //               </View>
-    //             </View>
-    //           )}
-
-              
-    //           {event.originalLink && (
-    //             <View style={{ marginVertical: "2%" }}>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 20,
-    //                     fontWeight: "600",
-    //                     flexWrap: "wrap",
-    //                     color: "white",
-    //                     paddingBottom: "1%",
-    //                   }}
-    //                 >
-    //                   Original Link
-    //                 </Text>
-    //               </View>
-    //               <View>
-    //                 <Text
-    //                   style={{
-    //                     color: "blue",
-    //                     fontWeight: "400",
-    //                     fontSize: 12,
-    //                     textDecorationLine: "underline",
-    //                   }}
-    //                   onPress={() => Linking.openURL(event.originalLink)}
-    //                 >
-    //                   {event.originalLink}
-    //                 </Text>
-    //               </View>
-    //             </View>
-    //           )}
-    //         </View>
-    //       </LinearGradient>
-    //     </ScrollView>
-    //   </View>
-
-    //   <View style={styles.footer}>
-    //     <Text
-    //       style={{
-    //         color: "white",
-    //         fontWeight: "600",
-    //         fontSize: 19,
-    //       }}
-    //     >
-    //       {event.onCampus == true ? "On-Campus" : "Off-Campus"}
-    //     </Text>
-    //     <Button
-    //       buttonStyle={{
-    //         backgroundColor: colours.primaryPurple,
-    //         padding: 15,
-    //         borderRadius: 15,
-    //       }}
-    //       title={event.signUpLink == null ? "No Sign Up Required" : "Sign Up"}
-    //       icon={{
-    //         name: event.signUpLink == null ? "" : "external-link",
-    //         type: "font-awesome",
-    //         size: 15,
-    //         color: "white",
-    //       }}
-    //       // containerStyle= {{
-    //       //   width: 150,
-    //       //   marginHorizontal: 50,
-    //       //   marginVertical: 10,
-    //       // }}
-    //       onPress={() => {
-    //         if (event.signUpLink != null) {
-    //           Linking.openURL(event.signUpLink!);
-    //         }
-    //         // navigation.navigate("EventSignUpView", {
-    //         //   userType: route.params.userType,
-    //         // });
-    //       }}
-    //     />
-    //   </View>
-    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: "6%",
   },
   title: {
     fontSize: 25,
@@ -523,9 +229,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 10,
-    paddingHorizontal: "2.3%",
+    paddingHorizontal: '5%',
     alignItems: "center",
-    backgroundColor: colours.secondaryPurple,
+    backgroundColor: colours.primaryGrey,
   },
   price: {
     backgroundColor: colours.primaryPurple,
