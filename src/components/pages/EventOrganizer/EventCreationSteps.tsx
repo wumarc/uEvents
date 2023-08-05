@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Button } from "@rneui/base";
 import { colours } from "../../subatoms/colours";
 
-export const Step1 = () => {
+export const Step1 = ({route, navigation}: any) => {
     
-    const [charactersAvailable, setCharactersAvailable] = useState<number>(50);
+    const [charactersAvailable, setCharactersAvailable] = useState<number>(35);
     
     return (
         <View style={{paddingHorizontal: '5%', flex: 1}}>
@@ -20,8 +20,8 @@ export const Step1 = () => {
                 <View style={{marginVertical: '5%'}}>
                     <Text>{charactersAvailable} <Text style={{color: colours.textGrey}}>characters available</Text></Text>
                     <Input
-                        onChange={(e) => {setCharactersAvailable(50 - e.nativeEvent.text.length)}}
-                        maxLength={50}
+                        onChange={(e) => {setCharactersAvailable(35 - e.nativeEvent.text.length)}}
+                        maxLength={35}
                     />
                 </View>
 
@@ -30,10 +30,10 @@ export const Step1 = () => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
-                title={"Next"}
-                disabled={charactersAvailable == 50}
-                titleStyle={{ fontSize: 15, fontWeight: "600" }}
+                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    title={"Next"}
+                    onPress={() => {navigation.navigate('Step2')}}
+                    titleStyle={{ fontSize: 15, fontWeight: "600" }}
                 />
             </View>
 

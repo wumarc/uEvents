@@ -30,7 +30,6 @@ const CreateEvent = ({ route, navigation }: props) => {
           <Button 
             onPress={() => {navigation.navigate('Step1')}}
           />
-          <Step1/>
 
           {/* Buttons */}
           {/* <View>
