@@ -172,7 +172,7 @@ const Profile = ({ route, navigation }: props) => {
                         borderRadius: 15,
                         marginVertical: '1%'
                     }}
-                    color={colours.primaryPurple}
+                    color={colours.secondaryPurple}
                     title={"Delete Account"}
                     onPress={() => {
                       deleteUser(auth.currentUser as User);
@@ -186,7 +186,7 @@ const Profile = ({ route, navigation }: props) => {
                         marginVertical: '1%'
                     }}
                     color={'transparent'}
-                    titleStyle={{color: colours.primaryPurple, fontWeight: '600'}}
+                    titleStyle={{color: colours.secondaryPurple, fontWeight: '600'}}
                     title={"Cancel"}
                     onPress={() => setConfirmDelete(false)}
                 />

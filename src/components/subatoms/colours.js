@@ -5,6 +5,7 @@ export const colours = {
     secondaryPurple: '#D6A9D5',
     primaryGrey: '#EDEDED',
     black: 'black',
-    white: 'white'
+    white: 'white',
+    textGrey: '#99A1AA',
 
 }
