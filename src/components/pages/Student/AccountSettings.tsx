@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
-import { colours } from "../../subatoms/Theme";
+import { colours, fonts } from "../../subatoms/Theme";
 import { useState } from "react";
 import { auth } from "../../../firebaseConfig";
 import SettingsInput from "../../atoms/SettingsInput";
@@ -87,12 +87,7 @@ const AccountSettings = () => {
                             paddingVertical: '6%',
                             borderRadius: 15
                         }}>
-                            <Text style={{
-                                fontSize: 17,
-                                fontWeight: '500',
-                                textAlign: 'center', 
-                                marginBottom: '5%'}}
-                            >
+                            <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}}>
                                 Change your password
                             </Text>
                             <CustomInput
@@ -128,7 +123,7 @@ const AccountSettings = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colours.primaryGrey,
+        backgroundColor: colours.white,
         paddingHorizontal: '4%'
     },
     studentInfo: {

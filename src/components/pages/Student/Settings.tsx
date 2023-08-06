@@ -15,7 +15,7 @@ import {
 } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { colours } from "../../subatoms/Theme";
+import { borderRadius, colours, fonts } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
 import { Linking } from "react-native";
 import { auth, fireStore } from "../../../firebaseConfig";
@@ -88,9 +88,7 @@ const Settings = ({ route, navigation }: props) => {
 
         {/* Title */}
         <View style={styles.pageTitle}>
-          <Text style={{ fontSize: 33, fontWeight: "600"}}>
-            Your Settings
-          </Text>
+          <Text style={fonts.title1}>Settings</Text>
         </View>
 
         {/* Settings */}
@@ -103,10 +101,6 @@ const Settings = ({ route, navigation }: props) => {
             buttonName={"Privacy Policy"}
             onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
           />
-          {/* <SettingsButton
-            buttonName={"Support"}
-            onPressListener={() => navigation.navigate("SupportView")}
-          /> */}
           <SettingsButton
             buttonName={"Delete Account"}
             onPressListener={() => setConfirmDelete(true)}
@@ -114,8 +108,8 @@ const Settings = ({ route, navigation }: props) => {
 
           {/* Log Out Button */}
           <Button
-            buttonStyle={{backgroundColor: 'white'}}
-            containerStyle={{ borderRadius: 15 }}
+            buttonStyle={{backgroundColor: colours.primaryGrey}}
+            containerStyle={{borderRadius: borderRadius.large}}
             onPress={() => logout()}
           >
             <View
@@ -138,11 +132,10 @@ const Settings = ({ route, navigation }: props) => {
                   name="log-out-outline"
                   type="ionicon"
                   color="transparent"
-                  size={15}
-                  iconStyle={{ fontSize: 27, color: "red" }}
-                  // containerStyle={{padding: 0, margin: 2}}
+                  size={13}
+                  iconStyle={{ fontSize: 23, color: "red" }}
                 />
-                <Text style={{ fontSize: 18, fontWeight: "600", color: "red" }}>
+                <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>
                   Log Out
                 </Text>
               </View>
@@ -164,7 +157,7 @@ const Settings = ({ route, navigation }: props) => {
                 paddingVertical: '6%',
                 borderRadius: 15
             }}>
-                <Text style={{fontSize: 17, fontWeight: '500', textAlign: 'center', marginBottom: '5%'}} >Are you sure you want to delete your account? This action cannot be reversed.</Text>    
+                <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}} >Are you sure you want to delete your account? This action cannot be reversed.</Text>    
                 <Button
                     style={{
                         paddingHorizontal: 10,
@@ -202,7 +195,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: "2.3%",
     flex: 1,
-    backgroundColor: colours.primaryGrey,
+    backgroundColor: colours.white,
   },
   pageTitle: {
     flexDirection: "row",

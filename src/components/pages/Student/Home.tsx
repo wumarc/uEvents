@@ -67,7 +67,7 @@ const Home = ({ route, navigation }: props) => {
 
       {/* Event title */}
       <View>
-        <Text style={{}}>Upcoming Events</Text>
+        <Text style={fonts.title1}>Upcoming Events</Text>
       </View>
 
       {/* Search Bar */}

@@ -1,7 +1,7 @@
 import { Input } from "react-native-elements";
 import * as React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { colours } from "../subatoms/Theme";
+import { borderRadius, colours } from "../subatoms/Theme";
 
 interface inputProps {
     input: string,
@@ -21,11 +21,11 @@ const SettingsInput = ({input, placeholder, onChangeListener, disabled}: inputPr
             autoCapitalize="none"
             inputContainerStyle={{
                 // borderBottomWidth: 1,
-                borderColor: "black",
+                borderColor: colours.black,
                 borderWidth: 1,
                 paddingVertical: '1%',
                 paddingHorizontal: '3%',
-                borderRadius: 6,
+                borderRadius: borderRadius.large,
                 underlineColor: "transparent"
             }}
             selectionColor={colours.purple}

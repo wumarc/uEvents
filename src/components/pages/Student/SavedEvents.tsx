@@ -5,6 +5,7 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { fonts } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
@@ -29,10 +30,10 @@ const SavedEvents = ({ route, navigation }: props) => {
       <ScrollView>
 
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Your Saved Events</Text>
+          <Text style={fonts.title1}>Saved Events</Text>
         </View>
 
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center"}}>
           {(student.saved ?? []).length != 0 ? (
             <FlatList
               data={(student ?? []).saved}
@@ -63,11 +64,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     paddingLeft: "3%",
     marginVertical: "3%",
-  },
-  title: {
-    fontSize: 33,
-    fontWeight: "600",
-  },
+  }
 });
 
 export default SavedEvents;

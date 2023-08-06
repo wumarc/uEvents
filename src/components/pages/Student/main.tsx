@@ -11,9 +11,9 @@ import { FC } from "react";
 import { useTheme } from "react-native-paper";
 import AccountSettings from "./AccountSettings";
 import OrganizerProfile from "./OrganizerProfile";
-import Organizers from "./Organizers";
+import BrowseOrganizers from "./BrowseOrganizers";
 import HeaderLeft from "../../molecules/HeaderLeft";
-import { colours } from "../../subatoms/Theme";
+import { colours, fonts } from "../../subatoms/Theme";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -65,9 +65,9 @@ const MainView = ({ route, navigation}: props) => {
         }}
       />
       <Tab.Screen
-        name="Organizers"
+        name="BrowseOrganizers"
         // listeners={{ tabPress: (e) => showHeader.profile }}
-        component={Organizers as any} // TODO fix error
+        component={BrowseOrganizers as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Organizers",
@@ -136,7 +136,7 @@ const Main: FC<{ userType: string }> = (props) => {
             component={EventDetails as any} // TODO fix error
             options={ ({navigation}) => ({
               title: "Event Details",
-              headerStyle: {backgroundColor: colours.primaryGrey},
+              headerStyle: {backgroundColor: colours.white},
               headerTintColor: colours.black,
               headerLeft: () => <HeaderLeft navigation={navigation}/>
             })}
@@ -146,7 +146,8 @@ const Main: FC<{ userType: string }> = (props) => {
             component={AccountSettings as any}
             options={ ({navigation}) => ({
               title: "Account Settings",
-              headerStyle: {backgroundColor: colours.primaryGrey},
+              headerStyle: {backgroundColor: colours.white},
+              headerTitleStyle: {fontWeight: fonts.regular},
               headerTintColor: colours.black,
               headerLeft: () => <HeaderLeft navigation={navigation}/>
             })}
@@ -156,7 +157,7 @@ const Main: FC<{ userType: string }> = (props) => {
             component={OrganizerProfile as any}
             options={{
               title: "Organizer Profile",
-              headerStyle: {backgroundColor: colours.purple},
+              headerStyle: {backgroundColor: colours.white},
               headerTintColor: 'white',
               headerTitleStyle: {fontWeight: 'bold'}
             }}
@@ -172,7 +173,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.primaryGrey,
+    backgroundColor: colours.white,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

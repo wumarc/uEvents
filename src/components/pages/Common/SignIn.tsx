@@ -176,8 +176,8 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
           autoCapitalize="none"
           containerStyle={{paddingHorizontal: 0}}
-          selectionColor={colours.primaryPurple}
-          inputContainerStyle={inputStyle}
+          selectionColor={colours.purple}
+          // inputContainerStyle={inputStyle}
         />
         <Input
           label="Password"
@@ -186,9 +186,9 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           containerStyle={{paddingHorizontal: 0}}
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
-          selectionColor={colours.primaryPurple}
+          selectionColor={colours.purple}
           secureTextEntry={true}
-          inputContainerStyle={inputStyle}
+          // inputContainerStyle={inputStyle}
         />
         <Text onPress={() => {}}>Forgot password?</Text>
         <Text style={styles.textAlert} >{error}</Text>
@@ -197,7 +197,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
       {/* Button */}
       <View>
         <Button
-          color={colours.primaryPurple}
+          color={colours.purple}
           title="Log In"
           containerStyle={{borderRadius: 15}}
           onPress={() => {signIn();}}
@@ -276,8 +276,8 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
             autoCapitalize="none"
             containerStyle={{paddingHorizontal: 0}}
-            selectionColor={colours.primaryPurple}
-            inputContainerStyle={inputStyle}
+            selectionColor={colours.purple}
+            // inputContainerStyle={inputStyle}
           />
           <Input
             label="Password"
@@ -307,7 +307,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 
         <View>
           <Button
-            color={colours.primaryPurple}
+            color={colours.purple}
             title="Sign up"
             onPress={() => {
               userType === "Student"

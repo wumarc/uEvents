@@ -1,7 +1,7 @@
 import { Icon } from "@rneui/base";
 import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
-import { colours } from "../subatoms/Theme";
+import { borderRadius, colours, fonts } from "../subatoms/Theme";
 
 interface buttonProps {
   buttonName: string;
@@ -10,8 +10,8 @@ interface buttonProps {
 
 const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
 
-    const iconSize= 15
-    const fontSize= 27
+    const iconSize= 13
+    const fontSize= 23
     const marginBottom = '4%'
     const settingName = [
         {"Account Settings": {icon: 'cog-outline', type: 'ionicon'}},
@@ -33,8 +33,8 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
     return (
       <View style={{marginBottom: marginBottom}}>
         <Button
-          buttonStyle={{backgroundColor: colours.white}}
-          containerStyle={{borderRadius: 15}}
+          buttonStyle={{backgroundColor: colours.primaryGrey}}
+          containerStyle={{borderRadius: borderRadius.large}}
           onPress={onPressListener}
         >
 
@@ -54,10 +54,9 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 type={findTypebyKey(buttonName)}
                 color='transparent'
                 size={iconSize}
-                iconStyle={{fontSize: fontSize, color: colours.purple}}
-                // containerStyle={{padding: 0, margin: 2}}
+                iconStyle={{fontSize: fontSize, color: colours.black}}
               />
-              <Text style={{fontSize: 18, fontWeight: '700', color: colours.purple}}>
+              <Text style={fonts.title3}>
                 {buttonName}
               </Text>
             </View>
@@ -69,7 +68,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 type='ionicon'
                 color='transparent'
                 size={iconSize}
-                iconStyle={{fontSize: fontSize, fontWeight: '600', color: colours.purple}}
+                iconStyle={fonts.title3}
                 // containerStyle={{padding: 0, margin: 2}}
               />
             </View>
