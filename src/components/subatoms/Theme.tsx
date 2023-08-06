@@ -23,7 +23,7 @@ export const ScreenSpacing = {
 }
 
 export const borderRadius = {
-    small: 5,
+    small: 8,
     medium: 10,
     large: 15,
 }
