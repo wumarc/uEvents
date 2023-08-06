@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
 import { EventObject } from "../../../utils/model/EventObject";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
@@ -129,7 +129,7 @@ const EventDetails = ({ route, navigation }: props) => {
           {/* {event.priceMin ? event.priceMax ? "$" + event.priceMin + "- $" + event.priceMax : "$" + event.priceMin : "Free"} */}
         </Text>
         <Button
-          buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+          buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
           title={event.signUpLink == null ? "No Signup Required" : "Sign Up"}
           disabled={event.signUpLink == null}
           titleStyle={{ fontSize: 15, fontWeight: "600" }}

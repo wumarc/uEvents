@@ -1,7 +1,7 @@
 import { Icon } from "@rneui/base";
 import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 
 interface buttonProps {
   buttonName: string;
@@ -54,10 +54,10 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 type={findTypebyKey(buttonName)}
                 color='transparent'
                 size={iconSize}
-                iconStyle={{fontSize: fontSize, color: colours.secondaryPurple}}
+                iconStyle={{fontSize: fontSize, color: colours.purple}}
                 // containerStyle={{padding: 0, margin: 2}}
               />
-              <Text style={{fontSize: 18, fontWeight: '700', color: colours.secondaryPurple}}>
+              <Text style={{fontSize: 18, fontWeight: '700', color: colours.purple}}>
                 {buttonName}
               </Text>
             </View>
@@ -69,7 +69,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
                 type='ionicon'
                 color='transparent'
                 size={iconSize}
-                iconStyle={{fontSize: fontSize, fontWeight: '600', color: colours.secondaryPurple}}
+                iconStyle={{fontSize: fontSize, fontWeight: '600', color: colours.purple}}
                 // containerStyle={{padding: 0, margin: 2}}
               />
             </View>

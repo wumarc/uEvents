@@ -1,7 +1,7 @@
 import { Input } from "react-native-elements";
 import * as React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 
 interface inputProps {
     input: string,
@@ -28,7 +28,7 @@ const SettingsInput = ({input, placeholder, onChangeListener, disabled}: inputPr
                 borderRadius: 6,
                 underlineColor: "transparent"
             }}
-            selectionColor={colours.secondaryPurple}
+            selectionColor={colours.purple}
             errorStyle={{}}
             errorProps={{}}
             inputStyle={{ outlineStyle: "none" }}

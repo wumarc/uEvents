@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import QRCode from 'react-native-qrcode-svg';
 import TicketDetail from "../molecules/TicketDetail";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/theme";
 import {Dimensions} from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;

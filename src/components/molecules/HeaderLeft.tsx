@@ -1,4 +1,4 @@
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";

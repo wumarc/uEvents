@@ -3,7 +3,9 @@
     "name": "uEvents",
     "slug": "uevents",
     "splash": {
-      "image": "./assets/icon.png"
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#D6A9D5"
     },
     "extra": {
       "eas": {
@@ -16,7 +18,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.uevents.dev.uevents",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.2"
     },
     "icon": "./assets/icon.png",
     "runtimeVersion": {

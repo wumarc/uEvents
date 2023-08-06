@@ -1,6 +1,6 @@
 import { Input } from "react-native-elements";
 import * as React from "react";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 
 interface inputProps {
     input: string,

@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StyleSheet } from "react-native"
 import { Input } from "react-native-elements"
 import { useState } from "react";
 import { Button } from "@rneui/base";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 
 export const Step1 = ({route, navigation}: any) => {
     
@@ -30,7 +30,7 @@ export const Step1 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step2')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -52,7 +52,7 @@ export const Step2 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step3')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -74,7 +74,7 @@ export const Step3 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step4')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -96,7 +96,7 @@ export const Step4 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step5')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -117,7 +117,7 @@ export const Step5 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step6')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -139,7 +139,7 @@ export const Step6 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step7')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -161,7 +161,7 @@ export const Step7 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step8')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -183,7 +183,7 @@ export const Step8 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {navigation.navigate('Step9')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
@@ -204,7 +204,7 @@ export const Step9 = ({route, navigation}: any) => {
             <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
-                    buttonStyle={{backgroundColor: colours.secondaryPurple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
                     onPress={() => {}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}

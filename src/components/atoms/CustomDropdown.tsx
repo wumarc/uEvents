@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { colours } from '../subatoms/colours';
+import { colours } from '../subatoms/theme';
 
 const CustomDropdown = ({dropdownOptions, dropdownName}: any) => {
 

@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 import { FC } from "react";
 import Profile from "./Profile";
 import allEvents from "./allEvents";
@@ -34,7 +34,7 @@ type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 const MainView = ({ route, navigation }: props) => {
   return (
     <Tab.Navigator
-      barStyle={{ backgroundColor: colours.secondaryPurple }}
+      barStyle={{ backgroundColor: colours.purple }}
       initialRouteName="allEvents"
     >
       <Tab.Screen
@@ -134,7 +134,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.secondaryPurple,
+    backgroundColor: colours.purple,
     paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 });

@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView } from "react-native";
 import { FAB } from 'react-native-elements';
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/theme";
 import { FlatList } from "react-native";
 import Event from "./Event";
 

@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { View, SafeAreaView, Linking, StyleSheet } from "react-native";
 import { Text, Input, Image } from "react-native-elements";
 import { Button } from "@rneui/base";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { auth } from "../../../firebaseConfig";
@@ -12,7 +12,6 @@ import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
-import { inputStyle, signInText, smallText } from "./Styling";
 import { CheckBox } from "@rneui/themed";
 import { SelectList } from 'react-native-dropdown-select-list'
 
@@ -87,12 +86,12 @@ const WelcomePage: FC = ({navigation}: any) => {
                 style={{
                   margin: 1,
                   borderWidth: 2,
-                  borderColor: colours.secondaryPurple,
+                  borderColor: colours.purple,
                   borderRadius: 30,
                 }}
                 buttonStyle={{borderRadius: 30}}
                 titleStyle={{fontSize: 18}}
-                color={colours.secondaryPurple}
+                color={colours.purple}
                 title="Login"
                 onPress={() => navigation.navigate('Login')}
               />
@@ -103,12 +102,12 @@ const WelcomePage: FC = ({navigation}: any) => {
                 style={{
                   margin: 1,
                   borderWidth: 2,
-                  borderColor: colours.secondaryPurple,
+                  borderColor: colours.purple,
                   borderRadius: 30,
                 }}
                 titleStyle={{fontSize: 18}}
                 buttonStyle={{borderRadius: 30}}
-                color={colours.secondaryPurple}
+                color={colours.purple}
                 title="Register"
                 onPress={() => navigation.navigate('Signup')}
               />
@@ -121,11 +120,11 @@ const WelcomePage: FC = ({navigation}: any) => {
               style={{
                 margin: 1,
                 borderWidth: 2,
-                borderColor: colours.secondaryPurple,
+                borderColor: colours.purple,
                 borderRadius: 30,
               }}
               containerStyle={{flex: 1}}
-              titleStyle={{color: colours.secondaryPurple, fontSize: 18, fontWeight: 'bold'}}
+              titleStyle={{color: colours.purple, fontSize: 18, fontWeight: 'bold'}}
               color={'transparent'}
               title="Skip"
             />
@@ -287,16 +286,16 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             containerStyle={{paddingHorizontal: 0}}
             onChangeText={(value) => setPassword(value)}
             autoCapitalize="none"
-            selectionColor={colours.primaryPurple}
+            // selectionColor={colours.primaryPurple}
             secureTextEntry={true}
-            inputContainerStyle={inputStyle}
+            // inputContainerStyle={inputStyle}
           />
           <Text style={styles.textAlert} >{error}</Text>
           <CheckBox
-            checkedColor={colours.primaryPurple}
+            // checkedColor={colours.primaryPurple}
             title={
               <Text> I agree to comply with uEvents' 
-                <Text style={smallText} onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
+                <Text style={{}} onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
                 >{" "}Privacy Policy{" "}</Text>
               </Text>
             }

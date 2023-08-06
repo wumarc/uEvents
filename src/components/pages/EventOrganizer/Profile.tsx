@@ -12,7 +12,7 @@ import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
 import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import InputWithLabel from "../../atoms/InputWithLabel";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType

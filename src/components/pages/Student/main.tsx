@@ -1,22 +1,19 @@
 import Home from "./Home";
-import Profile from "./Profile";
+import Settings from "./Settings";
 import SavedEvents from "./SavedEvents";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Platform } from "react-native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import EventDetails from "./EventDetails";
-import { Platform } from "react-native";
-import { colours } from "../../subatoms/colours";
 import { FC } from "react";
 import { useTheme } from "react-native-paper";
-import PrivacyPolicy from "./PrivacyPolicy";
-import Support from "./Support";
 import AccountSettings from "./AccountSettings";
 import OrganizerProfile from "./OrganizerProfile";
 import Organizers from "./Organizers";
 import HeaderLeft from "../../molecules/HeaderLeft";
+import { colours } from "../../subatoms/Theme";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -47,8 +44,8 @@ const MainView = ({ route, navigation}: props) => {
   return (
     <Tab.Navigator
       barStyle={{backgroundColor: '#f7f7f7'}}
-      activeColor={colours.secondaryPurple}
-      inactiveColor={'#979797'}
+      activeColor={colours.purple}
+      inactiveColor={colours.grey}
       initialRouteName="Home"
     >
       <Tab.Screen
@@ -58,10 +55,10 @@ const MainView = ({ route, navigation}: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Events",
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({focused }) => (
             <MaterialCommunityIcons
               name={focused ? "jellyfish" : "jellyfish-outline"}
-              color={focused ? colours.secondaryPurple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -74,10 +71,10 @@ const MainView = ({ route, navigation}: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Organizers",
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name={focused ? "office-building" : "office-building-outline"}
-              color={focused ? colours.secondaryPurple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -91,26 +88,26 @@ const MainView = ({ route, navigation}: props) => {
         options={{
           tabBarLabel: "Saved",
           title: "Saved",
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name={focused ? "heart" : "heart-outline"}
-              color={focused ? colours.secondaryPurple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Settings"
         // listeners={{ tabPress: (e) => showHeader.profile }}
-        component={Profile as any} // TODO fix error
+        component={Settings as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Settings",
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name={focused ? "cog" : "cog-outline"}
-              color={focused ? colours.secondaryPurple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -131,9 +128,7 @@ const Main: FC<{ userType: string }> = (props) => {
             name="MainView"
             component={MainView as any} // TODO fix error
             initialParams={{ userType: props.userType }}
-            options={{ // TODO
-              headerShown: false,
-            }}
+            options={{ headerShown: false }}
           />
           {/* Any other view that adds a stack to the main view */}
           <Stack.Screen
@@ -157,19 +152,11 @@ const Main: FC<{ userType: string }> = (props) => {
             })}
           />
           <Stack.Screen
-            name="PrivacyPolicyView" 
-            component={PrivacyPolicy as any}
-          />
-          <Stack.Screen 
-            name="SupportView" 
-            component={Support as any}
-          />
-          <Stack.Screen
             name="EventOrganizerView"
             component={OrganizerProfile as any}
             options={{
               title: "Organizer Profile",
-              headerStyle: {backgroundColor: colours.secondaryPurple},
+              headerStyle: {backgroundColor: colours.purple},
               headerTintColor: 'white',
               headerTitleStyle: {fontWeight: 'bold'}
             }}
@@ -185,7 +172,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ededed',
+    backgroundColor: colours.primaryGrey,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

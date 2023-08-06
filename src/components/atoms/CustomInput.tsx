@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { Input } from "react-native-elements";
 import * as React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 
 interface inputProps {
     input: string,

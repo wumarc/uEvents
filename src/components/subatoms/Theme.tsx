@@ -1,4 +1,13 @@
-import { colours } from "./colours"
+
+export const colours = {
+    // primaryPurple: '#8A4287', This is to be removed
+    purple: '#D6A9D5',
+    black: '#222222', // For big text
+    grey: '#777777',
+    primaryGrey: '#EDEDED',
+    // textGrey: '#99A1AA',
+    // titleGrey: '#47494F',
+}
 
 export const ScreenSpacing = {
     marginHorizontal: 10,
@@ -7,35 +16,10 @@ export const ScreenSpacing = {
     paddingVertical: 10,
 }
 
-export const fontSize = {
-    extraSmall: 10,
-    small: 14,
-    medium: 16,
-    large: 20,
-}
-
-export const fontWeight = {
-    light: "300",
-    normal: "400",
-    bold: "700" as "bold", // what is this weird ass error?
-}
-
-const fontStyle = {
-    regular: "Tahoma"
-}
-
-export const Title = {
-    fontSize: fontSize.large,
-    fontWeight: fontWeight.bold,
-    color: colours.blackText,
-}
-
-export const Subtitle = {
-    fontSize: fontSize.medium,
-    fontWeight: fontWeight.light,
-}
-
-export const regularText = {
-    fontSize: fontSize.medium,
-    fontWeight: fontWeight.light
+export const fonts = {
+    title1: {color: colours.black, fontSize: 33, fontWeight: '600'},
+    title2: {color: colours.black, fontSize: 20, fontWeight: '600'},
+    title3: {color: colours.black, fontSize: 18, fontWeight: '500'},
+    regular: {color: colours.grey, fontSize: 16, fontWeight: '400'},
+    small: {color: colours.grey, fontSize: 14, fontWeight: '300'}
 }

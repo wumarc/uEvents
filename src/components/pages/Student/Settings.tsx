@@ -15,7 +15,7 @@ import {
 } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
 import { Linking } from "react-native";
 import { auth, fireStore } from "../../../firebaseConfig";
@@ -28,7 +28,7 @@ import { BottomSheet } from "@rneui/base";
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
-const Profile = ({ route, navigation }: props) => {
+const Settings = ({ route, navigation }: props) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const logout = () => {
@@ -101,7 +101,6 @@ const Profile = ({ route, navigation }: props) => {
           />
           <SettingsButton
             buttonName={"Privacy Policy"}
-            // onPressListener={() => navigation.navigate("PrivacyPolicyView")}
             onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
           />
           {/* <SettingsButton
@@ -172,7 +171,7 @@ const Profile = ({ route, navigation }: props) => {
                         borderRadius: 15,
                         marginVertical: '1%'
                     }}
-                    color={colours.secondaryPurple}
+                    color={colours.purple}
                     title={"Delete Account"}
                     onPress={() => {
                       deleteUser(auth.currentUser as User);
@@ -186,7 +185,7 @@ const Profile = ({ route, navigation }: props) => {
                         marginVertical: '1%'
                     }}
                     color={'transparent'}
-                    titleStyle={{color: colours.secondaryPurple, fontWeight: '600'}}
+                    titleStyle={{color: colours.purple, fontWeight: '600'}}
                     title={"Cancel"}
                     onPress={() => setConfirmDelete(false)}
                 />
@@ -211,4 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default Settings;

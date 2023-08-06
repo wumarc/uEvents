@@ -7,13 +7,10 @@ import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { SearchBar } from "@rneui/themed";
-import { colours } from "../../subatoms/colours";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
-import Toggle  from 'react-native-toggle-element'
-import { Icon } from "@rneui/themed";
+import { colours, fonts } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -64,13 +61,13 @@ const Home = ({ route, navigation }: props) => {
 
   return (
     // NOTE: This is weird but the flatlist is not scrollable if the view is not flex: 1
-    <View style={{flex: 1, paddingHorizontal: '2.3%', backgroundColor: '#ededed'}}>
+    <View style={{flex: 1, paddingHorizontal: '2.3%', backgroundColor: colours.primaryGrey}}>
       {/* backgroundColor: '#ededed' */}
       <StatusBar translucent  />
 
       {/* Event title */}
       <View>
-        <Text style={styles.title}>Upcoming Events</Text>
+        <Text style={{}}>Upcoming Events</Text>
       </View>
 
       {/* Search Bar */}
@@ -225,17 +222,13 @@ export const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     flexDirection: "column",
-    backgroundColor: colours.secondaryPurple,
+    backgroundColor: colours.purple,
   },
   event: {
     // paddingVertical: 20, // MODIFIED
     // justifyContent: "center",
     // margin: 1
     marginVertical: '2%',
-  },
-  title: {
-    fontSize: 33,
-    fontWeight: "600",
   },
   titleContainer: {
     paddingLeft: "3%",

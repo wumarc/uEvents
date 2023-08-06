@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/Theme";
 import { useState } from "react";
 import { auth } from "../../../firebaseConfig";
 import SettingsInput from "../../atoms/SettingsInput";

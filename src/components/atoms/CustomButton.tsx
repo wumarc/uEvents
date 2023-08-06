@@ -1,5 +1,5 @@
 import { Button } from "@rneui/themed";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 
 interface buttonProps {
     buttonName: string;
@@ -16,7 +16,7 @@ const CustomButton = ({buttonName, onPressListener, disabled}: buttonProps) => {
                 borderRadius: 15,
                 marginVertical: '1%'
             }}
-            color={colours.secondaryPurple}
+            color={colours.purple}
             title={buttonName}
             onPress={onPressListener}
             disabled={disabled}

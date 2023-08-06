@@ -5,7 +5,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
-import { colours } from "../../subatoms/colours";
 import CreateEvent from "../EventOrganizer/CreateEvent";
 import { FC, useState } from "react";
 import Home from "./Home";
@@ -13,6 +12,7 @@ import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
+import { colours } from "../../subatoms/Theme";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -33,7 +33,7 @@ const MainView = ({ route, navigation }: props) => {
   return (
     <Tab.Navigator 
       barStyle={{backgroundColor: '#f7f7f7'}}
-      activeColor={colours.secondaryPurple}
+      activeColor={colours.purple}
       inactiveColor={'#979797'}
       initialRouteName="Home"
     >
@@ -46,7 +46,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "calendar" : "calendar-outline"}
-              color={focused? colours.secondaryPurple : '#979797'}
+              color={focused? colours.purple : '#979797'}
               size={30}
             />
           ),
@@ -61,7 +61,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "plus-circle" : "plus-circle-outline"}
-              color={focused? colours.secondaryPurple : '#979797'}
+              color={focused? colours.purple : '#979797'}
               size={30}
             />
           ),
@@ -76,7 +76,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "account-circle" : "account-circle-outline"}
-              color={focused? colours.secondaryPurple : '#979797'}
+              color={focused? colours.purple : '#979797'}
               size={30}
             />
           ),

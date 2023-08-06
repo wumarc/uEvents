@@ -13,7 +13,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { Step1 } from "./EventCreationSteps";
 import { Button } from "react-native-elements";
-import { colours } from "../../subatoms/colours";
+import { colours } from "../../subatoms/theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType

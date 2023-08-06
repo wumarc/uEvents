@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { colours } from "../subatoms/colours";
+import { colours } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import {
