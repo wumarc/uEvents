@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
-import { fonts } from "../../subatoms/Theme";
+import { colours, fonts, padding } from "../../subatoms/Theme";
 
 const BrowseOrganizers = () => {
 
     return (
-        <View style={styles.pageTitle}>
-          <Text style={fonts.title1}>
+        <View style={styles.container}>
+          <Text style={{...fonts.title1, paddingHorizontal: '3%'}}>
             Clubs
           </Text>
         </View>
@@ -14,9 +14,10 @@ const BrowseOrganizers = () => {
 }
 
 const styles = StyleSheet.create({
-    pageTitle: {
-        flexDirection: "row",
-        padding: "3%",
+    container: {
+        flex: 1,
+        backgroundColor: colours.white,
+        paddingHorizontal: padding.page,
     },
 });
 

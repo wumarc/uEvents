@@ -75,11 +75,8 @@ const AccountSettings = () => {
                     />
                     
                     <BottomSheet 
-                        modalProps={{}}
-                        // backdropStyle={{backgroundColor: 'transparent'}}
-                        // containerStyle={{backgroundColor: 'transparent'}}
+                        modalProps={{animationType: 'fade'}}
                         onBackdropPress={() => setIsVisible(false)}
-                        // containerStyle={{height: 100, backgroundColor: 'blue'}}
                         isVisible={isVisible}
                     >
                         <View style={{

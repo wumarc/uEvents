@@ -15,6 +15,11 @@ export const colours = {
     // titleGrey: '#47494F',
 }
 
+export const padding = {
+    page: '2.3%',
+    HorizontalStack: windowWidth * 0.05,
+}
+
 export const ScreenSpacing = {
     marginHorizontal: 10,
     marginVertical: 20,
@@ -30,8 +35,8 @@ export const borderRadius = {
 
 export const fonts = {
     title1: {color: colours.black, fontSize: 30, fontWeight: '500' as TextStyle['fontWeight']},
-    title2: {color: colours.black, fontSize: 20, fontWeight: '500'},
+    title2: {color: colours.black, fontSize: 20, fontWeight: '500' as TextStyle['fontWeight']},
     title3: {color: colours.black, fontSize: 17, fontWeight: '300' as TextStyle['fontWeight']},
-    regular: {color: colours.grey, fontSize: 16, fontWeight: '200'},
-    small: {color: colours.grey, fontSize: 14, fontWeight: '200'}
+    regular: {color: colours.grey, fontSize: 15, fontWeight: '200' as TextStyle['fontWeight']},
+    small: {color: colours.grey, fontSize: 13, fontWeight: '200' as TextStyle['fontWeight']}
 }

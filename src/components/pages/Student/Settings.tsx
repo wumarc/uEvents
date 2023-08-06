@@ -145,11 +145,8 @@ const Settings = ({ route, navigation }: props) => {
         
         {/* Delete Account Confirmation */}
         <BottomSheet 
-            modalProps={{}}
-            // backdropStyle={{backgroundColor: 'transparent'}}
-            // containerStyle={{backgroundColor: 'transparent'}}
+            modalProps={{animationType: 'fade'}}
             onBackdropPress={() => setConfirmDelete(false)}
-            // containerStyle={{height: 100, backgroundColor: 'blue'}}
             isVisible={confirmDelete}
         >
             <View style={{
@@ -157,7 +154,7 @@ const Settings = ({ route, navigation }: props) => {
                 paddingVertical: '6%',
                 borderRadius: 15
             }}>
-                <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}} >Are you sure you want to delete your account? This action cannot be reversed.</Text>    
+                <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}} >Confirm deletion of your account?</Text>    
                 <Button
                     style={{
                         paddingHorizontal: 10,
