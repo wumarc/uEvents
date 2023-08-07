@@ -1,11 +1,13 @@
 import { FC } from "react";
-import { View, Text } from "react-native";
-import { ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
+import { colours } from "../../subatoms/Theme";
 
 export const Loading: FC = () => {
+
   return (
-    <View>
-      <ActivityIndicator/>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <ActivityIndicator size="large" color={colours.purple} />
     </View>
   );
+
 };

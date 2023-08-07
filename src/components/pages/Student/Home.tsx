@@ -11,6 +11,7 @@ import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
+import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -25,7 +26,7 @@ const Home = ({ route, navigation }: props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
 
   const showToast = (save: boolean) => {
@@ -74,7 +75,6 @@ const Home = ({ route, navigation }: props) => {
         {/* List */}
         <FlatList
           style={{}}
-          contentContainerStyle={{ paddingBottom: 200 }}
           showsVerticalScrollIndicator={false}
           data={filteredEvents}
           renderItem={({ item, index }) => (

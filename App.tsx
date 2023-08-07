@@ -15,8 +15,12 @@ import { Error } from "./src/components/pages/Common/Error";
 import { LogBox } from "react-native";
 
 export default function App() {
+  
   const [user, loading, error] = useAuthState(auth);
+  
+  // Ignore all log messages
   LogBox.ignoreAllLogs();
+  
   // const [splashLoaded, setSplashLoaded] = useState(false); // TODO Fix splash screen so it doesn't break the web version anymore
 
   // if (!splashLoaded) {
@@ -37,8 +41,8 @@ export default function App() {
   } else if (error) {
     console.error(error);
     return (
-      <View>
-        <Text>{"Oops! There's been a problem"}</Text>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>{"Oops! It seems that there is a problem. Check your internet issues! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
       </View>
     );
   } else if (user) {
@@ -69,7 +73,7 @@ const AppInner: FC = () => {
   }
 
   if (!userData) {
-    return <Error message="Could not get user type" />;
+    return <Error message="Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account."/>;
   }
 
   if (userData.type === "student") {
@@ -79,6 +83,6 @@ const AppInner: FC = () => {
   } else if (userData.type === "admin") {
     return <MainAdmin userType={userData.type} />;
   } else {
-    return <Error message="Could not get user type" />;
+    return <Error message="Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account."/>;
   }
 };

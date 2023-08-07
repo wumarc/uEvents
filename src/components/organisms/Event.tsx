@@ -28,8 +28,7 @@ const Event: React.FC<EventProps> = (props) => {
     props.id
   );
 
-  const [loading2, student, setStudent] =
-    useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
+  const [loading2, student, setStudent] = useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
 
   if (loading || loading2 || !event) {
     return <Loading />;
@@ -37,11 +36,7 @@ const Event: React.FC<EventProps> = (props) => {
 
   const isSaved = (student.saved ?? []).includes(props.id);
 
-  let image = {
-    uri:
-      "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" +
-      event.images[0],
-  };
+  let image = { uri: "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" + event.images[0] };
 
   const saveEvent = () => {
     if (isSaved) {
