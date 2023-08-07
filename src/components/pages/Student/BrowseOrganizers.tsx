@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { colours, fonts, padding } from "../../subatoms/Theme";
+import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 const BrowseOrganizers = () => {
 
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colours.white,
-        paddingHorizontal: padding.page,
+        paddingHorizontal: spacing.page,
     },
 });
 
