@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 const BrowseOrganizers = () => {

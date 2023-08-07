@@ -1,6 +1,6 @@
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { useState } from "react";
-import { Button, Text } from "@rneui/themed";
+import { Button} from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";

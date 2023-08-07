@@ -1,6 +1,5 @@
-import { StyleSheet, View, FlatList, StatusBar, ScrollView } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
 import { useState } from "react";
-import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
