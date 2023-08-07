@@ -5,7 +5,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button } from "@rneui/base";
-import font from "../../subatoms/fonts/font";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -43,21 +42,11 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
 
           <View style={{flexDirection: 'row', alignItems: 'center', width: windowWidth*0.45}}>
-            <Icon
-                name='calendar-outline'
-                type='ionicon'
-                color= {colours.black}
-              />
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>Tomorrow</Text>
+            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 Tomorrow</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-                name='time-outline'
-                type='ionicon'
-                color= {colours.black}
-              />
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>08:00 PM</Text>
+            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>🕑 08:00 PM</Text>
             {/* extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End") */}
           </View>
 
@@ -110,7 +99,7 @@ const EventDetails = ({ route, navigation }: props) => {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={fonts.title3}>
+        <Text style={fonts.title2}>
           {event.priceMin ? event.priceMax
             ? "$" + event.priceMin + "- $" + event.priceMax : "$" + event.priceMin
             : "Free"

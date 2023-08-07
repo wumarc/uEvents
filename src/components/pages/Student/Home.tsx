@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, StatusBar } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar, ScrollView } from "react-native";
 import { useState } from "react";
 import { Text } from "@rneui/themed";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
@@ -10,7 +10,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { searchAlgo } from "../../../utils/search";
 import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
-import { colours, fonts } from "../../subatoms/Theme";
+import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -21,8 +21,6 @@ const Home = ({ route, navigation }: props) => {
 
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(true);
-  const [headerHeight, setHeaderHeight] = useState(0);
-
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -60,38 +58,39 @@ const Home = ({ route, navigation }: props) => {
   });
 
   return (
-    // NOTE: This is weird but the flatlist is not scrollable if the view is not flex: 1
-    <View style={{flex: 1, paddingHorizontal: '2.3%', backgroundColor: colours.primaryGrey}}>
-      {/* backgroundColor: '#ededed' */}
+    <View style={styles.container}>
       <StatusBar translucent  />
 
-      {/* Event title */}
-      <View>
-        <Text style={fonts.title1}>Upcoming Events</Text>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
 
-      {/* Search Bar */}
-      
-      {/* List */}
-      <FlatList
-        style={{ paddingTop: headerHeight - 20 }} // MODIFIED
-        contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED: why modified?
-        showsVerticalScrollIndicator={false}
-        data={filteredEvents}
-        renderItem={({ item, index }) => (
-          <View style={styles.event}>
-            <Event
-              id={item.id}
-              navigation={navigation}
-              userType={route.params.userType}
-              onSaveEvent={showToast}
-              listView={listView}
-            />
-          </View>
-        )}
-      />
+        {/* Event title */}
+        <View style={styles.pageTitle}>
+          <Text style={fonts.title1}>Upcoming Events</Text>
+        </View>
 
+        {/* Search Bar */}
+        
 
+        {/* List */}
+        <FlatList
+          style={{}}
+          contentContainerStyle={{ paddingBottom: 200 }}
+          showsVerticalScrollIndicator={false}
+          data={filteredEvents}
+          renderItem={({ item, index }) => (
+            <View style={styles.event}>
+              <Event
+                id={item.id}
+                navigation={navigation}
+                userType={route.params.userType}
+                onSaveEvent={showToast}
+                listView={listView}
+              />
+            </View>
+          )}
+        />
+
+      </ScrollView>
       
       {/* Search bar and Filter */}
       {/* <View
@@ -218,6 +217,11 @@ const Home = ({ route, navigation }: props) => {
 export default Home;
 
 export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colours.white,
+    paddingHorizontal: spacing.page,
+  },
   view: {
     position: "absolute",
     width: "100%",
@@ -233,5 +237,9 @@ export const styles = StyleSheet.create({
   titleContainer: {
     paddingLeft: "3%",
     marginVertical: "3%",
+  },
+  pageTitle: {
+    flexDirection: "row",
+    padding: "3%",
   },
 });

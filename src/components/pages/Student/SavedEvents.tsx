@@ -5,7 +5,7 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { fonts } from "../../subatoms/Theme";
+import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
@@ -22,14 +22,11 @@ const SavedEvents = ({ route, navigation }: props) => {
 
   return (
     <View
-      style={{
-        height: "100%",
-        width: "100%",
-      }}
+      style={styles.container}
     >
       <ScrollView>
 
-        <View style={styles.titleContainer}>
+        <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Saved Events</Text>
         </View>
 
@@ -61,9 +58,14 @@ const SavedEvents = ({ route, navigation }: props) => {
 };
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    paddingLeft: "3%",
-    marginVertical: "3%",
+  container: {
+    paddingHorizontal: spacing.page,
+    flex: 1,
+    backgroundColor: colours.white,
+  },
+  pageTitle: {
+    flexDirection: "row",
+    padding: "3%",
   }
 });
 

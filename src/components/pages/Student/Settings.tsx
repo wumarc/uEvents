@@ -15,7 +15,7 @@ import {
 } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { borderRadius, colours, fonts } from "../../subatoms/Theme";
+import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
 import { Linking } from "react-native";
 import { auth, fireStore } from "../../../firebaseConfig";
@@ -190,7 +190,7 @@ const Settings = ({ route, navigation }: props) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: "2.3%",
+    paddingHorizontal: spacing.page,
     flex: 1,
     backgroundColor: colours.white,
   },

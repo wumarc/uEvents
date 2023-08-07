@@ -20,7 +20,7 @@ export const spacing = {
     verticalMargin1: {marginVertical: windowWidth * 0.03},
     verticalMargin2: {marginVertical: windowWidth * 0.01},
     bottomMargin1: {marginBottom: windowWidth * 0.02},
-    page: windowWidth * 0.01,
+    page: windowWidth * 0.03,
 }
 
 export const borderRadius = {
@@ -30,7 +30,7 @@ export const borderRadius = {
 }
 
 export const fonts = {
-    title1: {color: colours.black, fontSize: 30, fontWeight: '500' as TextStyle['fontWeight']},
+    title1: {color: colours.black, fontSize: 27, fontWeight: '500' as TextStyle['fontWeight']},
     title2: {color: colours.black, fontSize: 20, fontWeight: '500' as TextStyle['fontWeight']},
     title3: {color: colours.black, fontSize: 17, fontWeight: '300' as TextStyle['fontWeight']},
     regular: {color: colours.grey, fontSize: 16, fontWeight: '300' as TextStyle['fontWeight']},

@@ -1,13 +1,19 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 const BrowseOrganizers = () => {
 
     return (
         <View style={styles.container}>
-          <Text style={{...fonts.title1, paddingHorizontal: '3%'}}>
-            Clubs
-          </Text>
+          
+          <ScrollView>
+
+            <View style={styles.pageTitle}>
+              <Text style={fonts.title1}>Clubs</Text>
+            </View>
+
+          </ScrollView>
+
         </View>
     )
 
@@ -18,6 +24,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colours.white,
         paddingHorizontal: spacing.page,
+    },
+    pageTitle: {
+      flexDirection: "row",
+      padding: "3%",
     },
 });
 
