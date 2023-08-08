@@ -131,11 +131,9 @@ const Profile = ({ route, navigation }: props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 0,
+    backgroundColor: colours.white,
     marginHorizontal: 0,
     paddingHorizontal: 8,
-    // alignItems: "center",
-    // justifyContent: "space-between",
   },
   profileHeader: {
     paddingLeft: '3%',

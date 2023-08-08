@@ -27,14 +27,13 @@ type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
 
-  const theme = useTheme();
-  theme.colors.secondaryContainer = "transparent";
+  useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
 
   return (
     <Tab.Navigator 
       barStyle={{backgroundColor: '#f7f7f7'}}
       activeColor={colours.purple}
-      inactiveColor={'#979797'}
+      inactiveColor={colours.grey}
       initialRouteName="Home"
     >
       <Tab.Screen 
@@ -46,7 +45,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "calendar" : "calendar-outline"}
-              color={focused? colours.purple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -61,7 +60,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "plus-circle" : "plus-circle-outline"}
-              color={focused? colours.purple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -76,7 +75,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "account-circle" : "account-circle-outline"}
-              color={focused? colours.purple : '#979797'}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -164,7 +163,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ededed',
+    backgroundColor: colours.white,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

@@ -13,7 +13,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { Step1 } from "./EventCreationSteps";
 import { Button } from "react-native-elements";
-import { colours } from "../../subatoms/theme";
+import { colours } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
@@ -55,6 +55,7 @@ const CreateEvent = ({ route, navigation }: props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colours.white,
     paddingHorizontal: '1%',
   }
 });
