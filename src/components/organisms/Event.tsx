@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { colours } from "../subatoms/Theme";
+import { colours, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import {
@@ -74,14 +74,14 @@ const Event: React.FC<EventProps> = (props) => {
       });
       }}
     >
-      <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13, backgroundColor: colours.white}}>
+      <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13, backgroundColor: colours.primaryGrey}}>
         
-        <View style={{justifyContent: 'center', alignItems: 'center', width: '30%'}}>
-           {/* <Image
+        <View style={{justifyContent: 'center', width: windowWidth*0.25, height: windowHeight*0.15}}>
+           <Image
              source={require('./1F604_color.png')}
              style={{width: "100%", height: "100%"}}
              resizeMode="contain"
-           /> */}
+           />
         </View>
 
         <View style={{width: '70%'}}>
@@ -91,12 +91,12 @@ const Event: React.FC<EventProps> = (props) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {/* <View style={{width: '10%', height: '20%', backgroundColor: 'green'}}>
+            <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
               <Image
                 source={{uri:'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg'}}
                 style={{width: "100%", height: "100%"}}
               />
-            </View> */}
+            </View>
             <Text style={{color: colours.black}}>{event.organizer}</Text>
           </View>
           

@@ -34,7 +34,7 @@ const EventDetails = ({ route, navigation }: props) => {
         </View>
 
         {/* Title */}
-        <View style={{marginVertical: 15}}>
+        <View style={{marginVertical: 5}}>
           <Text style={fonts.title2}>{event.name}</Text>
         </View>
 
@@ -55,7 +55,7 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Description */}
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>ℹ️Description</Text>
-          <Text style={fonts.regular}>Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. Activities include guided nature hikes, fishing, kayaking, campfire nights, stargazing, and outdoor cooking workshops. Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. {event.description}</Text>
+          <Text style={fonts.regular}>Join us for an unforgettable yaking, campfire nights, stargazing, and outdoor cooking workshops. Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. {event.description}</Text>
         </View>
 
         {/* Location */}
@@ -63,10 +63,11 @@ const EventDetails = ({ route, navigation }: props) => {
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📍Location</Text>
           <View style={{borderWidth: 2, borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
             <Text style={fonts.title3}>{event.location}</Text>
-            <Text style={fonts.small}>{event.address}100 Bank Street, Ottawa, ON, K1N5P9</Text>
+            <Text style={fonts.small}>{event.address}</Text>
             <Button title={"Open on Google Maps"}
               buttonStyle={{...buttons.button1, marginTop: '3%'}}
               titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
+              onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
             />
           </View>
         </View>
@@ -78,8 +79,8 @@ const EventDetails = ({ route, navigation }: props) => {
         </View>
 
         {/* Organizer */}
-        <View>
-          <Text style={fonts.title2}>🏠Organizer</Text>
+        <View style={spacing.verticalMargin1}>
+          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏠Organizer</Text>
           
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 
@@ -94,6 +95,11 @@ const EventDetails = ({ route, navigation }: props) => {
             </View>
           </View>
 
+        </View>
+
+        <View style={spacing.verticalMargin1}>
+          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🔗Source</Text>
+          <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
         </View>
 
       </ScrollView>
