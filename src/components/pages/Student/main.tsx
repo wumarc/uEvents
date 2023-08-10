@@ -122,7 +122,10 @@ const Main: FC<{ userType: string }> = (props) => {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator initialRouteName="MainView">
+        <Stack.Navigator 
+          initialRouteName="MainView"
+          screenOptions={{headerTitleAlign: 'center'}}
+        >
           {/* Main View */}
           <Stack.Screen
             name="MainView"
@@ -147,7 +150,7 @@ const Main: FC<{ userType: string }> = (props) => {
             options={ ({navigation}) => ({
               title: "Account Settings",
               headerStyle: {backgroundColor: colours.white},
-              headerTitleStyle: {fontWeight: fonts.regular},
+              // headerTitleStyle: {fontWeight: fonts.regular},
               headerTintColor: colours.black,
               headerLeft: () => <HeaderLeft navigation={navigation}/>
             })}
