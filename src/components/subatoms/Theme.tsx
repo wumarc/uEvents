@@ -1,5 +1,6 @@
 import { TextStyle } from "react-native"
 import {Dimensions} from 'react-native';
+import { Platform } from "react-native";
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -38,6 +39,20 @@ export const fonts = {
 }
 
 export const buttons = {
-    button1: {backgroundColor: colours.purple, padding: 10, borderRadius: 10, shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.5, shadowRadius: 2, elevation: 5,},
+    button1: {backgroundColor: colours.purple, padding: 10, borderRadius: 10,
+        ...Platform.select({
+            ios: {
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 2,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+            },
+            android: {
+                elevation: 4,
+            },
+    })
+    }
 }

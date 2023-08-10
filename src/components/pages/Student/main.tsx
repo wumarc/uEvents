@@ -124,7 +124,11 @@ const Main: FC<{ userType: string }> = (props) => {
       <SafeAreaView style={styles.container}>
         <Stack.Navigator 
           initialRouteName="MainView"
-          screenOptions={{headerTitleAlign: 'center'}}
+          screenOptions={{
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right',
+            //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
+          }}
         >
           {/* Main View */}
           <Stack.Screen
@@ -150,7 +154,7 @@ const Main: FC<{ userType: string }> = (props) => {
             options={ ({navigation}) => ({
               title: "Account Settings",
               headerStyle: {backgroundColor: colours.white},
-              // headerTitleStyle: {fontWeight: fonts.regular},
+              // headerTitleStyle: {fontWeight: fonts.regular}, This property breaks on Android
               headerTintColor: colours.black,
               headerLeft: () => <HeaderLeft navigation={navigation}/>
             })}
