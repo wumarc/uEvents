@@ -73,7 +73,7 @@ const AppInner: FC = () => {
   }
 
   if (!userData) {
-    return <Error message="Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account."/>;
+    return <Error message="Oops! It seems that there is a connexion issue. Please check your connexion and try again"/>;
   }
 
   if (userData.type === "student") {
