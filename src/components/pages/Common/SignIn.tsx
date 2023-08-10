@@ -29,7 +29,14 @@ const SignIn: FC = () => {
 
   return (
      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator 
+          initialRouteName="Welcome"
+          screenOptions={{
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right',
+            //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
+          }}
+        >
           <Stack.Screen 
             name="Welcome" 
             component={WelcomePage}
@@ -42,7 +49,7 @@ const SignIn: FC = () => {
             component={Login}
             initialParams={{ signInHandler: {signInHandler} }}
             options={{
-              headerTintColor: colours.primaryPurple,
+              headerTintColor: colours.black,
               headerBackTitleVisible: false,
             }}
           />
@@ -51,7 +58,7 @@ const SignIn: FC = () => {
             component={Signup}
             initialParams={{ signInHandler: {signInHandler} }}
             options={{
-              headerTintColor: colours.primaryPurple,
+              headerTintColor: colours.black,
               headerBackTitleVisible: false,
               headerTitle: 'Register',
             }}
@@ -113,21 +120,6 @@ const WelcomePage: FC = ({navigation}: any) => {
               />
             </View>
 
-          </View>
-
-          <View style={{flexDirection: 'row', paddingHorizontal: '2.3%'}}>
-            <Button
-              style={{
-                margin: 1,
-                borderWidth: 2,
-                borderColor: colours.purple,
-                borderRadius: 30,
-              }}
-              containerStyle={{flex: 1}}
-              titleStyle={{color: colours.purple, fontSize: 18, fontWeight: 'bold'}}
-              color={'transparent'}
-              title="Skip"
-            />
           </View>
 
         </View>

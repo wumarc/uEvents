@@ -14,7 +14,6 @@ import EditEvent from "./EditEvent";
 import UploadFile from "../../organisms/UploadFile";
 import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
-// import 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -46,7 +45,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="plus-circle"
-              color={colours.primaryPurple}
+              color={colours.purple}
               size={30}
             />
           ),
