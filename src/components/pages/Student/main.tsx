@@ -14,6 +14,7 @@ import OrganizerProfile from "./OrganizerProfile";
 import BrowseOrganizers from "./BrowseOrganizers";
 import HeaderLeft from "../../molecules/HeaderLeft";
 import { colours, fonts } from "../../subatoms/Theme";
+import HeaderRight from "../../molecules/HeaderRight";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -145,7 +146,8 @@ const Main: FC<{ userType: string }> = (props) => {
               title: "Event Details",
               headerStyle: {backgroundColor: colours.white},
               headerTintColor: colours.black,
-              headerLeft: () => <HeaderLeft navigation={navigation}/>
+              headerLeft: () => <HeaderLeft navigation={navigation}/>,
+              headerRight: () => <HeaderRight navigation={navigation}/>
             })}
           />
           <Stack.Screen 

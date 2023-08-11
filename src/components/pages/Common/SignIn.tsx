@@ -44,8 +44,8 @@ const SignIn: FC = () => {
               headerShown: false,
             }}
           />
-          <Stack.Screen 
-            name="Login" 
+          <Stack.Screen
+            name="Login"
             component={Login}
             initialParams={{ signInHandler: {signInHandler} }}
             options={{

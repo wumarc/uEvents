@@ -21,6 +21,8 @@ export const spacing = {
     verticalMargin1: {marginVertical: windowWidth * 0.03},
     verticalMargin2: {marginVertical: windowWidth * 0.01},
     bottomMargin1: {marginBottom: windowWidth * 0.02},
+    verticalPadding1: {paddingVertical: windowWidth * 0.03}, // to be changed
+    verticalPadding2: {paddingVertical: windowWidth * 0.01},
     page: windowWidth * 0.03,
 }
 
@@ -35,7 +37,7 @@ export const fonts = {
     title2: {color: colours.black, fontSize: 20, fontWeight: '500' as TextStyle['fontWeight']},
     title3: {color: colours.black, fontSize: 17, fontWeight: '300' as TextStyle['fontWeight']},
     regular: {color: colours.grey, fontSize: 16, fontWeight: '300' as TextStyle['fontWeight']},
-    small: {color: colours.grey, fontSize: 13, fontWeight: '200' as TextStyle['fontWeight']}
+    small: {color: colours.grey, fontSize: 14, fontWeight: '200' as TextStyle['fontWeight']}
 }
 
 export const buttons = {

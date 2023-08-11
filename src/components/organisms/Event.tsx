@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { colours, windowHeight, windowWidth } from "../subatoms/Theme";
+import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import {
@@ -74,7 +74,7 @@ const Event: React.FC<EventProps> = (props) => {
       });
       }}
     >
-      <View style={{flexDirection: 'row', borderColor: 'black', borderWidth: 1, borderRadius: 13, backgroundColor: colours.primaryGrey}}>
+      <View style={{flexDirection: 'row', borderColor: 'black', borderRadius: 13, backgroundColor: colours.white}}>
         
         <View style={{justifyContent: 'center', width: windowWidth*0.25, height: windowHeight*0.15}}>
            <Image
@@ -87,7 +87,7 @@ const Event: React.FC<EventProps> = (props) => {
         <View style={{width: '70%'}}>
 
           <View>
-            <Text style={{fontWeight: '500', fontSize: 20}}>{event.name}</Text>
+            <Text style={{fontWeight: '500', fontSize: 16, color: colours.purple}}>{event.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -97,7 +97,7 @@ const Event: React.FC<EventProps> = (props) => {
                 style={{width: "100%", height: "100%"}}
               />
             </View>
-            <Text style={{color: colours.black}}>{event.organizer}</Text>
+            <Text style={fonts.small}>{event.organizer}</Text>
           </View>
           
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -106,9 +106,9 @@ const Event: React.FC<EventProps> = (props) => {
               type='ionicon'
               color='black'
             />
-            <Text>{startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}</Text>
-            <Text> - </Text>
-            <Text>{startTime?.toDate().getDay().toString()}</Text>
+            <Text style={fonts.small}>{startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}</Text>
+            <Text style={fonts.small}> - </Text>
+            <Text style={fonts.small}>{startTime?.toDate().getDay().toString()}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -117,7 +117,7 @@ const Event: React.FC<EventProps> = (props) => {
               type='ionicon'
               color='black'
             />
-            <Text>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
+            <Text style={fonts.small}>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
           </View>
 
         </View>
