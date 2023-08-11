@@ -16,7 +16,7 @@ const BrowseOrganizers = () => {
             {/* Organizer */}
             <View>
               <Organizer name={"uOttawa Climate Crisis Coalition"}/>
-              <Organizer name={"The uOttawa Rock Climbing Club"}/>
+              <Organizer name={"uOttawa Rock Climbing Club"}/>
               <Organizer name={"uOttawa Anime Club"}/>
               <Organizer name={"uOttawa Rocketry"}/>
               <Organizer name={"uO Triathlon"}/>
@@ -24,7 +24,7 @@ const BrowseOrganizers = () => {
               <Organizer name={"uOttawa Bioethics Association"}/>
               <Organizer name={"University of Ottawa Squash Club"}/>
               <Organizer name={"Egyptian Student Association"}/>
-              <Organizer name={"The University of Ottawa Glee Gees"}/>
+              <Organizer name={"University of Ottawa Glee Gees"}/>
             </View>
 
           </ScrollView>

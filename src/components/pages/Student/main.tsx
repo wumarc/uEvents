@@ -142,13 +142,16 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="EventDetailsView"
             component={EventDetails as any} // TODO fix error
-            options={ ({navigation}) => ({
-              title: "Event Details",
-              headerStyle: {backgroundColor: colours.white},
-              headerTintColor: colours.black,
-              headerLeft: () => <HeaderLeft navigation={navigation}/>,
-              headerRight: () => <HeaderRight navigation={navigation}/>
-            })}
+            options={({navigation}) => {
+              const eventDetailsProps = {eventID: props.eventID};
+              return {
+                title: "Event Details",
+                headerStyle: {backgroundColor: colours.white},
+                headerTintColor: colours.black,
+                headerLeft: () => <HeaderLeft navigation={navigation}/>,
+                headerRight: () => <HeaderRight navigation={navigation} {...eventDetailsProps}/>
+              }
+            }}
           />
           <Stack.Screen 
             name="AccountSettingsView" 

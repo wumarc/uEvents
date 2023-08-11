@@ -1,9 +1,9 @@
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, StatusBar } from "react-native";
 import { colours, spacing, fonts } from "../../subatoms/Theme";
 import { FlatList } from "react-native";
-import Event from "./Event";
+import OrganizerEvent from "./OrganizerEvent";
 
-const Home = ({ navigation }: any) => {
+const Events = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
@@ -11,8 +11,13 @@ const Home = ({ navigation }: any) => {
             <ScrollView showsHorizontalScrollIndicator={false}>
 
                 <View style={styles.pageTitle}>
-                    <Text style={fonts.title1}>Your Events</Text>
+                    <Text style={fonts.title1}>Upcoming Events</Text>
                 </View>
+                
+                {/* Should have name, date, time, number of views, image? */}
+                <OrganizerEvent/>
+                <OrganizerEvent/>
+                <OrganizerEvent/>
 
                 {/* <FlatList
                     style={{}}
@@ -50,4 +55,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Home;
+export default Events;

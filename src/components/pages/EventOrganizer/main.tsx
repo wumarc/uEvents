@@ -7,12 +7,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
 import CreateEvent from "../EventOrganizer/CreateEvent";
 import { FC, useState } from "react";
-import Home from "./Home";
 import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
 import { colours } from "../../subatoms/Theme";
+import Events from "./Events";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,9 +36,9 @@ const MainView = ({ route, navigation }: props) => {
       inactiveColor={colours.grey}
       initialRouteName="Home"
     >
-      <Tab.Screen 
+      <Tab.Screen
         name="Home"
-        component={Home as any} // TODO fix error
+        component={Events as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Events",

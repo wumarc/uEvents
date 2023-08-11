@@ -12,7 +12,7 @@ import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
 import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import InputWithLabel from "../../atoms/InputWithLabel";
-import { colours } from "../../subatoms/Theme";
+import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -45,8 +45,8 @@ const Profile = ({ route, navigation }: props) => {
       <ScrollView>
 
         {/* Header Section */}
-        <View style={styles.profileHeader}>
-          <Text style={styles.title}>Your Profile</Text>
+        <View style={styles.pageTitle}>
+          <Text style={fonts.title1}>Profile</Text>
         </View>
 
         {/* Image Section */}
@@ -132,8 +132,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colours.white,
-    marginHorizontal: 0,
-    paddingHorizontal: 8,
+    paddingHorizontal: spacing.page,
   },
   profileHeader: {
     paddingLeft: '3%',
@@ -152,9 +151,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
   },
-  title: {
-    fontSize: 33,
-    fontWeight: "600",
+  pageTitle: {
+    flexDirection: "row",
+    padding: "3%",
   },
 });
 

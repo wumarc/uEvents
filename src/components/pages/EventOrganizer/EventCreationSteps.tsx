@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StyleSheet } from "react-native"
 import { Input } from "react-native-elements"
 import { useState } from "react";
 import { Button } from "@rneui/base";
-import { colours } from "../../subatoms/Theme";
+import { colours, fonts } from "../../subatoms/Theme";
 
 export const Step1 = ({route, navigation}: any) => {
     
@@ -13,12 +13,12 @@ export const Step1 = ({route, navigation}: any) => {
             
             <ScrollView>
 
-                <Text style={styles.formTitle}>How should we call your event?</Text>
+                <Text style={fonts.title1}>How should we call your event?</Text>
                 
-                <Text style={styles.formDescription}>Short names work best. Have fun with it!</Text>
+                <Text style={fonts.regular}>Short names work best. Have fun with it!</Text>
 
                 <View style={{marginVertical: '5%'}}>
-                    <Text>{charactersAvailable} <Text style={{color: colours.textGrey}}>characters available</Text></Text>
+                    <Text>{charactersAvailable} <Text style={{color: colours.grey}}>characters available</Text></Text>
                     <Input
                         onChange={(e) => {setCharactersAvailable(35 - e.nativeEvent.text.length)}}
                         maxLength={35}
@@ -27,7 +27,7 @@ export const Step1 = ({route, navigation}: any) => {
 
             </ScrollView>
 
-            <View style={styles.footer}>
+            {/* <View style={styles.footer}>
                 <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
                 <Button
                     buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
@@ -35,7 +35,7 @@ export const Step1 = ({route, navigation}: any) => {
                     onPress={() => {navigation.navigate('Step2')}}
                     titleStyle={{ fontSize: 15, fontWeight: "600" }}
                 />
-            </View>
+            </View> */}
 
         </View>
     )
@@ -43,14 +43,14 @@ export const Step1 = ({route, navigation}: any) => {
 
 export const Step2 = ({route, navigation}: any) => {
     return (
-        <View style={{paddingHorizontal: '5%', flex: 1}}>
+        <View style={{flex: 1, backgroundColor: colours.white}}>
             
             <ScrollView>
                 <Text>Provide a description of your event</Text>
             </ScrollView>
             
             <View style={styles.footer}>
-                <Text style={{color: colours.textGrey, fontWeight: "600", fontSize: 15}}>Back</Text>
+                <Text style={{...fonts.title3, textDecorationLine: 'underline'}}>Back</Text>
                 <Button
                     buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
                     title={"Next"}
@@ -222,17 +222,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: '5%',
         alignItems: "center",
-        backgroundColor: colours.primaryGrey,
+        backgroundColor: colours.white,
+        borderTopColor: colours.primaryGrey,
+        borderTopWidth: 1,
     },
-    formTitle: {
-        fontSize: 27,
-        fontWeight: '600',
-        paddingBottom: 10,
-        paddingTop: 10
-    },
-    formDescription: {
-        fontSize: 15, 
-        color: colours.textGrey,
-        fontWeight: '300'
-    }
 })

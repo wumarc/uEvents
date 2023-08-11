@@ -13,7 +13,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { Step1 } from "./EventCreationSteps";
 import { Button } from "react-native-elements";
-import { colours } from "../../subatoms/Theme";
+import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
@@ -27,16 +27,17 @@ const CreateEvent = ({ route, navigation }: props) => {
 
         <ScrollView>
 
-          {/* <Text style={{fontSize: 33, fontWeight: '600'}}>Create a new event</Text> */}
+          <View style={styles.pageTitle}>
+            <Text style={fonts.title1}>Create event</Text>
+          </View>
           
-          <Button 
-            onPress={() => {navigation.navigate('Step1')}}
-          />
+          {/* Form */}
+          <View style={spacing.verticalMargin1}>
+            <Step1/>
+          </View>
 
-          {/* Buttons */}
           {/* <View>
-            <CustomButton
-              buttonName={"Add Event"}
+            <CustomButton buttonName={"Add Event"}
               onPressListener={() => {
                 // Adding the event to the database
                 event.id = uid();
@@ -48,6 +49,14 @@ const CreateEvent = ({ route, navigation }: props) => {
 
         </ScrollView>
 
+        {/* Footer */}
+        <Button
+            buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
+            title={"Start"}
+            onPress={() => {navigation.navigate('Step2')}}
+            titleStyle={{...fonts.title2, color: colours.white}}
+        />
+
     </View>
   );
 };
@@ -57,6 +66,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colours.white,
     paddingHorizontal: '1%',
+  },
+  pageTitle: {
+    flexDirection: "row",
+    padding: "3%",
   }
 });
 
