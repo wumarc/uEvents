@@ -167,12 +167,11 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="EventOrganizerView"
             component={OrganizerProfile as any}
-            options={{
-              title: "Organizer Profile",
+            options={({navigation}) => ({
+              title: "Organizer",
               headerStyle: {backgroundColor: colours.white},
-              headerTintColor: 'white',
-              headerTitleStyle: {fontWeight: 'bold'}
-            }}
+              headerLeft: () => <HeaderLeft navigation={navigation}/>
+            })}
           />
         </Stack.Navigator>
       </SafeAreaView>

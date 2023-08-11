@@ -1,8 +1,10 @@
-import { View, StyleSheet, ScrollView, Text, FlatList } from "react-native";
+import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
 
-const BrowseOrganizers = () => {
+const BrowseOrganizers = ({navigation}: any) => {
+
+    const names = ["uOttawa Climate Crisis Coalition", "uOttawa Rock Climbing Club", "uOttawa Anime Club", "uOttawa Rocketry", "uO Triathlon", "UOttawa Quadball Club", "uOttawa Bioethics Association", "University of Ottawa Squash Club", "Egyptian Student Association", "University of Ottawa Glee Gees"]
 
     return (
         <View style={styles.container}>
@@ -14,20 +16,15 @@ const BrowseOrganizers = () => {
             </View>
 
             {/* Organizer */}
-            <View>
-              <Organizer name={"uOttawa Climate Crisis Coalition"}/>
-              <Organizer name={"uOttawa Rock Climbing Club"}/>
-              <Organizer name={"uOttawa Anime Club"}/>
-              <Organizer name={"uOttawa Rocketry"}/>
-              <Organizer name={"uO Triathlon"}/>
-              <Organizer name={"UOttawa Quadball Club"}/>
-              <Organizer name={"uOttawa Bioethics Association"}/>
-              <Organizer name={"University of Ottawa Squash Club"}/>
-              <Organizer name={"Egyptian Student Association"}/>
-              <Organizer name={"University of Ottawa Glee Gees"}/>
-            </View>
-
-          </ScrollView>
+            <ScrollView/>
+              {names.map((name, index) => (
+                <View key={index}>
+                  <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView")}>
+                    <Organizer name={name}/>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </ScrollView>
 
         </View>
     )
