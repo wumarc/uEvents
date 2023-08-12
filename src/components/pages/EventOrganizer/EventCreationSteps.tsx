@@ -29,16 +29,19 @@ export const Step0 = ({route, navigation}: any) => {
             {/* Static Footer */}
             <View style={styles.footer}>
                 <Button
-                    buttonStyle={{backgroundColor: colours.white,}}
+                    buttonStyle={{backgroundColor: colours.white}}
                     title={"Back"}
-                    onPress={() => {setStep(step - 1)}}
-                    titleStyle={{...fonts.title3}}
+                    onPress={() => setStep(step -1)}
+                    titleStyle={ step==1 ? {color: colours.white} : {...fonts.title3} }
+                    disabledStyle={{backgroundColor: colours.white}}
+                    disabledTitleStyle={{color: colours.white}}
+                    disabled={step==1}
                 />
                 <Button
-                    buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
+                    buttonStyle={{backgroundColor: colours.purple, padding: 15, borderRadius: 10}}
                     title={"Next"}
-                    onPress={() => {setStep(step + 1)}}
-                    titleStyle={{ fontSize: 15, fontWeight: "600" }}
+                    onPress={() => {setStep(step + 1)}} 
+                    titleStyle={{...fonts.title2, color: colours.white}}
                 />
             </View>
 
@@ -147,7 +150,8 @@ export const Step9 = ({route, navigation}: any) => {
     return (
 
             <ScrollView>
-                <Text style={fonts.title1}>Almost there! Let's take a look at your event for the last time</Text>
+                <Text style={fonts.title1}>Finish up and publish</Text>
+                <Text style={fonts.title2}>Let's take a look at your event to confirm all the information are correct</Text>
             </ScrollView>
     )
 }
