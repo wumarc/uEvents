@@ -10,7 +10,7 @@ import { FC, useState } from "react";
 import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
-import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
+import { Step0, Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
 import { colours } from "../../subatoms/Theme";
 import Events from "./Events";
 
@@ -106,6 +106,11 @@ const Main: FC<{ userType: string }> = (props) => {
             component={CreateEvent as any} // TODO fix error
             initialParams={{ userType: props.userType }}
             // options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Step0"
+            component={Step0 as any}
+            options={{ headerShown: true }}
           />
           <Stack.Screen
             name="Step1"

@@ -11,7 +11,7 @@ import { RootStackParamList } from "../Student/main";
 import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
-import { Step1 } from "./EventCreationSteps";
+import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
 import { Button } from "react-native-elements";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 
@@ -21,42 +21,26 @@ type props = NativeStackScreenProps<RootStackParamList, "Search">;
 const CreateEvent = ({ route, navigation }: props) => {
 
   const [event, setEvent] = useState<EventObject>(defaultEvent);
+  
 
   return (
     <View style={styles.container}>
-
+          {/*<CustomButton buttonName={"Add Event"} // Adding the event to the database
+            onPressListener={() => { event.id = uid(); addDocumentToCollection<EventObject>("events", event.id, event); navigation.pop() }} />*/}
         <ScrollView>
 
           <View style={styles.pageTitle}>
-            <Text style={fonts.title1}>Create event</Text>
+            <Text style={fonts.title1}>Create Event</Text>
           </View>
           
-          {/* Form */}
-          <View style={spacing.verticalMargin1}>
-            <Step1/>
-          </View>
-
-          {/* <View>
-            <CustomButton buttonName={"Add Event"}
-              onPressListener={() => {
-                // Adding the event to the database
-                event.id = uid();
-                addDocumentToCollection<EventObject>("events", event.id, event);
-                navigation.pop();
-              }}
-            />
-          </View> */}
-
-        </ScrollView>
-
-        {/* Footer */}
-        <Button
+          <Button
             buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
             title={"Start"}
-            onPress={() => {navigation.navigate('Step2')}}
+            onPress={() => {navigation.navigate('Step0')}}
             titleStyle={{...fonts.title2, color: colours.white}}
-        />
+          />
 
+        </ScrollView>
     </View>
   );
 };
