@@ -5,6 +5,7 @@ import { Button } from "@rneui/base";
 import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
 import { ProgressBar } from "react-native-paper";
 import {Calendar, LocaleConfig} from 'react-native-calendars';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export const Step0 = ({route, navigation}: any) => {
     
@@ -25,15 +26,13 @@ export const Step0 = ({route, navigation}: any) => {
                 {step == 7 && <Step7 />}
                 {step == 8 && <Step8 />}
                 {step == 9 && <Step9 />}
-                {step == 10 && <Step10 />}
-                {step == 11 && <Step11 />}
             </View>
             </ScrollView>
 
             {/* Static Footer */}
             <View>
                 <ProgressBar
-                    progress={step*0.1}
+                    progress={(step+1)*0.1}
                     color={colours.purple}
                 />
                 <View style={styles.footer_buttons}>
@@ -41,15 +40,15 @@ export const Step0 = ({route, navigation}: any) => {
                         buttonStyle={{backgroundColor: colours.white}}
                         title={"Back"}
                         onPress={() => step==1 ? navigation.pop() : setStep(step -1)}
-                        titleStyle={{...fonts.title3}}
-                        // disabledStyle={{backgroundColor: colours.white}}
-                        // disabledTitleStyle={{color: colours.white}}
-                        // disabled={step==1}
+                        titleStyle={{...fonts.title3, textDecorationLine: 'underline'}}
+                        disabledStyle={{backgroundColor: colours.white}}
+                        disabledTitleStyle={{color: colours.white}}
+                        disabled={step==9}
                     />
                     <Button
                         buttonStyle={{backgroundColor: colours.purple, padding: 15, borderRadius: 10}}
-                        title={"Next"}
-                        onPress={() => {setStep(step + 1)}} 
+                        title={step != 9 ? "Next" : "Finish"}
+                        onPress={() => {step != 9 ? setStep(step + 1) : navigation.pop()}}
                         titleStyle={{...fonts.title2, color: colours.white}}
                     />
                 </View>
@@ -97,6 +96,15 @@ export const Step2 = ({route, navigation}: any) => {
 
     const [nextStep, setNextStep] = useState<boolean>(false);
     const [onCampus, setOnCampus] = useState<boolean>(false);
+    const [buildingName, setBuildingName] = useState<string>('');
+    const [isFocus, setIsFocus] = useState(false);
+
+    const data = [
+        { label: 'Montpetit Gym', value: '1' },
+        { label: 'University Centre', value: '2' },
+        { label: 'Learning Crossroad', value: '3' },
+        { label: 'Cant find a building?', value: '4'}
+    ];
 
     return (
         <View>
@@ -121,6 +129,30 @@ export const Step2 = ({route, navigation}: any) => {
                     <Text style={fonts.title1}>{onCampus ? "In which building is your event taking place?" : "Where will the event take place?"}</Text>
                     <View>
                         <Text>{onCampus ? "Dropdown" : "Please provide the building name and then the address"}</Text>
+
+                        {/* Dropdown */}
+                        <Dropdown
+                            style={isFocus && {borderColor: 'blue'}}
+                            // placeholderStyle={styles.placeholderStyle}
+                            // selectedTextStyle={styles.selectedTextStyle}
+                            // inputSearchStyle={styles.inputSearchStyle}
+                            // iconStyle={styles.iconStyle}
+                            data={data}
+                            search
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            placeholder={!isFocus ? 'Select item' : '...'}
+                            searchPlaceholder="Search..."
+                            value={buildingName}
+                            onFocus={() => setIsFocus(true)}
+                            // onBlur={() => setIsFocus(false)}
+                            onChange={item => {
+                                setBuildingName(item.value);
+                                setIsFocus(false);
+                            }}
+                        />
+
                     </View>
                 </View>
             }
@@ -268,11 +300,12 @@ export const Step5 = ({route, navigation}: any) => {
 
 export const Step6 = ({route, navigation}: any) => {
     return (
-        
             
-            <View>
-                <Text style={fonts.title1}>If your event requires additional sign up, please provide the link here</Text>
-            </View>
+        <View>
+            <Text style={fonts.title1}>If your event requires sign up, please provide the link</Text>
+            <Text style={fonts.regular}>You can skip this step if your event requires no sign up</Text>
+        </View>
+
 
 
     )
@@ -289,39 +322,63 @@ export const Step7 = ({route, navigation}: any) => {
 export const Step8 = ({route, navigation}: any) => {
     return (
             <View>
-                <Text style={fonts.title1}>Finish up and publish</Text>
-                <Text style={fonts.title2}>Let's take a look at your event to confirm all the information are correct</Text>
+                
+                <View>
+                    <Text style={fonts.title1}>Review and publish</Text>
+                    <Text style={fonts.regular}>Let's review your event to confirm all the details</Text>
+                </View>
+
+                <View>
+                    {/* Name */}
+                    <View style={{flexDirection: 'row'}}>
+                        <Icon
+                            name='event'
+                            type='material'
+                            color={colours.grey}
+                        />
+                        <Text>Tuesday Weekly Salsa</Text>
+                    </View>
+
+                    {/* Location */}
+                    <View style={{flexDirection: 'row'}}>
+                        <Icon
+                            name='location-pin'
+                            type='entypo'
+                            color={colours.purple}
+                        />
+                        <Text>Montpetit Gym</Text>
+                    </View>
+                    
+                    {/* Date and time */}
+                    <View>
+
+                    </View>
+
+                    {/* Description */}
+                    <View></View>
+
+                    {/* Price */}
+                    <View></View>
+
+                    {/* Sign up link */}
+                    <View></View>
+
+                    {/* Recurrence */}
+                    <View></View>
+                
+                </View>
+
             </View>
     )
 }
 
 export const Step9 = ({route, navigation}: any) => {
     return (
-
-            <View>
-                <Text>Show Event</Text> 
-            </View>
-    )
-}
-
-export const Step10 = ({route, navigation}: any) => {
-    return (
         <View>
-            <Text>Show Event</Text>
-        </View>
-    )
-}
 
-export const Step11 = ({route, navigation}: any) => {
-    return (
-        <View>
-            <Text>You're all set! A member of the uEvents team will approve your event very shortly.</Text>
+            <Text style={fonts.title1}>You're all set! A member of the uEvents team will approve your event very shortly.</Text>
 
-            <Text>You can view your event on the Events page</Text>
-
-            <Button
-                title={"Back to Home Page"}
-            />
+            <Text style={fonts.title3}>You can view your event on the Events page</Text>
         </View>
     )
 }
