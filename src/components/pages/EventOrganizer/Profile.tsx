@@ -92,7 +92,7 @@ const Profile = ({ route, navigation }: props) => {
               labelProps={{}}
               disabledInputStyle={{ backgroundColor: "#ddd" }}
               value={"We are a club that loves to cycle! We meet every week to cycle around the city. We also have a competitive team that competes in the OUA league."}
-              selectionColor={colours.primaryPurple}
+              selectionColor={colours.purple}
               placeholder={"Club Description"}
               autoCapitalize="none"
               inputContainerStyle={{

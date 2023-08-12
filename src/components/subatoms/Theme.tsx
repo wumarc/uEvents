@@ -6,12 +6,12 @@ export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 
 export const colours = {
-    // primaryPurple: '#8A4287', This is to be removed
     purple: '#D6A9D5',
     black: '#222222', // For big text
     grey: '#777777',
     primaryGrey: '#EDEDED',
     white: '#FFFFFF',
+    darkPurple: '#8A4287',
     // textGrey: '#99A1AA',
     // titleGrey: '#47494F',
 }

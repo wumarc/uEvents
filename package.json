@@ -44,7 +44,7 @@
     "react-dom": "^18.1.0",
     "react-firebase-hooks": "^5.1.1",
     "react-native": "0.70.8",
-    "react-native-calendars": "^1.1298.0",
+    "react-native-calendars": "^1.1300.0",
     "react-native-config": "^1.5.1",
     "react-native-dotenv": "^3.4.8",
     "react-native-dropdown-select-list": "^2.0.4",
