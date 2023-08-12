@@ -5,16 +5,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
-import CreateEvent from "../EventOrganizer/CreateEvent";
 import { FC, useState } from "react";
 import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
-import { Step0 } from "./EventCreationSteps";
+import { Step0 } from "./CreateEvent";
 import { colours } from "../../subatoms/Theme";
-import Events from "./Events";
-import HeaderRight from "../../molecules/HeaderRight";
-import HeaderLeft from "../../molecules/HeaderLeft";
+import Home from "./Home";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -40,28 +37,13 @@ const MainView = ({ route, navigation }: props) => {
     >
       <Tab.Screen
         name="Home"
-        component={Events as any} // TODO fix error
+        component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Events",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "calendar" : "calendar-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="CreateEvent"
-        component={CreateEvent as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
-        options={{
-          tabBarLabel: "Create",
-          tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "plus-circle" : "plus-circle-outline"}
               color={focused ? colours.purple : colours.grey}
               size={30}
             />
@@ -103,12 +85,6 @@ const Main: FC<{ userType: string }> = (props) => {
             options={{ headerShown: false}}
           />
           {/* Create Event View */}
-          <Stack.Screen
-            name="CreateEventView"
-            component={CreateEvent as any} // TODO fix error
-            initialParams={{ userType: props.userType }}
-            // options={{ headerShown: false }}
-          />
           <Stack.Screen
             name="Step0"
             component={Step0 as any}

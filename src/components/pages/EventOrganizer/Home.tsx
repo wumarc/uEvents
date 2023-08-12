@@ -2,8 +2,9 @@ import { View, Text, SafeAreaView, StyleSheet, ScrollView, StatusBar } from "rea
 import { colours, spacing, fonts } from "../../subatoms/Theme";
 import { FlatList } from "react-native";
 import OrganizerEvent from "./OrganizerEvent";
+import { FAB } from "react-native-elements";
 
-const Events = ({ navigation }: any) => {
+const Home = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
@@ -35,13 +36,22 @@ const Events = ({ navigation }: any) => {
                     )}
                 /> */}
 
+                <View style={{position: 'absolute', bottom: 0, right: 0}}>
+                    <FAB
+                        icon={{ name: "add", color: 'white' }}
+                        placement="right"
+                        color={colours.purple}
+                        size="large"
+                        onPress={() => navigation.navigate("Step0")}
+                    />
+                </View>
+
             </ScrollView>
 
         </View>
     );
 
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -55,4 +65,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Events;
+export default Home;
