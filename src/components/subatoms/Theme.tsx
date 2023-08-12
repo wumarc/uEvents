@@ -21,9 +21,10 @@ export const spacing = {
     verticalMargin1: {marginVertical: windowWidth * 0.03},
     verticalMargin2: {marginVertical: windowWidth * 0.01},
     bottomMargin1: {marginBottom: windowWidth * 0.02},
-    verticalPadding1: {paddingVertical: windowWidth * 0.03}, // to be changed
+    verticalPadding1: {paddingVertical: windowWidth * 0.1}, // to be changed
     verticalPadding2: {paddingVertical: windowWidth * 0.01},
     page: windowWidth * 0.03,
+    page2: windowWidth * 0.07,
 }
 
 export const borderRadius = {

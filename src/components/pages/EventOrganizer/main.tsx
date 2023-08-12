@@ -10,9 +10,11 @@ import { FC, useState } from "react";
 import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
-import { Step0, Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9 } from "./EventCreationSteps";
+import { Step0 } from "./EventCreationSteps";
 import { colours } from "../../subatoms/Theme";
 import Events from "./Events";
+import HeaderRight from "../../molecules/HeaderRight";
+import HeaderLeft from "../../molecules/HeaderLeft";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -110,52 +112,11 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="Step0"
             component={Step0 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step1"
-            component={Step1 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step2"
-            component={Step2 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step3"
-            component={Step3 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step4"
-            component={Step4 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step5"
-            component={Step5 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step6"
-            component={Step6 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step7"
-            component={Step7 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step8"
-            component={Step8 as any}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Step9"
-            component={Step9 as any}
-            options={{ headerShown: true }}
+            options={({navigation}) => ({
+              title: "Organize a new event",
+              headerShown: true,
+              headerLeft: () => <HeaderLeft navigation={navigation}/>,
+            })}
           />
         </Stack.Navigator>
       </SafeAreaView>
