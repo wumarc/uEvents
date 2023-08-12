@@ -112,11 +112,7 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="Step0"
             component={Step0 as any}
-            options={({navigation}) => ({
-              title: "Organize a new event",
-              headerShown: true,
-              headerLeft: () => <HeaderLeft navigation={navigation}/>,
-            })}
+            options={({navigation}) => ({headerShown: false})}
           />
         </Stack.Navigator>
       </SafeAreaView>

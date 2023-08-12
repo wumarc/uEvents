@@ -40,11 +40,11 @@ export const Step0 = ({route, navigation}: any) => {
                     <Button
                         buttonStyle={{backgroundColor: colours.white}}
                         title={"Back"}
-                        onPress={() => setStep(step -1)}
-                        titleStyle={ step==1 ? {color: colours.white} : {...fonts.title3} }
-                        disabledStyle={{backgroundColor: colours.white}}
-                        disabledTitleStyle={{color: colours.white}}
-                        disabled={step==1}
+                        onPress={() => step==1 ? navigation.pop() : setStep(step -1)}
+                        titleStyle={{...fonts.title3}}
+                        // disabledStyle={{backgroundColor: colours.white}}
+                        // disabledTitleStyle={{color: colours.white}}
+                        // disabled={step==1}
                     />
                     <Button
                         buttonStyle={{backgroundColor: colours.purple, padding: 15, borderRadius: 10}}
@@ -211,7 +211,7 @@ export const Step4 = ({route, navigation}: any) => {
 
             <Text>{charactersAvailable} <Text style={{color: colours.grey}}>characters available</Text></Text>
             <Input
-                selectionColor={colours.purple}
+                selectionColor={colours.black}
                 autoCapitalize="none"
                 inputStyle={{height: windowHeight*0.13}}
                 inputContainerStyle={{
@@ -281,7 +281,7 @@ export const Step6 = ({route, navigation}: any) => {
 export const Step7 = ({route, navigation}: any) => {
     return (
         <View>
-            <Text style={fonts.title1}>If your event requires additional sign up, please provide the link here</Text>
+            <Text style={fonts.title1}>Recurrence</Text>
         </View>
     )
 }
@@ -289,7 +289,8 @@ export const Step7 = ({route, navigation}: any) => {
 export const Step8 = ({route, navigation}: any) => {
     return (
             <View>
-                <Text>Recurrence?</Text>
+                <Text style={fonts.title1}>Finish up and publish</Text>
+                <Text style={fonts.title2}>Let's take a look at your event to confirm all the information are correct</Text>
             </View>
     )
 }
@@ -298,21 +299,30 @@ export const Step9 = ({route, navigation}: any) => {
     return (
 
             <View>
-                <Text style={fonts.title1}>Finish up and publish</Text>
-                <Text style={fonts.title2}>Let's take a look at your event to confirm all the information are correct</Text>
+                <Text>Show Event</Text> 
             </View>
     )
 }
 
 export const Step10 = ({route, navigation}: any) => {
     return (
-        <View><Text>Show Event</Text></View>
+        <View>
+            <Text>Show Event</Text>
+        </View>
     )
 }
 
 export const Step11 = ({route, navigation}: any) => {
     return (
-        <View><Text>You're all set! A member of the uEvents team will shortly approve your event very shortly.</Text></View>
+        <View>
+            <Text>You're all set! A member of the uEvents team will approve your event very shortly.</Text>
+
+            <Text>You can view your event on the Events page</Text>
+
+            <Button
+                title={"Back to Home Page"}
+            />
+        </View>
     )
 }
 
