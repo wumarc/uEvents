@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, Modal, KeyboardAvoidingView} from "react-native"
+import { View, Text, ScrollView, StyleSheet, Modal, KeyboardAvoidingView, Platform} from "react-native"
 import { Icon, Input } from "react-native-elements"
 import { useState } from "react";
 import { Button } from "@rneui/base";
@@ -12,8 +12,11 @@ export const Step0 = ({route, navigation}: any) => {
     const [step, setStep] = useState(0);
 
     return (
-        <View style={{flex: 1, backgroundColor: colours.white, justifyContent: 'space-between'}}>
-            
+        <KeyboardAvoidingView
+            style={{flex: 1, backgroundColor: colours.white, justifyContent: 'space-between'}}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+ 
             {/* Render the right step dynamically */}
             <ScrollView>
                 <View style={{paddingHorizontal: spacing.page2, ...spacing.verticalPadding1}}>
@@ -31,7 +34,7 @@ export const Step0 = ({route, navigation}: any) => {
             </ScrollView>
 
             {/* Static Footer */}
-            <View>
+            <View style={{marginBottom: windowHeight*0.01}}>
                 <ProgressBar
                     progress={(step+1)*0.1}
                     color={colours.purple}
@@ -55,7 +58,7 @@ export const Step0 = ({route, navigation}: any) => {
                 </View>
             </View>
 
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -64,12 +67,12 @@ export const StepWelcome = ({route, navigation}: any) => {
     return (
         <View style={{flex: 1, height: '100%', justifyContent: 'center'}}>
 
-            <View>
-            <Text style={fonts.title1}>Create Event</Text>
+            <View style={spacing.verticalMargin1}>
+                <Text style={fonts.title1}>Create Event</Text>
             </View>
 
             <View>
-            <Text style={fonts.title3}>Creating an event is easy. Let us guide you through every step.</Text>
+                <Text style={fonts.regular}>Creating an event is easy. Let us guide you through every step.</Text>
             </View>
 
         </View>
@@ -81,17 +84,17 @@ export const Step1 = ({route, navigation}: any) => {
     const [charactersAvailable, setCharactersAvailable] = useState<number>(35);
     
     return (       
-        <KeyboardAvoidingView>
-            <Text style={fonts.title1}>How should we call your event?</Text>
+        <View>
+            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>How should we call your event?</Text>
             
             <Text style={fonts.regular}>Short names work best. Have fun with it!</Text>
 
             <View style={{marginVertical: '5%'}}>
                 <Text>{charactersAvailable} <Text style={{color: colours.grey}}>characters available</Text></Text>
                 <Input
-                    selectionColor={colours.purple}
+                    selectionColor={colours.black}
                     autoCapitalize="none"
-                    inputStyle={{height: windowHeight*0.13}}
+                    // inputStyle={{height: windowHeight*0.08}}
                     inputContainerStyle={{
                         borderColor: colours.grey,
                         borderWidth: 1,
@@ -106,7 +109,7 @@ export const Step1 = ({route, navigation}: any) => {
                     maxLength={35}
                 />
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 
@@ -128,7 +131,8 @@ export const Step2 = ({route, navigation}: any) => {
         <View>
             {!nextStep &&
                 <View>
-                    <Text style={fonts.title1}>Is your event taking place on campus?</Text>
+
+                    <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Is your event taking place on campus?</Text>
                     <View>
                         <Button
                             title={"Yes"} buttonStyle={{backgroundColor: colours.purple, padding: 15, borderRadius: 10, marginBottom: 10}}
@@ -307,6 +311,7 @@ export const Step5 = ({route, navigation}: any) => {
                         width: windowWidth*0.5,
                         height: windowHeight*0.1,
                     }}
+                    keyboardType="decimal-pad"
                     inputStyle={{fontSize: 50, fontWeight: 'bold'}}
                     containerStyle={{padding: 20, justifyContent: 'center', alignItems: 'center'}}
                     onChange={(e) => {}}
@@ -395,7 +400,7 @@ export const Step8 = ({route, navigation}: any) => {
 export const Step9 = ({route, navigation}: any) => {
     return (
         <View>
-            <Text style={fonts.title1}>You're all set! A member of the uEvents team will approve your event very shortly.</Text>
+            <Text style={fonts.title1}>🎉 You're all set! A member of the uEvents team will approve your event very shortly. 🎉</Text>
 
             <Text style={fonts.regular}>You can view your event on the Events page.</Text>
         </View>
@@ -406,7 +411,7 @@ const styles = StyleSheet.create({
     footer_buttons: {
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingVertical: '3%',
+        paddingVertical: '2.5%',
         paddingHorizontal: '5%',
         alignItems: "center",
         backgroundColor: colours.white,
