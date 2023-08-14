@@ -29,6 +29,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Settings = ({ route, navigation }: props) => {
+
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const logout = () => {
@@ -135,9 +136,7 @@ const Settings = ({ route, navigation }: props) => {
                   size={13}
                   iconStyle={{ fontSize: 23, color: "red" }}
                 />
-                <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>
-                  Log Out
-                </Text>
+                <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>Log Out</Text>
               </View>
             </View>
           </Button>
@@ -148,6 +147,7 @@ const Settings = ({ route, navigation }: props) => {
             modalProps={{animationType: 'fade'}}
             onBackdropPress={() => setConfirmDelete(false)}
             isVisible={confirmDelete}
+            scrollViewProps={{scrollEnabled:false}}
         >
             <View style={{
                 backgroundColor: 'white', 
@@ -155,18 +155,13 @@ const Settings = ({ route, navigation }: props) => {
                 borderRadius: 15
             }}>
                 <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}} >Confirm deletion of your account?</Text>    
-                <Button
-                    style={{
-                        paddingHorizontal: 10,
-                        borderRadius: 15,
-                        marginVertical: '1%'
-                    }}
-                    color={colours.purple}
-                    title={"Delete Account"}
-                    onPress={() => {
-                      deleteUser(auth.currentUser as User);
-                      deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
-                    }}
+                <CustomButton
+                  buttonName="Delete Account"
+                  onPressListener={() => {
+                    deleteUser(auth.currentUser as User);
+                    deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
+                  }}
+                  disabled={false}
                 />
                 <Button
                     style={{

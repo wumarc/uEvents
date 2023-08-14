@@ -13,8 +13,9 @@ import AccountSettings from "./AccountSettings";
 import OrganizerProfile from "./OrganizerProfile";
 import BrowseOrganizers from "./BrowseOrganizers";
 import HeaderLeft from "../../molecules/HeaderLeft";
-import { colours, fonts } from "../../subatoms/Theme";
+import { colours, fonts, renTheme } from "../../subatoms/Theme";
 import HeaderRight from "../../molecules/HeaderRight";
+import { ThemeProvider } from '@rneui/themed';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -121,61 +122,63 @@ const MainView = ({ route, navigation}: props) => {
 const Main: FC<{ userType: string }> = (props) => {
 
   return (
-    <NavigationContainer>
-      <SafeAreaView style={styles.container}>
-        <Stack.Navigator 
-          initialRouteName="MainView"
-          screenOptions={{
-            headerTitleAlign: 'center',
-            animation: 'slide_from_right',
-            //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
-          }}
-        >
-          {/* Main View */}
-          <Stack.Screen
-            name="MainView"
-            component={MainView as any} // TODO fix error
-            initialParams={{ userType: props.userType }}
-            options={{ headerShown: false }}
-          />
-          {/* Any other view that adds a stack to the main view */}
-          <Stack.Screen
-            name="EventDetailsView"
-            component={EventDetails as any} // TODO fix error
-            options={({navigation}) => {
-              const eventDetailsProps = {eventID: props.eventID};
-              return {
-                title: "Event Details",
-                headerStyle: {backgroundColor: colours.white},
-                headerTintColor: colours.black,
-                headerLeft: () => <HeaderLeft navigation={navigation}/>,
-                headerRight: () => <HeaderRight navigation={navigation} {...eventDetailsProps}/>
-              }
+    // <ThemeProvider theme={renTheme}>
+      <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+          <Stack.Navigator 
+            initialRouteName="MainView"
+            screenOptions={{
+              headerTitleAlign: 'center',
+              animation: 'slide_from_right',
+              //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
             }}
-          />
-          <Stack.Screen 
-            name="AccountSettingsView" 
-            component={AccountSettings as any}
-            options={ ({navigation}) => ({
-              title: "Account Settings",
-              headerStyle: {backgroundColor: colours.white},
-              // headerTitleStyle: {fontWeight: fonts.regular}, This property breaks on Android
-              headerTintColor: colours.black,
-              headerLeft: () => <HeaderLeft navigation={navigation}/>
-            })}
-          />
-          <Stack.Screen
-            name="EventOrganizerView"
-            component={OrganizerProfile as any}
-            options={({navigation}) => ({
-              title: "Organizer",
-              headerStyle: {backgroundColor: colours.white},
-              headerLeft: () => <HeaderLeft navigation={navigation}/>
-            })}
-          />
-        </Stack.Navigator>
-      </SafeAreaView>
-    </NavigationContainer>
+          >
+            {/* Main View */}
+            <Stack.Screen
+              name="MainView"
+              component={MainView as any} // TODO fix error
+              initialParams={{ userType: props.userType }}
+              options={{ headerShown: false }}
+            />
+            {/* Any other view that adds a stack to the main view */}
+            <Stack.Screen
+              name="EventDetailsView"
+              component={EventDetails as any} // TODO fix error
+              options={({navigation}) => {
+                const eventDetailsProps = {eventID: props.eventID};
+                return {
+                  title: "Event Details",
+                  headerStyle: {backgroundColor: colours.white},
+                  headerTintColor: colours.black,
+                  headerLeft: () => <HeaderLeft navigation={navigation}/>,
+                  headerRight: () => <HeaderRight navigation={navigation} {...eventDetailsProps}/>
+                }
+              }}
+            />
+            <Stack.Screen 
+              name="AccountSettingsView" 
+              component={AccountSettings as any}
+              options={ ({navigation}) => ({
+                title: "Account Settings",
+                headerStyle: {backgroundColor: colours.white},
+                // headerTitleStyle: {fontWeight: fonts.regular}, This property breaks on Android
+                headerTintColor: colours.black,
+                headerLeft: () => <HeaderLeft navigation={navigation}/>
+              })}
+            />
+            <Stack.Screen
+              name="EventOrganizerView"
+              component={OrganizerProfile as any}
+              options={({navigation}) => ({
+                title: "Organizer",
+                headerStyle: {backgroundColor: colours.white},
+                headerLeft: () => <HeaderLeft navigation={navigation}/>
+              })}
+            />
+          </Stack.Navigator>
+        </SafeAreaView>
+      </NavigationContainer>
+    // </ThemeProvider>
   );
 };
 

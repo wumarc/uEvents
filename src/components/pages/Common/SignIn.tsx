@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
 import { View, SafeAreaView, Linking, StyleSheet } from "react-native";
 import { Text, Input, Image } from "react-native-elements";
+import { BottomSheet } from "@rneui/base";
 import { Button } from "@rneui/base";
-import { colours } from "../../subatoms/Theme";
+import { colours, fonts } from "../../subatoms/Theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { auth } from "../../../firebaseConfig";
@@ -13,7 +14,8 @@ import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
-import { SelectList } from 'react-native-dropdown-select-list'
+import CustomButton from "../../atoms/CustomButton";
+import CustomInput from "../../atoms/CustomInput";
 
 // Accepted universities
 const universities = ["@uottawa.ca"];
@@ -22,10 +24,7 @@ const Stack = createNativeStackNavigator();
 const SignIn: FC = () => {
 
   const [isSigningUp, setIsSigningUp] = useState(false);
-
-  const signInHandler = () => {
-    setIsSigningUp(!isSigningUp);
-  };
+  const signInHandler = () => setIsSigningUp(!isSigningUp);
 
   return (
      <NavigationContainer>
@@ -83,8 +82,8 @@ const WelcomePage: FC = ({navigation}: any) => {
         {/* Sign In Box */}
         <View style={styles.optionsContainer}>
           
-          <View><Text style={{fontSize: 25}}>Start Socializing Now</Text></View>
-          <View><Text>Join a community of students and meet new people!</Text></View>
+          <View><Text style={fonts.title2}>Start Socializing Now</Text></View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}><Text style={fonts.regular}>Discover and join exciting student events, connect with peers, and stay in the loop with campus happenings</Text></View>
 
           <View style={{flexDirection: 'row', paddingHorizontal: '2.3%'}}>
             
@@ -136,6 +135,12 @@ const Login: FC = ({ setIsSigningUp }: any) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const resetPassword = () => {
+    console.log("Reset password")
+
+  }
+
   async function signIn() {
     if (email === "" || password === "") {
       setError("Email and password cannot be empty");
@@ -182,18 +187,13 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           secureTextEntry={true}
           // inputContainerStyle={inputStyle}
         />
-        <Text onPress={() => {}}>Forgot password?</Text>
+        <Text onPress={() => setShowResetPassword(true)}>Forgot password?</Text>
         <Text style={styles.textAlert} >{error}</Text>
       </View>
 
       {/* Button */}
       <View>
-        <Button
-          color={colours.purple}
-          title="Log In"
-          containerStyle={{borderRadius: 15}}
-          onPress={() => {signIn();}}
-        />
+        <CustomButton buttonName="Log In" onPressListener={() => signIn()} />
         {/* <View style={{marginTop: '2%', justifyContent: 'center'}}>
           <Text>
             Don't have an account?
@@ -201,6 +201,33 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           </Text>
         </View> */}
       </View>
+
+      <BottomSheet 
+          modalProps={{animationType: 'fade'}}
+          onBackdropPress={() => setShowResetPassword(false)}
+          isVisible={showResetPassword}
+          scrollViewProps={{scrollEnabled:false}}
+      >
+          <View style={{backgroundColor: 'white', paddingVertical: '7%', borderRadius: 15}}>
+              <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}}>
+                  Change your password
+              </Text>
+              <CustomInput
+                  input={email}
+                  secureText={false}
+                  placeholder="Enter your email"
+                  onChangeListener={(value: string) => setEmail(value)}
+              />
+              <View>
+                  <CustomButton
+                      buttonName="Reset Password" 
+                      onPressListener={() => resetPassword()}
+                      disabled={email === ""}
+                  />
+              </View>
+
+          </View>
+      </BottomSheet>
 
     </View>
   );
@@ -253,14 +280,14 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         
         {/* Form */}
         <View>
-          <SelectList
+          {/* <SelectList
             data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
             setSelected={(value: string) => setUserType(value)}
             save="value"
             defaultOption={{key: '3', value:'Account Type'}}
             boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
             dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
-          />
+          /> */}
           <Input
             label="Email"
             placeholder="Email"
@@ -274,17 +301,16 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           <Input
             label="Password"
             placeholder="Password"
+            selectionColor={colours.purple}
             labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
             containerStyle={{paddingHorizontal: 0}}
             onChangeText={(value) => setPassword(value)}
             autoCapitalize="none"
-            // selectionColor={colours.primaryPurple}
             secureTextEntry={true}
-            // inputContainerStyle={inputStyle}
           />
           <Text style={styles.textAlert} >{error}</Text>
           <CheckBox
-            // checkedColor={colours.primaryPurple}
+            checkedColor={colours.purple}
             title={
               <Text> I agree to comply with uEvents' 
                 <Text style={{}} onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
@@ -298,12 +324,11 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         </View>
 
         <View>
-          <Button
-            color={colours.purple}
-            title="Sign up"
-            onPress={() => {
-              userType === "Student"
-                ? signUp(true).then((success) => {
+          <CustomButton
+            buttonName="Sign Up"
+            onPressListener={() => {
+              // userType === "Student" ?
+                  signUp(true).then((success) => {
                     if (!success) return;
                     addDocumentToCollection<Student>(
                       "users",
@@ -311,15 +336,15 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
                       defaultStudent
                     );
                   })
-                : // Don't validate email for organizers
-                  signUp(false).then((success) => {
-                    if (!success) return;
-                    addDocumentToCollection<Organizer>(
-                      "users",
-                      getFirebaseUserIDOrEmpty(),
-                      defaultOrganizer
-                    );
-                  });
+                // : // Don't validate email for organizers
+                //   signUp(false).then((success) => {
+                //     if (!success) return;
+                //     addDocumentToCollection<Organizer>(
+                //       "users",
+                //       getFirebaseUserIDOrEmpty(),
+                //       defaultOrganizer
+                //     );
+                //   });
             }}
           />
         </View>
@@ -344,6 +369,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 
 }
 
+
 const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
@@ -367,5 +393,6 @@ const styles = StyleSheet.create({
     paddingVertical: '2%',
   }
 });
+
 
 export default SignIn;

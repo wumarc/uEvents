@@ -1,3 +1,4 @@
+import { createTheme } from "@rneui/themed";
 import { TextStyle } from "react-native"
 import {Dimensions} from 'react-native';
 import { Platform } from "react-native";
@@ -42,7 +43,7 @@ export const fonts = {
 }
 
 export const buttons = {
-    button1: {backgroundColor: colours.purple, padding: 10, borderRadius: 10,
+    button1: {backgroundColor: colours.purple, padding: 10, borderRadius: borderRadius.small,
         ...Platform.select({
             ios: {
                 shadowColor: "#000",
@@ -59,3 +60,22 @@ export const buttons = {
     })
     }
 }
+
+export const renTheme = createTheme({
+    lightColors: {
+      primary: colours.purple,
+    },
+    darkColors: {
+    //   primary: 'blue',
+    },
+    components: {
+      Button: {
+        color: colours.purple,
+        style: {
+            paddingHorizontal: '2.5%',
+            borderRadius: borderRadius.large,
+            marginVertical: '1%'
+        }
+      },
+    },
+});

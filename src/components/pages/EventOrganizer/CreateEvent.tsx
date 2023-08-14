@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, Modal, KeyboardAvoidingView, Platform} from "react-native"
+import { View, Text, ScrollView, StyleSheet, Modal, KeyboardAvoidingView, Platform, Pressable} from "react-native"
 import { Icon, Input } from "react-native-elements"
 import { useState } from "react";
 import { Button } from "@rneui/base";
@@ -93,7 +93,6 @@ export const Step1 = ({route, navigation}: any) => {
                 <Text>{charactersAvailable} <Text style={{color: colours.grey}}>characters available</Text></Text>
                 <Input
                     selectionColor={colours.black}
-                    autoCapitalize="none"
                     // inputStyle={{height: windowHeight*0.08}}
                     inputContainerStyle={{
                         borderColor: colours.grey,
@@ -206,8 +205,26 @@ export const Step3 = ({route, navigation}: any) => {
         <View>
             <Text style={fonts.title1}>Please provide the date and time of your event</Text>
 
+            <View>
+                <Text>From:</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Input
+                        onFocus={() => {setModalVisible(true)}}
+                        placeholder={"Select date"}
+                        selectionColor={colours.black}
+                    />
+                </View>
+            </View>
+            
+            <View>
+                <Text>To:</Text>
+                <View>
+
+                </View>
+            </View>
+
             <Button
-                title={"Pick a date"}
+                title={"Start day"}
                 buttonStyle={{backgroundColor: colours.purple, padding: 15, borderRadius: 10}}
                 onPress={() => {setModalVisible(true)}}
             />
@@ -221,10 +238,9 @@ export const Step3 = ({route, navigation}: any) => {
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
                         <View style={{width: '90%', backgroundColor: 'white', borderRadius: 10}}>
                             <Calendar
-                                onDayPress={day => {setSelected(day.dateString)}}
+                                onDayPress={day => {setSelected(day.dateString), setModalVisible(false)}}
                                 markedDates={{[selected]: {selected: true, disableTouchEvent: true}}}
-                                minDate={'2023-08-12'}
-                                maxDate={"2023-12-12"}
+                                minDate={Date()}
                                 allowSelectionOutOfRange={false}
                                 markingType="multi-period"
                                 hideExtraDays={true}
@@ -237,11 +253,6 @@ export const Step3 = ({route, navigation}: any) => {
                                     arrowColor: colours.purple,
                                     todayTextColor: colours.purple,
                                 }}
-                            />
-                            <Button
-                                title= {"Done"}
-                                buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
-                                onPress={() => {setModalVisible(false)}}
                             />
                         </View>
                     </View>
@@ -266,7 +277,6 @@ export const Step4 = ({route, navigation}: any) => {
             <Text>{charactersAvailable} <Text style={{color: colours.grey}}>characters available</Text></Text>
             <Input
                 selectionColor={colours.black}
-                autoCapitalize="none"
                 inputStyle={{height: windowHeight*0.13}}
                 inputContainerStyle={{
                     borderColor: colours.grey,

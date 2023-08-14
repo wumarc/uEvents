@@ -11,6 +11,7 @@ import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
+import { SearchBar } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -69,7 +70,28 @@ const Home = ({ route, navigation }: props) => {
         </View>
 
         {/* Search Bar */}
-        
+        <View>
+          <SearchBar
+            platform="default"
+            inputContainerStyle={{
+              borderRadius: 6,
+              height: 38,
+              backgroundColor: '#ebebeb',
+            }}
+            containerStyle={{
+              backgroundColor: 'white',
+              flex: 1,
+              borderBottomColor: "transparent",
+              borderTopColor: "transparent",
+            }}
+            onChangeText={(value) => setSearch(value)}
+            placeholder="Search events by name or category"
+            // placeholderTextColor="white"
+            value={search}
+            autoCapitalize="none"
+            selectionColor={colours.black}
+          />
+        </View>
 
         {/* List */}
         <FlatList
@@ -104,29 +126,6 @@ const Home = ({ route, navigation }: props) => {
       >
         <View style={{ display: "flex", flexDirection: "row" }}>
           <View style={{ flexGrow: 1 }}>
-            <View>
-              <Text style={styles.title}>Upcoming Events</Text>
-            </View>
-            <SearchBar
-              platform="default"
-              inputContainerStyle={{
-                borderRadius: 6,
-                height: 38,
-                backgroundColor: '#ebebeb',
-              }}
-              containerStyle={{
-                backgroundColor: 'white',
-                flex: 1,
-                borderBottomColor: "transparent",
-                borderTopColor: "transparent",
-              }}
-              onChangeText={(value) => setSearch(value)}
-              placeholder="Search events by name or category"
-              // placeholderTextColor="white"
-              value={search}
-              autoCapitalize="none"
-              selectionColor={colours.primaryPurple}
-            />
             <View style={{ flexGrow: 0 }}>
             <Toggle
               trackBar={{

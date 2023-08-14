@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
-import { colours, fonts } from "../../subatoms/Theme";
+import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import { useState } from "react";
 import { auth } from "../../../firebaseConfig";
 import SettingsInput from "../../atoms/SettingsInput";
@@ -15,6 +15,7 @@ import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/themed";
 import CustomInput from "../../atoms/CustomInput";
+import { Button } from "@rneui/themed";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -60,13 +61,15 @@ const AccountSettings = () => {
 
                     <SettingsInput 
                         placeholder="Email" 
-                        input={email!} 
+                        input={email!}
                         disabled={true}
+                        onChangeListener={{}}
                     />
                     <SettingsInput 
                         placeholder="Password" 
                         disabled={true} 
                         input={"***********"}
+                        onChangeListener={{}}
                     />
 
                     <CustomButton 
@@ -78,10 +81,11 @@ const AccountSettings = () => {
                         modalProps={{animationType: 'fade'}}
                         onBackdropPress={() => setIsVisible(false)}
                         isVisible={isVisible}
+                        scrollViewProps={{scrollEnabled:false}}
                     >
                         <View style={{
                             backgroundColor: 'white', 
-                            paddingVertical: '6%',
+                            paddingVertical: '7%',
                             borderRadius: 15
                         }}>
                             <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}}>

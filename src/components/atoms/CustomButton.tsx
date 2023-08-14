@@ -12,11 +12,11 @@ const CustomButton = ({buttonName, onPressListener, disabled}: buttonProps) => {
     return (
         <Button
             style={{
-                paddingHorizontal: 10,
-                borderRadius: borderRadius.medium,
+                // paddingHorizontal: '2.5%',
+                borderRadius: borderRadius.large,
                 marginVertical: '1%'
             }}
-            
+            buttonStyle={{borderRadius: borderRadius.small}}
             color={colours.purple}
             title={buttonName}
             onPress={onPressListener}
@@ -25,9 +25,5 @@ const CustomButton = ({buttonName, onPressListener, disabled}: buttonProps) => {
     );
 
 }
-
-
-
-
 
 export default CustomButton;
