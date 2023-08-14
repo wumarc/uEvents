@@ -23,6 +23,7 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = (props) => {
+  
   const [loading, event, setEvent] = useStateWithFireStoreDocument(
     "events",
     props.id

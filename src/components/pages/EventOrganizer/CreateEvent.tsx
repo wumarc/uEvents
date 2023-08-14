@@ -6,6 +6,8 @@ import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subato
 import { ProgressBar } from "react-native-paper";
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import { Dropdown } from 'react-native-element-dropdown';
+import emojiRegex from 'emoji-regex';
+import { Image } from '@rneui/themed';
 
 export const Step0 = ({route, navigation}: any) => {
     
@@ -30,6 +32,7 @@ export const Step0 = ({route, navigation}: any) => {
                     {step == 7 && <Step7 />}
                     {step == 8 && <Step8 />}
                     {step == 9 && <Step9 />}
+                    {step == 10 && <Step10 />}
                 </View>
             </ScrollView>
 
@@ -52,7 +55,7 @@ export const Step0 = ({route, navigation}: any) => {
                     <Button
                         buttonStyle={{backgroundColor: colours.purple, padding: 15, paddingHorizontal: 25, borderRadius: 10}}
                         title={step != 9 ? "Next" : "Finish"}
-                        onPress={() => {step != 9 ? setStep(step + 1) : navigation.pop()}}
+                        onPress={() => {step != 10 ? setStep(step + 1) : navigation.pop()}}
                         titleStyle={{...fonts.title2, color: colours.white}}
                     />
                 </View>
@@ -413,6 +416,56 @@ export const Step9 = ({route, navigation}: any) => {
             <Text style={fonts.title1}>🎉 You're all set! A member of the uEvents team will approve your event very shortly. 🎉</Text>
 
             <Text style={fonts.regular}>You can view your event on the Events page.</Text>
+        </View>
+    )
+}
+
+export const Step10 = ({route, navigation}: any) => {
+    
+    const [unicodePath, setUnicodePath] = useState<string>('../../../assets/openmojis/1F600.png');
+
+    // use this to valide the emoji
+    const isEmoji = (character: string) => {
+        const regex = emojiRegex();
+        return regex.test(character);
+    };
+
+    function emojiToUnicode(emoji: any) {
+        if(emoji.length == 0) return;
+        setUnicodePath('../../../assets/openmojis/'+ emoji.codePointAt(0).toString(16).toUpperCase());
+    }
+
+    return (
+        <View>
+            <Text style={fonts.title1}>Pick an emoji to represent your event</Text>
+            <Text style={fonts.regular}>Who still uses images? Yuck! Emojis are cooler 😎</Text>
+
+            <View>
+                <Input
+                    selectionColor={colours.black}
+                    autoCapitalize="none"
+                    inputContainerStyle={{
+                        borderColor: colours.grey,
+                        borderBottomWidth: 1,
+                        borderWidth: 1,
+                        paddingVertical: 4,
+                        paddingHorizontal: 10,
+                        borderRadius: 6,
+                        width: windowWidth*0.3,
+                        height: windowHeight*0.1,
+                    }}
+                    inputStyle={{fontSize: 50, fontWeight: 'bold'}}
+                    containerStyle={{padding: 20, justifyContent: 'center', alignItems: 'center'}}
+                    onChange={(e) => {emojiToUnicode(e.nativeEvent.text)}}
+                    maxLength={5}
+                />
+                <Image
+                    // source={require('../../../assets/openmojis/1F600.png')}
+                    source={require('../../../assets/openmojis/1F600.png')}
+                    style={{width: 100, height: 100}}
+                />
+                
+            </View>
         </View>
     )
 }

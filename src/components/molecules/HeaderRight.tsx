@@ -6,7 +6,12 @@ import { useNavigation } from "@react-navigation/native";
 const HeaderRight = ({navigation, saved}: any) => {
 
     return (
-        <TouchableOpacity onPress={() => console.log("Unsave")}>
+        <TouchableOpacity 
+            onPress={() => 
+                console.log("Unsave")
+                
+            }
+        >
             <MaterialCommunityIcons
                 name={saved ? "heart" : "heart-outline"}
                 color={saved ? colours.purple : colours.black}
