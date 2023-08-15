@@ -177,9 +177,10 @@ export const Step3 = ({route, navigation}: any) => {
         <View>
             {!nextStep &&
                 <View>
-
+                    
                     <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Is your event taking place on campus?</Text>
-                    <View>
+                    
+                    <View style={{marginVertical: '5%'}}>
                         <Button
                             title={"Yes"} buttonStyle={{backgroundColor: colours.purple, padding: 15, borderRadius: 10, marginBottom: 10}}
                             onPress={() => {setNextStep(true); setOnCampus(true)}}
@@ -352,7 +353,7 @@ export const Step6 = ({route, navigation}: any) => {
             
             <View>
                 <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Now, set your price</Text>
-                <Text style={fonts.regular}>If your event is free, just leave it blank</Text>
+                <Text style={fonts.regular}>If your event is free, just leave it blank.</Text>
             </View>
 
             {/* Price */}
@@ -426,7 +427,7 @@ export const Step10 = ({route, navigation}: any) => {
                 
                 <View>
                     <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Review and publish</Text>
-                    <Text style={fonts.regular}>Let's review your event to confirm all the details</Text>
+                    <Text style={fonts.regular}>Let's review your event to confirm all the details.</Text>
                 </View>
 
                 <View>

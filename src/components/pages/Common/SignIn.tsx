@@ -3,7 +3,7 @@ import { View, SafeAreaView, Linking, StyleSheet } from "react-native";
 import { Text, Input, Image } from "react-native-elements";
 import { BottomSheet } from "@rneui/base";
 import { Button } from "@rneui/base";
-import { colours, fonts } from "../../subatoms/Theme";
+import { colours, fonts, windowHeight } from "../../subatoms/Theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { auth } from "../../../firebaseConfig";
@@ -71,19 +71,22 @@ const SignIn: FC = () => {
 const WelcomePage: FC = ({navigation}: any) => {
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: colours.white}}>
       <View>
 
         {/* Image */}
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={require("../../../assets/welcome_image.jpg")} />
+          <Image style={styles.image} source={require("../../../assets/welcome_image.png")}/>
         </View>
 
         {/* Sign In Box */}
         <View style={styles.optionsContainer}>
           
-          <View><Text style={fonts.title2}>Start Socializing Now</Text></View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}><Text style={fonts.regular}>Discover and join exciting student events, connect with peers, and stay in the loop with campus happenings</Text></View>
+          <View style={{alignItems: 'center'}}>
+            <Text style={fonts.title1}>uEvents</Text>
+            <Text style={fonts.title2}>Find out what you are missing</Text>
+          </View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}><Text style={fonts.regular}>The next student led social connection app.</Text></View>
 
           <View style={{flexDirection: 'row', paddingHorizontal: '2.3%'}}>
             
@@ -373,20 +376,22 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
-    height: '60%',
+    backgroundColor: colours.purple,
+    height: windowHeight*0.55,
   },
   optionsContainer: {
     width: '100%',
     height: '40%',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    backgroundColor: 'white',
+    backgroundColor: colours.white,
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   image: {
+    justifyContent: 'center',
     width: '100%',
-    height: '110%',
+    height: '100%',
   },
   textAlert: {
     color: 'red',
