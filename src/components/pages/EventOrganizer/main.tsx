@@ -75,6 +75,7 @@ const Main: FC<{ userType: string }> = (props) => {
 
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor="transparent" translucent={true} barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <Stack.Navigator initialRouteName="MainView">
           {/* Main View */}

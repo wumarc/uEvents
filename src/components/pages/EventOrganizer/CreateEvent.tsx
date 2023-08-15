@@ -14,7 +14,7 @@ export const Step0 = ({route, navigation}: any) => {
     const [step, setStep] = useState(1);
 
     return (
-        <KeyboardAvoidingView
+        <View
             style={{flex: 1, backgroundColor: colours.white, justifyContent: 'space-between'}}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
@@ -38,7 +38,7 @@ export const Step0 = ({route, navigation}: any) => {
             </ScrollView>
 
             {/* Static Footer */}
-            <View style={{marginBottom: windowHeight*0.01}}>
+            <KeyboardAvoidingView style={{marginBottom: windowHeight*0.01}}>
                 <ProgressBar
                     progress={step*0.09}
                     color={colours.purple}
@@ -60,9 +60,9 @@ export const Step0 = ({route, navigation}: any) => {
                         titleStyle={{...fonts.title2, color: colours.white}}
                     />
                 </View>
-            </View>
+            </KeyboardAvoidingView>
 
-        </KeyboardAvoidingView>
+        </View>
     );
 }
 
