@@ -42,7 +42,7 @@ export default function App() {
     console.error(error);
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{"Oops! It seems that there is a problem. Check your internet issues! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
+        <Text>{"Oops! There is a problem. Check your internet connexion! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
       </View>
     );
   } else if (user) {
@@ -73,7 +73,8 @@ const AppInner: FC = () => {
   }
 
   if (!userData) {
-    return <Error message="Oops! It seems that there is a connexion issue. Please check your connexion and try again"/>;
+    // TODO: why is this giving an error?
+    return <Error message="Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account."/>;
   }
 
   if (userData.type === "student") {
@@ -83,6 +84,6 @@ const AppInner: FC = () => {
   } else if (userData.type === "admin") {
     return <MainAdmin userType={userData.type} />;
   } else {
-    return <Error message="Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account."/>;
+    return <Error message="A problem has occured. please reach us at uevents.dev@uottawa.ca to recover your account."/>;
   }
 };

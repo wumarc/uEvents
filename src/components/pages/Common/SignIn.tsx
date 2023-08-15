@@ -257,10 +257,10 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 
       // Only accept emails from accepted universities
       if (!universities.some((university) => email.includes(university))) {
-        setError("You must be an uOttawa student to sign up");
+        setError("You must be a uOttawa student to sign up");
         return false;
       }
-
+      
       if (!checked) {
         setError("You must agree to the terms and conditions");
         return false;
@@ -316,7 +316,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             checkedColor={colours.purple}
             title={
               <Text> I agree to comply with uEvents' 
-                <Text style={{}} onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
+                <Text onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
                 >{" "}Privacy Policy{" "}</Text>
               </Text>
             }
@@ -327,11 +327,12 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         </View>
 
         <View>
-          <CustomButton
-            buttonName="Sign Up"
-            onPressListener={() => {
-              // userType === "Student" ?
-                  signUp(true).then((success) => {
+          <Button
+            color={colours.purple}
+            title="Sign up"
+            onPress={() => {
+              userType === "Student"
+                ? signUp(true).then((success) => {
                     if (!success) return;
                     addDocumentToCollection<Student>(
                       "users",
@@ -339,15 +340,15 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
                       defaultStudent
                     );
                   })
-                // : // Don't validate email for organizers
-                //   signUp(false).then((success) => {
-                //     if (!success) return;
-                //     addDocumentToCollection<Organizer>(
-                //       "users",
-                //       getFirebaseUserIDOrEmpty(),
-                //       defaultOrganizer
-                //     );
-                //   });
+                : // Don't validate email for organizers
+                  signUp(false).then((success) => {
+                    if (!success) return;
+                    addDocumentToCollection<Organizer>(
+                      "users",
+                      getFirebaseUserIDOrEmpty(),
+                      defaultOrganizer
+                    );
+                  });
             }}
           />
         </View>
