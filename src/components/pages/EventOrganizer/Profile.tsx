@@ -1,8 +1,7 @@
 import { ScrollView, View } from "react-native";
-import { Button, Image, Text } from "@rneui/themed";
-import { Input } from "react-native-elements";
+import { Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
-import { defaultStudent, Student } from "../../../utils/model/Student";
+import { Input } from "@rneui/themed";
 import { Avatar } from "react-native-elements";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
@@ -17,6 +16,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
+  
   const [loading, profile, setProfile] = useSateWithFireStore<Organizer>(
     "organizer" + "/" + getFirebaseUserID(),
     "info",
@@ -72,17 +72,26 @@ const Profile = ({ route, navigation }: props) => {
         <View style={styles.studentInfo}>
           <View style={{ flexDirection: "column", flex: 1 }}>
             
-            <InputWithLabel
-              placeholder="Name"
-              input={profile.name ? profile.name : "uOttawa Cycling Club"}
-              secureText={false}
-              onChangeListener={(value: string) => setProfile({ ...profile, name: value })}
+            <Input
+                label="Name"
+                value={profile.name ? profile.name : "uOttawa Cycling Club"}
+                disabled={true}
+                labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+                autoCapitalize="none"
+                containerStyle={{paddingHorizontal: 0}}
+                selectionColor={colours.purple}
+                onChange={(value: any) => setProfile({ ...profile, name: value })}
             />
 
-            <InputWithLabel
-              placeholder="Email"
-              input={profile.email ? profile.email : "uottawa_cycling@gmail.com"}
-              secureText={false}
+            <Input
+                label="Email"
+                // value={profile.email ? profile.email : "uottawa_cycling@gmail.com"}
+                disabled={true}
+                labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+                autoCapitalize="none"
+                containerStyle={{paddingHorizontal: 0}}
+                selectionColor={colours.purple}
+                onChange={(value: any) => setProfile({ ...profile, name: value })}
             />
 
             <Input
@@ -101,14 +110,7 @@ const Profile = ({ route, navigation }: props) => {
                   paddingVertical: 2,
                   paddingHorizontal: 8,
                   borderRadius: 6,
-                  underlineColor: "transparent"
               }}
-              multiline={true}
-              errorStyle={{}}
-              errorProps={{}}
-              inputStyle={{ outlineStyle: "none" }}
-              leftIconContainerStyle={{}}
-              rightIconContainerStyle={{}}
             />
 
           </View>

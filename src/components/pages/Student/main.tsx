@@ -124,8 +124,9 @@ const Main: FC<{ userType: string }> = (props) => {
   return (
     // <ThemeProvider theme={renTheme}>
       <NavigationContainer>
+        <StatusBar backgroundColor="transparent" translucent={true} barStyle="dark-content" />
         <SafeAreaView style={styles.container}>
-          <Stack.Navigator 
+          <Stack.Navigator
             initialRouteName="MainView"
             screenOptions={{
               headerTitleAlign: 'center',
