@@ -14,7 +14,7 @@
     },
     "android": {
       "package": "com.uevents.dev.uevents",
-      "versionCode": 2
+      "versionCode": 3
     },
     "ios": {
       "bundleIdentifier": "com.uevents.dev.uevents",
