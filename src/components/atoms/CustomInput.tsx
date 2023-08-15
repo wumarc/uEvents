@@ -26,12 +26,11 @@ const CustomInput = ({input, placeholder, onChangeListener, secureText}: inputPr
                 borderWidth: 1,
                 paddingVertical: 4,
                 paddingHorizontal: 10,
-                borderRadius: borderRadius.large,
-                underlineColor: "transparent"
+                borderRadius: borderRadius.medium,
             }}
             errorStyle={{}}
             errorProps={{}}
-            inputStyle={{ outlineStyle: "none" }}
+            inputStyle={{}}
             labelStyle={{}}
             labelProps={{}}
             leftIconContainerStyle={{}}

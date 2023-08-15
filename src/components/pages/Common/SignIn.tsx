@@ -172,8 +172,8 @@ const Login: FC = ({ setIsSigningUp }: any) => {
         <Input
           label="Email"
           placeholder="Email"
+          labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
           onChangeText={(value) => setEmail(value)}
-          labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
           autoCapitalize="none"
           containerStyle={{paddingHorizontal: 0}}
           selectionColor={colours.purple}
@@ -182,9 +182,9 @@ const Login: FC = ({ setIsSigningUp }: any) => {
         <Input
           label="Password"
           placeholder="Password"
-          labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
-          containerStyle={{paddingHorizontal: 0}}
+          labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
           onChangeText={(value) => setPassword(value)}
+          containerStyle={{paddingHorizontal: 0}}
           autoCapitalize="none"
           selectionColor={colours.purple}
           secureTextEntry={true}
@@ -295,7 +295,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             label="Email"
             placeholder="Email"
             onChangeText={(value) => setEmail(value)}
-            labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
+            labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
             autoCapitalize="none"
             containerStyle={{paddingHorizontal: 0}}
             selectionColor={colours.purple}
@@ -305,7 +305,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             label="Password"
             placeholder="Password"
             selectionColor={colours.purple}
-            labelStyle={{color: 'black', fontWeight: '400', marginBottom: '1%'}}
+            labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
             containerStyle={{paddingHorizontal: 0}}
             onChangeText={(value) => setPassword(value)}
             autoCapitalize="none"
@@ -372,7 +372,6 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 
 }
 
-
 const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
@@ -398,6 +397,5 @@ const styles = StyleSheet.create({
     paddingVertical: '2%',
   }
 });
-
 
 export default SignIn;

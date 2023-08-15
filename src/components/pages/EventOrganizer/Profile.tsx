@@ -11,7 +11,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
 import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
-import InputWithLabel from "../../atoms/InputWithLabel";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;

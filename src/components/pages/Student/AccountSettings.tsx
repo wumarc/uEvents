@@ -1,8 +1,8 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import { useState } from "react";
+import { Input } from "react-native-elements";
 import { auth } from "../../../firebaseConfig";
-import SettingsInput from "../../atoms/SettingsInput";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserID } from "../../../utils/util";
@@ -59,17 +59,23 @@ const AccountSettings = () => {
             <ScrollView>
                 <View style={styles.studentInfo}>
 
-                    <SettingsInput 
-                        placeholder="Email" 
-                        input={email!}
+                    <Input
+                        label="Email"
+                        value={email!}
                         disabled={true}
-                        onChangeListener={{}}
+                        labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+                        autoCapitalize="none"
+                        containerStyle={{paddingHorizontal: 0}}
+                        selectionColor={colours.purple}
                     />
-                    <SettingsInput 
-                        placeholder="Password" 
-                        disabled={true} 
-                        input={"***********"}
-                        onChangeListener={{}}
+                    <Input
+                        label="Password"
+                        value={"*********"}
+                        disabled={true}
+                        labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+                        autoCapitalize="none"
+                        containerStyle={{paddingHorizontal: 0}}
+                        selectionColor={colours.purple}
                     />
 
                     <CustomButton 
