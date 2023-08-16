@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { ButtonGroup, Icon } from "react-native-elements";
 import { Input } from "@rneui/themed";
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button } from "@rneui/base";
 import {
   colours,
@@ -23,12 +23,27 @@ import { ProgressBar } from "react-native-paper";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Dropdown } from "react-native-element-dropdown";
 import emojiRegex from "emoji-regex";
-import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
+import {
+  useSateWithFireStore,
+  useStateWithFireStoreDocument,
+} from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 import { getOrderedCategories } from "../../../utils/categories";
+import { EventObject } from "../../../utils/model/EventObject";
+import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
+import { doc, setDoc } from "firebase/firestore";
+import { fireStore } from "../../../firebaseConfig";
 
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
+  const [id, setId] = useState(uid());
+
+  useEffect(() => {
+    setDoc(doc(fireStore, "events/" + id), {
+      id: id,
+      organizer: getFirebaseUserIDOrEmpty(),
+    });
+  }, []);
 
   return (
     <View
@@ -48,16 +63,16 @@ export const Step0 = ({ route, navigation }: any) => {
           }}
         >
           {/* {step == 0 && <StepWelcome />} */}
-          {step == 1 && <Step1 />}
-          {step == 2 && <Step2 />}
-          {step == 3 && <Step3 />}
-          {step == 4 && <Step4 />}
-          {step == 5 && <Step5 />}
-          {step == 6 && <Step6 />}
-          {step == 7 && <Step7 />}
-          {step == 8 && <Step8 />}
-          {step == 9 && <Step9 />}
-          {step == 10 && <Step10 />}
+          {step == 1 && <Step1 eventID={id} />}
+          {step == 2 && <Step2 eventID={id} />}
+          {step == 3 && <Step3 eventID={id} />}
+          {step == 4 && <Step4 eventID={id} />}
+          {step == 5 && <Step5 eventID={id} />}
+          {step == 6 && <Step6 eventID={id} />}
+          {step == 7 && <Step7 eventID={id} />}
+          {step == 8 && <Step8 eventID={id} />}
+          {step == 9 && <Step9 eventID={id} />}
+          {step == 10 && <Step10 eventID={id} />}
         </View>
       </ScrollView>
 
@@ -111,8 +126,17 @@ export const StepWelcome = ({ route, navigation }: any) => {
 };
 
 /* ---------------------------------- Name ---------------------------------- */
-export const Step1 = ({ route, navigation }: any) => {
+export const Step1: FC<{ eventID: string }> = (props) => {
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    props.eventID
+  );
+
   const [charactersAvailable, setCharactersAvailable] = useState<number>(35);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View>
@@ -144,6 +168,7 @@ export const Step1 = ({ route, navigation }: any) => {
           containerStyle={{ paddingHorizontal: 0 }}
           onChange={(e) => {
             setCharactersAvailable(35 - e.nativeEvent.text.length);
+            set({ ...event, name: e.nativeEvent.text });
           }}
           maxLength={35}
         />
@@ -153,7 +178,7 @@ export const Step1 = ({ route, navigation }: any) => {
 };
 
 /* ---------------------------------- Emoji --------------------------------- */
-export const Step2 = ({ route, navigation }: any) => {
+export const Step2: FC<{ eventID: string }> = (props) => {
   const [unicodePath, setUnicodePath] = useState<string>(
     "../../../assets/openmojis/1F600.png"
   );
@@ -207,7 +232,7 @@ export const Step2 = ({ route, navigation }: any) => {
 };
 
 /* --------------------------------- Location ------------------------------- */
-export const Step3 = ({ route, navigation }: any) => {
+export const Step3: FC<{ eventID: string }> = (props) => {
   const [nextStep, setNextStep] = useState<boolean>(false);
   const [onCampus, setOnCampus] = useState<boolean>(false);
   const [buildingName, setBuildingName] = useState<string>("");
@@ -302,7 +327,7 @@ export const Step3 = ({ route, navigation }: any) => {
 };
 
 /* ---------------------------------- Date ---------------------------------- */
-export const Step4 = ({ route, navigation }: any) => {
+export const Step4: FC<{ eventID: string }> = (props) => {
   const [selected, setSelected] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState({
@@ -417,7 +442,7 @@ export const Step4 = ({ route, navigation }: any) => {
 };
 
 /* ------------------------------- Description ------------------------------ */
-export const Step5 = ({ route, navigation }: any) => {
+export const Step5: FC<{ eventID: string }> = (props) => {
   const [charactersAvailable, setCharactersAvailable] = useState<number>(200);
 
   return (
@@ -460,7 +485,7 @@ export const Step5 = ({ route, navigation }: any) => {
 };
 
 /* --------------------------------- Price ---------------------------------- */
-export const Step6 = ({ route, navigation }: any) => {
+export const Step6: FC<{ eventID: string }> = (props) => {
   return (
     <View>
       <View>
@@ -510,7 +535,7 @@ export const Step6 = ({ route, navigation }: any) => {
 };
 
 /* ------------------------------- Sign up link ----------------------------- */
-export const Step7 = ({ route, navigation }: any) => {
+export const Step7: FC<{ eventID: string }> = (props) => {
   return (
     <View>
       <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
@@ -524,7 +549,7 @@ export const Step7 = ({ route, navigation }: any) => {
 };
 
 /* ---------------------------------- Tags ---------------------------------- */
-export const Step8 = ({ route, navigation }: any) => {
+export const Step8: FC<{ eventID: string }> = (props) => {
   const [loading, categories, setCategories] = useSateWithFireStore<string[]>(
     "categories/names",
     "list",
@@ -580,7 +605,7 @@ export const Step8 = ({ route, navigation }: any) => {
 };
 
 /* --------------------------------- Review --------------------------------- */
-export const Step9 = ({ route, navigation }: any) => {
+export const Step9: FC<{ eventID: string }> = (props) => {
   return (
     <View>
       <View>
@@ -627,7 +652,7 @@ export const Step9 = ({ route, navigation }: any) => {
 };
 
 /* --------------------------------- Finish --------------------------------- */
-export const Step10 = ({ route, navigation }: any) => {
+export const Step10: FC<{ eventID: string }> = (props) => {
   return (
     <View>
       <View>

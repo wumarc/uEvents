@@ -74,7 +74,8 @@ export type EventObject = {
   description: string; // 750 characters max
   location: string; // Building name and room number
   address: string;
-  organizer: string; // Organizer name //TODO: Replace for id
+  organizerType: "Manually Added" | "Organizer Added";
+  organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
   startTime: Timestamp;
   endTime?: Timestamp; // End time doesn't have to be specified
   categories: string[];
