@@ -1,16 +1,14 @@
-import { KeyboardAvoidingView, ScrollView, View } from "react-native";
-import { Text } from "@rneui/themed";
-import { StyleSheet } from "react-native";
-import { Input } from "@rneui/themed";
-import { Avatar, Button } from "react-native-elements";
+import { KeyboardAvoidingView, ScrollView, View, StyleSheet, Image } from "react-native";
+import { Input, Avatar, Text } from "@rneui/themed";
+import { Button} from "react-native-elements";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
-import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
-import React from "react";
+import React, { useState } from "react";
+import * as ImagePicker from 'expo-image-picker';
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -18,11 +16,28 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 const Profile = ({ route, navigation }: props) => {
   
   const [saveChanges, setSaveChanges] = React.useState(false);
+  const [image, setImage] = useState<String>("");
   const [loading, profile, setProfile] = useSateWithFireStore<Organizer>(
     "organizer" + "/" + getFirebaseUserID(),
     "info",
     defaultOrganizer
   );
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.2,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result!.assets[0]!.uri);
+    }
+  };
 
   if (loading) {
     return <Text>Loading</Text>;
@@ -36,11 +51,15 @@ const Profile = ({ route, navigation }: props) => {
         {/* Image Section */}
         <View style={styles.profileImage}>
           <Avatar
-            source={{uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w"}}
-            // showEditButton
+            source={{uri: image == "" ? "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w" : image}}
             rounded
             size="xlarge"
-          />
+          >
+            <Avatar.Accessory 
+              size={23}
+              onPress={() => {pickImage()}}
+            />
+          </Avatar>
         </View>
 
         {/* Club Info Section */}
@@ -75,6 +94,10 @@ const Profile = ({ route, navigation }: props) => {
                 autoCapitalize="none"
                 containerStyle={{paddingHorizontal: 0}}
                 selectionColor={colours.purple}
+                rightIcon={{ 
+                  type: 'entypo', name: 'cross',
+                  onPress: () => {}
+                }}
                 onChange={(value: any) => setProfile({ ...profile, name: value })}
             />
 
@@ -86,6 +109,7 @@ const Profile = ({ route, navigation }: props) => {
                 textAlignVertical= 'top'
                 multiline={true}
                 autoCapitalize="none"
+                rightIcon={{ type: 'entypo', name: 'cross'}}
                 containerStyle={{paddingHorizontal: 0}}
                 selectionColor={colours.purple}
                 onChange={(value: any) => setProfile({ ...profile, name: value })}
