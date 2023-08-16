@@ -47,7 +47,9 @@ export const Step0 = ({ route, navigation }: any) => {
       setDoc(doc(fireStore, "events/" + id), {
         id: id,
         organizer: getFirebaseUserIDOrEmpty(),
-        state: "Created",
+
+        // Default event
+        state: "Draft",
         name: "",
         description: "",
         startTime: new Timestamp(0, 0),
@@ -59,7 +61,7 @@ export const Step0 = ({ route, navigation }: any) => {
         originalLink: "",
         address: "",
         // recurrence: new recurrence("None"),
-        organizerType: "Manually Added",
+        organizerType: "Organizer Added",
       });
     }
   }, []);

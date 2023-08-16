@@ -42,7 +42,7 @@ const Home = ({ navigation }: any) => {
           data={myEvents}
           renderItem={({ item, index }) => (
             <View>
-              <OrganizerEvent event={item} navigation={navigation} />
+              <OrganizerEvent eventID={item.id} navigation={navigation} />
             </View>
           )}
         />

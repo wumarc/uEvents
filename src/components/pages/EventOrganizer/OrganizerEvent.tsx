@@ -6,13 +6,26 @@ import { EventObject } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { deleteDoc, doc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
+import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { Loading } from "../Common/Loading";
 
-const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
+const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
+  const [loading, event, setEvent] = useStateWithFireStoreDocument(
+    "events",
+    props.eventID
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  let publishOption = event.state === "Draft" ? "Publish" : "Unpublish";
+
   return (
     <TouchableOpacity
       onPress={() =>
         props.navigation.navigate("EventDetailsView", {
-          eventID: props.event.id,
+          eventID: props.eventID,
         })
       }
     >
@@ -26,7 +39,7 @@ const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
       >
         <View>
           <Text style={{ ...fonts.title2, color: colours.purple }}>
-            {props.event.name}
+            {event.name}
           </Text>
           <Text style={fonts.title3}>June 13 2023</Text>
           <Text style={fonts.title3}>10 PM - 4 PM</Text>
@@ -45,7 +58,7 @@ const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ ...fonts.title3 }}>Published</Text>
+            <Text style={{ ...fonts.title3 }}>{event.state}</Text>
 
             <Icon
               reverse
@@ -61,17 +74,24 @@ const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
             title="Edit"
             onPress={() =>
               props.navigation.navigate("Step0", {
-                eventID: props.event.id,
+                eventID: props.eventID,
                 useDefault: false,
               })
             }
           />
-          <Button title="Publish" />
+          <Button
+            title={publishOption}
+            onPress={() => {
+              if (event.state === "Draft") {
+                setEvent({ ...event, state: "Pending" });
+              } else {
+                setEvent({ ...event, state: "Draft" });
+              }
+            }}
+          />
           <Button
             title="Delete"
-            onPress={() =>
-              deleteDoc(doc(fireStore, "events/" + props.event.id))
-            }
+            onPress={() => deleteDoc(doc(fireStore, "events/" + props.eventID))}
           />
         </View>
       </View>
