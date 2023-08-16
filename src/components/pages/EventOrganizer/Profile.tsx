@@ -25,14 +25,13 @@ const Profile = ({ route, navigation }: props) => {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
+    // https://docs.expo.dev/versions/latest/sdk/imagepicker/
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.2,
     });
-
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result!.assets[0]!.uri);
@@ -160,6 +159,5 @@ const styles = StyleSheet.create({
     borderTopColor: colours.primaryGrey,
   },
 });
-
 
 export default Profile;

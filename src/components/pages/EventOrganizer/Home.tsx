@@ -3,12 +3,15 @@ import { colours, spacing, fonts } from "../../subatoms/Theme";
 import { FlatList } from "react-native";
 import OrganizerEvent from "./OrganizerEvent";
 import { FAB } from "react-native-elements";
+import { useState } from "react";
 
 const Home = ({ navigation }: any) => {
 
+    const [events, setEvents] = useState<any[]>([]);
+
     return (
         <View style={styles.container}>
-            <StatusBar translucent  />
+            <StatusBar translucent />
             <ScrollView showsHorizontalScrollIndicator={false}>
 
                 <View style={styles.pageTitle}>
@@ -20,33 +23,28 @@ const Home = ({ navigation }: any) => {
                 <OrganizerEvent/>
                 <OrganizerEvent/>
 
-                {/* <FlatList
+                <FlatList
                     style={{}}
                     showsVerticalScrollIndicator={false}
-                    data={filteredEvents}
+                    data={events}
                     renderItem={({ item, index }) => (
-                        <View style={styles.event}>
-                        <Event
-                            id={item.id}
-                            navigation={navigation}
-                            userType={route.params.userType}
-                            listView={listView}
-                        />
+                        <View>
+                            <OrganizerEvent/>
                         </View>
                     )}
-                /> */}
-
-                <View style={{position: 'absolute', bottom: 0, right: 0}}>
-                    <FAB
-                        icon={{ name: "add", color: 'white' }}
-                        placement="right"
-                        color={colours.purple}
-                        size="large"
-                        onPress={() => navigation.navigate("Step0")}
-                    />
-                </View>
+                />
 
             </ScrollView>
+
+            <View style={{position: 'absolute', bottom: 0, right: 0}}>
+                <FAB
+                    icon={{ name: "add", color: 'white' }}
+                    placement="right"
+                    color={colours.purple}
+                    size="large"
+                    onPress={() => navigation.navigate("Step0")}
+                />
+            </View>
 
         </View>
     );

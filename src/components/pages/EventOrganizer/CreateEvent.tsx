@@ -33,7 +33,6 @@ export const Step0 = ({route, navigation}: any) => {
                     {step == 8 && <Step8 />}
                     {step == 9 && <Step9 />}
                     {step == 10 && <Step10 />}
-                    {step == 11 && <Step11 />}
                 </View>
             </ScrollView>
 
@@ -51,7 +50,7 @@ export const Step0 = ({route, navigation}: any) => {
                         titleStyle={{...fonts.title3, textDecorationLine: 'underline'}}
                         disabledStyle={{backgroundColor: colours.white}}
                         disabledTitleStyle={{color: colours.white}}
-                        disabled={step==11}
+                        disabled={step == 1 || step==11}
                     />
                     <Button
                         buttonStyle={{backgroundColor: colours.purple, padding: 15, paddingHorizontal: 25, borderRadius: 10}}
@@ -89,7 +88,7 @@ export const Step1 = ({route, navigation}: any) => {
     
     return (       
         <View>
-            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>How should we call your event?</Text>
+            <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>How should we call your event?</Text>
             
             <Text style={fonts.regular}>Short names work best. Have fun with it!</Text>
 
@@ -133,7 +132,7 @@ export const Step2 = ({route, navigation}: any) => {
 
     return (
         <View>
-            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Pick an emoji to represent your event</Text>
+            <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Pick an emoji to represent your event</Text>
             <Text style={fonts.regular}>Who still uses images? Yuck! Emojis are cooler 😎</Text>
 
             <View style={{marginVertical: '5%', paddingHorizontal: '15%'}}>
@@ -149,6 +148,7 @@ export const Step2 = ({route, navigation}: any) => {
                         borderRadius: 6,
                         height: windowHeight*0.2
                     }}
+                    textAlign="center"
                     inputStyle={{fontSize: 150, fontWeight: 'bold'}}
                     onChange={(e) => {emojiToUnicode(e.nativeEvent.text)}}
                     maxLength={5}
@@ -178,7 +178,7 @@ export const Step3 = ({route, navigation}: any) => {
             {!nextStep &&
                 <View>
                     
-                    <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Is your event taking place on campus?</Text>
+                    <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Is your event taking place on campus?</Text>
                     
                     <View style={{marginVertical: '5%'}}>
                         <Button
@@ -196,10 +196,10 @@ export const Step3 = ({route, navigation}: any) => {
             {nextStep &&
                 <View>
                     <Text style={fonts.title1}>{onCampus ? "In which building is your event taking place?" : "Where will the event take place?"}</Text>
-                    <View>
-                        <Text>{onCampus ? "Dropdown" : "Provide the building name and then the address"}</Text>
+                    
+                    <View style={{marginVertical: '5%'}}>
+                        <Text style={fonts.regular}>{onCampus ? "Search the building by its acronym!" : "Provide the building name and then the address"}</Text>
 
-                        {/* Dropdown */}
                         <Dropdown
                             style={isFocus && {borderColor: 'blue'}}
                             // placeholderStyle={styles.placeholderStyle}
@@ -211,7 +211,7 @@ export const Step3 = ({route, navigation}: any) => {
                             maxHeight={300}
                             labelField="label"
                             valueField="value"
-                            placeholder={!isFocus ? 'Select item' : '...'}
+                            placeholder={!isFocus ? 'Select building' : ""}
                             searchPlaceholder="Search..."
                             value={buildingName}
                             onFocus={() => setIsFocus(true)}
@@ -318,7 +318,7 @@ export const Step5 = ({route, navigation}: any) => {
     return (
         <View>
             <View>
-                <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Provide a description of your event</Text>
+                <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Provide a description of your event</Text>
                 <Text style={fonts.regular}>Anything you would like to share that is not in the title.</Text>
             </View>
 
@@ -351,7 +351,7 @@ export const Step6 = ({route, navigation}: any) => {
         <View>
             
             <View>
-                <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Now, set your price</Text>
+                <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Now, set your price</Text>
                 <Text style={fonts.regular}>If your event is free, just leave it blank.</Text>
             </View>
 
@@ -386,7 +386,7 @@ export const Step7 = ({route, navigation}: any) => {
             
         <View>
             
-            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Provide a link to sign up</Text>
+            <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Provide a link to sign up</Text>
             <Text style={fonts.regular}>Skip this step if your event requires no sign up.</Text>
         </View>
 
@@ -400,7 +400,7 @@ export const Step8 = ({route, navigation}: any) => {
         <View>
             
             <View>
-                <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Tags</Text>
+                <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Tags</Text>
                 <Text style={fonts.regular}>Pick up to 5 tags to represent your event</Text>                
             </View>
 
@@ -411,21 +411,12 @@ export const Step8 = ({route, navigation}: any) => {
         </View>
     )
 }
-
-export const Step9= ({route, navigation}: any) => {
-    return (
-        <View>
-            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}></Text>
-        </View>
-    )
-}
-
-export const Step10 = ({route, navigation}: any) => {
+export const Step9 = ({route, navigation}: any) => {
     return (
             <View>
                 
                 <View>
-                    <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Review and publish</Text>
+                    <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Review and publish</Text>
                     <Text style={fonts.regular}>Let's review your event to confirm all the details.</Text>
                 </View>
 
@@ -475,12 +466,12 @@ export const Step10 = ({route, navigation}: any) => {
     )
 }
 
-export const Step11 = ({route, navigation}: any) => {
+export const Step10 = ({route, navigation}: any) => {
     return (
         <View>
             
             <View>
-                <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>🎉 You're all set! Sit back and relax while we approve your event. 🎉</Text>
+                <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>🎉 You're all set! Sit back and relax while we approve your event. 🎉</Text>
                 <Text style={fonts.regular}>You can view your event on the Events page.</Text>
             </View>
 
