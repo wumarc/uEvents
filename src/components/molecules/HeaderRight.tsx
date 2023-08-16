@@ -23,10 +23,6 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
 
   const saved = (userData?.saved ?? []).includes(props.eventID);
 
-  console.log("saved");
-  console.log(saved);
-  console.log(userData);
-
   return (
     <TouchableOpacity
       onPress={() => {
