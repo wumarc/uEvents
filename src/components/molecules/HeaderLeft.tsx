@@ -1,14 +1,22 @@
 import { colours } from "../subatoms/Theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TouchableOpacity } from "react-native";
+import { Modal, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
-const HeaderLeft = ({navigation}: any) => {
+const HeaderLeft = ({navigation, type}: any) => {
+
+    // const [showModal, setShowModal] = useState(false);
 
     return (
-        <TouchableOpacity onPress={() => navigation.pop()}>
+        <TouchableOpacity 
+            onPress={() => {
+                // setShowModal(true);
+                navigation.pop()
+            }}
+        >
             <MaterialCommunityIcons
-                name="arrow-left"
+                name={type == null ? "arrow-left" : "close"}
                 color={colours.black}
                 size={30}
             />

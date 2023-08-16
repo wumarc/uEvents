@@ -79,7 +79,9 @@ const Main: FC<{ userType: string }> = (props) => {
     <NavigationContainer>
       <StatusBar backgroundColor="transparent" translucent={true} barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator initialRouteName="MainView">
+        <Stack.Navigator 
+          initialRouteName="MainView"
+        >
           {/* Main View */}
           <Stack.Screen
             name="MainView"
@@ -91,15 +93,19 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="Step0"
             component={Step0 as any}
-            options={({navigation}) => ({headerShown: false})}
+            options={({navigation}) => ({
+              headerShown: true,
+              headerTitle: "",
+              headerLeft: () => <HeaderLeft navigation={navigation} type={"cross"}/>,
+              animation: "slide_from_bottom"
+            })}
           />
           <Stack.Screen
             name="Profile"
             component={Profile as any}
             initialParams={{ userType: props.userType }}
             options={({navigation}) => ({
-              headerLeft: () => <HeaderLeft navigation={navigation}/>,
-              
+              headerLeft: () => <HeaderLeft navigation={navigation}/>  
             })}
           />
         </Stack.Navigator>
