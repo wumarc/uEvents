@@ -14,6 +14,7 @@ import Home from "./Home";
 import Settings from "./Settings";
 import Profile from "./Profile";
 import HeaderLeft from "../../molecules/HeaderLeft";
+import EventDetails from "../Student/EventDetails";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -27,12 +28,11 @@ export type RootStackParamList = {
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
-
   useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
 
   return (
-    <Tab.Navigator 
-      barStyle={{backgroundColor: '#f7f7f7'}}
+    <Tab.Navigator
+      barStyle={{ backgroundColor: "#f7f7f7" }}
       activeColor={colours.purple}
       inactiveColor={colours.grey}
       initialRouteName="Home"
@@ -72,41 +72,56 @@ const MainView = ({ route, navigation }: props) => {
 };
 
 const Main: FC<{ userType: string }> = (props) => {
-
   const [form, setForm] = useState({});
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="transparent" translucent={true} barStyle="dark-content" />
+      <StatusBar
+        backgroundColor="transparent"
+        translucent={true}
+        barStyle="dark-content"
+      />
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator 
-          initialRouteName="MainView"
-        >
+        <Stack.Navigator initialRouteName="MainView">
           {/* Main View */}
           <Stack.Screen
             name="MainView"
             component={MainView as any} // TODO fix error
             initialParams={{ userType: props.userType }}
-            options={{ headerShown: false}}
+            options={{ headerShown: false }}
           />
           {/* Create Event View */}
           <Stack.Screen
             name="Step0"
             component={Step0 as any}
-            options={({navigation}) => ({
+            options={({ navigation }) => ({
               headerShown: true,
               headerTitle: "",
-              headerLeft: () => <HeaderLeft navigation={navigation} type={"cross"}/>,
-              animation: "slide_from_bottom"
+              headerLeft: () => (
+                <HeaderLeft navigation={navigation} type={"cross"} />
+              ),
+              animation: "slide_from_bottom",
             })}
           />
           <Stack.Screen
             name="Profile"
             component={Profile as any}
             initialParams={{ userType: props.userType }}
-            options={({navigation}) => ({
-              headerLeft: () => <HeaderLeft navigation={navigation}/>  
+            options={({ navigation }) => ({
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
+          />
+          <Stack.Screen
+            name="EventDetailsView"
+            component={EventDetails as any} // TODO fix error
+            options={({ route, navigation }) => {
+              return {
+                title: "Event Details",
+                headerStyle: { backgroundColor: colours.white },
+                headerTintColor: colours.black,
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+              };
+            }}
           />
         </Stack.Navigator>
       </SafeAreaView>

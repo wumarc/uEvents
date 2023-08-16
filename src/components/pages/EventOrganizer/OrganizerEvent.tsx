@@ -3,10 +3,17 @@ import { Icon } from "@rneui/base";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { FC } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
+import { Button } from "react-native-elements";
 
-const OrganizerEvent: FC<{ event: EventObject }> = (props) => {
+const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
   return (
-    <TouchableOpacity onPress={() => console.log("Pressed")}>
+    <TouchableOpacity
+      onPress={() =>
+        props.navigation.navigate("EventDetailsView", {
+          eventID: props.event.id,
+        })
+      }
+    >
       <View
         style={{
           flexDirection: "row",
@@ -26,21 +33,31 @@ const OrganizerEvent: FC<{ event: EventObject }> = (props) => {
 
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <Text style={{ ...fonts.title3 }}>Published</Text>
-          <Icon
-            reverse
-            name="chevron-forward-outline"
-            type="ionicon"
-            color="transparent"
-            size={20}
-            iconStyle={fonts.title3}
-            // containerStyle={{padding: 0, margin: 2}}
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ ...fonts.title3 }}>Published</Text>
+
+            <Icon
+              reverse
+              name="chevron-forward-outline"
+              type="ionicon"
+              color="transparent"
+              size={20}
+              iconStyle={fonts.title3}
+              // containerStyle={{padding: 0, margin: 2}}
+            />
+          </View>
+          <Button title="Edit" />
+          <Button title="Publish" />
+          <Button title="Delete" />
         </View>
       </View>
     </TouchableOpacity>
