@@ -85,13 +85,13 @@ const Home = ({ route, navigation }: props) => {
   // Filtered events
   let filteredEvents = events as EventObject[];
   filteredEvents = searchAlgo(search, filteredEvents);
-  if (selectedIndex !== 0) {
-    filteredEvents = filteredEvents.filter((event) =>
-      event.categories.includes(
-        Object.values(EventCategory)[selectedIndex] as EventCategory
-      )
-    );
-  }
+  // if (selectedIndex !== 0) {
+  //   filteredEvents = filteredEvents.filter((event) =>
+  //     event.categories.includes(
+  //       Object.values(EventCategory)[selectedIndex] as EventCategory
+  //     )
+  //   );
+  // }
   filteredEvents = filteredEvents.filter((event) => {
     let startTime = nextStartTime(event.startTime, event.recurrence);
     if (!startTime) {

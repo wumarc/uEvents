@@ -136,6 +136,22 @@ export function searchAlgo(
     })
   );
 
+  // Remove events with score of 0 (except if all scores are 0)
+  let allZero = true;
+  for (let [key, value] of sortedMap) {
+    if (value !== 0) {
+      allZero = false;
+      break;
+    }
+  }
+  if (!allZero) {
+    for (let [key, value] of sortedMap) {
+      if (value === 0) {
+        sortedMap.delete(key);
+      }
+    }
+  }
+
   // Return the sorted list of events
   let sortedEvents: EventObject[] = [];
   for (let [key, value] of sortedMap) {
