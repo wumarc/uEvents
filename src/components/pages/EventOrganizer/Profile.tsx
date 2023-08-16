@@ -1,22 +1,23 @@
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { Input } from "@rneui/themed";
-import { Avatar } from "react-native-elements";
+import { Avatar, Button } from "react-native-elements";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import CustomButton from "../../atoms/CustomButton";
 import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
-import { colours, fonts, spacing } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
+import React from "react";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
   
+  const [saveChanges, setSaveChanges] = React.useState(false);
   const [loading, profile, setProfile] = useSateWithFireStore<Organizer>(
     "organizer" + "/" + getFirebaseUserID(),
     "info",
@@ -27,7 +28,6 @@ const Profile = ({ route, navigation }: props) => {
     return <Text>Loading</Text>;
   }
 
-
   return (
     <View style={styles.container}>
       
@@ -35,18 +35,8 @@ const Profile = ({ route, navigation }: props) => {
 
         {/* Image Section */}
         <View style={styles.profileImage}>
-          {/* <Image 
-                      source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
-                      style={{ 
-                          width: 200,
-                          height: 200,
-                          borderRadius: 200/2,
-                      }}
-                  /> */}
           <Avatar
-            source={{
-              uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
-            }}
+            source={{uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w"}}
             // showEditButton
             rounded
             size="xlarge"
@@ -55,12 +45,12 @@ const Profile = ({ route, navigation }: props) => {
 
         {/* Club Info Section */}
         <View style={styles.studentInfo}>
+
           <View style={{ flexDirection: "column", flex: 1 }}>
             
             <Input
-                label="Name"
+                label="Organization Name"
                 value={profile.name ? profile.name : "uOttawa Cycling Club"}
-                disabled={true}
                 labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
                 autoCapitalize="none"
                 containerStyle={{paddingHorizontal: 0}}
@@ -70,8 +60,7 @@ const Profile = ({ route, navigation }: props) => {
 
             <Input
                 label="Email"
-                // value={profile.email ? profile.email : "uottawa_cycling@gmail.com"}
-                disabled={true}
+                value={"uottawa_cycling@gmail.com"}
                 labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
                 autoCapitalize="none"
                 containerStyle={{paddingHorizontal: 0}}
@@ -80,28 +69,46 @@ const Profile = ({ route, navigation }: props) => {
             />
 
             <Input
-              label={"Club Description"}
-              labelStyle={{color: 'grey', padding: '1%'}}
-              labelProps={{}}
-              disabledInputStyle={{ backgroundColor: "#ddd" }}
-              value={"We are a club that loves to cycle! We meet every week to cycle around the city. We also have a competitive team that competes in the OUA league."}
-              selectionColor={colours.purple}
-              placeholder={"Club Description"}
-              autoCapitalize="none"
-              inputContainerStyle={{
-                  borderBottomWidth: 2,
-                  borderColor: "#bfbfbf",
-                  borderWidth: 2,
-                  paddingVertical: 2,
-                  paddingHorizontal: 8,
-                  borderRadius: 6,
-              }}
+                label="Instagram"
+                value={"https://www.instagram.com/uottawaboxingclub/?hl=en"}
+                labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+                autoCapitalize="none"
+                containerStyle={{paddingHorizontal: 0}}
+                selectionColor={colours.purple}
+                onChange={(value: any) => setProfile({ ...profile, name: value })}
+            />
+
+            <Input
+                label="Organization Description"
+                value={"Nestled in the heart of the city, the Downtown Boxing Club is a haven for both amateur and professional boxers. As you step through its glass doors, the rhythmic sound of punching bags and skipping ropes echoes through the spacious, well-lit gym. The walls are adorned with vintage black and white photographs of boxing legends, reminding all who enter of ."}
+                labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+                inputStyle={{height: windowHeight*0.2}}
+                textAlignVertical= 'top'
+                multiline={true}
+                autoCapitalize="none"
+                containerStyle={{paddingHorizontal: 0}}
+                selectionColor={colours.purple}
+                onChange={(value: any) => setProfile({ ...profile, name: value })}
             />
 
           </View>
+
         </View>
 
       </ScrollView>
+      
+      {/* Static Footer */}
+      <KeyboardAvoidingView style={{marginBottom: windowHeight*0.01}}>
+          <View style={styles.footer_buttons}>
+              <Button
+                  buttonStyle={{backgroundColor: colours.purple, padding: 15, paddingHorizontal: 25, borderRadius: 10}}
+                  title={"Save Changes"}
+                  onPress={() => {}}
+                  disabled={!saveChanges}
+                  titleStyle={{...fonts.title3, color: colours.white}}
+              />
+          </View>
+      </KeyboardAvoidingView>
 
     </View>
 
@@ -114,27 +121,21 @@ const styles = StyleSheet.create({
     backgroundColor: colours.white,
     paddingHorizontal: spacing.page,
   },
-  profileHeader: {
-    paddingLeft: '3%',
-    marginVertical: '3%',
-  },
   profileImage: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 10,
+    ...spacing.verticalMargin1,
   },
   studentInfo: {
     flexDirection: "row",
-    // backgroundColor: "green"
+    ...spacing.verticalMargin1,
   },
-  saveButton: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  pageTitle: {
-    flexDirection: "row",
-    padding: "3%",
+  footer_buttons: {
+    paddingVertical: '1%',
+    backgroundColor: colours.white,
+    borderTopColor: colours.primaryGrey,
   },
 });
+
 
 export default Profile;

@@ -342,7 +342,6 @@ export const Step5 = ({route, navigation}: any) => {
                 />
             </View>
             
-
         </View>
     )
 }
@@ -416,7 +415,7 @@ export const Step8 = ({route, navigation}: any) => {
 export const Step9= ({route, navigation}: any) => {
     return (
         <View>
-            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}>Recurrence</Text>
+            <Text style={{...fonts.title1, ...spacing.verticalMargin1}}></Text>
         </View>
     )
 }
