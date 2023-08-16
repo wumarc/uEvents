@@ -96,6 +96,7 @@ export const nextStartTime = (
   recurrence: recurrence
 ): Timestamp | undefined => {
   let today = new Date();
+
   let startDate = startTime.toDate();
   let foundDate = new Date();
   if (!recurrence) {
@@ -207,6 +208,7 @@ export const defaultEvent: EventObject = {
   originalLink: "",
   address: "",
   recurrence: new recurrence("None"),
+  organizerType: "Manually Added",
 };
 
 // Utility functions

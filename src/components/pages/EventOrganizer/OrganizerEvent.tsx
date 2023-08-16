@@ -4,6 +4,8 @@ import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { FC } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
+import { deleteDoc, doc } from "firebase/firestore";
+import { fireStore } from "../../../firebaseConfig";
 
 const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
   return (
@@ -55,9 +57,22 @@ const OrganizerEvent: FC<{ event: EventObject; navigation: any }> = (props) => {
               // containerStyle={{padding: 0, margin: 2}}
             />
           </View>
-          <Button title="Edit" />
+          <Button
+            title="Edit"
+            onPress={() =>
+              props.navigation.navigate("Step0", {
+                eventID: props.event.id,
+                useDefault: false,
+              })
+            }
+          />
           <Button title="Publish" />
-          <Button title="Delete" />
+          <Button
+            title="Delete"
+            onPress={() =>
+              deleteDoc(doc(fireStore, "events/" + props.event.id))
+            }
+          />
         </View>
       </View>
     </TouchableOpacity>

@@ -54,7 +54,7 @@ const Home = ({ navigation }: any) => {
           placement="right"
           color={colours.purple}
           size="large"
-          onPress={() => navigation.navigate("Step0")}
+          onPress={() => navigation.navigate("Step0", { useDefault: false })}
         />
       </View>
     </View>

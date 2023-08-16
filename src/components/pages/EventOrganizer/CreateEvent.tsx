@@ -29,20 +29,39 @@ import {
 } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 import { getOrderedCategories } from "../../../utils/categories";
-import { EventObject } from "../../../utils/model/EventObject";
+import {
+  EventObject,
+  defaultEvent,
+  recurrence,
+} from "../../../utils/model/EventObject";
 import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
-import { doc, setDoc } from "firebase/firestore";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
-  const [id, setId] = useState(uid());
+  const [id, setId] = useState(route.params.eventID ?? uid());
 
   useEffect(() => {
-    setDoc(doc(fireStore, "events/" + id), {
-      id: id,
-      organizer: getFirebaseUserIDOrEmpty(),
-    });
+    if (route.params.eventID == undefined) {
+      setDoc(doc(fireStore, "events/" + id), {
+        id: id,
+        organizer: getFirebaseUserIDOrEmpty(),
+        state: "Created",
+        name: "",
+        description: "",
+        startTime: new Timestamp(0, 0),
+        location: "",
+        categories: [],
+        onCampus: false,
+        images: [],
+        priceMin: 0,
+        originalLink: "",
+        address: "",
+        // recurrence: new recurrence("None"),
+        organizerType: "Manually Added",
+      });
+    }
   }, []);
 
   return (
@@ -168,9 +187,10 @@ export const Step1: FC<{ eventID: string }> = (props) => {
           containerStyle={{ paddingHorizontal: 0 }}
           onChange={(e) => {
             setCharactersAvailable(35 - e.nativeEvent.text.length);
-            // set({ ...event, name: e.nativeEvent.text });
+            set({ ...event, name: e.nativeEvent.text });
           }}
           maxLength={35}
+          defaultValue={event.name}
         />
       </View>
     </View>

@@ -23,6 +23,7 @@ export type RootStackParamList = {
   MainView: { userType: string };
   CreateEventView: { userType: string };
   Profile: { userType: string };
+  Step0: { eventID: string | undefined; useDefault: boolean };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
