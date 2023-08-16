@@ -7,7 +7,7 @@ export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 
 export const colours = {
-    purple: '#D6A9D5',
+    purple: '#B075AE',
     black: '#222222', // For big text
     grey: '#777777',
     primaryGrey: '#EDEDED',

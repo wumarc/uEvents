@@ -10,7 +10,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import emojiRegex from 'emoji-regex';
 
 export const Step0 = ({route, navigation}: any) => {
-    
+
     const [step, setStep] = useState(1);
 
     return (
