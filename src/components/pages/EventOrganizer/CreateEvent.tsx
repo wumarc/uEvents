@@ -168,7 +168,7 @@ export const Step1: FC<{ eventID: string }> = (props) => {
           containerStyle={{ paddingHorizontal: 0 }}
           onChange={(e) => {
             setCharactersAvailable(35 - e.nativeEvent.text.length);
-            set({ ...event, name: e.nativeEvent.text });
+            // set({ ...event, name: e.nativeEvent.text });
           }}
           maxLength={35}
         />

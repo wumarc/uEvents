@@ -6,7 +6,7 @@ import { Button } from "@rneui/base";
 import { colours, fonts, windowHeight } from "../../subatoms/Theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { auth } from "../../../firebaseConfig";
+import { auth, fireStore } from "../../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
@@ -16,133 +16,129 @@ import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
 import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
+import { addDoc, doc, setDoc } from "firebase/firestore";
 
 // Accepted universities
 const universities = ["@uottawa.ca"];
 const Stack = createNativeStackNavigator();
 
 const SignIn: FC = () => {
-
   const [isSigningUp, setIsSigningUp] = useState(false);
   const signInHandler = () => setIsSigningUp(!isSigningUp);
 
   return (
-     <NavigationContainer>
-        <Stack.Navigator 
-          initialRouteName="Welcome"
-          screenOptions={{
-            headerTitleAlign: 'center',
-            animation: 'slide_from_right',
-            //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Welcome"
+        screenOptions={{
+          headerTitleAlign: "center",
+          animation: "slide_from_right",
+          //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
+        }}
+      >
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomePage}
+          options={{
+            headerShown: false,
           }}
-        >
-          <Stack.Screen 
-            name="Welcome" 
-            component={WelcomePage}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            initialParams={{ signInHandler: {signInHandler} }}
-            options={{
-              headerTintColor: colours.black,
-              headerBackTitleVisible: false,
-            }}
-          />
-          <Stack.Screen 
-            name="Signup"
-            component={Signup}
-            initialParams={{ signInHandler: {signInHandler} }}
-            options={{
-              headerTintColor: colours.black,
-              headerBackTitleVisible: false,
-              headerTitle: 'Register',
-            }}
-          />
-        </Stack.Navigator>
-     </NavigationContainer>
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          initialParams={{ signInHandler: { signInHandler } }}
+          options={{
+            headerTintColor: colours.black,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          initialParams={{ signInHandler: { signInHandler } }}
+          options={{
+            headerTintColor: colours.black,
+            headerBackTitleVisible: false,
+            headerTitle: "Register",
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-
 };
 
-const WelcomePage: FC = ({navigation}: any) => {
-
+const WelcomePage: FC = ({ navigation }: any) => {
   return (
-    <SafeAreaView style={{backgroundColor: colours.white}}>
+    <SafeAreaView style={{ backgroundColor: colours.white }}>
       <View>
-
         {/* Image */}
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={require("../../../assets/welcome_image.png")}/>
+          <Image
+            style={styles.image}
+            source={require("../../../assets/welcome_image.png")}
+          />
         </View>
 
         {/* Sign In Box */}
         <View style={styles.optionsContainer}>
-          
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: "center" }}>
             <Text style={fonts.title1}>uEvents</Text>
             <Text style={fonts.title2}>Find out what you are missing</Text>
           </View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}><Text style={fonts.regular}>The next student led social connection app.</Text></View>
-
-          <View style={{flexDirection: 'row', paddingHorizontal: '2.3%'}}>
-            
-            <View style={{flex: 1}}>
-              <Button
-                style={{
-                  margin: 1,
-                  borderWidth: 2,
-                  borderColor: colours.purple,
-                  borderRadius: 30,
-                }}
-                buttonStyle={{borderRadius: 30}}
-                titleStyle={{fontSize: 18}}
-                color={colours.purple}
-                title="Login"
-                onPress={() => navigation.navigate('Login')}
-              />
-            </View>
-
-            <View style={{flex: 1}}>
-              <Button
-                style={{
-                  margin: 1,
-                  borderWidth: 2,
-                  borderColor: colours.purple,
-                  borderRadius: 30,
-                }}
-                titleStyle={{fontSize: 18}}
-                buttonStyle={{borderRadius: 30}}
-                color={colours.purple}
-                title="Register"
-                onPress={() => navigation.navigate('Signup')}
-              />
-            </View>
-
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text style={fonts.regular}>
+              The next student led social connection app.
+            </Text>
           </View>
 
-        </View>
+          <View style={{ flexDirection: "row", paddingHorizontal: "2.3%" }}>
+            <View style={{ flex: 1 }}>
+              <Button
+                style={{
+                  margin: 1,
+                  borderWidth: 2,
+                  borderColor: colours.purple,
+                  borderRadius: 30,
+                }}
+                buttonStyle={{ borderRadius: 30 }}
+                titleStyle={{ fontSize: 18 }}
+                color={colours.purple}
+                title="Login"
+                onPress={() => navigation.navigate("Login")}
+              />
+            </View>
 
+            <View style={{ flex: 1 }}>
+              <Button
+                style={{
+                  margin: 1,
+                  borderWidth: 2,
+                  borderColor: colours.purple,
+                  borderRadius: 30,
+                }}
+                titleStyle={{ fontSize: 18 }}
+                buttonStyle={{ borderRadius: 30 }}
+                color={colours.purple}
+                title="Register"
+                onPress={() => navigation.navigate("Signup")}
+              />
+            </View>
+          </View>
+        </View>
       </View>
     </SafeAreaView>
-  )
-
-}
+  );
+};
 
 const Login: FC = ({ setIsSigningUp }: any) => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const [showResetPassword, setShowResetPassword] = useState(false);
   const resetPassword = () => {
-    console.log("Reset password")
-
-  }
+    console.log("Reset password");
+  };
 
   async function signIn() {
     if (email === "" || password === "") {
@@ -165,33 +161,39 @@ const Login: FC = ({ setIsSigningUp }: any) => {
   }
 
   return (
-    <View style={{backgroundColor: 'white', flex: 1, paddingHorizontal: '3%', paddingTop: '25%'}}>
-      
+    <View
+      style={{
+        backgroundColor: "white",
+        flex: 1,
+        paddingHorizontal: "3%",
+        paddingTop: "25%",
+      }}
+    >
       {/* Form */}
       <View>
         <Input
           label="Email"
           placeholder="Email"
-          labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+          labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
-          containerStyle={{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0 }}
           selectionColor={colours.purple}
           // inputContainerStyle={inputStyle}
         />
         <Input
           label="Password"
           placeholder="Password"
-          labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
+          labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           onChangeText={(value) => setPassword(value)}
-          containerStyle={{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0 }}
           autoCapitalize="none"
           selectionColor={colours.purple}
           secureTextEntry={true}
           // inputContainerStyle={inputStyle}
         />
         <Text onPress={() => setShowResetPassword(true)}>Forgot password?</Text>
-        <Text style={styles.textAlert} >{error}</Text>
+        <Text style={styles.textAlert}>{error}</Text>
       </View>
 
       {/* Button */}
@@ -205,45 +207,49 @@ const Login: FC = ({ setIsSigningUp }: any) => {
         </View> */}
       </View>
 
-      <BottomSheet 
-          modalProps={{animationType: 'fade'}}
-          onBackdropPress={() => setShowResetPassword(false)}
-          isVisible={showResetPassword}
-          scrollViewProps={{scrollEnabled:false}}
+      <BottomSheet
+        modalProps={{ animationType: "fade" }}
+        onBackdropPress={() => setShowResetPassword(false)}
+        isVisible={showResetPassword}
+        scrollViewProps={{ scrollEnabled: false }}
       >
-          <View style={{backgroundColor: 'white', paddingVertical: '7%', borderRadius: 15}}>
-              <Text style={{...fonts.title3, textAlign: 'center', marginBottom: '5%'}}>
-                  Change your password
-              </Text>
-              <CustomInput
-                  input={email}
-                  secureText={false}
-                  placeholder="Enter your email"
-                  onChangeListener={(value: string) => setEmail(value)}
-              />
-              <View>
-                  <CustomButton
-                      buttonName="Reset Password" 
-                      onPressListener={() => resetPassword()}
-                      disabled={email === ""}
-                  />
-              </View>
-
+        <View
+          style={{
+            backgroundColor: "white",
+            paddingVertical: "7%",
+            borderRadius: 15,
+          }}
+        >
+          <Text
+            style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}
+          >
+            Change your password
+          </Text>
+          <CustomInput
+            input={email}
+            secureText={false}
+            placeholder="Enter your email"
+            onChangeListener={(value: string) => setEmail(value)}
+          />
+          <View>
+            <CustomButton
+              buttonName="Reset Password"
+              onPressListener={() => resetPassword()}
+              disabled={email === ""}
+            />
           </View>
+        </View>
       </BottomSheet>
-
     </View>
   );
-
-}
+};
 
 const Signup: FC = ({ setIsSigningUp }: any) => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState("");
-  const [userType, setUserType] = useState("Student");
+  const [userType, setUserType] = useState("student");
 
   async function signUp(validate: boolean): Promise<boolean> {
     if (validate) {
@@ -260,7 +266,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         setError("You must be a uOttawa student to sign up");
         return false;
       }
-      
+
       if (!checked) {
         setError("You must agree to the terms and conditions");
         return false;
@@ -269,6 +275,10 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
+        type: userType,
+        saved: [],
+      });
       setIsSigningUp(false);
       return true;
     } catch (error: any) {
@@ -278,12 +288,17 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
   }
 
   return (
-    
-      <View style={{backgroundColor: 'white', flex: 1, paddingHorizontal: '3%', paddingTop: '25%'}}>
-        
-        {/* Form */}
-        <View>
-          {/* <SelectList
+    <View
+      style={{
+        backgroundColor: "white",
+        flex: 1,
+        paddingHorizontal: "3%",
+        paddingTop: "25%",
+      }}
+    >
+      {/* Form */}
+      <View>
+        {/* <SelectList
             data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
             setSelected={(value: string) => setUserType(value)}
             save="value"
@@ -291,70 +306,80 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
             dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
           /> */}
-          <Input
-            label="Email"
-            placeholder="Email"
-            onChangeText={(value) => setEmail(value)}
-            labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
-            autoCapitalize="none"
-            containerStyle={{paddingHorizontal: 0}}
-            selectionColor={colours.purple}
-            // inputContainerStyle={inputStyle}
-          />
-          <Input
-            label="Password"
-            placeholder="Password"
-            selectionColor={colours.purple}
-            labelStyle={{color: 'black', fontWeight: '500', marginBottom: '1%'}}
-            containerStyle={{paddingHorizontal: 0}}
-            onChangeText={(value) => setPassword(value)}
-            autoCapitalize="none"
-            secureTextEntry={true}
-          />
-          <Text style={styles.textAlert} >{error}</Text>
-          <CheckBox
-            checkedColor={colours.purple}
-            title={
-              <Text> I agree to comply with uEvents' 
-                <Text onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
-                >{" "}Privacy Policy{" "}</Text>
+        <Input
+          label="Email"
+          placeholder="Email"
+          onChangeText={(value) => setEmail(value)}
+          labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+          autoCapitalize="none"
+          containerStyle={{ paddingHorizontal: 0 }}
+          selectionColor={colours.purple}
+          // inputContainerStyle={inputStyle}
+        />
+        <Input
+          label="Password"
+          placeholder="Password"
+          selectionColor={colours.purple}
+          labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+          containerStyle={{ paddingHorizontal: 0 }}
+          onChangeText={(value) => setPassword(value)}
+          autoCapitalize="none"
+          secureTextEntry={true}
+        />
+        <Text style={styles.textAlert}>{error}</Text>
+        <CheckBox
+          checkedColor={colours.purple}
+          title={
+            <Text>
+              {" "}
+              I agree to comply with uEvents'
+              <Text
+                onPress={() =>
+                  Linking.openURL(
+                    "https://uevents.webnode.page/privacy-policy/"
+                  )
+                }
+              >
+                {" "}
+                Privacy Policy{" "}
               </Text>
-            }
-            containerStyle={{padding: 0, margin: 0}}
-            checked={checked}
-            onPress={() => setChecked(!checked)}
-          />  
-        </View>
+            </Text>
+          }
+          containerStyle={{ padding: 0, margin: 0 }}
+          checked={checked}
+          onPress={() => setChecked(!checked)}
+        />
+      </View>
 
-        <View>
-          <Button
-            color={colours.purple}
-            title="Sign up"
-            onPress={() => {
-              userType === "Student"
-                ? signUp(true).then((success) => {
-                    if (!success) return;
-                    addDocumentToCollection<Student>(
-                      "users",
-                      getFirebaseUserIDOrEmpty(),
-                      defaultStudent
-                    );
-                  })
-                : // Don't validate email for organizers
-                  signUp(false).then((success) => {
-                    if (!success) return;
-                    addDocumentToCollection<Organizer>(
-                      "users",
-                      getFirebaseUserIDOrEmpty(),
-                      defaultOrganizer
-                    );
-                  });
-            }}
-          />
-        </View>
+      <View>
+        <Button
+          color={colours.purple}
+          title="Sign up"
+          onPress={() => {
+            userType === "Student"
+              ? signUp(true).then((success) => {
+                  if (!success) return;
+                  addDocumentToCollection<Student>(
+                    "users",
+                    getFirebaseUserIDOrEmpty(),
+                    defaultStudent
+                  );
+                })
+              : // Don't validate email for organizers
+                signUp(false).then((success) => {
+                  if (!success) return;
+                  addDocumentToCollection<Organizer>(
+                    "users",
+                    getFirebaseUserIDOrEmpty(),
+                    defaultOrganizer
+                  );
+                });
+          }}
+        />
+      </View>
 
-        {/* Login Option */}
-        {/* <View>
+      {/* Login Option */}
+      {/* <View>
           <Text>
             Already have an account?
             <Text
@@ -366,37 +391,34 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             </Text>
           </Text>
         </View> */}
-
-      </View>
-    
+    </View>
   );
-
-}
+};
 
 const styles = StyleSheet.create({
   imageContainer: {
-    width: '100%',
+    width: "100%",
     backgroundColor: colours.purple,
-    height: windowHeight*0.55,
+    height: windowHeight * 0.55,
   },
   optionsContainer: {
-    width: '100%',
-    height: '40%',
+    width: "100%",
+    height: "40%",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     backgroundColor: colours.white,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
   image: {
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
   },
   textAlert: {
-    color: 'red',
-    paddingVertical: '2%',
-  }
+    color: "red",
+    paddingVertical: "2%",
+  },
 });
 
 export default SignIn;
