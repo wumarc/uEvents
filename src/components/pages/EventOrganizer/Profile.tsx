@@ -27,26 +27,11 @@ const Profile = ({ route, navigation }: props) => {
     return <Text>Loading</Text>;
   }
 
-  const logout = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-  };
 
   return (
     <View style={styles.container}>
       
       <ScrollView>
-
-        {/* Header Section */}
-        <View style={styles.pageTitle}>
-          <Text style={fonts.title1}>Profile</Text>
-        </View>
 
         {/* Image Section */}
         <View style={styles.profileImage}>
@@ -115,12 +100,6 @@ const Profile = ({ route, navigation }: props) => {
 
           </View>
         </View>
-
-        {/* Log out button */}
-        <CustomButton
-          buttonName="Log out"
-          onPressListener={() => {logout()}}
-        />
 
       </ScrollView>
 

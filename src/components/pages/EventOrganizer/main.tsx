@@ -6,12 +6,14 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
 import { FC, useState } from "react";
-import Profile from "./Profile";
 import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
 import { Step0 } from "./CreateEvent";
 import { colours } from "../../subatoms/Theme";
 import Home from "./Home";
+import Settings from "./Settings";
+import Profile from "./Profile";
+import HeaderLeft from "../../molecules/HeaderLeft";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,14 +53,14 @@ const MainView = ({ route, navigation }: props) => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile as any} // TODO fix error
+        name="Settings"
+        component={Settings as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Settings",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-              name={focused ? "account-circle" : "account-circle-outline"}
+              name={focused ? "cog" : "cog-outline"}
               color={focused ? colours.purple : colours.grey}
               size={30}
             />
@@ -90,6 +92,15 @@ const Main: FC<{ userType: string }> = (props) => {
             name="Step0"
             component={Step0 as any}
             options={({navigation}) => ({headerShown: false})}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile as any}
+            initialParams={{ userType: props.userType }}
+            options={({navigation}) => ({
+              headerLeft: () => <HeaderLeft navigation={navigation}/>,
+              
+            })}
           />
         </Stack.Navigator>
       </SafeAreaView>

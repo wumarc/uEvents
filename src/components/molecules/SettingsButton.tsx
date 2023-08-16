@@ -14,7 +14,7 @@ const SettingsButton = ({buttonName, onPressListener}: buttonProps) => {
     const fontSize= 23
     const marginBottom = '4%'
     const settingName = [
-        {"Account Settings": {icon: 'cog-outline', type: 'ionicon'}},
+        {"Organization Profile": {icon: 'account-outline', type: 'material-community'}},
         {"Privacy Policy": {icon: 'shield-lock-outline', type: 'material-community'}},
         {"Support": {icon: 'help-circle-outline', type: 'ionicon'}},
         {"Delete Account": {icon: 'trash-outline', type: 'ionicon'}},
