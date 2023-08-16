@@ -1,6 +1,17 @@
-import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  StatusBar,
+  ScrollView,
+  Text,
+} from "react-native";
 import { useState } from "react";
-import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
+import {
+  useSateWithFireStore,
+  useSateWithFireStoreArray,
+  useStateWithFireStoreCollection,
+} from "../../../utils/useStateWithFirebase";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -12,22 +23,37 @@ import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
 import { SearchBar } from "react-native-elements";
+import {
+  buildCategories,
+  calculateNumberOfEvents,
+} from "../../../utils/categories";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
 
 const Home = ({ route, navigation }: props) => {
-  // const [loading, dbListenedValue, set, add, remove] =
-  //   useSateWithFireStoreArray<EventObject>("event/eventList", "eventListObj");
+  /* ---------------------------------- Hooks --------------------------------- */
 
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(true);
-  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] =
+    useStateWithFireStoreCollection<EventObject>("events");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loading2, categories, setCategories] = useSateWithFireStore<string[]>(
+    "categories/names",
+    "list",
+    []
+  );
 
-  if (loading) {
-    return <Loading/>;
+  const [loading3, categoriesValue, setCategoriesValue] = useSateWithFireStore<
+    number[]
+  >("categories/values", "list", []);
+
+  if (loading || loading2 || loading3) {
+    return <Loading />;
   }
+
+  /* ---------------------------------- Toast --------------------------------- */
 
   const showToast = (save: boolean) => {
     // https://github.com/calintamas/react-native-toast-message/blob/945189fec9746b79d8b5b450e298ef391f8022fb/docs/custom-layouts.md
@@ -39,6 +65,22 @@ const Home = ({ route, navigation }: props) => {
       visibilityTime: 1800,
     });
   };
+
+  /* --------------------------- Categories handling -------------------------- */
+  let numberOfEvents = calculateNumberOfEvents(categories, categoriesValue);
+  if (
+    numberOfEvents != events?.length &&
+    events != undefined &&
+    !Number.isNaN(numberOfEvents)
+  ) {
+    // Case where the categories are not updated
+    // Should never happen but just in case
+    let [newCategories, newCategoriesValue] = buildCategories(events);
+    setCategories(newCategories);
+    setCategoriesValue(newCategoriesValue);
+  }
+
+  /* ---------------------------- Filter the events --------------------------- */
 
   // Filtered events
   let filteredEvents = events as EventObject[];
@@ -60,10 +102,9 @@ const Home = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar translucent  />
+      <StatusBar translucent />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-
         {/* Event title */}
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Upcoming Events</Text>
@@ -76,10 +117,10 @@ const Home = ({ route, navigation }: props) => {
             inputContainerStyle={{
               borderRadius: 6,
               height: 38,
-              backgroundColor: '#ebebeb',
+              backgroundColor: "#ebebeb",
             }}
             containerStyle={{
-              backgroundColor: 'white',
+              backgroundColor: "white",
               flex: 1,
               borderBottomColor: "transparent",
               borderTopColor: "transparent",
@@ -110,9 +151,8 @@ const Home = ({ route, navigation }: props) => {
             </View>
           )}
         />
-
       </ScrollView>
-      
+
       {/* Search bar and Filter */}
       {/* <View
         style={{
@@ -152,7 +192,7 @@ const Home = ({ route, navigation }: props) => {
           </View>
           </View>
         </View> */}
-        {/* <View style={{ backgroundColor: colours.secondaryPurple }}>
+      {/* <View style={{ backgroundColor: colours.secondaryPurple }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtonGroup
               buttons={Object.values(EventCategory)}
@@ -182,7 +222,6 @@ const Home = ({ route, navigation }: props) => {
         </View> */}
       {/* </View> */}
 
-
       {/* Event List*/}
       {/* <FlatList
         style={{ paddingTop: headerHeight - 20 }} // MODIFIED
@@ -207,7 +246,7 @@ const Home = ({ route, navigation }: props) => {
       /> */}
 
       {/* Toast */}
-      <Toast/>
+      <Toast />
     </View>
   );
 };
@@ -230,7 +269,7 @@ export const styles = StyleSheet.create({
     // paddingVertical: 20, // MODIFIED
     // justifyContent: "center",
     // margin: 1
-    marginVertical: '2%',
+    marginVertical: "2%",
   },
   titleContainer: {
     paddingLeft: "3%",

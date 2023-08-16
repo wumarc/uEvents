@@ -66,23 +66,24 @@ export const daysToInt = (days: daysOfWeekBrief[]): number[] => {
 /// Optional fields are marked with a question mark. They can be undefined or empty to represent no value
 export type EventObject = {
   id: string; // Unique id for each event
+  state: "Created" | "Pending" | "Published"; // Created: Event is created but not submitted for approval. Pending: Event is submitted for approval. Published: Event is approved and published
   name: string;
   priceMin: number; // If no max price is specified, this is the exact price
   priceMax?: number;
-  priceDescription?: string; // If needed, a description of the different prices
+  // priceDescription?: string; // If needed, a description of the different prices
   description: string; // 750 characters max
   location: string; // Building name and room number
   address: string;
   organizer: string; // Organizer name //TODO: Replace for id
   startTime: Timestamp;
   endTime?: Timestamp; // End time doesn't have to be specified
-  categories: EventCategory[];
+  categories: string[];
   onCampus: boolean;
-  food?: string;
-  attire?: string;
-  toBring?: string;
-  includes?: string;
-  transportation?: string;
+  // food?: string;
+  // attire?: string;
+  // toBring?: string;
+  // includes?: string;
+  // transportation?: string;
   images: string[];
   signUpLink?: string; // If undefined, no sign up link
   originalLink: string;
