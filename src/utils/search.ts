@@ -72,36 +72,36 @@ export function searchAlgo(
       ) {
         score += CATEGORY_WEIGHT;
       }
-      if (
-        event.food &&
-        event.food?.toLowerCase().includes(keyword.toLowerCase())
-      ) {
-        score += FOOD_WEIGHT;
-      }
-      if (
-        event.attire &&
-        event.attire?.toLowerCase().includes(keyword.toLowerCase())
-      ) {
-        score += ATTIRE_WEIGHT;
-      }
-      if (
-        event.toBring &&
-        event.toBring?.toLowerCase().includes(keyword.toLowerCase())
-      ) {
-        score += TOBRING_WEIGHT;
-      }
-      if (
-        event.includes &&
-        event.includes?.toLowerCase().includes(keyword.toLowerCase())
-      ) {
-        score += INCLUDES_WEIGHT;
-      }
-      if (
-        event.transportation &&
-        event.transportation?.toLowerCase().includes(keyword.toLowerCase())
-      ) {
-        score += TRANSPORTATION_WEIGHT;
-      }
+      // if (
+      //   event.food &&
+      //   event.food?.toLowerCase().includes(keyword.toLowerCase())
+      // ) {
+      //   score += FOOD_WEIGHT;
+      // }
+      // if (
+      //   event.attire &&
+      //   event.attire?.toLowerCase().includes(keyword.toLowerCase())
+      // ) {
+      //   score += ATTIRE_WEIGHT;
+      // }
+      // if (
+      //   event.toBring &&
+      //   event.toBring?.toLowerCase().includes(keyword.toLowerCase())
+      // ) {
+      //   score += TOBRING_WEIGHT;
+      // }
+      // if (
+      //   event.includes &&
+      //   event.includes?.toLowerCase().includes(keyword.toLowerCase())
+      // ) {
+      //   score += INCLUDES_WEIGHT;
+      // }
+      // if (
+      //   event.transportation &&
+      //   event.transportation?.toLowerCase().includes(keyword.toLowerCase())
+      // ) {
+      //   score += TRANSPORTATION_WEIGHT;
+      // }
     }
 
     eventMap.set(i, score);

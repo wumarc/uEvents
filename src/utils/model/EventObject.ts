@@ -192,6 +192,7 @@ export const nextEndTime = (
 };
 
 export const defaultEvent: EventObject = {
+  state: "Created",
   id: "1",
   name: "",
   description: "",
