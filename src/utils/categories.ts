@@ -26,3 +26,35 @@ export function buildCategories(events: EventObject[]): [string[], number[]] {
   });
   return [categories, categoriesValues];
 }
+
+const defaultCategories = [
+  "arts",
+  "design",
+  "business",
+  "science",
+  "sports",
+  "games",
+  "nightlife",
+];
+
+export function getOrderedCategories(
+  categories: string[],
+  categoriesValues: number[]
+): string[] {
+  for (let value of defaultCategories) {
+    if (!categories.includes(value)) {
+      categories.push(value);
+      categoriesValues.push(5);
+    }
+  }
+
+  var orderedCategories: string[] = [];
+  for (let i = 0; i < categories.length; i++) {
+    var max = Math.max(...categoriesValues);
+    var index = categoriesValues.indexOf(max);
+    orderedCategories.push(categories[index] as string);
+    categoriesValues[index] = -1;
+  }
+
+  return orderedCategories;
+}
