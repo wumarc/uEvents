@@ -386,7 +386,7 @@ export const Step3b: FC<{ eventID: string, onCampusProps: any }> = (props) => {
               selectionColor={colours.black}
             />
             <Input
-              label="Address"
+              label="Address (please provide the full address)"
               selectionColor={colours.black}
             />
           </View>
@@ -665,6 +665,15 @@ export const Step6: FC<{ eventID: string, setFreeEventProps: any, setStep: any, 
 
 export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
 
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    props.eventID
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
 
     <View>
@@ -681,21 +690,8 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
             maxLength={4}
             autoCapitalize="none"
             placeholder=""
-            leftIcon={
-              <Icon
-                name="dollar"
-                type="font-awesome"
-                size={40}
-                color={colours.black}
-              />
-            }
-            inputContainerStyle={{
-              borderColor: colours.grey,
-              paddingVertical: 4,
-              paddingHorizontal: 10,
-              borderRadius: 6,
-              
-            }}
+            leftIcon={<Icon name="dollar" type="font-awesome" size={40}color={colours.black}/>}
+            inputContainerStyle={{borderColor: colours.grey, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
             keyboardType="decimal-pad"
             inputStyle={{ fontSize: 40, fontWeight: "bold" }}
             containerStyle={{
@@ -717,29 +713,14 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           selectionColor={colours.black}
           maxLength={4}
           autoCapitalize="none"
-          leftIcon={
-            <Icon
-              name="dollar"
-              type="font-awesome"
-              size={40}
-              color={colours.black}
-            />
-          }
-          inputContainerStyle={{
-            borderColor: colours.grey,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
+          leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
+          inputContainerStyle={{borderColor: colours.grey, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
           keyboardType="decimal-pad"
           inputStyle={{ fontSize: 40, fontWeight: "bold" }}
-          containerStyle={{
-            padding: 20,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          containerStyle={{padding: 20, justifyContent: "center", alignItems: "center"}}
           onChange={(e) => {}}
         />
+
         </View>
 
       </View>
