@@ -16,10 +16,8 @@ import { EventObject } from "./model/EventObject";
 import { useDownloadURL } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
 
-export function useStateWithFireStoreImage(eventId: string) {
-  const [url, loading, error] = useDownloadURL(
-    ref(storage, "events/" + eventId)
-  );
+export function useStateWithFireStoreImage(path: string) {
+  const [url, loading, error] = useDownloadURL(ref(storage, path));
 
   if (error) {
     return [false, "", false] as const;

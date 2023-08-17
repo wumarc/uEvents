@@ -1,6 +1,7 @@
 import { EventObject } from "./EventObject";
 
 export type Organizer = {
+  id: string;
   type: "organizer";
   name: string;
   image: string;
@@ -16,4 +17,5 @@ export const defaultOrganizer: Organizer = {
   email: "",
   instagram: "",
   description: "",
+  id: "",
 };

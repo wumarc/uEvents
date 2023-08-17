@@ -10,10 +10,12 @@ import { Button } from "react-native-elements";
 import {
   useSateWithFireStore,
   useStateWithFireStoreDocument,
+  useStateWithFireStoreImage,
 } from "../../../utils/useStateWithFirebase";
 import {
   getFirebaseUserID,
   getFirebaseUserIDOrEmpty,
+  uid,
 } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -21,18 +23,47 @@ import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
+import { useUploadFile } from "react-firebase-hooks/storage";
+import { ref } from "firebase/storage";
+import { storage } from "../../../firebaseConfig";
+import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
-  const [saveChanges, setSaveChanges] = React.useState(false);
-  const [image, setImage] = useState<String>("");
+  const [image, setImage] = useState<string>("");
   const [loading, profile, setProfile] =
     useStateWithFireStoreDocument<Organizer>(
       "users",
       getFirebaseUserIDOrEmpty()
     );
+  const [uploadFile, uploading, snapshot, error] = useUploadFile();
+
+  const [loading2, url, found] = useStateWithFireStoreImage(
+    "organizers/" + getFirebaseUserIDOrEmpty()
+  );
+
+  if (loading2 || loading) {
+    return <Loading />;
+  }
+
+  if (uploading) {
+    return <Text>Uploading file...</Text>;
+  }
+
+  let uri = "";
+  if (image != "") {
+    uri = image;
+  } else if (found && url) {
+    uri = url;
+  } else {
+    uri =
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  }
+
+  const id = profile.id ?? getFirebaseUserIDOrEmpty();
+  const reference = ref(storage, "organizers/" + id);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -45,25 +76,35 @@ const Profile = ({ route, navigation }: props) => {
     });
 
     if (!result.canceled) {
+      console.log(result);
       setImage(result!.assets[0]!.uri);
+      fetch(result!.assets[0]!.uri).then((response) => {
+        console.log(response);
+        response.blob().then((blob) => {
+          uploadFile(reference, blob, {
+            contentType: "image/jpeg",
+          })
+            .then(() => {
+              setProfile({ ...profile, image: id });
+              console.log("done");
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        });
+      });
     }
   };
-
-  if (loading) {
-    return <Text>Loading</Text>;
-  }
 
   return (
     <View style={styles.container}>
       <ScrollView>
+        {/* {snapshot && <Text>Snapshot: {JSON.stringify(snapshot)}</Text>} */}
         {/* Image Section */}
         <View style={styles.profileImage}>
           <Avatar
             source={{
-              uri:
-                image == ""
-                  ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                  : image,
+              uri: uri,
             }}
             rounded
             size="xlarge"
