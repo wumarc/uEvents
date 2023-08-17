@@ -667,8 +667,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Recurrence */}
         <View></View>
       </View>
-      {/*<CustomButton buttonName={"Add Event"} // Adding the event to the database
-            onPressListener={() => { event.id = uid(); addDocumentToCollection<EventObject>("events", event.id, event); navigation.pop() }} />*/}
+
     </View>
   );
 };

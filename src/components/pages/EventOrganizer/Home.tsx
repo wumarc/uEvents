@@ -57,7 +57,7 @@ const Home = ({ navigation }: any) => {
           onPress={() => navigation.navigate("Step0", { useDefault: false })}
         />
       </View>
-      
+
     </View>
   );
 };

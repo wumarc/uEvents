@@ -25,7 +25,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        props.navigation.navigate("EventDetailsView", {
+        props.navigation.navigate("OrganizerEventDetails", {
           eventID: props.eventID,
         })
       }

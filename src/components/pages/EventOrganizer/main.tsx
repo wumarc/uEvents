@@ -14,7 +14,7 @@ import Home from "./Home";
 import Settings from "./Settings";
 import Profile from "./Profile";
 import HeaderLeft from "../../molecules/HeaderLeft";
-import EventDetails from "../Student/EventDetails";
+import OrganizerEventDetails from "./OrganizerEventDetails";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,6 +23,7 @@ export type RootStackParamList = {
   MainView: { userType: string };
   CreateEventView: { userType: string };
   Profile: { userType: string };
+  OrganizerEventDetails: { eventID: string };
   Step0: { eventID: string | undefined; useDefault: boolean };
 };
 
@@ -113,8 +114,8 @@ const Main: FC<{ userType: string }> = (props) => {
             })}
           />
           <Stack.Screen
-            name="EventDetailsView"
-            component={EventDetails as any} // TODO fix error
+            name="OrganizerEventDetails"
+            component={OrganizerEventDetails as any} // TODO fix error
             options={({ route, navigation }) => {
               return {
                 title: "Event Details",
