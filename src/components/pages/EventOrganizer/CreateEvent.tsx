@@ -8,7 +8,7 @@ import {
   Platform,
   Pressable,
 } from "react-native";
-import { ButtonGroup, Icon } from "react-native-elements";
+import { ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { Input } from "@rneui/themed";
 import { FC, useEffect, useState } from "react";
 import { Button } from "@rneui/base";
@@ -41,6 +41,8 @@ import { fireStore } from "../../../firebaseConfig";
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
   const [id, setId] = useState(route.params.eventID ?? uid());
+  const [propsFromStep3, setPropsFromStep3] = useState<any>(null);
+  const [freeEventProps, setFreeEventProps] = useState<any>(null);
 
   useEffect(() => {
     if (route.params.eventID == undefined) {
@@ -67,48 +69,39 @@ export const Step0 = ({ route, navigation }: any) => {
   }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: colours.white,
-        justifyContent: "space-between",
-      }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      {/* Render the right step dynamically */}
+    <View style={{flex: 1, backgroundColor: colours.white, justifyContent: "space-between"}}>
+    {/* behavior={Platform.OS === "ios" ? "padding" : "height"} */}
+      
       <ScrollView>
-        <View
-          style={{
-            paddingHorizontal: spacing.page2,
-            ...spacing.verticalPadding1,
-          }}
-        >
-          {/* {step == 0 && <StepWelcome />} */}
+        <View style={{ paddingHorizontal: spacing.page2, ...spacing.verticalPadding1 }}>
           {step == 1 && <Step1 eventID={id} />}
           {step == 2 && <Step2 eventID={id} />}
           {step == 3 && <Step3 eventID={id} />}
           {step == 4 && <Step4 eventID={id} />}
           {step == 5 && <Step5 eventID={id} />}
-          {step == 6 && <Step6 eventID={id} />}
-          {step == 7 && <Step7 eventID={id} />}
-          {step == 8 && <Step8 eventID={id} />}
-          {step == 9 && <Step9 eventID={id} />}
-          {step == 10 && <Step10 eventID={id} />}
+          {step == 6 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
+          {step == 7 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
+          {step == 8 && <Step7 eventID={id} />}
+          {step == 9 && <Step8 eventID={id} />}
+          {step == 10 && <Step9 eventID={id} />}
+          {step == 11 && <Step10 eventID={id} />}
         </View>
       </ScrollView>
 
       {/* Static Footer */}
       <KeyboardAvoidingView style={{ marginBottom: windowHeight * 0.01 }}>
-        <ProgressBar progress={step * 0.09} color={colours.purple} />
+        <ProgressBar progress={step * 0.1} color={colours.purple} />
         <View style={styles.footer_buttons}>
           <Button
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
-            onPress={() => (step == 1 ? navigation.pop() : setStep(step - 1))}
+            onPress={() => 
+              (step == 1 ? navigation.pop() : setStep(step - 1))
+            }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
             disabledTitleStyle={{ color: colours.white }}
-            disabled={step == 1 || step == 11}
+            disabled={step == 1 || step == 10}
           />
           <Button
             buttonStyle={{
@@ -117,31 +110,15 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            title={step != 11 ? "Next" : "Finish"}
+            disabled={step == 6}
+            title={step != 10 ? "Next" : "Finish"}
             onPress={() => {
-              step != 11 ? setStep(step + 1) : navigation.pop();
+              step != 10 ? setStep(step + 1) : navigation.pop();
             }}
             titleStyle={{ ...fonts.title2, color: colours.white }}
           />
         </View>
       </KeyboardAvoidingView>
-    </View>
-  );
-};
-
-/* --------------------------------- Welcome -------------------------------- */
-export const StepWelcome = ({ route, navigation }: any) => {
-  return (
-    <View style={{ flex: 1, height: "100%", justifyContent: "center" }}>
-      <View style={spacing.verticalMargin1}>
-        <Text style={fonts.title1}>Create Event</Text>
-      </View>
-
-      <View>
-        <Text style={fonts.regular}>
-          Creating an event is easy. Let us guide you through every step.
-        </Text>
-      </View>
     </View>
   );
 };
@@ -366,6 +343,7 @@ export const Step3: FC<{ eventID: string }> = (props) => {
 
 /* ---------------------------------- Date ---------------------------------- */
 export const Step4: FC<{ eventID: string }> = (props) => {
+  
   const [selected, setSelected] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState({
@@ -373,7 +351,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
     endDate: null,
   });
 
-  const onDayPress = (day) => {
+  const onDayPress = (day: any) => {
     const { startDate, endDate } = selectedDates;
     if (startDate && endDate) {
       setSelectedDates({ startDate: day.dateString, endDate: null });
@@ -481,6 +459,12 @@ export const Step4: FC<{ eventID: string }> = (props) => {
 
 /* ------------------------------- Description ------------------------------ */
 export const Step5: FC<{ eventID: string }> = (props) => {
+  
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    props.eventID
+  );
+
   const [charactersAvailable, setCharactersAvailable] = useState<number>(200);
 
   return (
@@ -501,6 +485,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
         </Text>
         <Input
           selectionColor={colours.black}
+          defaultValue={event?.description}
           inputStyle={{ height: windowHeight * 0.13 }}
           inputContainerStyle={{
             borderColor: colours.grey,
@@ -514,6 +499,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
           containerStyle={{ paddingHorizontal: 0 }}
           onChange={(e) => {
             setCharactersAvailable(200 - e.nativeEvent.text.length);
+            set({...event, description: e.nativeEvent.text})
           }}
           maxLength={200}
         />
@@ -522,25 +508,101 @@ export const Step5: FC<{ eventID: string }> = (props) => {
   );
 };
 
-/* --------------------------------- Price ---------------------------------- */
-export const Step6: FC<{ eventID: string }> = (props) => {
+/* --------------------------------- Price: Free or Nah? ---------------------------------- */
+export const Step6: FC<{ eventID: string, setFreeEventProps: any, setStep: any, step: number }> = (props) => {
+
   return (
     <View>
+
       <View>
-        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-          Now, set your price
-        </Text>
-        <Text style={fonts.regular}>
-          If your event is free, just leave it blank.
-        </Text>
+        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Is your event free?</Text>
       </View>
 
-      {/* Price */}
       <View style={{ marginVertical: "5%" }}>
+            <Button
+              title={"Yes"}
+              buttonStyle={{
+                backgroundColor: colours.purple,
+                padding: 15,
+                borderRadius: 10,
+                marginBottom: 10,
+              }}
+              onPress={() => {
+                props.setFreeEventProps(true)
+                props.setStep(props.step+2)
+              }}
+            />
+            <Button
+              title={"No"}
+              buttonStyle={{
+                backgroundColor: colours.purple,
+                padding: 15,
+                borderRadius: 10,
+              }}
+              onPress={() => { 
+                props.setFreeEventProps(true)
+                props.setStep(props.step+1)
+              }}
+            />
+      </View>      
+
+
+    </View>
+  );
+};
+
+export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
+
+  return (
+
+    <View>
+
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>How much does it cost?</Text>
+      <Text style={fonts.regular}>We all prefer free events, but sometimes we have to pay for the good.</Text>
+
+      <View style={{flexDirection: 'row'}}>
+          
+        <View style={{width: "48%"}}>
+          <Input
+            label="Min"
+            selectionColor={colours.black}
+            autoCapitalize="none"
+            placeholder="0"
+            leftIcon={
+              <Icon
+                name="dollar"
+                type="font-awesome"
+                size={40}
+                color={colours.black}
+              />
+            }
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderBottomWidth: 0,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+            keyboardType="decimal-pad"
+            inputStyle={{ fontSize: 50, fontWeight: "bold" }}
+            containerStyle={{
+              padding: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onChange={(e) => {}}
+          />
+        </View>
+        
+        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+          <Text style={{...fonts.title1}}>-</Text>
+        </View>
+    
+        <View style={{width: "48%"}}>
         <Input
+          label="Max"
           selectionColor={colours.black}
           autoCapitalize="none"
-          placeholder="Free"
           leftIcon={
             <Icon
               name="dollar"
@@ -555,8 +617,6 @@ export const Step6: FC<{ eventID: string }> = (props) => {
             paddingVertical: 4,
             paddingHorizontal: 10,
             borderRadius: 6,
-            width: windowWidth * 0.5,
-            height: windowHeight * 0.1,
           }}
           keyboardType="decimal-pad"
           inputStyle={{ fontSize: 50, fontWeight: "bold" }}
@@ -567,21 +627,55 @@ export const Step6: FC<{ eventID: string }> = (props) => {
           }}
           onChange={(e) => {}}
         />
+        </View>
+      
       </View>
+
     </View>
+
   );
-};
+
+}
 
 /* ------------------------------- Sign up link ----------------------------- */
 export const Step7: FC<{ eventID: string }> = (props) => {
+  
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    props.eventID
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <View>
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-        Provide a link to sign up
-      </Text>
-      <Text style={fonts.regular}>
-        Skip this step if your event requires no sign up.
-      </Text>
+      
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Do you require sign up?</Text>
+      <Text style={fonts.regular}>Skip this step if your event requires no sign up.</Text>
+      
+      <View style={{ marginVertical: "5%" }}>
+        <Input
+          selectionColor={colours.black}
+          defaultValue={event?.signUpLink}
+          placeholder="https://docs.google.com/forms/d/e/1FAIpQLSe7-SQCOLPxuD62i9ddBTcMPoA0OdUhrvJWprt7WY06IO3KEg/viewform"
+          // inputStyle={{height: windowHeight*0.08}}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+          }}
+          textAlignVertical="top"
+          multiline={true}
+          containerStyle={{paddingHorizontal: 0}}
+          onChange={(e) => set({...event, signUpLink: e.nativeEvent.text})}
+          maxLength={300}
+        />
+      </View>
+
     </View>
   );
 };
@@ -608,7 +702,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
     <View>
       <View>
         <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-          Tags
+          Select tags to represent your event
         </Text>
         <Text style={fonts.regular}>
           Pick up to 5 tags to represent your event
