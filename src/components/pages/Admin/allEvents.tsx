@@ -48,6 +48,9 @@ const EventLine: FC<{
   navigation: any;
 }> = ({ event, del, navigation }) => {
   let organizer = event.organizer;
+
+  const [reason, setReason] = useState("");
+
   if (event.organizerType === "Organizer Added") {
     const [loading, organizer2] = useStateWithFireStoreDocument(
       "users",
@@ -135,7 +138,6 @@ const EventLine: FC<{
         {event.state === "Draft" ? <Text>Draft</Text> : <></>}
         {event.state === "Pending" ? (
           <Button
-            color="green"
             onPress={() => {
               setDoc(doc(fireStore, "events/" + event.id), {
                 ...event,
@@ -149,6 +151,45 @@ const EventLine: FC<{
           <></>
         )}
         {event.state === "Published" ? <Text>Approved</Text> : <></>}
+        {event.state === "Rejected" ? <Text>Rejected</Text> : <></>}
+      </View>
+      <View
+        style={{
+          marginLeft: 40,
+          height: 40,
+        }}
+      >
+        {event.state === "Pending" ? (
+          <Button
+            onPress={() => {
+              setDoc(doc(fireStore, "events/" + event.id), {
+                ...event,
+                state: "Rejected",
+                rejectReason: reason,
+              });
+            }}
+          >
+            Reject
+          </Button>
+        ) : (
+          <></>
+        )}
+      </View>
+      <View
+        style={{
+          marginLeft: 40,
+          height: 40,
+        }}
+      >
+        {event.state === "Pending" ? (
+          <Input
+            placeholder="Reject reason"
+            onChangeText={(t) => setReason(t)}
+            style={{ width: 400 }}
+          />
+        ) : (
+          <></>
+        )}
       </View>
     </View>
   );
