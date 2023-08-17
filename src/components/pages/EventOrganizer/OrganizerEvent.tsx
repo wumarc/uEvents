@@ -1,5 +1,5 @@
 import { View, Text, Touchable, TouchableOpacity } from "react-native";
-import { Icon } from "@rneui/base";
+import { Icon } from "@rneui/themed";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { FC } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
@@ -10,6 +10,7 @@ import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFireba
 import { Loading } from "../Common/Loading";
 
 const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
+  
   const [loading, event, setEvent] = useStateWithFireStoreDocument(
     "events",
     props.eventID
@@ -43,7 +44,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           </Text>
           <Text style={fonts.title3}>June 13 2023</Text>
           <Text style={fonts.title3}>10 PM - 4 PM</Text>
-          <Text style={fonts.title3}>345 Clicks</Text>
+          <Text style={{...fonts.title3}}>345 Clicks</Text>
         </View>
 
         <View
@@ -58,27 +59,58 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ ...fonts.title3 }}>{event.state}</Text>
+            <Text style={{
+              ...fonts.title2, 
+              color: event.state == "Draft" ? colours.grey : '#EF9B0F'
+            }}>
+              {event.state}
+            </Text>
 
-            <Icon
-              reverse
-              name="chevron-forward-outline"
-              type="ionicon"
-              color="transparent"
-              size={20}
-              iconStyle={fonts.title3}
-              // containerStyle={{padding: 0, margin: 2}}
-            />
           </View>
-          <Button
-            title="Edit"
-            onPress={() =>
-              props.navigation.navigate("Step0", {
-                eventID: props.eventID,
-                useDefault: false,
-              })
-            }
-          />
+        </View>
+
+        <View style={{ flexDirection: "row"}}>
+
+          <View style={{justifyContent: "center"}}>
+
+            <TouchableOpacity 
+              style={{flexDirection: 'row', alignItems: 'center', justifyContent: "flex-end"}}
+              onPress={() =>
+                props.navigation.navigate("Step0", {
+                  eventID: props.eventID,
+                  useDefault: false,
+                })
+              }
+            >
+              <Text style={fonts.title3}>Edit</Text>
+              <Icon
+                reverse
+                name="square-edit-outline"
+                type="material-community"
+                color="transparent"
+                size={15}
+                iconStyle={{...fonts.title1, color: colours.black}}
+              />
+            </TouchableOpacity >
+
+            <TouchableOpacity 
+              style={{flexDirection: 'row', alignItems: 'center', justifyContent: "flex-end"}}
+              onPress={() => deleteDoc(doc(fireStore, "events/" + props.eventID))}
+            >
+              <Text style={fonts.title3}>Delete</Text>
+              <Icon
+                reverse
+                name="delete-outline"
+                type="material-community"
+                color="transparent"
+                size={15}
+                iconStyle={{...fonts.title1, color: colours.black}}
+              />
+            </TouchableOpacity>
+
+          </View>
+
+{/*           
           <Button
             title={publishOption}
             onPress={() => {
@@ -88,12 +120,11 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
                 setEvent({ ...event, state: "Draft" });
               }
             }}
-          />
-          <Button
-            title="Delete"
-            onPress={() => deleteDoc(doc(fireStore, "events/" + props.eventID))}
-          />
+          /> 
+          */}
+
         </View>
+
       </View>
     </TouchableOpacity>
   );
