@@ -93,10 +93,10 @@ const Profile = ({ route, navigation }: props) => {
                 autoCapitalize="none"
                 containerStyle={{paddingHorizontal: 0}}
                 selectionColor={colours.purple}
-                rightIcon={{ 
-                  type: 'entypo', name: 'cross',
-                  onPress: () => {}
-                }}
+                // rightIcon={{ 
+                //   type: 'entypo', name: 'cross',
+                //   onPress: () => {}
+                // }}
                 onChange={(value: any) => setProfile({ ...profile, name: value })}
             />
 
@@ -108,7 +108,7 @@ const Profile = ({ route, navigation }: props) => {
                 textAlignVertical= 'top'
                 multiline={true}
                 autoCapitalize="none"
-                rightIcon={{ type: 'entypo', name: 'cross'}}
+                // rightIcon={{ type: 'entypo', name: 'cross'}}
                 containerStyle={{paddingHorizontal: 0}}
                 selectionColor={colours.purple}
                 onChange={(value: any) => setProfile({ ...profile, name: value })}
