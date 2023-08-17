@@ -79,14 +79,13 @@ export const Step0 = ({ route, navigation }: any) => {
           {step == 3 && <Step3 eventID={id} setOncampusProps={setOnCampusProps} step={step} setStep={setStep}/>}
           {step == 4 && <Step3b eventID={id} onCampusProps={onCampusProps}/>}
           {step == 5 && <Step4 eventID={id} />}
-          {step == 6 && <Step4 eventID={id} />}
-          {step == 7 && <Step5 eventID={id} />}
-          {step == 8 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
-          {step == 9 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
-          {step == 10 && <Step7 eventID={id} />}
-          {step == 11 && <Step8 eventID={id} />}
-          {step == 12 && <Step9 eventID={id} />}
-          {step == 13 && <Step10 eventID={id} />}
+          {step == 6 && <Step5 eventID={id} />}
+          {step == 7 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
+          {step == 8 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
+          {step == 9 && <Step7 eventID={id} />}
+          {step == 10 && <Step8 eventID={id} />}
+          {step == 11 && <Step9 eventID={id} />}
+          {step == 12 && <Step10 eventID={id} />}
         </View>
       </ScrollView>
 
@@ -98,7 +97,7 @@ export const Step0 = ({ route, navigation }: any) => {
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
             onPress={() => 
-              (step == 1 ? navigation.pop() : step == 3 && onCampusProps ? setStep(step-2) : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
+              (step == 1 ? navigation.pop() : step == 3 && onCampusProps ? setStep(step-2) : step == 10 && freeEventProps ? setStep(step-2) : setStep(step - 1))
             }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
@@ -112,10 +111,10 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            disabled={step == 6 || step == 3}
+            disabled={step == 7 || step == 3}
             title={step != 10 ? "Next" : "Finish"}
             onPress={() => {
-              step != 10 ? setStep(step + 1) : navigation.pop();
+              step != 13 ? setStep(step + 1) : navigation.pop();
             }}
             titleStyle={{ ...fonts.title2, color: colours.white }}
           />
@@ -254,9 +253,9 @@ export const Step3: FC<{ eventID: string, setOncampusProps: any, setStep: any, s
 
   return (
     <View>
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Is your event taking place on campus?</Text>
+      <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Is your event taking place on campus?</Text>
 
-      <View style={{ marginVertical: "5%" }}>
+      <View style={{marginVertical: "5%"}}>
         <Button
           title={"Yes"}
           buttonStyle={{
@@ -352,17 +351,14 @@ export const Step3b: FC<{ eventID: string, onCampusProps: any }> = (props) => {
       </Text>
 
       <Text style={{...fonts.regular}}>
-        {props.onCampusProps ? "Search the building by its acronym!" : "Provide the building name and then the address"}
+        {props.onCampusProps ? "Search the building by its acronym!" : "Provide the location and address."}
       </Text>
 
       <View style={{marginTop: '10%'}}>
         {props.onCampusProps ? 
           <Dropdown
             // style={isFocus && { borderColor: "blue" }}
-            placeholderStyle={{
-              fontSize: 20,
-              padding: 5,
-            }}
+            placeholderStyle={{ fontSize: 20, padding: 5}}
             // selectedTextStyle={styles.selectedTextStyle}
             // inputSearchStyle={styles.inputSearchStyle}
             // iconStyle={styles.iconStyle}
@@ -372,9 +368,7 @@ export const Step3b: FC<{ eventID: string, onCampusProps: any }> = (props) => {
             labelField="label"
             valueField="address"
             placeholder={selectedBuilding != null ? data[selectedBuilding]?.label : "Select the building"}
-            containerStyle={{
-              borderWidth: 1,
-            }}
+            containerStyle={{borderWidth: 1}}
             style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.06}}
             searchPlaceholder="Search..."
             // value={data[selectedBuilding]?.label}
@@ -386,15 +380,21 @@ export const Step3b: FC<{ eventID: string, onCampusProps: any }> = (props) => {
             }}
           />
         :
-          <Input
-            
-          />
+          <View>
+            <Input
+              label="Building Name / Location"
+              selectionColor={colours.black}
+            />
+            <Input
+              label="Address"
+              selectionColor={colours.black}
+            />
+          </View>
         }
       </View>
 
     </View>
   )
-
 }
 
 /* ---------------------------------- Date ---------------------------------- */
@@ -691,10 +691,10 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
             }
             inputContainerStyle={{
               borderColor: colours.grey,
-              borderBottomWidth: 0,
               paddingVertical: 4,
               paddingHorizontal: 10,
               borderRadius: 6,
+              
             }}
             keyboardType="decimal-pad"
             inputStyle={{ fontSize: 40, fontWeight: "bold" }}
@@ -727,7 +727,6 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           }
           inputContainerStyle={{
             borderColor: colours.grey,
-            borderBottomWidth: 0,
             paddingVertical: 4,
             paddingHorizontal: 10,
             borderRadius: 6,
@@ -742,7 +741,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           onChange={(e) => {}}
         />
         </View>
-      
+
       </View>
 
     </View>
