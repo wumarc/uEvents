@@ -41,7 +41,7 @@ import { fireStore } from "../../../firebaseConfig";
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
   const [id, setId] = useState(route.params.eventID ?? uid());
-  const [propsFromStep3, setPropsFromStep3] = useState<any>(null);
+  const [onCampusProps, setOnCampusProps] = useState<any>(null);
   const [freeEventProps, setFreeEventProps] = useState<any>(null);
 
   useEffect(() => {
@@ -76,8 +76,8 @@ export const Step0 = ({ route, navigation }: any) => {
         <View style={{ paddingHorizontal: spacing.page2, ...spacing.verticalPadding1 }}>
           {step == 1 && <Step1 eventID={id} />}
           {step == 2 && <Step2 eventID={id} />}
-          {step == 3 && <Step3 eventID={id} />}
-          {step == 4 && <Step3b eventID={id} />}
+          {step == 3 && <Step3 eventID={id} setOncampusProps={setOnCampusProps} step={step} setStep={setStep}/>}
+          {step == 4 && <Step3b eventID={id} onCampusProps={onCampusProps}/>}
           {step == 5 && <Step4 eventID={id} />}
           {step == 6 && <Step4 eventID={id} />}
           {step == 7 && <Step5 eventID={id} />}
@@ -98,7 +98,7 @@ export const Step0 = ({ route, navigation }: any) => {
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
             onPress={() => 
-              (step == 1 ? navigation.pop() : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
+              (step == 1 ? navigation.pop() : step == 3 && onCampusProps ? setStep(step-2) : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
             }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
@@ -112,7 +112,7 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            disabled={step == 6}
+            disabled={step == 6 || step == 3}
             title={step != 10 ? "Next" : "Finish"}
             onPress={() => {
               step != 10 ? setStep(step + 1) : navigation.pop();
@@ -121,6 +121,7 @@ export const Step0 = ({ route, navigation }: any) => {
           />
         </View>
       </KeyboardAvoidingView>
+
     </View>
   );
 };
@@ -249,104 +250,147 @@ export const Step2: FC<{ eventID: string }> = (props) => {
 };
 
 /* --------------------------------- Location ------------------------------- */
-export const Step3: FC<{ eventID: string }> = (props) => {
-  const [nextStep, setNextStep] = useState<boolean>(false);
-  const [onCampus, setOnCampus] = useState<boolean>(false);
-  const [buildingName, setBuildingName] = useState<string>("");
-  const [isFocus, setIsFocus] = useState(false);
+export const Step3: FC<{ eventID: string, setOncampusProps: any, setStep: any, step: number }> = (props) => {
 
+  return (
+    <View>
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Is your event taking place on campus?</Text>
+
+      <View style={{ marginVertical: "5%" }}>
+        <Button
+          title={"Yes"}
+          buttonStyle={{
+            backgroundColor: colours.purple,
+            padding: 15,
+            borderRadius: 10,
+            marginBottom: 10,
+          }}
+          onPress={() => {
+            props.setOncampusProps(true);
+            props.setStep(props.step+1)
+          }}
+        />
+        <Button
+          title={"No"}
+          buttonStyle={{
+            backgroundColor: colours.purple,
+            padding: 15,
+            borderRadius: 10,
+          }}
+          onPress={() => {
+            props.setOncampusProps(false)
+            props.setStep(props.step+1)
+          }}
+        />
+      </View>
+    </View>
+  );
+
+};
+
+export const Step3b: FC<{ eventID: string, onCampusProps: any }> = (props) => {
+
+  const [selectedBuilding, setSelectedBuilding] = useState<number>();
+  const [isFocus, setIsFocus] = useState(false);
   const data = [
-    { label: "Montpetit Gym", value: "1" },
-    { label: "University Centre", value: "2" },
-    { label: "Learning Crossroad", value: "3" },
-    { label: "Cant find a building?", value: "4" },
+    { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion" },
+    { label: "Hagen (HGN)", address: "115 Séraphin Marion" },
+    { label: "William Commanda (WCA)", address: "52 University" },
+    { label: "Tabaret Hall (TBT)", address: "550 Cumberland" },
+    { label: "Department of Visual Arts (LRR)", address: "100 Laurier" },
+    { label: "Hamelin (MHN)", address: "70 Laurier" },
+    { label: "Morisset (MRT)", address: "65 University" },
+    { label: "University Centre (UCU)", address: "85 University" },
+    { label: "141 Louis Pasteur (LPR)", address: "141 Louis Pasteur" },
+    { label: "Thompson Residence (THN)", address: "45 University" },
+    { label: "Montpetit (MNT)", address: "125 University" },
+    { label: "Pérez (PRZ)", address: "50 University" },
+    { label: "Residence (90U)", address: "90 University" },
+    { label: "Marchand Residence (MRD)", address: "110 University" },
+    { label: "Learning Crossroads (CRX)", address: "145 Jean-Jacques Lussier" },
+    { label: "Lamoureux (LMX)", address: "145 Jean-Jacques Lussier" },
+    { label: "Brooks (BRS)", address: "100 Thomas-More" },
+    { label: "Colonel By (CBY)", address: "161 Louis Pasteur" },
+    { label: "Leblanc Residence (LBC)", address: "45 Louis Pasteur" },
+    { label: "MCE", address: "100 Marie Curie" },
+    { label: "Bioscience-Ph I CAREG (CRG)", address: "20 Marie Curie" },
+    { label: "Fauteux (FTX)", address: "57 Louis Pasteur" },
+    { label: "Simard (SMD)", address: "60 University" },
+    { label: "Vanier (VNR)", address: "136 Jean-Jacques Lussier" },
+    { label: "Bioscience-Ph III, Gendron (GNN)", address: "30 Marie Curie" },
+    { label: "Marion (MRN)", address: "140 Louis Pasteur" },
+    { label: "Stanton Residence (STN)", address: "100 University" },
+    { label: "Hyman Soloway Residence (HSY)", address: "157 Laurier" },
+    { label: "Desmarais (DMS)", address: "55 Laurier" },
+    { label: "Social Sciences Building (FSS)", address: "120 University" },
+    { label: "Power Plant (CTE)", address: "720 King Edward" },
+    { label: "Minto Sports Complex (MNO)", address: "801 King Edward" },
+    { label: "SITE (STE)", address: "800 King Edward" },
+    { label: "D'Iorio (DRO)", address: "10 Marie Curie" },
+    { label: "Bioscience-Ph II (BSC)", address: "30 Marie Curie" },
+    { label: "STEM Complex (STM)", address: "150 Louis Pasteur" },
+    { label: "Roger Guindon (RGN)", address: "451 Smyth" },
+    { label: "GSAED Grad House (GSD)", address: "601 Cumberland" },
+    { label: "HNN", address: "202 Henderson" },
+    { label: "Advanced Research Complex (ARC)", address: "25 Templeton" },
+    { label: "KED", address: "585 King Edward" },
+    { label: "STT", address: "1 Stewart" },
+    { label: "Alex Trebek Alumni Hall (ATK)", address: "157 Séraphin Marion" },
+    { label: "ANX", address: "Annex Residence" },
+    { label: "MNN", address: "Mann Residence" },
+    { label: "WBD", address: "200 Wilbrod" },
+    { label: "FRL", address: "Friel Residence" },
+    { label: "RDU", address: "Rideau Residence" },
+    { label: "Dome", address: "Lees 200 - Bloc F" },
   ];
 
   return (
     <View>
-      {!nextStep && (
-        <View>
-          <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-            Is your event taking place on campus?
-          </Text>
 
-          <View style={{ marginVertical: "5%" }}>
-            <Button
-              title={"Yes"}
-              buttonStyle={{
-                backgroundColor: colours.purple,
-                padding: 15,
-                borderRadius: 10,
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                setNextStep(true);
-                setOnCampus(true);
-              }}
-            />
-            <Button
-              title={"No"}
-              buttonStyle={{
-                backgroundColor: colours.purple,
-                padding: 15,
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                setNextStep(true);
-                setOnCampus(false);
-              }}
-            />
-          </View>
-        </View>
-      )}
+      <Text style={fonts.title1}>
+        {props.onCampusProps ? "In which building is your event taking place?" : "Where will the event take place?"}
+      </Text>
 
-      {nextStep && (
-        <View>
-          <Text style={fonts.title1}>
-            {onCampus
-              ? "In which building is your event taking place?"
-              : "Where will the event take place?"}
-          </Text>
+      <Text style={{...fonts.regular}}>
+        {props.onCampusProps ? "Search the building by its acronym!" : "Provide the building name and then the address"}
+      </Text>
 
-          <View style={{ marginVertical: "5%" }}>
-            <Text style={fonts.regular}>
-              {onCampus
-                ? "Search the building by its acronym!"
-                : "Provide the building name and then the address"}
-            </Text>
-
-            <Dropdown
-              style={isFocus && { borderColor: "blue" }}
-              // placeholderStyle={styles.placeholderStyle}
-              // selectedTextStyle={styles.selectedTextStyle}
-              // inputSearchStyle={styles.inputSearchStyle}
-              // iconStyle={styles.iconStyle}
-              data={data}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={!isFocus ? "Select building" : ""}
-              searchPlaceholder="Search..."
-              value={buildingName}
-              onFocus={() => setIsFocus(true)}
-              // onBlur={() => setIsFocus(false)}
-              onChange={(item) => {
-                setBuildingName(item.value);
-                setIsFocus(false);
-              }}
-            />
-          </View>
-        </View>
-      )}
-    </View>
-  );
-};
-
-export const Step3b: FC<{ eventID: string }> = (props) => {
-
-  return (
-    <View>
+      <View style={{marginTop: '10%'}}>
+        {props.onCampusProps ? 
+          <Dropdown
+            // style={isFocus && { borderColor: "blue" }}
+            placeholderStyle={{
+              fontSize: 20,
+              padding: 5,
+            }}
+            // selectedTextStyle={styles.selectedTextStyle}
+            // inputSearchStyle={styles.inputSearchStyle}
+            // iconStyle={styles.iconStyle}
+            data={data}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="address"
+            placeholder={selectedBuilding != null ? data[selectedBuilding]?.label : "Select the building"}
+            containerStyle={{
+              borderWidth: 1,
+            }}
+            style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.06}}
+            searchPlaceholder="Search..."
+            // value={data[selectedBuilding]?.label}
+            onFocus={() => setIsFocus(true)}
+            onChange={(item) => {
+              setIsFocus(false);
+              setSelectedBuilding(5);
+              console.log(item) 
+            }}
+          />
+        :
+          <Input
+            
+          />
+        }
+      </View>
 
     </View>
   )
