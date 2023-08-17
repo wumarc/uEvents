@@ -96,7 +96,7 @@ export const Step0 = ({ route, navigation }: any) => {
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
             onPress={() => 
-              (step == 1 ? navigation.pop() : setStep(step - 1))
+              (step == 1 ? navigation.pop() : step == 8 && freeEventProps ? setStep(step-2) : setStep(step - 1))
             }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
@@ -557,17 +557,18 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
 
     <View>
 
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>How much does it cost?</Text>
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price of your event</Text>
       <Text style={fonts.regular}>We all prefer free events, but sometimes we have to pay for the good.</Text>
 
       <View style={{flexDirection: 'row'}}>
           
         <View style={{width: "48%"}}>
           <Input
-            label="Min"
+            label=" "
             selectionColor={colours.black}
+            maxLength={3}
             autoCapitalize="none"
-            placeholder="0"
+            placeholder=""
             leftIcon={
               <Icon
                 name="dollar"
@@ -600,8 +601,9 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
     
         <View style={{width: "48%"}}>
         <Input
-          label="Max"
+          label="Max (Optional)"
           selectionColor={colours.black}
+          maxLength={3}
           autoCapitalize="none"
           leftIcon={
             <Icon
