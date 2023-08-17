@@ -1,6 +1,6 @@
 import { View, Text, Touchable, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
-import { colours, fonts, spacing } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import { FC } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
@@ -38,7 +38,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           ...spacing.verticalPadding1,
         }}
       >
-        <View>
+        <View style={{width: windowWidth*0.5}}>
           <Text style={{ ...fonts.title2, color: colours.purple }}>
             {event.name}
           </Text>

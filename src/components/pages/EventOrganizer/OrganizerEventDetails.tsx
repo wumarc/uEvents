@@ -103,7 +103,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
         </View>
 
       </ScrollView>
-
+      
       <View style={styles.footer}>
         <Text style={fonts.title2}>
           {event.priceMin ? event.priceMax

@@ -228,7 +228,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
         Who still uses images? Yuck! Emojis are cooler 😎
       </Text>
 
-      <View style={{ marginVertical: "5%", paddingHorizontal: "15%" }}>
+      <View style={{ marginVertical: "5%", paddingHorizontal: "3%"}}>
         <Input
           selectionColor={colours.black}
           autoCapitalize="none"
@@ -239,14 +239,30 @@ export const Step2: FC<{ eventID: string }> = (props) => {
             paddingVertical: 4,
             paddingHorizontal: 10,
             borderRadius: 6,
-            height: windowHeight * 0.2,
+          }}
+          onChange={(e) => {emojiToUnicode(e.nativeEvent.text)}}
+          maxLength={5}
+        />
+        <Input
+          selectionColor={colours.black}
+          autoCapitalize="none"
+          disabled={true}
+          label="How your emoji will look to the students"
+          labelStyle={{...fonts.regular}}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderBottomWidth: 1,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 10,
+            borderRadius: 6,
+            height: windowHeight * 0.1,
           }}
           textAlign="center"
-          inputStyle={{ fontSize: 150, fontWeight: "bold" }}
+          inputStyle={{ fontSize: 80, fontWeight: "bold" }}
           onChange={(e) => {
             emojiToUnicode(e.nativeEvent.text);
           }}
-          maxLength={5}
         />
       </View>
     </View>
