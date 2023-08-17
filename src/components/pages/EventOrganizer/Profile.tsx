@@ -28,10 +28,11 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 const Profile = ({ route, navigation }: props) => {
   const [saveChanges, setSaveChanges] = React.useState(false);
   const [image, setImage] = useState<String>("");
-  const [loading, profile, setProfile] = useStateWithFireStoreDocument(
-    "users",
-    getFirebaseUserIDOrEmpty()
-  );
+  const [loading, profile, setProfile] =
+    useStateWithFireStoreDocument<Organizer>(
+      "users",
+      getFirebaseUserIDOrEmpty()
+    );
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -81,7 +82,7 @@ const Profile = ({ route, navigation }: props) => {
           <View style={{ flexDirection: "column", flex: 1 }}>
             <Input
               label="Organization Name"
-              value={profile.name ? profile.name : "uOttawa Cycling Club"}
+              value={profile.name}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -90,12 +91,14 @@ const Profile = ({ route, navigation }: props) => {
               autoCapitalize="none"
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
-              onChange={(value: any) => setProfile({ ...profile, name: value })}
+              onChangeText={(value: string) =>
+                setProfile({ ...profile, name: value })
+              }
             />
 
             <Input
               label="Email"
-              value={"uottawa_cycling@gmail.com"}
+              value={profile.email}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -104,12 +107,14 @@ const Profile = ({ route, navigation }: props) => {
               autoCapitalize="none"
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
-              onChange={(value: any) => setProfile({ ...profile, name: value })}
+              onChangeText={(value: string) =>
+                setProfile({ ...profile, email: value })
+              }
             />
 
             <Input
               label="Instagram"
-              value={"https://www.instagram.com/uottawaboxingclub/?hl=en"}
+              value={profile.instagram}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -122,14 +127,14 @@ const Profile = ({ route, navigation }: props) => {
               //   type: 'entypo', name: 'cross',
               //   onPress: () => {}
               // }}
-              onChange={(value: any) => setProfile({ ...profile, name: value })}
+              onChangeText={(value: string) =>
+                setProfile({ ...profile, instagram: value })
+              }
             />
 
             <Input
               label="Organization Description"
-              value={
-                "Nestled in the heart of the city, the Downtown Boxing Club is a haven for both amateur and professional boxers. As you step through its glass doors, the rhythmic sound of punching bags and skipping ropes echoes through the spacious, well-lit gym. The walls are adorned with vintage black and white photographs of boxing legends, reminding all who enter of ."
-              }
+              value={profile.description}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -142,7 +147,9 @@ const Profile = ({ route, navigation }: props) => {
               // rightIcon={{ type: 'entypo', name: 'cross'}}
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
-              onChange={(value: any) => setProfile({ ...profile, name: value })}
+              onChangeText={(value: string) =>
+                setProfile({ ...profile, description: value })
+              }
             />
           </View>
         </View>
@@ -158,9 +165,11 @@ const Profile = ({ route, navigation }: props) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            title={"Save Changes"}
-            onPress={() => {}}
-            disabled={!saveChanges}
+            title={"Done"}
+            onPress={() => {
+              navigation.pop();
+            }}
+            // disabled={!saveChanges}
             titleStyle={{ ...fonts.title3, color: colours.white }}
           />
         </View>
