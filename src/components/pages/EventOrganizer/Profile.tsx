@@ -61,7 +61,7 @@ const Profile = ({ route, navigation }: props) => {
             source={{
               uri:
                 image == ""
-                  ? "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w"
+                  ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                   : image,
             }}
             rounded

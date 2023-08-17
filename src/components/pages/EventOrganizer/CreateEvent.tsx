@@ -741,7 +741,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           onChange={(e) => {}}
         />
         </View>
-      
+
       </View>
 
     </View>
