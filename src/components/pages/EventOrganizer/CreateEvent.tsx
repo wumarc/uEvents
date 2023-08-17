@@ -77,14 +77,16 @@ export const Step0 = ({ route, navigation }: any) => {
           {step == 1 && <Step1 eventID={id} />}
           {step == 2 && <Step2 eventID={id} />}
           {step == 3 && <Step3 eventID={id} />}
-          {step == 4 && <Step4 eventID={id} />}
-          {step == 5 && <Step5 eventID={id} />}
-          {step == 6 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
-          {step == 7 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
-          {step == 8 && <Step7 eventID={id} />}
-          {step == 9 && <Step8 eventID={id} />}
-          {step == 10 && <Step9 eventID={id} />}
-          {step == 11 && <Step10 eventID={id} />}
+          {step == 4 && <Step3b eventID={id} />}
+          {step == 5 && <Step4 eventID={id} />}
+          {step == 6 && <Step4 eventID={id} />}
+          {step == 7 && <Step5 eventID={id} />}
+          {step == 8 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
+          {step == 9 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
+          {step == 10 && <Step7 eventID={id} />}
+          {step == 11 && <Step8 eventID={id} />}
+          {step == 12 && <Step9 eventID={id} />}
+          {step == 13 && <Step10 eventID={id} />}
         </View>
       </ScrollView>
 
@@ -96,7 +98,7 @@ export const Step0 = ({ route, navigation }: any) => {
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
             onPress={() => 
-              (step == 1 ? navigation.pop() : step == 8 && freeEventProps ? setStep(step-2) : setStep(step - 1))
+              (step == 1 ? navigation.pop() : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
             }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
@@ -341,62 +343,79 @@ export const Step3: FC<{ eventID: string }> = (props) => {
   );
 };
 
+export const Step3b: FC<{ eventID: string }> = (props) => {
+
+  return (
+    <View>
+
+    </View>
+  )
+
+}
+
 /* ---------------------------------- Date ---------------------------------- */
 export const Step4: FC<{ eventID: string }> = (props) => {
   
-  const [selected, setSelected] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [startModalVisible, setStartModalVisible] = useState(false);
+  const [endModalVisible, setEndModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState({
     startDate: null,
     endDate: null,
   });
 
-  const onDayPress = (day: any) => {
-    const { startDate, endDate } = selectedDates;
-    if (startDate && endDate) {
-      setSelectedDates({ startDate: day.dateString, endDate: null });
-      return;
-    }
-    if (startDate) {
-      setSelectedDates({ ...selectedDates, endDate: day.dateString });
-      return;
-    }
-    setSelectedDates({ ...selectedDates, startDate: day.dateString });
-  };
+  const formatDate = (date: Date) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`;
+  }
 
   return (
     <View>
       <Text style={fonts.title1}>Provide the date and time of your event</Text>
 
+      {/* Start date button */}
       <View>
-        <Text>From:</Text>
+        <Text>Start date and time:</Text>
+        
         <View style={{ flexDirection: "row" }}>
-          <Input
-            onFocus={() => {
-              setModalVisible(true);
+          <Button
+            title={selectedDates.startDate ? formatDate(selectedDates.startDate) : "Select date"}
+            onPress={() => {setStartModalVisible(true)}}
+            buttonStyle={{
+              borderRadius: 8,
+              borderWidth: 2,
+              backgroundColor: 'transparent',
+              borderColor: colours.grey,
             }}
-            placeholder={"Select date"}
-            selectionColor={colours.black}
+            titleStyle={{ color: colours.black }}
+          />
+          
+        </View>
+        
+        
+
+      </View>
+
+      {/* End date button */}
+      <View>
+        <Text>End date and time (optional):</Text>
+        
+        <View style={{ flexDirection: "row" }}>
+          <Button
+            title={selectedDates.endDate ? formatDate(selectedDates.endDate) : "Select date"}
+            onPress={() => {setEndModalVisible(true)}}
+            buttonStyle={{
+              borderRadius: 8,
+              borderWidth: 2,
+              backgroundColor: 'transparent',
+              borderColor: colours.grey,
+            }}
+            titleStyle={{ color: colours.black }}
           />
         </View>
+
       </View>
 
-      <View>
-        <Text>To:</Text>
-        <View></View>
-      </View>
-
-      <Button
-        title={"Start day"}
-        buttonStyle={{
-          backgroundColor: colours.purple,
-          padding: 15,
-          borderRadius: 10,
-        }}
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      />
+      {/* Start date modal */}
       <View
         style={{
           width: windowWidth,
@@ -408,10 +427,8 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
+          visible={startModalVisible}
+          onRequestClose={() => {setStartModalVisible(!startModalVisible)}}
         >
           <View
             style={{
@@ -430,10 +447,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
             >
               <Calendar
                 onDayPress={(day) => {
-                  setSelected(day.dateString), setModalVisible(false);
-                }}
-                markedDates={{
-                  [selected]: { selected: true, disableTouchEvent: true },
+                  setStartModalVisible(false);
                 }}
                 minDate={Date()}
                 allowSelectionOutOfRange={false}
@@ -453,6 +467,60 @@ export const Step4: FC<{ eventID: string }> = (props) => {
           </View>
         </Modal>
       </View>
+
+      {/* End date modal */}
+      <View
+        style={{
+          width: windowWidth,
+          height: windowHeight * 0.5,
+          justifyContent: "center",
+          marginTop: 10,
+        }}
+      >
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={endModalVisible}
+          onRequestClose={() => {setEndModalVisible(!endModalVisible)}}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            <View
+              style={{
+                width: "90%",
+                backgroundColor: "white",
+                borderRadius: 10,
+              }}
+            >
+              <Calendar
+                onDayPress={(day) => {
+                  setEndModalVisible(false);
+                }}
+                minDate={Date()}
+                allowSelectionOutOfRange={false}
+                markingType="multi-period"
+                hideExtraDays={true}
+                firstDay={1}
+                disableAllTouchEventsForDisabledDays={true}
+                style={{ borderWidth: 1, borderColor: "gray", height: 350 }}
+                theme={{
+                  textSectionTitleColor: "#b6c1cd",
+                  selectedDayBackgroundColor: colours.purple,
+                  arrowColor: colours.purple,
+                  todayTextColor: colours.purple,
+                }}
+              />
+            </View>
+          </View>
+        </Modal>
+      </View>
+
     </View>
   );
 };
@@ -566,7 +634,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           <Input
             label=" "
             selectionColor={colours.black}
-            maxLength={3}
+            maxLength={4}
             autoCapitalize="none"
             placeholder=""
             leftIcon={
@@ -585,7 +653,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
               borderRadius: 6,
             }}
             keyboardType="decimal-pad"
-            inputStyle={{ fontSize: 50, fontWeight: "bold" }}
+            inputStyle={{ fontSize: 40, fontWeight: "bold" }}
             containerStyle={{
               padding: 20,
               justifyContent: "center",
@@ -595,7 +663,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           />
         </View>
         
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{...fonts.title1}}>-</Text>
         </View>
     
@@ -603,7 +671,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
         <Input
           label="Max (Optional)"
           selectionColor={colours.black}
-          maxLength={3}
+          maxLength={4}
           autoCapitalize="none"
           leftIcon={
             <Icon
@@ -621,7 +689,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
             borderRadius: 6,
           }}
           keyboardType="decimal-pad"
-          inputStyle={{ fontSize: 50, fontWeight: "bold" }}
+          inputStyle={{ fontSize: 40, fontWeight: "bold" }}
           containerStyle={{
             padding: 20,
             justifyContent: "center",
