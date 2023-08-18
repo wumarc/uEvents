@@ -32,6 +32,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
+  
   const [image, setImage] = useState<string>("");
   const [loading, profile, setProfile] =
     useStateWithFireStoreDocument<Organizer>(
@@ -49,7 +50,7 @@ const Profile = ({ route, navigation }: props) => {
   }
 
   if (uploading) {
-    return <Text>Uploading file...</Text>;
+    return <Loading/>;
   }
 
   let uri = "";
@@ -206,7 +207,7 @@ const Profile = ({ route, navigation }: props) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            title={"Done"}
+            title={"Save Changes"}
             onPress={() => {
               navigation.pop();
             }}

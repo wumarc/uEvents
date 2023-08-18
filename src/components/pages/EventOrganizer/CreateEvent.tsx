@@ -832,44 +832,172 @@ export const Step8: FC<{ eventID: string }> = (props) => {
 
 /* --------------------------------- Review --------------------------------- */
 export const Step9: FC<{ eventID: string }> = (props) => {
+  
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    props.eventID
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <View>
+    <View style={{paddingVertical: 0, marginVertical: 0, paddingHorizontal: 0, marginHorizontal: 0}}>
+
       <View>
-        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-          Review and publish
-        </Text>
-        <Text style={fonts.regular}>
-          Let's review your event to confirm all the details.
-        </Text>
+        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Review and Publish</Text>
+        <Text style={fonts.regular}>Let's review the details.</Text>
       </View>
 
       <View>
+
         {/* Name */}
-        <View style={{ flexDirection: "row" }}>
-          <Icon name="event" type="material" color={colours.grey} />
-          <Text>Tuesday Weekly Salsa</Text>
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Name"
+            defaultValue={event.name}
+            selectionColor={colours.black}
+            // inputStyle={{height: windowHeight*0.08}}
+            leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
+        </View>
+        
+        {/* Emoji */}
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Emoji"
+            defaultValue={event.emoji}
+            selectionColor={colours.black}
+            leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
         </View>
 
         {/* Location */}
-        <View style={{ flexDirection: "row" }}>
-          <Icon name="location-pin" type="entypo" color={colours.purple} />
-          <Text>Montpetit Gym</Text>
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Location"
+            defaultValue={event.location}
+            selectionColor={colours.black}
+            leftIcon={<Icon name="location-sharp" type="ionicon" color={colours.grey} />}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
         </View>
 
-        {/* Date and time */}
-        <View></View>
+        {/* Date, time, recurrence */}
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Date and time"
+            leftIcon={<Icon name="date-range" type="ionicons" color={colours.grey} />}
+            selectionColor={colours.black}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
+        </View>
 
         {/* Description */}
-        <View></View>
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Description"
+            multiline={true}
+            maxLength={750}
+            onChange={(e) => set({ ...event, description: e.nativeEvent.text })}
+            defaultValue={event.description}
+            selectionColor={colours.black}
+            leftIcon={<Icon name="description" type="material" color={colours.grey} />}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
+        </View>
 
         {/* Price */}
-        <View></View>
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Price"
+            // defaultValue={event.price}
+            selectionColor={colours.black}
+            leftIcon={<Icon name="dollar" type="font-awesome" color={colours.grey} />}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
+        </View>
 
         {/* Sign up link */}
-        <View></View>
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Sign up link"
+            defaultValue={event.signUpLink}
+            onChange={(e) => set({ ...event, signUpLink: e.nativeEvent.text })}
+            leftIcon={<Icon name="link" type="material" color={colours.grey} />}
+            selectionColor={colours.black}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
+        </View>
 
-        {/* Recurrence */}
-        <View></View>
+        {/* Tags */}
+        <View style={{flexDirection: "row"}}>
+          <Input
+            label="Tags"
+            selectionColor={colours.black}
+            leftIcon={<Icon name="tag-multiple" type="material-community" color={colours.grey} />}
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+          />
+        </View>
+
       </View>
 
     </View>
