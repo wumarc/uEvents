@@ -87,6 +87,7 @@ export type EventObject = {
   // includes?: string;
   // transportation?: string;
   images: string[];
+  emoji: string;
   signUpLink?: string; // If undefined, no sign up link
   originalLink: string;
   recurrence: recurrence;
