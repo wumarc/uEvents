@@ -124,7 +124,7 @@ const Profile = ({ route, navigation }: props) => {
           <View style={{ flexDirection: "column", flex: 1 }}>
             <Input
               label="Organization Name"
-              value={profile.name}
+              defaultValue={profile.name}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -140,7 +140,7 @@ const Profile = ({ route, navigation }: props) => {
 
             <Input
               label="Email"
-              value={profile.email}
+              defaultValue={profile.email}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -149,19 +149,13 @@ const Profile = ({ route, navigation }: props) => {
               autoCapitalize="none"
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
-              onChangeText={(value: string) =>
-                setProfile({ ...profile, email: value })
-              }
+              onChangeText={(value: string) => setProfile({ ...profile, email: value })}
             />
 
             <Input
               label="Instagram"
-              value={profile.instagram}
-              labelStyle={{
-                color: "black",
-                fontWeight: "500",
-                marginBottom: "1%",
-              }}
+              defaultValue={profile.instagram}
+              labelStyle={{color: "black", fontWeight: "500", marginBottom: "1%"}}
               autoCapitalize="none"
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
@@ -176,7 +170,7 @@ const Profile = ({ route, navigation }: props) => {
 
             <Input
               label="Organization Description"
-              value={profile.description}
+              defaultValue={profile.description}
               labelStyle={{
                 color: "black",
                 fontWeight: "500",
@@ -207,11 +201,8 @@ const Profile = ({ route, navigation }: props) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            title={"Save Changes"}
-            onPress={() => {
-              navigation.pop();
-            }}
-            // disabled={!saveChanges}
+            title={"Done"}
+            onPress={() => navigation.pop()}
             titleStyle={{ ...fonts.title3, color: colours.white }}
           />
         </View>

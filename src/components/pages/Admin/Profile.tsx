@@ -69,10 +69,7 @@ const Profile = ({ route, navigation }: props) => {
           <Input
             placeholder="Name"
             defaultValue={profile.name ? profile.name : ""}
-            leftIcon={{
-              type: "material",
-              name: "person",
-            }}
+            leftIcon={{type: "material", name: "person"}}
             onChangeText={(value) => setProfile({ ...profile, name: value })}
           />
           <Input
