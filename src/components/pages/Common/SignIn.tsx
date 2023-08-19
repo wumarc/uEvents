@@ -17,6 +17,7 @@ import { CheckBox } from "@rneui/themed";
 import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { addDoc, doc, setDoc } from "firebase/firestore";
+import { spacing } from "../../subatoms/Theme";
 
 // Accepted universities
 const universities = ["@uottawa.ca"];
@@ -69,63 +70,43 @@ const SignIn: FC = () => {
 
 const WelcomePage: FC = ({ navigation }: any) => {
   return (
-    <SafeAreaView style={{ backgroundColor: colours.white }}>
-      <View>
-        {/* Image */}
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={require("../../../assets/welcome_image.png")}
-          />
-        </View>
-
-        {/* Sign In Box */}
-        <View style={styles.optionsContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={fonts.title1}>uEvents</Text>
-            <Text style={fonts.title2}>Find out what you are missing</Text>
-          </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text style={fonts.regular}>
-              The next student led social connection app.
-            </Text>
-          </View>
-
-          <View style={{ flexDirection: "row", paddingHorizontal: "2.3%" }}>
-            <View style={{ flex: 1 }}>
-              <Button
-                style={{
-                  margin: 1,
-                  borderWidth: 2,
-                  borderColor: colours.purple,
-                  borderRadius: 30,
-                }}
-                buttonStyle={{ borderRadius: 30 }}
-                titleStyle={{ fontSize: 18 }}
-                color={colours.purple}
-                title="Login"
-                onPress={() => navigation.navigate("Login")}
-              />
-            </View>
-
-            <View style={{ flex: 1 }}>
-              <Button
-                style={{
-                  margin: 1,
-                  borderWidth: 2,
-                  borderColor: colours.purple,
-                  borderRadius: 30,
-                }}
-                titleStyle={{ fontSize: 18 }}
-                buttonStyle={{ borderRadius: 30 }}
-                color={colours.purple}
-                title="Register"
-                onPress={() => navigation.navigate("Signup")}
-              />
-            </View>
-          </View>
-        </View>
+    <SafeAreaView style={{ backgroundColor: "#D6A9D5", flex: 1, justifyContent: 'space-around'}}>
+      
+      {/* Image */}
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={require("../../../assets/welcome_image.png")}
+        />
       </View>
+      
+      {/* App Description */}
+      <View style={{alignItems: 'center'}}>
+        <Text style={{...fonts.title1, color: colours.white, fontSize: 50}}>uEvents</Text>
+        <Text style={{...fonts.title2, color: colours.white}}>Find out what you are missing.</Text> 
+      </View>
+
+      {/* Sign In Box */}
+      <View style={{paddingHorizontal: spacing.page, paddingVertical: '3%'}}>
+        <Button
+          style={{margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30, width: '100%'}}
+          buttonStyle={{borderRadius: 30}}
+          titleStyle={{fontSize: 18}}
+          color={colours.purple}
+          title="Login"
+          onPress={() => navigation.navigate("Login")}
+        />
+        <Text></Text>
+        <Button
+          style={{margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30}}
+          titleStyle={{ fontSize: 18 }}
+          buttonStyle={{ borderRadius: 30 }}
+          color={colours.purple}
+          title="Register"
+          onPress={() => navigation.navigate("Signup")}
+        />
+      </View>
+      
     </SafeAreaView>
   );
 };
@@ -397,23 +378,18 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    width: "100%",
-    backgroundColor: colours.purple,
-    height: windowHeight * 0.55,
+    width: "30%",
+    height: windowHeight * 0.23,
+    alignSelf: "center",
   },
   optionsContainer: {
     width: "100%",
     height: "40%",
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    backgroundColor: colours.white,
-    justifyContent: "space-evenly",
-    alignItems: "center",
   },
   image: {
     justifyContent: "center",
     width: "100%",
-    height: "100%",
+    height: "90%",
   },
   textAlert: {
     color: "red",
