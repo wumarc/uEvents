@@ -20,6 +20,7 @@ import CustomInput from "../../atoms/CustomInput";
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
 import HeaderLeft from "../../molecules/HeaderLeft";
+import { Dropdown } from "react-native-element-dropdown";
 
 // Accepted universities
 const universities = ["@uottawa.ca"];
@@ -108,6 +109,10 @@ const WelcomePage: FC = ({ navigation }: any) => {
           onPress={() => navigation.navigate("Signup")}
         />
       </View>
+
+      <View style={{alignItems: 'center'}}>
+        <Text style={{...fonts.small, color: colours.white}}>uEvent Technologies Inc.</Text>
+      </View>
       
     </SafeAreaView>
   );
@@ -152,6 +157,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
         paddingTop: "25%",
       }}
     >
+
       {/* Form */}
       <View>
         <Input
@@ -245,28 +251,14 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState("");
-  const [userType, setUserType] = useState("student");
+  const [userType, setUserType] = useState("");
 
   async function signUp(validate: boolean): Promise<boolean> {
-    if (validate) {
-      if (email === "" || password === "") {
-        if (email === "" || password === "") {
-          setError("Email and password cannot be empty");
-          return false;
-        }
-        return false;
-      }
-
-      // Only accept emails from accepted universities
-      if (!universities.some((university) => email.includes(university))) {
-        setError("You must be a uOttawa student to sign up");
-        return false;
-      }
-
-      if (!checked) {
-        setError("You must agree to the terms and conditions");
-        return false;
-      }
+    
+    // Only accept emails from accepted universities
+    if (!universities.some((university) => email.includes(university))) {
+      setError("You must be a uOttawa student to sign up");
+      return false;
     }
 
     try {
@@ -278,8 +270,9 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
       setIsSigningUp(false);
       return true;
     } catch (error: any) {
-      setError(error.message);
+      setError("Invalid email or password, please try again");
     }
+    
     return false;
   }
 
@@ -292,23 +285,17 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         paddingTop: "25%",
       }}
     >
+
+
       {/* Form */}
       <View>
-        {/* <SelectList
-            data={[{key:'1', value:'Student'}, {key:'2', value:'Organizer'}]}
-            setSelected={(value: string) => setUserType(value)}
-            save="value"
-            defaultOption={{key: '3', value:'Account Type'}}
-            boxStyles={{backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 12, paddingHorizontal: 10, marginVertical: 10}}
-            dropdownStyles={{backgroundColor: 'white', borderColor: "#ffffff", borderWidth: 2, borderRadius: 6, paddingVertical: 2, paddingHorizontal: 2, marginVertical: 2}}
-          /> */}
         <Input
-          label="Email"
-          placeholder="Email"
+          label="School Email"
+          placeholder="adele078@uottawa.ca"
           onChangeText={(value) => setEmail(value)}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
-          containerStyle={{ paddingHorizontal: 0 }}
+          containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
           selectionColor={colours.black}
           inputContainerStyle={{
             borderColor: colours.grey,
@@ -318,6 +305,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             borderRadius: 6,
           }}
         />
+        
         <Input
           label="Password"
           placeholder="Password"
@@ -335,6 +323,18 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             borderRadius: 6,
           }}
         />
+        
+        <Text style={{color: "black", fontWeight: "500", fontSize: 16, marginBottom: "1%"}}>Register as a</Text>
+        <Dropdown
+            placeholderStyle={{paddingVertical: 4, paddingHorizontal: 8}}
+            data={[{key:1, value:'Student'}, {key:2, value:'Organizer'}]}
+            labelField="value"
+            valueField="key"
+            placeholder={userType == "" ? 'Account Type' : userType}
+            style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, paddingVertical: 5, paddingHorizontal: 8}}
+            onChange={(item) => (item.key == 1 ? setUserType("student") : setUserType("organizer"))}
+        />
+
         <Text style={styles.textAlert}>{error}</Text>
         <CheckBox
           checkedColor={colours.purple}
@@ -364,6 +364,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         <Button
           color={colours.purple}
           title="Sign up"
+          disabled={email === "" || password === "" || userType === "" || !checked}
           onPress={() => {
             userType === "Student"
               ? signUp(true).then((success) => {
@@ -387,19 +388,6 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         />
       </View>
 
-      {/* Login Option */}
-      {/* <View>
-          <Text>
-            Already have an account?
-            <Text
-              onPress={setIsSigningUp}
-              style={{ color: colours.primaryPurple }}
-            >
-              {" "}
-              Sign in
-            </Text>
-          </Text>
-        </View> */}
     </View>
   );
 };
