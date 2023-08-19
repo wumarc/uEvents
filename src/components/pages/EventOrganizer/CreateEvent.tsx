@@ -27,6 +27,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import emojiRegex from "emoji-regex";
 import {
   useSateWithFireStore,
+  useStateWithFireStoreCollection,
   useStateWithFireStoreDocument,
 } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
@@ -449,6 +450,8 @@ export const Step5: FC<{ eventID: string }> = (props) => {
 
   const [charactersAvailable, setCharactersAvailable] = useState<number>(400);
 
+  if (loading) return <Loading />;
+
   return (
     <View>
       <View>
@@ -579,7 +582,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onChange={(e) => {}}
+            onChange={(e) => {set({...event, priceMin: parseInt(e.nativeEvent.text)})}}
           />
         </View>
         
@@ -598,7 +601,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
           keyboardType="decimal-pad"
           inputStyle={{ fontSize: 40, fontWeight: "bold" }}
           containerStyle={{padding: 20, justifyContent: "center", alignItems: "center"}}
-          onChange={(e) => {}}
+          onChange={(e) => {set({...event, priceMax: parseInt(e.nativeEvent.text)})}}
         />
 
         </View>
@@ -656,20 +659,55 @@ export const Step7: FC<{ eventID: string }> = (props) => {
 
 /* ---------------------------------- Tags ---------------------------------- */
 export const Step8: FC<{ eventID: string }> = (props) => {
-  const [loading, categories, setCategories] = useSateWithFireStore<string[]>(
-    "categories/names",
-    "list",
-    []
+  // const [loading, categories, setCategories] = useSateWithFireStore<string[]>(
+  //   "categories/names",
+  //   "list",
+  //   []
+  // );
+
+  // const [loading2, categoriesValue, setCategoriesValue] = useSateWithFireStore<
+  //   number[]
+  // >("categories/values", "list", []);
+
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    props.eventID
   );
 
-  const [loading2, categoriesValue, setCategoriesValue] = useSateWithFireStore<
-    number[]
-  >("categories/values", "list", []);
+  const [loading2, events, add] =
+  useStateWithFireStoreCollection<EventObject>("events");
 
-  const [selected, setSelected] = useState<number[]>([]);
+  const [fixedCategories, setFixedCategories] = useState<string[]>([]);
 
+  let categories: string[] = [];
+
+  useEffect(() => {
+    if (fixedCategories.length == 0) {
+      setFixedCategories(categories);
+    }
+  }, [events]);
+  
   if (loading || loading2) {
     return <Loading />;
+  }
+
+  const getSelectedIndexes = () => {
+    // Calculate the selected categories
+    let set: number[] = [];
+    for (let category of event.categories) {
+      set.push(fixedCategories.indexOf(category));
+    }
+    return set;
+  }
+
+  categories = getOrderedCategories(events as EventObject[]);
+
+  const updateEvent = (indexes: number[]) => {
+    let newCategories: string[] = [];
+    for (let index of indexes) {
+      newCategories.push(fixedCategories[index] as string);
+    }
+    set({ ...event, categories: newCategories });
   }
 
   return (
@@ -683,25 +721,28 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         </Text>
       </View>
       <ButtonGroup
-        buttons={getOrderedCategories(categories, categoriesValue)}
+        buttons={fixedCategories}
         onPress={(index) => {
+          let selected = getSelectedIndexes();
+          let newSelected = []
           if (selected.includes(index)) {
-            setSelected(selected.filter((item) => item != index));
+            newSelected = selected.filter((item) => item != index);
           } else {
             if (selected.length < 5) {
-              setSelected([...selected, index]);
+              newSelected = [...selected, index];
             } else {
-              setSelected([
+              newSelected = [
                 selected[1],
                 selected[2],
                 selected[3],
                 selected[4],
                 index,
-              ]);
+              ];
             }
           }
+          updateEvent(newSelected);
         }}
-        selectedIndexes={selected}
+        selectedIndexes={getSelectedIndexes()}
         vertical
       />
 
