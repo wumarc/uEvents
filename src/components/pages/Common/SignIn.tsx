@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { View, SafeAreaView, Linking, StyleSheet } from "react-native";
-import { Text, Input, Image } from "react-native-elements";
+import { Text, Image } from "react-native-elements";
+import { Input } from "@rneui/themed";
 import { BottomSheet } from "@rneui/base";
 import { Button } from "@rneui/base";
 import { colours, fonts, windowHeight } from "../../subatoms/Theme";
@@ -18,6 +19,7 @@ import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
+import HeaderLeft from "../../molecules/HeaderLeft";
 
 // Accepted universities
 const universities = ["@uottawa.ca"];
@@ -89,7 +91,7 @@ const WelcomePage: FC = ({ navigation }: any) => {
       {/* Sign In Box */}
       <View style={{paddingHorizontal: spacing.page, paddingVertical: '3%'}}>
         <Button
-          style={{margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30, width: '100%'}}
+          style={{margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30}}
           buttonStyle={{borderRadius: 30}}
           titleStyle={{fontSize: 18}}
           color={colours.purple}
@@ -155,12 +157,19 @@ const Login: FC = ({ setIsSigningUp }: any) => {
         <Input
           label="Email"
           placeholder="Email"
+          maxLength={30}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0 }}
-          selectionColor={colours.purple}
-          // inputContainerStyle={inputStyle}
+          selectionColor={colours.black}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 6,
+          }}
         />
         <Input
           label="Password"
@@ -169,9 +178,15 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setPassword(value)}
           containerStyle={{ paddingHorizontal: 0 }}
           autoCapitalize="none"
-          selectionColor={colours.purple}
+          selectionColor={colours.black}
           secureTextEntry={true}
-          // inputContainerStyle={inputStyle}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 6,
+          }}
         />
         <Text onPress={() => setShowResetPassword(true)}>Forgot password?</Text>
         <Text style={styles.textAlert}>{error}</Text>
@@ -294,18 +309,31 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0 }}
-          selectionColor={colours.purple}
-          // inputContainerStyle={inputStyle}
+          selectionColor={colours.black}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 6,
+          }}
         />
         <Input
           label="Password"
           placeholder="Password"
-          selectionColor={colours.purple}
+          selectionColor={colours.black}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           containerStyle={{ paddingHorizontal: 0 }}
           onChangeText={(value) => setPassword(value)}
           autoCapitalize="none"
           secureTextEntry={true}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 6,
+          }}
         />
         <Text style={styles.textAlert}>{error}</Text>
         <CheckBox
