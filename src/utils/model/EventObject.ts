@@ -75,6 +75,7 @@ export type EventObject = {
   description: string; // 750 characters max
   location: string; // Building name and room number
   address: string;
+  roomNumber?: string;
   organizerType: "Manually Added" | "Organizer Added";
   organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
   startTime: Timestamp;
@@ -211,6 +212,8 @@ export const defaultEvent: EventObject = {
   address: "",
   recurrence: new recurrence("None"),
   organizerType: "Manually Added",
+  emoji: "",
+  rejectReason: "",
 };
 
 // Utility functions

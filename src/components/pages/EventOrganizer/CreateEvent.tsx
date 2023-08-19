@@ -226,6 +226,8 @@ export const Step3: FC<{ eventID: string, setStep: any, step: number }> = (props
     props.eventID
   );
 
+  if (loading) return <Loading />
+
   return (
     <View>
       <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Is your event taking place on campus?</Text>
@@ -253,6 +255,7 @@ export const Step3: FC<{ eventID: string, setStep: any, step: number }> = (props
 
 };
 
+/* --------------------------- Location on campus --------------------------- */
 export const Step3b: FC<{ eventID: string }> = (props) => {
 
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
