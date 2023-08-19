@@ -219,7 +219,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           <Text
             style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}
           >
-            Change your password
+            Enter your email to reset your password
           </Text>
           <CustomInput
             input={email}
