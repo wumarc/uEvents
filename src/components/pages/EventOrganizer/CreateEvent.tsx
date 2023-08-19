@@ -39,18 +39,19 @@ import {
 import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
   const [id, setId] = useState(route.params.eventID ?? uid());
   const [freeEventProps, setFreeEventProps] = useState<any>(null);
-
+  
   // TODO: Function to publish the event
-  // const publish() = () => {
+  // const publish = () => {
   //   if (event.state === "Draft") {
-  //     setEvent({ ...event, state: "Pending" });
+  //     set({ ...event, state: "Pending" });
   //   } else {
-  //     setEvent({ ...event, state: "Draft" });
+  //     set({ ...event, state: "Draft" });
   //   }
   // }
 
@@ -373,18 +374,9 @@ export const Step3b: FC<{ eventID: string }> = (props) => {
 
 /* ---------------------------------- Date ---------------------------------- */
 export const Step4: FC<{ eventID: string }> = (props) => {
-  
-  const [startModalVisible, setStartModalVisible] = useState(false);
-  const [endModalVisible, setEndModalVisible] = useState(false);
-  const [selectedDates, setSelectedDates] = useState({
-    startDate: null,
-    endDate: null,
-  });
 
-  const formatDate = (date: Date) => {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`;
-  }
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
+  if (loading) return <Loading />;
 
   return (
     <View>
@@ -402,7 +394,43 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         />
       </View>
 
-      
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={fonts.regular}>Start Day</Text>
+        <DateTimePicker
+          value={new Date()}
+          mode={"date"}
+          minimumDate={new Date()}
+          maximumDate={new Date(2023, 31, 31)}
+          onChange={(e) => {
+            set({...event, startTime: e.nativeEvent.timestamp}) // TODO help
+          }}
+        />
+        <Text style={fonts.regular}>Start Time</Text>
+        <DateTimePicker
+          value={new Date()}
+          mode={"time"}
+          is24Hour={true}
+          onChange={(e) => {console.log(e.nativeEvent.timestamp)}}
+        />
+      </View>
+
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={fonts.regular}>End Day</Text>
+          <DateTimePicker
+            value={new Date()}
+            mode={"date"}
+            minimumDate={new Date()}
+            maximumDate={new Date(2023, 31, 31)}
+            onChange={(e) => {console.log(e.nativeEvent.timestamp)}}
+        />
+        <Text style={fonts.regular}>End Time</Text>
+        <DateTimePicker
+          value={new Date()}
+          mode={"time"}
+          is24Hour={true}
+          onChange={(e) => {console.log(e.nativeEvent.timestamp)}}
+        />
+      </View>
 
     </View>
   );
@@ -704,41 +732,37 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Name */}
         <Input
           label="Event Name"
-          defaultValue={event.name}
           selectionColor={colours.black}
-          // inputStyle={{height: windowHeight*0.08}}
+          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
-          inputContainerStyle={{ borderColor: colours.grey, borderWidth: 1, paddingVertical: 2, borderRadius: 6}}
-          containerStyle={{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0}}
+          onChange={(e) => set({...event, name: e.nativeEvent.text})}
+          maxLength={35}
+          defaultValue={event.name}
         />
         
         {/* Emoji */}
         <Input
-          label="Event Emoji"
-          defaultValue={event.emoji}
+          label="Emoji"
           selectionColor={colours.black}
+          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
-          inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 2, borderRadius: 6}}
-          containerStyle={{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0}}
+          onChange={(e) => set({...event, emoji: e.nativeEvent.text})}
+          maxLength={8}
+          defaultValue={event.emoji}
         />
 
         {/* Location */}
-        <View style={{flexDirection: "row"}}>
-          <Input
-            label="Location"
-            defaultValue={event.location}
-            selectionColor={colours.black}
-            // leftIcon={<Icon name="location-sharp" type="ionicon" color={colours.grey} />}
-            // inputStyle={{height: windowHeight*0.08}}
-            inputContainerStyle={{
-              borderColor: colours.grey,
-              borderWidth: 1,
-              paddingVertical: 2,
-              borderRadius: 6,
-            }}
-            containerStyle={{paddingHorizontal: 0}}
-          />
-        </View>
+        <Input
+          label="Location"
+          selectionColor={colours.black}
+          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+          containerStyle={{ paddingHorizontal: 0}}
+          onChange={(e) => set({...event, location: e.nativeEvent.text})}
+          maxLength={8}
+          defaultValue={event.location}
+        />
 
         {/* Date, time, recurrence */}
         <View style={{flexDirection: "row"}}>
@@ -760,15 +784,13 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Description */}
         <Input
           label="Description"
+          selectionColor={colours.black}
           multiline={true}
-          maxLength={200}
+          maxLength={400}
+          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           onChange={(e) => set({ ...event, description: e.nativeEvent.text })}
           defaultValue={event.description}
-          selectionColor={colours.black}
-          // leftIcon={<Icon name="description" type="material" color={colours.grey} />}
-          // inputStyle={{height: windowHeight*0.08}}
-          inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 2, borderRadius: 6}}
-          containerStyle={{paddingHorizontal: 0}}
+          containerStyle={{ paddingHorizontal: 0}}
         />
 
         {/* Price */}
@@ -776,9 +798,9 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Input
             label="Price"
             defaultValue={event.priceMin.toString()}
+            onChange={(e) => set({...event, priceMin: Number(e.nativeEvent.text)})}
             selectionColor={colours.black}
-            // leftIcon={<Icon name="dollar" type="font-awesome" color={colours.grey} />}
-            inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 2, borderRadius: 6}}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0, flex:1}}
             maxLength={4}
           />
@@ -786,9 +808,9 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Input
             label="Max Price (Optional)"
             defaultValue={event.priceMax?.toString()}
+            onChange={(e) => set({...event, priceMax: Number(e.nativeEvent.text)})}
             selectionColor={colours.black}
-            // leftIcon={<Icon name="dollar" type="font-awesome" color={colours.grey} />}
-            inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 2, borderRadius: 6}}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0, flex:1}}
             maxLength={4}
           />
@@ -800,9 +822,8 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           multiline={true}
           defaultValue={event.signUpLink}
           onChange={(e) => set({ ...event, signUpLink: e.nativeEvent.text })}
-          // leftIcon={<Icon name="link" type="material" color={colours.grey} />}
           selectionColor={colours.black}
-          inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 2,borderRadius: 6,}}
+          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           containerStyle={{paddingHorizontal: 0}}
         />
 
@@ -811,14 +832,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Input
             label="Tags"
             selectionColor={colours.black}
-            // leftIcon={<Icon name="tag-multiple" type="material-community" color={colours.grey} />}
-            // inputStyle={{height: windowHeight*0.08}}
-            inputContainerStyle={{
-              borderColor: colours.grey,
-              borderWidth: 1,
-              paddingVertical: 2,
-              borderRadius: 6,
-            }}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0}}
           />
         </View>
