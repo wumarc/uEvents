@@ -327,7 +327,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         <Text style={{color: "black", fontWeight: "500", fontSize: 16, marginBottom: "1%"}}>Register as a</Text>
         <Dropdown
             placeholderStyle={{paddingVertical: 4, paddingHorizontal: 8}}
-            data={[{key:1, value:'Student'}, {key:2, value:'Organizer'}]}
+            data={[{key:1, value:'student'}, {key:2, value:'organizer'}]}
             labelField="value"
             valueField="key"
             placeholder={userType == "" ? 'Account Type' : userType}
@@ -366,24 +366,10 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           title="Sign up"
           disabled={email === "" || password === "" || userType === "" || !checked}
           onPress={() => {
-            userType === "Student"
-              ? signUp(true).then((success) => {
-                  if (!success) return;
-                  addDocumentToCollection<Student>(
-                    "users",
-                    getFirebaseUserIDOrEmpty(),
-                    defaultStudent
-                  );
-                })
+            userType === "student"
+              ? signUp(true)
               : // Don't validate email for organizers
-                signUp(false).then((success) => {
-                  if (!success) return;
-                  addDocumentToCollection<Organizer>(
-                    "users",
-                    getFirebaseUserIDOrEmpty(),
-                    defaultOrganizer
-                  );
-                });
+                signUp(false);
           }}
         />
       </View>
