@@ -113,7 +113,7 @@ const Main: FC<{ userType: string }> = (props) => {
               headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="OrganizerEventDetails"
             component={OrganizerEventDetails as any} // TODO fix error
             options={({ route, navigation }) => {
@@ -124,7 +124,7 @@ const Main: FC<{ userType: string }> = (props) => {
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
               };
             }}
-          /> */}
+          />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>

@@ -5,6 +5,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button } from "@rneui/base";
+import { Input } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerEventDetails">;
 // To access the type of user, use route.params.userType
@@ -25,81 +26,116 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
 
       <ScrollView style={{paddingHorizontal: spacing.horizontalMargin1, paddingBottom: 100}} showsVerticalScrollIndicator={false}>
 
-        {/* Image */}
-        <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.18}}>
-          <Image source={require('./1F3A5_color.png')}
-            style={{width: '100%', height: '100%'}}
-            resizeMode="contain"
+        <View style={spacing.verticalMargin1}>
+
+          {/* Name */}
+          <Input
+            label="Event Name"
+            selectionColor={colours.black}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+            // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
+            containerStyle={{ paddingHorizontal: 0}}
+            onChange={(e) => set({...event, name: e.nativeEvent.text})}
+            maxLength={35}
+            defaultValue={event.name}
           />
-        </View>
+          
+          {/* Emoji */}
+          <Input
+            label="Emoji"
+            selectionColor={colours.black}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+            // leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
+            containerStyle={{ paddingHorizontal: 0}}
+            onChange={(e) => set({...event, emoji: e.nativeEvent.text})}
+            maxLength={8}
+            defaultValue={event.emoji}
+          />
 
-        {/* Title */}
-        <View style={{marginVertical: 5}}>
-          <Text style={fonts.title2}>{event.name}</Text>
-        </View>
+          {/* Location */}
+          <Input
+            label="Location"
+            selectionColor={colours.black}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+            containerStyle={{ paddingHorizontal: 0}}
+            onChange={(e) => set({...event, location: e.nativeEvent.text})}
+            maxLength={8}
+            defaultValue={event.location}
+          />
 
-        {/* Date */}
-        <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
-
-          <View style={{flexDirection: 'row', alignItems: 'center', width: windowWidth*0.45}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 Tomorrow</Text>
-          </View>
-
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>🕑 08:00 PM</Text>
-            {/* extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End") */}
-          </View>
-
-        </View>
-
-        {/* Description */}
-        <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>ℹ️ Description</Text>
-          <Text style={fonts.regular}>{event.description}</Text>
-        </View>
-
-        {/* Location */}
-        <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📍 Location</Text>
-          <View style={{borderWidth: 2, borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
-            <Text style={fonts.title3}>{event.location}</Text>
-            <Text style={fonts.small}>{event.address}</Text>
-            <Button title={"Open on Google Maps"}
-              buttonStyle={{...buttons.button1, marginTop: '3%'}}
-              titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
-              onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
+          {/* Date, time, recurrence */}
+          <View style={{flexDirection: "row"}}>
+            <Input
+              label="Date and time"
+              // leftIcon={<Icon name="date-range" type="ionicons" color={colours.grey} />}
+              selectionColor={colours.black}
+              // inputStyle={{height: windowHeight*0.08}}
+              inputContainerStyle={{
+                borderColor: colours.grey,
+                borderWidth: 1,
+                paddingVertical: 2,
+                borderRadius: 6,
+              }}
+              containerStyle={{paddingHorizontal: 0}}
             />
           </View>
-        </View>
 
-        {/* Other information */}
-        {/* <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📝 Other Information</Text>
-          <Text style={fonts.regular}>If you are vegetarian, please let us know by sending us an email</Text>
-        </View> */}
+          {/* Description */}
+          <Input
+            label="Description"
+            selectionColor={colours.black}
+            multiline={true}
+            maxLength={400}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+            onChange={(e) => set({ ...event, description: e.nativeEvent.text })}
+            defaultValue={event.description}
+            containerStyle={{ paddingHorizontal: 0}}
+          />
 
-        {/* Organizer */}
-        <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏠 Organizer</Text>
-          
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-
-            {/* Icon / name */}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon
-                name='calendar-outline'
-                type='ionicon'
-                color= {colours.grey}
-              />
-              <Text style={fonts.regular}>{event.organizer}</Text>
-            </View>
+          {/* Price */}
+          <View style={{flexDirection: "row"}}>
+            <Input
+              label="Price"
+              defaultValue={event.priceMin.toString()}
+              onChange={(e) => set({...event, priceMin: Number(e.nativeEvent.text)})}
+              selectionColor={colours.black}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+              containerStyle={{paddingHorizontal: 0, flex:1}}
+              maxLength={4}
+            />
+            <Text> </Text>
+            <Input
+              label="Max Price (Optional)"
+              defaultValue={event.priceMax?.toString()}
+              onChange={(e) => set({...event, priceMax: Number(e.nativeEvent.text)})}
+              selectionColor={colours.black}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+              containerStyle={{paddingHorizontal: 0, flex:1}}
+              maxLength={4}
+            />
           </View>
 
-        </View>
+          {/* Sign up link */}
+          <Input
+            label="Sign up link"
+            multiline={true}
+            defaultValue={event.signUpLink}
+            onChange={(e) => set({ ...event, signUpLink: e.nativeEvent.text })}
+            selectionColor={colours.black}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+            containerStyle={{paddingHorizontal: 0}}
+          />
 
-        <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🔗 Source</Text>
-          <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
+          {/* Tags */}
+          <View style={{flexDirection: "row"}}>
+            <Input
+              label="Tags"
+              selectionColor={colours.black}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+              containerStyle={{paddingHorizontal: 0}}
+            />
+          </View>
+
         </View>
 
       </ScrollView>
@@ -112,10 +148,10 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           }
         </Text>
         <Button
-          buttonStyle={{backgroundColor: colours.purple, padding: '10%', paddingHorizontal: '8%', borderRadius: 10}}
-          title={"Edit"}
-          titleStyle={{ fontSize: 20, fontWeight: "600" }}
-          onPress={() => {navigation.navigate("Step0", { eventID: route.params.eventID, useDefault: false })}}
+          buttonStyle={{backgroundColor: colours.purple, padding: '5%', paddingHorizontal: '4%', borderRadius: 10}}
+          title={"Save Changes"}
+          titleStyle={{ fontSize: 20, fontWeight: "600"}}
+          onPress={() => navigation.pop()}
         />
       </View>
 
