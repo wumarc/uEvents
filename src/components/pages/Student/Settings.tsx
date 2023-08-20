@@ -194,7 +194,7 @@ const Settings = ({ route, navigation }: props) => {
             <Button 
               buttonStyle={{backgroundColor: colours.white}} 
               icon={<Icon name="copy" type="feather" color={colours.black} />} 
-              onPress={() => Clipboard.setStringAsync('admin@uevents.ca')}
+              onPress={() => Clipboard.setStringAsync('admin@uevents.org')}
             />
           </View>
         </Dialog>

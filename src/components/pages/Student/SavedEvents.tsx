@@ -29,7 +29,7 @@ const SavedEvents = ({ route, navigation }: props) => {
           <Text style={fonts.title1}>Saved Events</Text>
         </View>
 
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center", ...spacing.verticalMargin1}}>
           {(student.saved ?? []).length != 0 ? (
             <FlatList
               data={(student ?? []).saved}
@@ -44,9 +44,7 @@ const SavedEvents = ({ route, navigation }: props) => {
             />
           ) : (
             <View style={{ paddingHorizontal: "10%"}}>
-              <Text style={{ fontSize: 19 }}>
-                You currently have no saved events
-              </Text>
+              <Text style={fonts.title3}>You currently have no saved events</Text>
             </View>
           )}
         </View>
