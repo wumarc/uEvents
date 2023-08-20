@@ -1,4 +1,4 @@
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Modal } from "react-native";
 import { useState } from "react";
 import { Button } from "@rneui/themed";
 import { StyleSheet } from "react-native";
@@ -24,12 +24,16 @@ import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
 import CustomButton from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/base";
+import { Dialog } from "react-native-elements";
+import * as Clipboard from 'expo-clipboard';
+
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Settings = ({ route, navigation }: props) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [dialogVisible, setdialogVisible] = useState(false);
 
   const logout = () => {
     const auth = getAuth();
@@ -92,6 +96,10 @@ const Settings = ({ route, navigation }: props) => {
             onPressListener={() =>
               Linking.openURL("https://uevents.webnode.page/privacy-policy/")
             }
+          />
+          <SettingsButton
+            buttonName={"Contact Us"}
+            onPressListener={() =>setdialogVisible(true)}
           />
           <SettingsButton
             buttonName={"Delete Account"}
@@ -179,6 +187,18 @@ const Settings = ({ route, navigation }: props) => {
             />
           </View>
         </BottomSheet>
+
+        <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={fonts.title2}>admin@uevents.ca</Text>
+            <Button 
+              buttonStyle={{backgroundColor: colours.white}} 
+              icon={<Icon name="copy" type="feather" color={colours.black} />} 
+              onPress={() => Clipboard.setStringAsync('admin@uevents.ca')}
+            />
+          </View>
+        </Dialog>
+
       </ScrollView>
     </View>
   );

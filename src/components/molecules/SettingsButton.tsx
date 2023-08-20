@@ -13,26 +13,11 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
   const fontSize = 23;
   const marginBottom = "4%";
   const settingName = [
-    {
-      "Account Settings": {
-        icon: "account-outline",
-        type: "material-community",
-      },
-    },
-    {
-      "Organization Profile": {
-        icon: "account-outline",
-        type: "material-community",
-      },
-    },
-    {
-      "Privacy Policy": {
-        icon: "shield-lock-outline",
-        type: "material-community",
-      },
-    },
-    { Support: { icon: "help-circle-outline", type: "ionicon" } },
-    { "Delete Account": { icon: "trash-outline", type: "ionicon" } },
+    {"Account Settings": {icon: "account-outline",type: "material-community"}},
+    {"Organization Profile": {icon: "account-outline",type: "material-community"}},
+    {"Privacy Policy": {icon: "shield-lock-outline",type: "material-community"}},
+    {"Contact Us": { icon: "mail-outline", type: "ionicon" }},
+    {"Delete Account": { icon: "trash-outline", type: "ionicon" }},
   ];
 
   const findIconByKey = (key: any) => {
