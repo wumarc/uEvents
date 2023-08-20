@@ -83,7 +83,7 @@ export const Step0 = ({ route, navigation }: any) => {
   return (
     <View style={{flex: 1, backgroundColor: colours.white, justifyContent: "space-between"}}>
     {/* behavior={Platform.OS === "ios" ? "padding" : "height"} */}
-      
+
       <ScrollView>
         <View style={{ paddingHorizontal: spacing.page2, ...spacing.verticalPadding1 }}>
           {step == 1 && <Step1 eventID={id} />}
@@ -103,7 +103,7 @@ export const Step0 = ({ route, navigation }: any) => {
 
       {/* Static Footer */}
       <KeyboardAvoidingView style={{ marginBottom: windowHeight * 0.01 }}>
-        <ProgressBar progress={step * 0.1} color={colours.purple} />
+        <ProgressBar progress={step * 0.09} color={colours.purple} />
         <View style={styles.footer_buttons}>
           <Button
             buttonStyle={{ backgroundColor: colours.white }}
@@ -325,49 +325,57 @@ export const Step3b: FC<{ eventID: string }> = (props) => {
       <View style={{marginTop: '10%'}}>
         {event.onCampus ? (
           <View>
+            <Text style={fonts.regular}>Select the building or place name</Text>
             <Dropdown
               search
               searchPlaceholder="Search by name or acronym"
-              placeholderStyle={{ fontSize: 20, padding: 5}}
+              placeholderStyle={{ fontSize: 17, padding: 7}}
               data={data}
               labelField="label"
               valueField="address"
-              placeholder={event.location == "" ?  "Select the building" :  event.location}
-              style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.06}}
+              placeholder={event.location == "" ?  "" :  event.location}
+              style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
               onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
             />
             <Input
               selectionColor={colours.black}
-              label="Room number"
-              inputContainerStyle={{
-                borderColor: colours.grey,
-                borderWidth: 1,
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-                borderRadius: 6,
-              }}
+              label="Room number (optional)"
+              labelStyle={{...fonts.regular}}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               containerStyle={{ paddingHorizontal: 0, marginTop: '3%'}}
-              onChange={(e) => {}}
-              maxLength={8}
-              defaultValue={event.name}
+              onChange={(e) => set({...event, roomNumber: e.nativeEvent.text, onCampus: true})}
+              maxLength={10}
+              defaultValue={event.roomNumber}
             />
           </View>
         ) :
           <View>
             <Input
-              label="Location name"
-              selectionColor={colours.black}
-              defaultValue={event.location}
-              maxLength={30}
-              onChange={(e) => set({ ...event, location: e.nativeEvent.text, onCampus: false})}
-            />
-            <Input
               label="Street address"
               selectionColor={colours.black}
               defaultValue={ event.address}
-              multiline={true}
-              maxLength={50}
+              labelStyle={{...fonts.regular}}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+              maxLength={60}
               onChange={(e) => set({ ...event, address: e.nativeEvent.text, onCampus: false})}
+            />
+            <Input
+              label="Location or building name"
+              selectionColor={colours.black}
+              labelStyle={{...fonts.regular}}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+              defaultValue={event.location}
+              maxLength={50}
+              onChange={(e) => set({ ...event, location: e.nativeEvent.text, onCampus: false})}
+            />
+            <Input
+              label="Room number (optional)"
+              selectionColor={colours.black}
+              labelStyle={{...fonts.regular}}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+              defaultValue={event.roomNumber}
+              maxLength={10}
+              onChange={(e) => set({ ...event, roomNumber: e.nativeEvent.text, onCampus: false})}
             />
           </View>
         }
@@ -390,51 +398,17 @@ export const Step4: FC<{ eventID: string }> = (props) => {
 
       {/* Recurrence */}
       <View style={spacing.verticalMargin1}>
-        <ButtonGroup
+        {/* <ButtonGroup
           buttons={["Single Event", "Weekly Event"]}
           onPress={(index) => {}}
           selectedIndex={0}
           containerStyle={{ height: 50 }}
           selectedButtonStyle={{ backgroundColor: colours.purple }}
-        />
+        /> */}
       </View>
 
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={fonts.regular}>Start Day</Text>
-        <DateTimePicker
-          value={new Date()}
-          mode={"date"}
-          minimumDate={new Date()}
-          maximumDate={new Date(2023, 31, 31)}
-          onChange={(e) => {
-            set({...event, startTime: e.nativeEvent.timestamp}) // TODO help
-          }}
-        />
-        <Text style={fonts.regular}>Start Time</Text>
-        <DateTimePicker
-          value={new Date()}
-          mode={"time"}
-          is24Hour={true}
-          onChange={(e) => {console.log(e.nativeEvent.timestamp)}}
-        />
-      </View>
-
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={fonts.regular}>End Day</Text>
-          <DateTimePicker
-            value={new Date()}
-            mode={"date"}
-            minimumDate={new Date()}
-            maximumDate={new Date(2023, 31, 31)}
-            onChange={(e) => {console.log(e.nativeEvent.timestamp)}}
-        />
-        <Text style={fonts.regular}>End Time</Text>
-        <DateTimePicker
-          value={new Date()}
-          mode={"time"}
-          is24Hour={true}
-          onChange={(e) => {console.log(e.nativeEvent.timestamp)}}
-        />
+      <View>
+        
       </View>
 
     </View>
@@ -617,7 +591,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
 
 /* ------------------------------- Sign up link ----------------------------- */
 export const Step7: FC<{ eventID: string }> = (props) => {
-  
+
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
     props.eventID
