@@ -408,7 +408,24 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       </View>
 
       <View>
-        
+        <Text>Start Time</Text>
+        <DateTimePicker
+          value={event.startTime == null ? new Date() : event.startTime.toDate()}
+          mode={"datetime"}
+          display="spinner"
+          minimumDate={new Date()}
+          maximumDate={new Date(2023, 31, 31)}
+          onChange={(e) => set({...event, startTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
+        />
+        <Text>End Time</Text>
+        <DateTimePicker
+          value={event.endTime == null ? new Date() : event.endTime.toDate()}
+          mode={"datetime"}
+          display="spinner"
+          minimumDate={event.startTime == null ? new Date() : event.startTime.toDate()}
+          maximumDate={new Date(2023, 31, 31)}
+          onChange={(e) => set({...event, endTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
+        />
       </View>
 
     </View>
