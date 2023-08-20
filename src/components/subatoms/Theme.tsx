@@ -57,7 +57,7 @@ export const buttons = {
             android: {
                 elevation: 4,
             },
-    })
+        })
     }
 }
 

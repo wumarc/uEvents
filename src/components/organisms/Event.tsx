@@ -64,6 +64,20 @@ const Event: React.FC<EventProps> = (props) => {
     endTime = nextEndTime(event.startTime, startTime, event.endTime);
   }
 
+  const getTimeInAMPM = (date: any) => {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    const strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+
+  }
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -85,40 +99,46 @@ const Event: React.FC<EventProps> = (props) => {
            />
         </View>
 
-        <View style={{width: '70%'}}>
+        <View style={{width: '70%', justifyContent: 'center'}}>
 
           <View>
-            <Text style={{fontWeight: '500', fontSize: 16, color: colours.purple}}>{event.name}</Text>
+            <Text style={{fontWeight: '700', fontSize: 17, color: colours.purple}}>{event.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
-              <Image
+            {/* <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}> */}
+              {/* <Image
                 source={{uri:'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg'}}
                 style={{width: "100%", height: "100%"}}
-              />
-            </View>
-            <Text style={fonts.small}>{event.organizer}</Text>
+              /> */}
+            {/* <Icon
+              name='font-awesome'
+              type='building-o'
+              color='black'
+            /> */}
+            {/* </View> */}
+            <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizer}</Text>
           </View>
-          
+
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
               name='time-outline'
               type='ionicon'
-              color='black'
+              color={colours.grey}
             />
-            <Text style={fonts.small}>{startTime?.toDate().getHours() + ":" + startTime?.toDate().getMinutes()}</Text>
-            <Text style={fonts.small}> - </Text>
-            <Text style={fonts.small}>{startTime?.toDate().getDay().toString()}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text>
+            {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}
+            <Text style={{...fonts.small, fontWeight: '500'}}> - </Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{startTime?.toDate().getDay().toString()}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
               name='location-outline'
               type='ionicon'
-              color='black'
+              color={colours.grey}
             />
-            <Text style={fonts.small}>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
           </View>
 
         </View>

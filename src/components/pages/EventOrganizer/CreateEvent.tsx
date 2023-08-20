@@ -272,6 +272,7 @@ export const Step3b: FC<{ eventID: string }> = (props) => {
     { label: "Hamelin (MHN)", address: "70 Laurier Street, Ottawa, Ontario"},
     { label: "Morisset (MRT)", address: "65 University Street, Ottawa, Ontario"},
     { label: "University Centre (UCU)", address: "85 University Street, Ottawa, Ontario"},
+    { label: "University Square", address: "136 University Private, Ottawa, ON K1N 1H3"},
     { label: "141 Louis Pasteur (LPR)", address: "141 Louis Pasteur Street, Ottawa, Ontario"},
     { label: "Thompson Residence (THN)", address: "45 University Street, Ottawa, Ontario"},
     { label: "Montpetit (MNT)", address: "125 University Street, Ottawa, Ontario"},
