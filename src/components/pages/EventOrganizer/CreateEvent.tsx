@@ -42,6 +42,59 @@ import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+const data = [
+  { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
+  { label: "Hagen (HGN)", address: "115 Séraphin Marion Street, Ottawa, Ontario"},
+  { label: "William Commanda (WCA)", address: "52 University Street, Ottawa, Ontario"},
+  { label: "Tabaret Hall (TBT)", address: "550 Cumberland Street, Ottawa, Ontario"},
+  { label: "Department of Visual Arts (LRR)", address: "100 Laurier Street, Ottawa, Ontario"},
+  { label: "Hamelin (MHN)", address: "70 Laurier Street, Ottawa, Ontario"},
+  { label: "Morisset (MRT)", address: "65 University Street, Ottawa, Ontario"},
+  { label: "University Centre (UCU)", address: "85 University Street, Ottawa, Ontario"},
+  { label: "University Square", address: "136 University Private, Ottawa, ON K1N 1H3"},
+  { label: "141 Louis Pasteur (LPR)", address: "141 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Thompson Residence (THN)", address: "45 University Street, Ottawa, Ontario"},
+  { label: "Montpetit (MNT)", address: "125 University Street, Ottawa, Ontario"},
+  { label: "Pérez (PRZ)", address: "50 University Street, Ottawa, Ontario"},
+  { label: "Residence (90U)", address: "90 University Street, Ottawa, Ontario"},
+  { label: "Marchand Residence (MRD)", address: "110 University Street, Ottawa, Ontario"},
+  { label: "Learning Crossroads (CRX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
+  { label: "Lamoureux (LMX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
+  { label: "Brooks (BRS)", address: "100 Thomas-More Street, Ottawa, Ontario"},
+  { label: "Colonel By (CBY)", address: "161 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Leblanc Residence (LBC)", address: "45 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "MCE", address: "100 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Bioscience-Ph I CAREG (CRG)", address: "20 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Fauteux (FTX)", address: "57 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Simard (SMD)", address: "60 University Street, Ottawa, Ontario"},
+  { label: "Vanier (VNR)", address: "136 Jean-Jacques Lussier Street, Ottawa, Ontario"},
+  { label: "Bioscience-Ph III, Gendron (GNN)", address: "30 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Marion (MRN)", address: "140 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Stanton Residence (STN)", address: "100 University Street, Ottawa, Ontario"},
+  { label: "Hyman Soloway Residence (HSY)", address: "157 Laurier Street, Ottawa, Ontario"},
+  { label: "Desmarais (DMS)", address: "55 Laurier Street, Ottawa, Ontario"},
+  { label: "Social Sciences Building (FSS)", address: "120 University Street, Ottawa, Ontario"},
+  { label: "Power Plant (CTE)", address: "720 King Edward Street, Ottawa, Ontario"},
+  { label: "Minto Sports Complex (MNO)", address: "801 King Edward Street, Ottawa, Ontario"},
+  { label: "SITE (STE)", address: "800 King Edward Street, Ottawa, Ontario"},
+  { label: "D'Iorio (DRO)", address: "10 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Bioscience-Ph II (BSC)", address: "30 Marie Curie Street, Ottawa, Ontario"},
+  { label: "STEM Complex (STM)", address: "150 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Roger Guindon (RGN)", address: "451 Smyth Street, Ottawa, Ontario"},
+  { label: "GSAED Grad House (GSD)", address: "601 Cumberland Street, Ottawa, Ontario"},
+  { label: "HNN", address: "202 Henderson Street, Ottawa, Ontario"},
+  { label: "Advanced Research Complex (ARC)", address: "25 Templeton Street, Ottawa, Ontario"},
+  { label: "KED", address: "585 King Edward Street, Ottawa, Ontario"},
+  { label: "STT", address: "1 Stewart Street, Ottawa, Ontario"},
+  { label: "Alex Trebek Alumni Hall (ATK)", address: "157 Séraphin Marion Street, Ottawa, Ontario"},
+  { label: "ANX", address: "Annex Residence, Ottawa, Ontario"},
+  { label: "MNN", address: "Mann Residence, Ottawa, Ontario"},
+  { label: "WBD", address: "200 Wilbrod Street, Ottawa, Ontario"},
+  { label: "FRL", address: "Friel Residence, Ottawa, Ontario"},
+  { label: "RDU", address: "Rideau Residence, Ottawa, Ontario"},
+  { label: "Dome", address: "Lees 200 - Bloc F, Ottawa, Ontario"},
+];
+
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
   const [id, setId] = useState(route.params.eventID ?? uid());
@@ -202,7 +255,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
           textAlign="center"
           inputStyle={{ fontSize: 70}}
           onChange={(e) => set({ ...event, emoji: e.nativeEvent.text }) }
-          maxLength={5}
+          maxLength={8}
         />
         {/* <Input
           selectionColor={colours.purple}
@@ -227,59 +280,6 @@ export const Step3: FC<{ eventID: string}> = (props) => {
     "events",
     props.eventID
   );
-
-  const data = [
-    { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
-    { label: "Hagen (HGN)", address: "115 Séraphin Marion Street, Ottawa, Ontario"},
-    { label: "William Commanda (WCA)", address: "52 University Street, Ottawa, Ontario"},
-    { label: "Tabaret Hall (TBT)", address: "550 Cumberland Street, Ottawa, Ontario"},
-    { label: "Department of Visual Arts (LRR)", address: "100 Laurier Street, Ottawa, Ontario"},
-    { label: "Hamelin (MHN)", address: "70 Laurier Street, Ottawa, Ontario"},
-    { label: "Morisset (MRT)", address: "65 University Street, Ottawa, Ontario"},
-    { label: "University Centre (UCU)", address: "85 University Street, Ottawa, Ontario"},
-    { label: "University Square", address: "136 University Private, Ottawa, ON K1N 1H3"},
-    { label: "141 Louis Pasteur (LPR)", address: "141 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Thompson Residence (THN)", address: "45 University Street, Ottawa, Ontario"},
-    { label: "Montpetit (MNT)", address: "125 University Street, Ottawa, Ontario"},
-    { label: "Pérez (PRZ)", address: "50 University Street, Ottawa, Ontario"},
-    { label: "Residence (90U)", address: "90 University Street, Ottawa, Ontario"},
-    { label: "Marchand Residence (MRD)", address: "110 University Street, Ottawa, Ontario"},
-    { label: "Learning Crossroads (CRX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
-    { label: "Lamoureux (LMX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
-    { label: "Brooks (BRS)", address: "100 Thomas-More Street, Ottawa, Ontario"},
-    { label: "Colonel By (CBY)", address: "161 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Leblanc Residence (LBC)", address: "45 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "MCE", address: "100 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Bioscience-Ph I CAREG (CRG)", address: "20 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Fauteux (FTX)", address: "57 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Simard (SMD)", address: "60 University Street, Ottawa, Ontario"},
-    { label: "Vanier (VNR)", address: "136 Jean-Jacques Lussier Street, Ottawa, Ontario"},
-    { label: "Bioscience-Ph III, Gendron (GNN)", address: "30 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Marion (MRN)", address: "140 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Stanton Residence (STN)", address: "100 University Street, Ottawa, Ontario"},
-    { label: "Hyman Soloway Residence (HSY)", address: "157 Laurier Street, Ottawa, Ontario"},
-    { label: "Desmarais (DMS)", address: "55 Laurier Street, Ottawa, Ontario"},
-    { label: "Social Sciences Building (FSS)", address: "120 University Street, Ottawa, Ontario"},
-    { label: "Power Plant (CTE)", address: "720 King Edward Street, Ottawa, Ontario"},
-    { label: "Minto Sports Complex (MNO)", address: "801 King Edward Street, Ottawa, Ontario"},
-    { label: "SITE (STE)", address: "800 King Edward Street, Ottawa, Ontario"},
-    { label: "D'Iorio (DRO)", address: "10 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Bioscience-Ph II (BSC)", address: "30 Marie Curie Street, Ottawa, Ontario"},
-    { label: "STEM Complex (STM)", address: "150 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Roger Guindon (RGN)", address: "451 Smyth Street, Ottawa, Ontario"},
-    { label: "GSAED Grad House (GSD)", address: "601 Cumberland Street, Ottawa, Ontario"},
-    { label: "HNN", address: "202 Henderson Street, Ottawa, Ontario"},
-    { label: "Advanced Research Complex (ARC)", address: "25 Templeton Street, Ottawa, Ontario"},
-    { label: "KED", address: "585 King Edward Street, Ottawa, Ontario"},
-    { label: "STT", address: "1 Stewart Street, Ottawa, Ontario"},
-    { label: "Alex Trebek Alumni Hall (ATK)", address: "157 Séraphin Marion Street, Ottawa, Ontario"},
-    { label: "ANX", address: "Annex Residence, Ottawa, Ontario"},
-    { label: "MNN", address: "Mann Residence, Ottawa, Ontario"},
-    { label: "WBD", address: "200 Wilbrod Street, Ottawa, Ontario"},
-    { label: "FRL", address: "Friel Residence, Ottawa, Ontario"},
-    { label: "RDU", address: "Rideau Residence, Ottawa, Ontario"},
-    { label: "Dome", address: "Lees 200 - Bloc F, Ottawa, Ontario"},
-  ];
 
   if (loading) return <Loading />
 
@@ -531,7 +531,7 @@ export const Step6: FC<{ eventID: string}> = (props) => {
 
         <View style={{width: "48%"}}>
           <Input
-            label=" "
+            label="0 if free"
             selectionColor={colours.purple}
             maxLength={4}
             autoCapitalize="none"
@@ -759,15 +759,88 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         />
 
         {/* Location */}
-        <Input
-          label="Location"
-          selectionColor={colours.purple}
-          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
-          containerStyle={{ paddingHorizontal: 0}}
-          onChange={(e) => set({...event, location: e.nativeEvent.text})}
-          maxLength={8}
-          defaultValue={event.location}
-        />
+        <View style={{}}>
+          
+          <ButtonGroup
+            buttons={["Yes", "No"]}
+            onPress={(index) => {
+              if (index == 0) {
+                set({ ...event, onCampus: true });
+              } else {
+                set({ ...event, onCampus: false });
+              }
+            }}
+            selectedIndex={event.onCampus == true ? 0 : 1}
+            containerStyle={{ height: 50 }}
+            selectedButtonStyle={{ backgroundColor: colours.purple }}
+          />
+
+          <View>
+            {event.onCampus ? (
+              <View>
+                <Text style={fonts.regular}>Select the building or place name</Text>
+                <Dropdown
+                  search
+                  searchPlaceholder="Search by name or acronym"
+                  placeholderStyle={{ fontSize: 17, padding: 7}}
+                  data={data}
+                  labelField="label"
+                  valueField="address"
+                  placeholder={event.location == "" ?  "" :  event.location}
+                  style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
+                  onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
+                />
+                <Input
+                  
+                  label="Room number (optional)"
+                  selectTextOnFocus={true}
+                  selectionColor={colours.purple}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, borderRadius: 6}}
+                  containerStyle={{ paddingHorizontal: 0}}
+                  onChange={(e) => set({...event, roomNumber: e.nativeEvent.text, onCampus: true})}
+                  maxLength={10}
+                  defaultValue={event.roomNumber}
+                />
+              </View>
+            ) :
+              <View>
+                <Input
+                  label="Street address"
+                  selectionColor={colours.purple}
+                  selectTextOnFocus={true}
+                  multiline={true}
+                  defaultValue={ event.address}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  maxLength={60}
+                  onChange={(e) => set({ ...event, address: e.nativeEvent.text, onCampus: false})}
+                />
+                <Input
+                  label="Location or building name"
+                  selectionColor={colours.purple}
+                  selectTextOnFocus={true}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  defaultValue={event.location}
+                  maxLength={50}
+                  onChange={(e) => set({ ...event, location: e.nativeEvent.text, onCampus: false})}
+                />
+                <Input
+                  label="Room number (optional)"
+                  selectionColor={colours.purple}
+                  selectTextOnFocus={true}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  defaultValue={event.roomNumber}
+                  maxLength={10}
+                  onChange={(e) => set({ ...event, roomNumber: e.nativeEvent.text, onCampus: false})}
+                />
+              </View>
+            }
+          </View>
+          
+        </View>
 
         {/* Date, time, recurrence */}
         <View style={{flexDirection: "row"}}>
@@ -830,6 +903,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           containerStyle={{paddingHorizontal: 0}}
+          maxLength={300}
         />
 
         {/* Tags */}
