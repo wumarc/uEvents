@@ -749,6 +749,39 @@ export const Step9: FC<{ eventID: string }> = (props) => {
     props.eventID
   );
 
+  const [loading2, events, add] =
+  useStateWithFireStoreCollection<EventObject>("events");
+
+  const [fixedCategories, setFixedCategories] = useState<string[]>([]);
+
+  let categories: string[] = [];
+
+  useEffect(() => {
+    if (fixedCategories.length == 0) {
+      setFixedCategories(categories);
+    }
+  }, [events]);
+  
+  if (loading || loading2) {
+    return <Loading />;
+  }
+
+  const getSelectedCategories = () => {
+    // Calculate the selected categories
+    let set: string[] = [];
+    for (let category of event.categories) {
+      set.push(category);
+    }
+    return set;
+  }
+
+  categories = getOrderedCategories(events as EventObject[]);
+
+  let categoryData = [];
+  for (let category of fixedCategories) {
+    categoryData.push({label: category, value: category});
+  }
+
   if (loading) {
     return <Loading />;
   }
@@ -935,12 +968,27 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         />
 
         {/* Tags */}
-        <View style={{flexDirection: "row"}}>
-          <Input
-            label="Tags"
-            selectionColor={colours.purple}
-            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
-            containerStyle={{paddingHorizontal: 0}}
+        <View>
+          <Text style={{...fonts.title3, fontWeight: 'bold', color: 'grey'}}>
+            Tags
+          </Text>
+          <MultiSelect
+            search
+            searchPlaceholder="Search tags"
+            placeholderStyle={{ fontSize: 17, padding: 7}}
+            selectedStyle={{borderRadius: 10, padding: '2%', borderColor: colours.black}}
+            selectedTextStyle={{color: colours.black, fontSize: 18}}
+            data={categoryData}
+            maxSelect={5}
+            activeColor={colours.purple}
+            value={getSelectedCategories()}
+            labelField={"label"}
+            valueField={"value"}
+            placeholder={"Select up to 5 tags"}
+            style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
+            onChange={(item) => {
+              set({...event, categories: item})
+            }}
           />
         </View>
 
