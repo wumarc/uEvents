@@ -205,7 +205,7 @@ export const defaultEvent: EventObject = {
   location: "",
   organizer: "",
   categories: [],
-  onCampus: false,
+  onCampus: true,
   images: [],
   priceMin: 0,
   originalLink: "",

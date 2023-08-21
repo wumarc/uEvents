@@ -73,7 +73,7 @@ export const Step0 = ({ route, navigation }: any) => {
         startTime: new Timestamp(0, 0),
         location: "",
         categories: [],
-        onCampus: false,
+        onCampus: true,
         images: [],
         priceMin: 0,
         originalLink: "",
