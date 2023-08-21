@@ -5,6 +5,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button } from "@rneui/base";
+import { SvgUri } from 'react-native-svg';
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -27,10 +28,12 @@ const EventDetails = ({ route, navigation }: props) => {
 
         {/* Image */}
         <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.18}}>
-          <Image source={require('./1F3A5_color.png')}
-            style={{width: '100%', height: '100%'}}
-            resizeMode="contain"
-          />
+        <SvgUri
+          width="100%"
+          height="100%"
+          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          fill="black"
+        />
         </View>
 
         {/* Title */}

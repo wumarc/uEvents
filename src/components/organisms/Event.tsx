@@ -5,13 +5,12 @@ import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import {
-  extractMonth,
-  extractDay,
   nextStartTime,
   nextEndTime,
+  EventObject,
 } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
-import { Image } from "@rneui/base";
+import { SvgUri } from 'react-native-svg';
 
 // Event component props
 interface EventProps {
@@ -24,7 +23,7 @@ interface EventProps {
 
 const Event: React.FC<EventProps> = (props) => {
   
-  const [loading, event, setEvent] = useStateWithFireStoreDocument(
+  const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(
     "events",
     props.id
   );
@@ -78,6 +77,8 @@ const Event: React.FC<EventProps> = (props) => {
 
   }
 
+  console.log(event.emoji)
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -92,11 +93,12 @@ const Event: React.FC<EventProps> = (props) => {
       <View style={{flexDirection: 'row', borderColor: 'black', borderRadius: 13, backgroundColor: colours.white}}>
         
         <View style={{justifyContent: 'center', width: windowWidth*0.25, height: windowHeight*0.15}}>
-           <Image
-             source={require('./1F604_color.png')}
-             style={{width: "100%", height: "100%"}}
-             resizeMode="contain"
-           />
+        <SvgUri
+          width="100%"
+          height="100%"
+          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          fill="black"
+        />
         </View>
 
         <View style={{width: '70%', justifyContent: 'center'}}>

@@ -46,6 +46,10 @@ export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
   const [id, setId] = useState(route.params.eventID ?? uid());
   const [freeEventProps, setFreeEventProps] = useState<any>(null);
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
+    "events",
+    id
+  );
   
   // TODO: Function to publish the event
   // const publish = () => {
@@ -79,6 +83,10 @@ export const Step0 = ({ route, navigation }: any) => {
       });
     }
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={{flex: 1, backgroundColor: colours.white, justifyContent: "space-between"}}>
@@ -125,7 +133,12 @@ export const Step0 = ({ route, navigation }: any) => {
             }}
             disabled={step == 7 || step == 3}
             title={step == 11 ? "Publish" : step == 12 ? "Finish" : "Next"}
-            onPress={() => step >= 12 ? navigation.pop() : setStep(step + 1)}
+            onPress={() => {
+              if (step == 11) {
+                set({ ...event, state: "Pending" });
+              }
+              step >= 12 ? navigation.pop() : setStep(step + 1)
+            }}
             titleStyle={{ ...fonts.title2, color: colours.white }}
           />
         </View>
