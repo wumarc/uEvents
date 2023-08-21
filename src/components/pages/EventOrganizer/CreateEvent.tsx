@@ -111,7 +111,7 @@ export const Step0 = ({ route, navigation }: any) => {
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
             disabledTitleStyle={{ color: colours.white }}
-            disabled={step == 1 || step == 12}
+            disabled={step == 1 || step == 10}
           />
           <Button
             buttonStyle={{
@@ -120,12 +120,12 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            title={step == 11 ? "Publish" : step == 9 ? "Finish" : "Next"}
+            title={step == 10 ? "Publish" : step == 9 ? "Finish" : "Next"}
             onPress={() => {
-              if (step == 11) {
+              if (step == 10) {
                 set({ ...event, state: "Pending" });
               }
-              step >= 12 ? navigation.pop() : setStep(step + 1)
+              step >= 10 ? navigation.pop() : setStep(step + 1)
             }}
             titleStyle={{ ...fonts.title2, color: colours.white }}
           />
@@ -157,7 +157,7 @@ export const Step1: FC<{ eventID: string }> = (props) => {
           <Text style={{ color: colours.grey }}>characters available</Text>
         </Text>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
             borderWidth: 1,
@@ -195,7 +195,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
 
       <View style={{ marginVertical: "5%", paddingHorizontal: "30%"}}>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           autoCapitalize="none"
           defaultValue={event.emoji}
           inputContainerStyle={{borderColor: colours.grey, borderBottomWidth: 1, borderWidth: 1, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
@@ -205,7 +205,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
           maxLength={5}
         />
         {/* <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           autoCapitalize="none"
           disabled={true}
           label="How your emoji will look to the students"
@@ -317,8 +317,10 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
             />
             <Input
-              selectionColor={colours.black}
+              
               label="Room number (optional)"
+              selectTextOnFocus={true}
+              selectionColor={colours.purple}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               containerStyle={{ paddingHorizontal: 0, marginTop: '3%'}}
@@ -331,7 +333,9 @@ export const Step3: FC<{ eventID: string}> = (props) => {
           <View>
             <Input
               label="Street address"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
+              selectTextOnFocus={true}
+              multiline={true}
               defaultValue={ event.address}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
@@ -340,7 +344,8 @@ export const Step3: FC<{ eventID: string}> = (props) => {
             />
             <Input
               label="Location or building name"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
+              selectTextOnFocus={true}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               defaultValue={event.location}
@@ -349,7 +354,8 @@ export const Step3: FC<{ eventID: string}> = (props) => {
             />
             <Input
               label="Room number (optional)"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
+              selectTextOnFocus={true}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               defaultValue={event.roomNumber}
@@ -405,7 +411,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
           <>
             <Text style={fonts.title3}>Start Time (MM-DD-YYYY-HH-MM)</Text>
             <Input
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               maxLength={50}
@@ -434,7 +440,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         <>
           <Text>End Time (Optional)</Text>
           <Input
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString()}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               maxLength={50}
@@ -477,7 +483,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
           <Text style={{ color: colours.grey }}>characters available</Text>
         </Text>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           defaultValue={event?.description}
           inputStyle={{ height: windowHeight * 0.13 }}
           inputContainerStyle={{
@@ -526,7 +532,7 @@ export const Step6: FC<{ eventID: string}> = (props) => {
         <View style={{width: "48%"}}>
           <Input
             label=" "
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             maxLength={4}
             autoCapitalize="none"
             placeholder=""
@@ -550,7 +556,7 @@ export const Step6: FC<{ eventID: string}> = (props) => {
         <View style={{width: "48%"}}>
         <Input
           label="Max (Optional)"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           maxLength={4}
           autoCapitalize="none"
           leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
@@ -589,7 +595,7 @@ export const Step7: FC<{ eventID: string }> = (props) => {
       
       <View style={{ marginVertical: "5%" }}>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           defaultValue={event?.signUpLink}
           placeholder="https://docs.google.com/forms/d/e/1FAIpQLSe7-SQCOLPxuD62i9ddBTcMPoA0OdUhrvJWprt7WY06IO3KEg/viewform"
           // inputStyle={{height: windowHeight*0.08}}
@@ -731,7 +737,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Name */}
         <Input
           label="Event Name"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
           containerStyle={{ paddingHorizontal: 0}}
@@ -743,7 +749,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Emoji */}
         <Input
           label="Emoji"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
           containerStyle={{ paddingHorizontal: 0}}
@@ -755,7 +761,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Location */}
         <Input
           label="Location"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           containerStyle={{ paddingHorizontal: 0}}
           onChange={(e) => set({...event, location: e.nativeEvent.text})}
@@ -768,7 +774,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Input
             label="Date and time"
             // leftIcon={<Icon name="date-range" type="ionicons" color={colours.grey} />}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             // inputStyle={{height: windowHeight*0.08}}
             inputContainerStyle={{
               borderColor: colours.grey,
@@ -783,7 +789,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Description */}
         <Input
           label="Description"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           multiline={true}
           maxLength={400}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
@@ -798,7 +804,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
             label="Price"
             defaultValue={event.priceMin.toString()}
             onChange={(e) => set({...event, priceMin: Number(e.nativeEvent.text)})}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0, flex:1}}
             maxLength={4}
@@ -808,7 +814,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
             label="Max Price (Optional)"
             defaultValue={event.priceMax?.toString()}
             onChange={(e) => set({...event, priceMax: Number(e.nativeEvent.text)})}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0, flex:1}}
             maxLength={4}
@@ -821,7 +827,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           multiline={true}
           defaultValue={event.signUpLink}
           onChange={(e) => set({ ...event, signUpLink: e.nativeEvent.text })}
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           containerStyle={{paddingHorizontal: 0}}
         />
@@ -830,7 +836,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         <View style={{flexDirection: "row"}}>
           <Input
             label="Tags"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0}}
           />

@@ -167,7 +167,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0 }}
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
             borderWidth: 1,
@@ -183,7 +183,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setPassword(value)}
           containerStyle={{ paddingHorizontal: 0 }}
           autoCapitalize="none"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           secureTextEntry={true}
           inputContainerStyle={{
             borderColor: colours.grey,
@@ -299,7 +299,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
             borderWidth: 1,
@@ -312,7 +312,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         <Input
           label="Password (min 6 characters)"
           placeholder="Password"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           containerStyle={{ paddingHorizontal: 0 }}
           onChangeText={(value) => setPassword(value)}

@@ -130,7 +130,7 @@ const Home = ({ route, navigation }: props) => {
             // placeholderTextColor="white"
             value={search}
             autoCapitalize="none"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
           />
         </View>
 
