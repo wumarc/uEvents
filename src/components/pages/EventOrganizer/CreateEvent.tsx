@@ -766,7 +766,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         <Input
           label="Event Name"
           selectionColor={colours.purple}
-          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
+          inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
           // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
           containerStyle={{ paddingHorizontal: 0}}
           onChange={(e) => set({...event, name: e.nativeEvent.text})}
@@ -788,7 +788,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
 
         {/* Location */}
         <View style={{}}>
-          
+          <Text>On-campus</Text>
           <ButtonGroup
             buttons={["Yes", "No"]}
             onPress={(index) => {
