@@ -96,8 +96,7 @@ export const Step0 = ({ route, navigation }: any) => {
         <View style={{ paddingHorizontal: spacing.page2, ...spacing.verticalPadding1 }}>
           {step == 1 && <Step1 eventID={id} />}
           {step == 2 && <Step2 eventID={id} />}
-          {step == 3 && <Step3 eventID={id} step={step} setStep={setStep}/>}
-          {step == 4 && <Step3b eventID={id} />}
+          {step == 3 && <Step3 eventID={id} />}
           {step == 5 && <Step4 eventID={id} />}
           {step == 6 && <Step5 eventID={id} />}
           {step == 7 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
@@ -233,48 +232,12 @@ export const Step2: FC<{ eventID: string }> = (props) => {
 };
 
 /* --------------------------------- Location ------------------------------- */
-export const Step3: FC<{ eventID: string, setStep: any, step: number }> = (props) => {
+export const Step3: FC<{ eventID: string}> = (props) => {
   
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
     props.eventID
   );
-
-  if (loading) return <Loading />
-
-  return (
-    <View>
-      <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Is your event taking place on campus?</Text>
-
-      <View style={{marginVertical: "5%"}}>
-        <Button
-          title={"Yes"}
-          buttonStyle={{backgroundColor: colours.purple,padding: 15,borderRadius: 10,marginBottom: 10}}
-          onPress={() => {
-            set({ ...event, onCampus: true });
-            props.setStep(props.step+1)
-          }}
-        />
-        <Button
-          title={"No"}
-          buttonStyle={{backgroundColor: colours.purple,padding: 15,borderRadius: 10}}
-          onPress={() => {
-            set({ ...event, onCampus: false });
-            props.setStep(props.step+1)
-          }}
-        />
-      </View>
-    </View>
-  );
-
-};
-
-/* --------------------------- Location on campus --------------------------- */
-export const Step3b: FC<{ eventID: string }> = (props) => {
-
-  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
-
-  if (loading) return <Loading />
 
   const data = [
     { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -329,12 +292,26 @@ export const Step3b: FC<{ eventID: string }> = (props) => {
     { label: "Dome", address: "Lees 200 - Bloc F, Ottawa, Ontario"},
   ];
 
+  if (loading) return <Loading />
+
   return (
     <View>
-
-      <Text style={fonts.title1}>{event.onCampus ? "Specify the building and room number of your event" : "Where will the event take place?"}</Text>
-      <Text style={{...fonts.regular}}>{event.onCampus ? "Search the building by its acronym!" : "Provide the location and address."}</Text>
-
+      <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Is your event taking place on campus?</Text>
+      
+      <ButtonGroup
+        buttons={["Yes", "No"]}
+        onPress={(index) => {
+          if (index == 0) {
+            set({ ...event, onCampus: true });
+          } else {
+            set({ ...event, onCampus: false });
+          }
+        }}
+        selectedIndex={event.onCampus == true ? 0 : 1}
+        containerStyle={{ height: 50 }}
+        selectedButtonStyle={{ backgroundColor: colours.purple }}
+      />
+      
       <View style={{marginTop: '10%'}}>
         {event.onCampus ? (
           <View>
@@ -395,8 +372,9 @@ export const Step3b: FC<{ eventID: string }> = (props) => {
       </View>
 
     </View>
-  )
-}
+  );
+
+};
 
 /* ---------------------------------- Date ---------------------------------- */
 export const Step4: FC<{ eventID: string }> = (props) => {
@@ -421,27 +399,60 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       </View>
 
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
-        <Text style={fonts.title3}>Start Time</Text>
-        <DateTimePicker
-          value={event.startTime == null ? new Date() : event.startTime.toDate()}
-          mode={"datetime"}
-          display="spinner"
-          minimumDate={new Date()}
-          maximumDate={new Date(2023, 31, 31)}
-          onChange={(e) => set({...event, startTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
-        />
+        {Platform.OS === "ios" &&
+          <>
+            <Text style={fonts.title3}>Start Time</Text>
+            <DateTimePicker
+              value={event.startTime == null ? new Date() : event.startTime.toDate()}
+              mode={"datetime"}
+              display="spinner"
+              minimumDate={new Date()}
+              maximumDate={new Date(2023, 31, 31)}
+              onChange={(e) => set({...event, startTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
+            />
+          </>
+        }
+        {Platform.OS === "android" &&
+          <>
+            <Text style={fonts.title3}>Start Time (MM-DD-YYYY-HH-MM)</Text>
+            <Input
+              selectionColor={colours.black}
+              defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+              maxLength={50}
+              onChange={(e) => set({...event, startTime: Timestamp.fromMillis(Date.parse(e.nativeEvent.text))})}
+            />
+          </>
+        }
+
       </View>
-      
+
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
-        <Text style={fonts.title3}>End Time (Optional)</Text>
-        <DateTimePicker
-          value={event.endTime == null ? new Date() : event.endTime.toDate()}
-          mode={"datetime"}
-          display="spinner"
-          minimumDate={event.startTime == null ? new Date() : event.startTime.toDate()}
-          maximumDate={new Date(2023, 31, 31)}
-          onChange={(e) => set({...event, endTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
-        />
+      {Platform.OS === "ios" &&
+        <>
+          <Text style={fonts.title3}>End Time (Optional)</Text>
+          <DateTimePicker
+            value={event.endTime == null ? new Date() : event.endTime.toDate()}
+            mode={"datetime"}
+            display="spinner"
+            minimumDate={event.startTime == null ? new Date() : event.startTime.toDate()}
+            maximumDate={new Date(2023, 31, 31)}
+            onChange={(e) => set({...event, endTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
+          />
+        </>
+      }
+      {Platform.OS === "android" &&
+        <>
+          <Text>End Time (Optional)</Text>
+          <Input
+              selectionColor={colours.black}
+              defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString()}
+              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+              maxLength={50}
+              onChange={(e) => set({...event, startTime: Timestamp.fromMillis(Date.parse(e.nativeEvent.text))})}
+            />
+        </>
+      }
       </View>
 
     </View>
