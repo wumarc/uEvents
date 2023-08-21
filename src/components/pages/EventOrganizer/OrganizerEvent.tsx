@@ -44,7 +44,8 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           </Text>
           <Text style={fonts.title3}>June 13 2023</Text>
           <Text style={fonts.title3}>10 PM - 4 PM</Text>
-          <Text style={{...fonts.title3}}>345 Clicks</Text>
+          <Text style={{...fonts.title3}}>{event.rejectReason}</Text>
+          {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
 
         <View

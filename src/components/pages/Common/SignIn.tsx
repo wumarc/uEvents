@@ -16,10 +16,9 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
 import CustomButton from "../../atoms/CustomButton";
-import CustomInput from "../../atoms/CustomInput";
+import * as Clipboard from 'expo-clipboard';
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
-import HeaderLeft from "../../molecules/HeaderLeft";
 import { Dropdown } from "react-native-element-dropdown";
 
 // Accepted universities
@@ -168,7 +167,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setEmail(value)}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0 }}
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
             borderWidth: 1,
@@ -184,7 +183,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setPassword(value)}
           containerStyle={{ paddingHorizontal: 0 }}
           autoCapitalize="none"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           secureTextEntry={true}
           inputContainerStyle={{
             borderColor: colours.grey,
@@ -219,25 +218,29 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           style={{
             backgroundColor: "white",
             paddingVertical: "7%",
+            paddingHorizontal: '2%',
             borderRadius: 15,
           }}
         >
           <Text
             style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}
           >
-            Enter your email to reset your password
+            {/* Enter your email to reset your password */}
+            Send us an email to reset your password
           </Text>
-          <CustomInput
+          {/* <CustomInput
             input={email}
             secureText={false}
             placeholder="Enter your email"
             onChangeListener={(value: string) => setEmail(value)}
-          />
+          /> */}
+          <Text style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}>admin@uevents.org</Text>
           <View>
             <CustomButton
-              buttonName="Reset Password"
-              onPressListener={() => resetPassword()}
-              disabled={email === ""}
+              buttonName="Copy Email"
+              onPressListener={() => Clipboard.setStringAsync('admin@uevents.org')}
+              // onPressListener={() => resetPassword()}
+              // disabled={email === ""}
             />
           </View>
         </View>
@@ -296,7 +299,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
             borderWidth: 1,
@@ -309,7 +312,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         <Input
           label="Password (min 6 characters)"
           placeholder="Password"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           containerStyle={{ paddingHorizontal: 0 }}
           onChangeText={(value) => setPassword(value)}

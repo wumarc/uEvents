@@ -31,7 +31,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           {/* Name */}
           <Input
             label="Event Name"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
             containerStyle={{ paddingHorizontal: 0}}
@@ -43,7 +43,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           {/* Emoji */}
           <Input
             label="Emoji"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             // leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
             containerStyle={{ paddingHorizontal: 0}}
@@ -55,7 +55,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           {/* Location */}
           <Input
             label="Location"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{ paddingHorizontal: 0}}
             onChange={(e) => set({...event, location: e.nativeEvent.text})}
@@ -68,7 +68,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
             <Input
               label="Date and time"
               // leftIcon={<Icon name="date-range" type="ionicons" color={colours.grey} />}
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               // inputStyle={{height: windowHeight*0.08}}
               inputContainerStyle={{
                 borderColor: colours.grey,
@@ -83,7 +83,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           {/* Description */}
           <Input
             label="Description"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             multiline={true}
             maxLength={400}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
@@ -98,7 +98,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
               label="Price"
               defaultValue={event.priceMin.toString()}
               onChange={(e) => set({...event, priceMin: Number(e.nativeEvent.text)})}
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
               containerStyle={{paddingHorizontal: 0, flex:1}}
               maxLength={4}
@@ -108,7 +108,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
               label="Max Price (Optional)"
               defaultValue={event.priceMax?.toString()}
               onChange={(e) => set({...event, priceMax: Number(e.nativeEvent.text)})}
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
               containerStyle={{paddingHorizontal: 0, flex:1}}
               maxLength={4}
@@ -121,7 +121,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
             multiline={true}
             defaultValue={event.signUpLink}
             onChange={(e) => set({ ...event, signUpLink: e.nativeEvent.text })}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0}}
           />
@@ -130,7 +130,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           <View style={{flexDirection: "row"}}>
             <Input
               label="Tags"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
               containerStyle={{paddingHorizontal: 0}}
             />

@@ -42,6 +42,59 @@ import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+const data = [
+  { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
+  { label: "Hagen (HGN)", address: "115 Séraphin Marion Street, Ottawa, Ontario"},
+  { label: "William Commanda (WCA)", address: "52 University Street, Ottawa, Ontario"},
+  { label: "Tabaret Hall (TBT)", address: "550 Cumberland Street, Ottawa, Ontario"},
+  { label: "Department of Visual Arts (LRR)", address: "100 Laurier Street, Ottawa, Ontario"},
+  { label: "Hamelin (MHN)", address: "70 Laurier Street, Ottawa, Ontario"},
+  { label: "Morisset (MRT)", address: "65 University Street, Ottawa, Ontario"},
+  { label: "University Centre (UCU)", address: "85 University Street, Ottawa, Ontario"},
+  { label: "University Square", address: "136 University Private, Ottawa, ON K1N 1H3"},
+  { label: "141 Louis Pasteur (LPR)", address: "141 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Thompson Residence (THN)", address: "45 University Street, Ottawa, Ontario"},
+  { label: "Montpetit (MNT)", address: "125 University Street, Ottawa, Ontario"},
+  { label: "Pérez (PRZ)", address: "50 University Street, Ottawa, Ontario"},
+  { label: "Residence (90U)", address: "90 University Street, Ottawa, Ontario"},
+  { label: "Marchand Residence (MRD)", address: "110 University Street, Ottawa, Ontario"},
+  { label: "Learning Crossroads (CRX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
+  { label: "Lamoureux (LMX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
+  { label: "Brooks (BRS)", address: "100 Thomas-More Street, Ottawa, Ontario"},
+  { label: "Colonel By (CBY)", address: "161 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Leblanc Residence (LBC)", address: "45 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "MCE", address: "100 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Bioscience-Ph I CAREG (CRG)", address: "20 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Fauteux (FTX)", address: "57 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Simard (SMD)", address: "60 University Street, Ottawa, Ontario"},
+  { label: "Vanier (VNR)", address: "136 Jean-Jacques Lussier Street, Ottawa, Ontario"},
+  { label: "Bioscience-Ph III, Gendron (GNN)", address: "30 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Marion (MRN)", address: "140 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Stanton Residence (STN)", address: "100 University Street, Ottawa, Ontario"},
+  { label: "Hyman Soloway Residence (HSY)", address: "157 Laurier Street, Ottawa, Ontario"},
+  { label: "Desmarais (DMS)", address: "55 Laurier Street, Ottawa, Ontario"},
+  { label: "Social Sciences Building (FSS)", address: "120 University Street, Ottawa, Ontario"},
+  { label: "Power Plant (CTE)", address: "720 King Edward Street, Ottawa, Ontario"},
+  { label: "Minto Sports Complex (MNO)", address: "801 King Edward Street, Ottawa, Ontario"},
+  { label: "SITE (STE)", address: "800 King Edward Street, Ottawa, Ontario"},
+  { label: "D'Iorio (DRO)", address: "10 Marie Curie Street, Ottawa, Ontario"},
+  { label: "Bioscience-Ph II (BSC)", address: "30 Marie Curie Street, Ottawa, Ontario"},
+  { label: "STEM Complex (STM)", address: "150 Louis Pasteur Street, Ottawa, Ontario"},
+  { label: "Roger Guindon (RGN)", address: "451 Smyth Street, Ottawa, Ontario"},
+  { label: "GSAED Grad House (GSD)", address: "601 Cumberland Street, Ottawa, Ontario"},
+  { label: "HNN", address: "202 Henderson Street, Ottawa, Ontario"},
+  { label: "Advanced Research Complex (ARC)", address: "25 Templeton Street, Ottawa, Ontario"},
+  { label: "KED", address: "585 King Edward Street, Ottawa, Ontario"},
+  { label: "STT", address: "1 Stewart Street, Ottawa, Ontario"},
+  { label: "Alex Trebek Alumni Hall (ATK)", address: "157 Séraphin Marion Street, Ottawa, Ontario"},
+  { label: "ANX", address: "Annex Residence, Ottawa, Ontario"},
+  { label: "MNN", address: "Mann Residence, Ottawa, Ontario"},
+  { label: "WBD", address: "200 Wilbrod Street, Ottawa, Ontario"},
+  { label: "FRL", address: "Friel Residence, Ottawa, Ontario"},
+  { label: "RDU", address: "Rideau Residence, Ottawa, Ontario"},
+  { label: "Dome", address: "Lees 200 - Bloc F, Ottawa, Ontario"},
+];
+
 export const Step0 = ({ route, navigation }: any) => {
   const [step, setStep] = useState(1);
   const [id, setId] = useState(route.params.eventID ?? uid());
@@ -50,15 +103,6 @@ export const Step0 = ({ route, navigation }: any) => {
     "events",
     id
   );
-  
-  // TODO: Function to publish the event
-  // const publish = () => {
-  //   if (event.state === "Draft") {
-  //     set({ ...event, state: "Pending" });
-  //   } else {
-  //     set({ ...event, state: "Draft" });
-  //   }
-  // }
 
   useEffect(() => {
     if (route.params.eventID == undefined) {
@@ -97,31 +141,30 @@ export const Step0 = ({ route, navigation }: any) => {
           {step == 1 && <Step1 eventID={id} />}
           {step == 2 && <Step2 eventID={id} />}
           {step == 3 && <Step3 eventID={id} />}
-          {step == 5 && <Step4 eventID={id} />}
-          {step == 6 && <Step5 eventID={id} />}
-          {step == 7 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
-          {step == 8 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
-          {step == 9 && <Step7 eventID={id} />}
-          {step == 10 && <Step8 eventID={id} />}
-          {step == 11 && <Step9 eventID={id} />}
-          {step == 12 && <Step10 eventID={id} />}
+          {step == 4 && <Step4 eventID={id} />}
+          {step == 5 && <Step5 eventID={id} />}
+          {step == 6 && <Step6 eventID={id} />}
+          {step == 7 && <Step7 eventID={id} />}
+          {step == 8 && <Step8 eventID={id} />}
+          {step == 9 && <Step9 eventID={id} />}
+          {step == 10 && <Step10 eventID={id} />}
         </View>
       </ScrollView>
 
       {/* Static Footer */}
       <KeyboardAvoidingView style={{ marginBottom: windowHeight * 0.01 }}>
-        <ProgressBar progress={step * 0.09} color={colours.purple} />
+        <ProgressBar progress={step * 0.1} color={colours.purple} />
         <View style={styles.footer_buttons}>
           <Button
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
             onPress={() => 
-              (step == 1 ? navigation.pop() : step == 3 ? setStep(step-2) : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
+              (step == 1 ? navigation.pop() : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
             }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
             disabledTitleStyle={{ color: colours.white }}
-            disabled={step == 1 || step == 12}
+            disabled={step == 1 || step == 10}
           />
           <Button
             buttonStyle={{
@@ -130,13 +173,12 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            // disabled={step == 7 || step == 3}
-            title={step == 11 ? "Publish" : step == 12 ? "Finish" : "Next"}
+            title={step == 10 ? "Publish" : step == 9 ? "Finish" : "Next"}
             onPress={() => {
-              if (step == 11) {
+              if (step == 10) {
                 set({ ...event, state: "Pending" });
               }
-              step >= 12 ? navigation.pop() : setStep(step + 1)
+              step >= 10 ? navigation.pop() : setStep(step + 1)
             }}
             titleStyle={{ ...fonts.title2, color: colours.white }}
           />
@@ -168,7 +210,7 @@ export const Step1: FC<{ eventID: string }> = (props) => {
           <Text style={{ color: colours.grey }}>characters available</Text>
         </Text>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
             borderWidth: 1,
@@ -206,17 +248,17 @@ export const Step2: FC<{ eventID: string }> = (props) => {
 
       <View style={{ marginVertical: "5%", paddingHorizontal: "30%"}}>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           autoCapitalize="none"
           defaultValue={event.emoji}
           inputContainerStyle={{borderColor: colours.grey, borderBottomWidth: 1, borderWidth: 1, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
           textAlign="center"
           inputStyle={{ fontSize: 70}}
           onChange={(e) => set({ ...event, emoji: e.nativeEvent.text }) }
-          maxLength={5}
+          maxLength={8}
         />
         {/* <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           autoCapitalize="none"
           disabled={true}
           label="How your emoji will look to the students"
@@ -238,59 +280,6 @@ export const Step3: FC<{ eventID: string}> = (props) => {
     "events",
     props.eventID
   );
-
-  const data = [
-    { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
-    { label: "Hagen (HGN)", address: "115 Séraphin Marion Street, Ottawa, Ontario"},
-    { label: "William Commanda (WCA)", address: "52 University Street, Ottawa, Ontario"},
-    { label: "Tabaret Hall (TBT)", address: "550 Cumberland Street, Ottawa, Ontario"},
-    { label: "Department of Visual Arts (LRR)", address: "100 Laurier Street, Ottawa, Ontario"},
-    { label: "Hamelin (MHN)", address: "70 Laurier Street, Ottawa, Ontario"},
-    { label: "Morisset (MRT)", address: "65 University Street, Ottawa, Ontario"},
-    { label: "University Centre (UCU)", address: "85 University Street, Ottawa, Ontario"},
-    { label: "University Square", address: "136 University Private, Ottawa, ON K1N 1H3"},
-    { label: "141 Louis Pasteur (LPR)", address: "141 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Thompson Residence (THN)", address: "45 University Street, Ottawa, Ontario"},
-    { label: "Montpetit (MNT)", address: "125 University Street, Ottawa, Ontario"},
-    { label: "Pérez (PRZ)", address: "50 University Street, Ottawa, Ontario"},
-    { label: "Residence (90U)", address: "90 University Street, Ottawa, Ontario"},
-    { label: "Marchand Residence (MRD)", address: "110 University Street, Ottawa, Ontario"},
-    { label: "Learning Crossroads (CRX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
-    { label: "Lamoureux (LMX)", address: "145 Jean-Jacques Lussier Street, Ottawa, Ontario"},
-    { label: "Brooks (BRS)", address: "100 Thomas-More Street, Ottawa, Ontario"},
-    { label: "Colonel By (CBY)", address: "161 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Leblanc Residence (LBC)", address: "45 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "MCE", address: "100 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Bioscience-Ph I CAREG (CRG)", address: "20 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Fauteux (FTX)", address: "57 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Simard (SMD)", address: "60 University Street, Ottawa, Ontario"},
-    { label: "Vanier (VNR)", address: "136 Jean-Jacques Lussier Street, Ottawa, Ontario"},
-    { label: "Bioscience-Ph III, Gendron (GNN)", address: "30 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Marion (MRN)", address: "140 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Stanton Residence (STN)", address: "100 University Street, Ottawa, Ontario"},
-    { label: "Hyman Soloway Residence (HSY)", address: "157 Laurier Street, Ottawa, Ontario"},
-    { label: "Desmarais (DMS)", address: "55 Laurier Street, Ottawa, Ontario"},
-    { label: "Social Sciences Building (FSS)", address: "120 University Street, Ottawa, Ontario"},
-    { label: "Power Plant (CTE)", address: "720 King Edward Street, Ottawa, Ontario"},
-    { label: "Minto Sports Complex (MNO)", address: "801 King Edward Street, Ottawa, Ontario"},
-    { label: "SITE (STE)", address: "800 King Edward Street, Ottawa, Ontario"},
-    { label: "D'Iorio (DRO)", address: "10 Marie Curie Street, Ottawa, Ontario"},
-    { label: "Bioscience-Ph II (BSC)", address: "30 Marie Curie Street, Ottawa, Ontario"},
-    { label: "STEM Complex (STM)", address: "150 Louis Pasteur Street, Ottawa, Ontario"},
-    { label: "Roger Guindon (RGN)", address: "451 Smyth Street, Ottawa, Ontario"},
-    { label: "GSAED Grad House (GSD)", address: "601 Cumberland Street, Ottawa, Ontario"},
-    { label: "HNN", address: "202 Henderson Street, Ottawa, Ontario"},
-    { label: "Advanced Research Complex (ARC)", address: "25 Templeton Street, Ottawa, Ontario"},
-    { label: "KED", address: "585 King Edward Street, Ottawa, Ontario"},
-    { label: "STT", address: "1 Stewart Street, Ottawa, Ontario"},
-    { label: "Alex Trebek Alumni Hall (ATK)", address: "157 Séraphin Marion Street, Ottawa, Ontario"},
-    { label: "ANX", address: "Annex Residence, Ottawa, Ontario"},
-    { label: "MNN", address: "Mann Residence, Ottawa, Ontario"},
-    { label: "WBD", address: "200 Wilbrod Street, Ottawa, Ontario"},
-    { label: "FRL", address: "Friel Residence, Ottawa, Ontario"},
-    { label: "RDU", address: "Rideau Residence, Ottawa, Ontario"},
-    { label: "Dome", address: "Lees 200 - Bloc F, Ottawa, Ontario"},
-  ];
 
   if (loading) return <Loading />
 
@@ -328,8 +317,10 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
             />
             <Input
-              selectionColor={colours.black}
+              
               label="Room number (optional)"
+              selectTextOnFocus={true}
+              selectionColor={colours.purple}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               containerStyle={{ paddingHorizontal: 0, marginTop: '3%'}}
@@ -342,7 +333,9 @@ export const Step3: FC<{ eventID: string}> = (props) => {
           <View>
             <Input
               label="Street address"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
+              selectTextOnFocus={true}
+              multiline={true}
               defaultValue={ event.address}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
@@ -351,7 +344,8 @@ export const Step3: FC<{ eventID: string}> = (props) => {
             />
             <Input
               label="Location or building name"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
+              selectTextOnFocus={true}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               defaultValue={event.location}
@@ -360,7 +354,8 @@ export const Step3: FC<{ eventID: string}> = (props) => {
             />
             <Input
               label="Room number (optional)"
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
+              selectTextOnFocus={true}
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               defaultValue={event.roomNumber}
@@ -416,7 +411,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
           <>
             <Text style={fonts.title3}>Start Time (MM-DD-YYYY-HH-MM)</Text>
             <Input
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               maxLength={50}
@@ -445,7 +440,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         <>
           <Text>End Time (Optional)</Text>
           <Input
-              selectionColor={colours.black}
+              selectionColor={colours.purple}
               defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString()}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               maxLength={50}
@@ -488,7 +483,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
           <Text style={{ color: colours.grey }}>characters available</Text>
         </Text>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           defaultValue={event?.description}
           inputStyle={{ height: windowHeight * 0.13 }}
           inputContainerStyle={{
@@ -513,59 +508,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
 };
 
 /* --------------------------------- Price: Free or Nah? ---------------------------------- */
-export const Step6: FC<{ eventID: string, setFreeEventProps: any, setStep: any, step: number }> = (props) => {
-
-  return (
-    <View>
-
-      <View>
-        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Is your event free?</Text>
-      </View>
-
-      {/* <View>
-        <ButtonGroup
-          buttons={["Yes", "No"]}
-          onPress={(index) => {}}
-          selectedIndex={0}
-          containerStyle={{ height: 50 }}
-          selectedButtonStyle={{ backgroundColor: colours.purple }}
-        />
-      </View> */}
-
-      <View style={{ marginVertical: "5%" }}>
-            <Button
-              title={"Yes"}
-              buttonStyle={{
-                backgroundColor: colours.purple,
-                padding: 15,
-                borderRadius: 10,
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                props.setFreeEventProps(true)
-                props.setStep(props.step+2)
-              }}
-            />
-            <Button
-              title={"No"}
-              buttonStyle={{
-                backgroundColor: colours.purple,
-                padding: 15,
-                borderRadius: 10,
-              }}
-              onPress={() => { 
-                props.setFreeEventProps(false)
-                props.setStep(props.step+1)
-              }}
-            />
-      </View>      
-
-
-    </View>
-  );
-};
-
-export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
+export const Step6: FC<{ eventID: string}> = (props) => {
 
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
@@ -577,18 +520,19 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
   }
 
   return (
-
     <View>
 
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price of your event</Text>
-      <Text style={fonts.regular}>We all prefer free events, but sometimes we have to pay for the good.</Text>
+      <View>
+        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price of your event</Text>
+        <Text style={fonts.regular}>Skip this step if your event is free.</Text>
+      </View>
 
-      <View style={{flexDirection: 'row'}}>
-          
+      <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
+
         <View style={{width: "48%"}}>
           <Input
-            label=" "
-            selectionColor={colours.black}
+            label="0 if free"
+            selectionColor={colours.purple}
             maxLength={4}
             autoCapitalize="none"
             placeholder=""
@@ -612,7 +556,7 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
         <View style={{width: "48%"}}>
         <Input
           label="Max (Optional)"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           maxLength={4}
           autoCapitalize="none"
           leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
@@ -626,12 +570,10 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
         </View>
 
       </View>
-
+      
     </View>
-
   );
-
-}
+};
 
 /* ------------------------------- Sign up link ----------------------------- */
 export const Step7: FC<{ eventID: string }> = (props) => {
@@ -653,7 +595,7 @@ export const Step7: FC<{ eventID: string }> = (props) => {
       
       <View style={{ marginVertical: "5%" }}>
         <Input
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           defaultValue={event?.signUpLink}
           placeholder="https://docs.google.com/forms/d/e/1FAIpQLSe7-SQCOLPxuD62i9ddBTcMPoA0OdUhrvJWprt7WY06IO3KEg/viewform"
           // inputStyle={{height: windowHeight*0.08}}
@@ -823,7 +765,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Name */}
         <Input
           label="Event Name"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
           containerStyle={{ paddingHorizontal: 0}}
@@ -835,7 +777,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Emoji */}
         <Input
           label="Emoji"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
           containerStyle={{ paddingHorizontal: 0}}
@@ -845,22 +787,95 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         />
 
         {/* Location */}
-        <Input
-          label="Location"
-          selectionColor={colours.black}
-          inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
-          containerStyle={{ paddingHorizontal: 0}}
-          onChange={(e) => set({...event, location: e.nativeEvent.text})}
-          maxLength={8}
-          defaultValue={event.location}
-        />
+        <View style={{}}>
+          
+          <ButtonGroup
+            buttons={["Yes", "No"]}
+            onPress={(index) => {
+              if (index == 0) {
+                set({ ...event, onCampus: true });
+              } else {
+                set({ ...event, onCampus: false });
+              }
+            }}
+            selectedIndex={event.onCampus == true ? 0 : 1}
+            containerStyle={{ height: 50 }}
+            selectedButtonStyle={{ backgroundColor: colours.purple }}
+          />
+
+          <View>
+            {event.onCampus ? (
+              <View>
+                <Text style={fonts.regular}>Select the building or place name</Text>
+                <Dropdown
+                  search
+                  searchPlaceholder="Search by name or acronym"
+                  placeholderStyle={{ fontSize: 17, padding: 7}}
+                  data={data}
+                  labelField="label"
+                  valueField="address"
+                  placeholder={event.location == "" ?  "" :  event.location}
+                  style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
+                  onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
+                />
+                <Input
+                  
+                  label="Room number (optional)"
+                  selectTextOnFocus={true}
+                  selectionColor={colours.purple}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, borderRadius: 6}}
+                  containerStyle={{ paddingHorizontal: 0}}
+                  onChange={(e) => set({...event, roomNumber: e.nativeEvent.text, onCampus: true})}
+                  maxLength={10}
+                  defaultValue={event.roomNumber}
+                />
+              </View>
+            ) :
+              <View>
+                <Input
+                  label="Street address"
+                  selectionColor={colours.purple}
+                  selectTextOnFocus={true}
+                  multiline={true}
+                  defaultValue={ event.address}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  maxLength={60}
+                  onChange={(e) => set({ ...event, address: e.nativeEvent.text, onCampus: false})}
+                />
+                <Input
+                  label="Location or building name"
+                  selectionColor={colours.purple}
+                  selectTextOnFocus={true}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  defaultValue={event.location}
+                  maxLength={50}
+                  onChange={(e) => set({ ...event, location: e.nativeEvent.text, onCampus: false})}
+                />
+                <Input
+                  label="Room number (optional)"
+                  selectionColor={colours.purple}
+                  selectTextOnFocus={true}
+                  labelStyle={{...fonts.regular}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  defaultValue={event.roomNumber}
+                  maxLength={10}
+                  onChange={(e) => set({ ...event, roomNumber: e.nativeEvent.text, onCampus: false})}
+                />
+              </View>
+            }
+          </View>
+          
+        </View>
 
         {/* Date, time, recurrence */}
         <View style={{flexDirection: "row"}}>
           <Input
             label="Date and time"
             // leftIcon={<Icon name="date-range" type="ionicons" color={colours.grey} />}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             // inputStyle={{height: windowHeight*0.08}}
             inputContainerStyle={{
               borderColor: colours.grey,
@@ -875,7 +890,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         {/* Description */}
         <Input
           label="Description"
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           multiline={true}
           maxLength={400}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
@@ -890,7 +905,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
             label="Price"
             defaultValue={event.priceMin.toString()}
             onChange={(e) => set({...event, priceMin: Number(e.nativeEvent.text)})}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0, flex:1}}
             maxLength={4}
@@ -900,7 +915,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
             label="Max Price (Optional)"
             defaultValue={event.priceMax?.toString()}
             onChange={(e) => set({...event, priceMax: Number(e.nativeEvent.text)})}
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0, flex:1}}
             maxLength={4}
@@ -913,16 +928,17 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           multiline={true}
           defaultValue={event.signUpLink}
           onChange={(e) => set({ ...event, signUpLink: e.nativeEvent.text })}
-          selectionColor={colours.black}
+          selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           containerStyle={{paddingHorizontal: 0}}
+          maxLength={300}
         />
 
         {/* Tags */}
         <View style={{flexDirection: "row"}}>
           <Input
             label="Tags"
-            selectionColor={colours.black}
+            selectionColor={colours.purple}
             inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
             containerStyle={{paddingHorizontal: 0}}
           />
