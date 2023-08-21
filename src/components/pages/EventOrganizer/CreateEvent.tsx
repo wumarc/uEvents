@@ -23,7 +23,7 @@ import {
 } from "../../subatoms/Theme";
 import { ProgressBar } from "react-native-paper";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { Dropdown } from "react-native-element-dropdown";
+import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import emojiRegex from "emoji-regex";
 import {
   useSateWithFireStore,
@@ -130,7 +130,7 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            disabled={step == 7 || step == 3}
+            // disabled={step == 7 || step == 3}
             title={step == 11 ? "Publish" : step == 12 ? "Finish" : "Next"}
             onPress={() => {
               if (step == 11) {
@@ -719,7 +719,21 @@ export const Step8: FC<{ eventID: string }> = (props) => {
     return set;
   }
 
+  const getSelectedCategories = () => {
+    // Calculate the selected categories
+    let set: string[] = [];
+    for (let category of event.categories) {
+      set.push(category);
+    }
+    return set;
+  }
+
   categories = getOrderedCategories(events as EventObject[]);
+
+  let categoryData = [];
+  for (let category of fixedCategories) {
+    categoryData.push({label: category, value: category});
+  }
 
   const updateEvent = (indexes: number[]) => {
     let newCategories: string[] = [];
@@ -739,7 +753,21 @@ export const Step8: FC<{ eventID: string }> = (props) => {
           Pick up to 5 tags to represent your event
         </Text>
       </View>
-      <ButtonGroup
+      <MultiSelect
+              search
+              searchPlaceholder="Search by name or acronym"
+              placeholderStyle={{ fontSize: 17, padding: 7}}
+              data={categoryData}
+              value={getSelectedCategories()}
+              labelField={"label"}
+              valueField={"value"}
+              placeholder={event.location == "" ?  "" :  event.location}
+              style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
+              onChange={(item) => {
+                set({...event, categories: item})
+              }}
+            />
+      {/* <ButtonGroup
         buttons={fixedCategories}
         onPress={(index) => {
           let selected = getSelectedIndexes();
@@ -763,7 +791,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         }}
         selectedIndexes={getSelectedIndexes()}
         vertical
-      />
+      /> */}
 
       <View></View>
     </View>
