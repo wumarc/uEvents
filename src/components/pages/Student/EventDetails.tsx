@@ -55,7 +55,7 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Description */}
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>ℹ️ Description</Text>
-          <Text style={fonts.regular}>Join us for an unforgettable yaking, campfire nights, stargazing, and outdoor cooking workshops. Join us for an unforgettable camping experience in the heart of [Location] from [Dates]. The Wildlife Wilderness Camping Retreat offers a blend of relaxation and outdoor adventure, catering to both seasoned explorers and those new to the wilderness. {event.description}</Text>
+          <Text style={fonts.regular}>{event.description}</Text>
         </View>
 
         {/* Location */}
@@ -72,25 +72,17 @@ const EventDetails = ({ route, navigation }: props) => {
           </View>
         </View>
 
-        {/* Other information */}
-        <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📝 Other Information</Text>
-          <Text style={fonts.regular}>If you are vegetarian, please let us know by sending us an email</Text>
-        </View>
-
         {/* Organizer */}
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏠 Organizer</Text>
-          
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-
             {/* Icon / name */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon
+              {/* <Icon
                 name='calendar-outline'
                 type='ionicon'
                 color= {colours.grey}
-              />
+              /> */}
               <Text style={fonts.regular}>{event.organizer}</Text>
             </View>
           </View>
@@ -98,7 +90,7 @@ const EventDetails = ({ route, navigation }: props) => {
         </View>
 
         <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🔗 Source</Text>
+          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🔗 Source Link</Text>
           <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
         </View>
 

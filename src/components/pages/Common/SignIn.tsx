@@ -307,7 +307,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         />
         
         <Input
-          label="Password"
+          label="Password (min 6 characters)"
           placeholder="Password"
           selectionColor={colours.black}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}

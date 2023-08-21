@@ -69,7 +69,7 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="BrowseOrganizers"
         // listeners={{ tabPress: (e) => showHeader.profile }}
         component={BrowseOrganizers as any} // TODO fix error
@@ -84,7 +84,7 @@ const MainView = ({ route, navigation }: props) => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Saved"
         // listeners={{ tabPress: (e) => showHeader.saved }}

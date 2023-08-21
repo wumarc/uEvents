@@ -31,11 +31,13 @@ const Home = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <StatusBar translucent />
+      
       <ScrollView showsHorizontalScrollIndicator={false}>
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Upcoming Events</Text>
         </View>
 
+        {(myEvents ?? []).length != 0 ? (
         <FlatList
           style={{}}
           showsVerticalScrollIndicator={false}
@@ -46,6 +48,12 @@ const Home = ({ navigation }: any) => {
             </View>
           )}
         />
+        ) : (
+          <View style={{ paddingHorizontal: "10%"}}>
+            <Text style={fonts.title3}>You currently have no events. Create one by clicking on the add button!</Text>
+          </View>
+        )}
+
       </ScrollView>
 
       <View style={{ position: "absolute", bottom: 0, right: 0 }}>

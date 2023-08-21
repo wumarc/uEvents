@@ -72,7 +72,7 @@ export type EventObject = {
   priceMin: number; // If no max price is specified, this is the exact price
   priceMax?: number;
   // priceDescription?: string; // If needed, a description of the different prices
-  description: string; // 750 characters max
+  description: string; // 750 characters max TODO change it to 400?
   location: string; // Building name and room number
   address: string;
   roomNumber?: string;
