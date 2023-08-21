@@ -16,10 +16,9 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
 import CustomButton from "../../atoms/CustomButton";
-import CustomInput from "../../atoms/CustomInput";
+import * as Clipboard from 'expo-clipboard';
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
-import HeaderLeft from "../../molecules/HeaderLeft";
 import { Dropdown } from "react-native-element-dropdown";
 
 // Accepted universities
@@ -219,25 +218,29 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           style={{
             backgroundColor: "white",
             paddingVertical: "7%",
+            paddingHorizontal: '2%',
             borderRadius: 15,
           }}
         >
           <Text
             style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}
           >
-            Enter your email to reset your password
+            {/* Enter your email to reset your password */}
+            Send us an email to reset your password
           </Text>
-          <CustomInput
+          {/* <CustomInput
             input={email}
             secureText={false}
             placeholder="Enter your email"
             onChangeListener={(value: string) => setEmail(value)}
-          />
+          /> */}
+          <Text style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}>admin@uevents.org</Text>
           <View>
             <CustomButton
-              buttonName="Reset Password"
-              onPressListener={() => resetPassword()}
-              disabled={email === ""}
+              buttonName="Copy Email"
+              onPressListener={() => Clipboard.setStringAsync('admin@uevents.org')}
+              // onPressListener={() => resetPassword()}
+              // disabled={email === ""}
             />
           </View>
         </View>

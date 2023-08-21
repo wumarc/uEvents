@@ -50,15 +50,6 @@ export const Step0 = ({ route, navigation }: any) => {
     "events",
     id
   );
-  
-  // TODO: Function to publish the event
-  // const publish = () => {
-  //   if (event.state === "Draft") {
-  //     set({ ...event, state: "Pending" });
-  //   } else {
-  //     set({ ...event, state: "Draft" });
-  //   }
-  // }
 
   useEffect(() => {
     if (route.params.eventID == undefined) {
@@ -97,26 +88,25 @@ export const Step0 = ({ route, navigation }: any) => {
           {step == 1 && <Step1 eventID={id} />}
           {step == 2 && <Step2 eventID={id} />}
           {step == 3 && <Step3 eventID={id} />}
-          {step == 5 && <Step4 eventID={id} />}
-          {step == 6 && <Step5 eventID={id} />}
-          {step == 7 && <Step6 eventID={id} setFreeEventProps={setFreeEventProps} step={step} setStep={setStep}/>}
-          {step == 8 && <Step6b eventID={id} freeEventProps={freeEventProps}/>}
-          {step == 9 && <Step7 eventID={id} />}
-          {step == 10 && <Step8 eventID={id} />}
-          {step == 11 && <Step9 eventID={id} />}
-          {step == 12 && <Step10 eventID={id} />}
+          {step == 4 && <Step4 eventID={id} />}
+          {step == 5 && <Step5 eventID={id} />}
+          {step == 6 && <Step6 eventID={id} />}
+          {step == 7 && <Step7 eventID={id} />}
+          {step == 8 && <Step8 eventID={id} />}
+          {step == 9 && <Step9 eventID={id} />}
+          {step == 10 && <Step10 eventID={id} />}
         </View>
       </ScrollView>
 
       {/* Static Footer */}
       <KeyboardAvoidingView style={{ marginBottom: windowHeight * 0.01 }}>
-        <ProgressBar progress={step * 0.09} color={colours.purple} />
+        <ProgressBar progress={step * 0.1} color={colours.purple} />
         <View style={styles.footer_buttons}>
           <Button
             buttonStyle={{ backgroundColor: colours.white }}
             title={"Back"}
             onPress={() => 
-              (step == 1 ? navigation.pop() : step == 3 ? setStep(step-2) : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
+              (step == 1 ? navigation.pop() : step == 9 && freeEventProps ? setStep(step-2) : setStep(step - 1))
             }
             titleStyle={{ ...fonts.title3, textDecorationLine: "underline" }}
             disabledStyle={{ backgroundColor: colours.white }}
@@ -130,8 +120,7 @@ export const Step0 = ({ route, navigation }: any) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            disabled={step == 7 || step == 3}
-            title={step == 11 ? "Publish" : step == 12 ? "Finish" : "Next"}
+            title={step == 11 ? "Publish" : step == 9 ? "Finish" : "Next"}
             onPress={() => {
               if (step == 11) {
                 set({ ...event, state: "Pending" });
@@ -513,59 +502,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
 };
 
 /* --------------------------------- Price: Free or Nah? ---------------------------------- */
-export const Step6: FC<{ eventID: string, setFreeEventProps: any, setStep: any, step: number }> = (props) => {
-
-  return (
-    <View>
-
-      <View>
-        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Is your event free?</Text>
-      </View>
-
-      {/* <View>
-        <ButtonGroup
-          buttons={["Yes", "No"]}
-          onPress={(index) => {}}
-          selectedIndex={0}
-          containerStyle={{ height: 50 }}
-          selectedButtonStyle={{ backgroundColor: colours.purple }}
-        />
-      </View> */}
-
-      <View style={{ marginVertical: "5%" }}>
-            <Button
-              title={"Yes"}
-              buttonStyle={{
-                backgroundColor: colours.purple,
-                padding: 15,
-                borderRadius: 10,
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                props.setFreeEventProps(true)
-                props.setStep(props.step+2)
-              }}
-            />
-            <Button
-              title={"No"}
-              buttonStyle={{
-                backgroundColor: colours.purple,
-                padding: 15,
-                borderRadius: 10,
-              }}
-              onPress={() => { 
-                props.setFreeEventProps(false)
-                props.setStep(props.step+1)
-              }}
-            />
-      </View>      
-
-
-    </View>
-  );
-};
-
-export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
+export const Step6: FC<{ eventID: string}> = (props) => {
 
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
@@ -577,14 +514,15 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
   }
 
   return (
-
     <View>
 
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price of your event</Text>
-      <Text style={fonts.regular}>We all prefer free events, but sometimes we have to pay for the good.</Text>
+      <View>
+        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price of your event</Text>
+        <Text style={fonts.regular}>Skip this step if your event is free.</Text>
+      </View>
 
-      <View style={{flexDirection: 'row'}}>
-          
+      <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
+
         <View style={{width: "48%"}}>
           <Input
             label=" "
@@ -626,12 +564,10 @@ export const Step6b: FC<{ eventID: string, freeEventProps: any }> = (props) => {
         </View>
 
       </View>
-
+      
     </View>
-
   );
-
-}
+};
 
 /* ------------------------------- Sign up link ----------------------------- */
 export const Step7: FC<{ eventID: string }> = (props) => {
