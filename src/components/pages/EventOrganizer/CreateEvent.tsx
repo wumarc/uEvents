@@ -689,26 +689,27 @@ export const Step8: FC<{ eventID: string }> = (props) => {
     <View>
       <View>
         <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-          Select tags to represent your event
-        </Text>
-        <Text style={fonts.regular}>
-          Pick up to 5 tags to represent your event
+          Select up to 5 tags to represent your event
         </Text>
       </View>
       <MultiSelect
-              search
-              searchPlaceholder="Search by name or acronym"
-              placeholderStyle={{ fontSize: 17, padding: 7}}
-              data={categoryData}
-              value={getSelectedCategories()}
-              labelField={"label"}
-              valueField={"value"}
-              placeholder={event.location == "" ?  "" :  event.location}
-              style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
-              onChange={(item) => {
-                set({...event, categories: item})
-              }}
-            />
+        search
+        searchPlaceholder="Search tags"
+        placeholderStyle={{ fontSize: 17, padding: 7}}
+        selectedStyle={{borderRadius: 10, padding: '2%', borderColor: colours.black}}
+        selectedTextStyle={{color: colours.black, fontSize: 18}}
+        data={categoryData}
+        maxSelect={5}
+        activeColor={colours.purple}
+        value={getSelectedCategories()}
+        labelField={"label"}
+        valueField={"value"}
+        placeholder={"Select up to 5 tags"}
+        style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
+        onChange={(item) => {
+          set({...event, categories: item})
+        }}
+      />
       {/* <ButtonGroup
         buttons={fixedCategories}
         onPress={(index) => {
