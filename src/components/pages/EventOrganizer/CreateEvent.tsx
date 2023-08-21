@@ -38,7 +38,7 @@ import {
   recurrence,
 } from "../../../utils/model/EventObject";
 import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
-import { Timestamp, doc, setDoc } from "firebase/firestore";
+import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -787,8 +787,8 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         />
 
         {/* Location */}
-        <View style={{}}>
-          <Text>On-campus</Text>
+        <View style={{backgroundColor: '#F1F1F1', padding: '1%'}}>
+          <Text style={{...fonts.title3, fontWeight: 'bold', color: 'grey', paddingLeft: '3%'}}>On-campus</Text>
           <ButtonGroup
             buttons={["Yes", "No"]}
             onPress={(index) => {
@@ -799,7 +799,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
               }
             }}
             selectedIndex={event.onCampus == true ? 0 : 1}
-            containerStyle={{ height: 50 }}
+            containerStyle={{ height: 50, paddingHorizontal: 0}}
             selectedButtonStyle={{ backgroundColor: colours.purple }}
           />
 
@@ -819,7 +819,6 @@ export const Step9: FC<{ eventID: string }> = (props) => {
                   onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
                 />
                 <Input
-                  
                   label="Room number (optional)"
                   selectTextOnFocus={true}
                   selectionColor={colours.purple}
@@ -840,7 +839,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
                   multiline={true}
                   defaultValue={ event.address}
                   labelStyle={{...fonts.regular}}
-                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingHorizontal: 8, borderRadius: 6}}
                   maxLength={60}
                   onChange={(e) => set({ ...event, address: e.nativeEvent.text, onCampus: false})}
                 />
@@ -849,7 +848,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
                   selectionColor={colours.purple}
                   selectTextOnFocus={true}
                   labelStyle={{...fonts.regular}}
-                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
+                  inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingHorizontal: 8, borderRadius: 6}}
                   defaultValue={event.location}
                   maxLength={50}
                   onChange={(e) => set({ ...event, location: e.nativeEvent.text, onCampus: false})}
