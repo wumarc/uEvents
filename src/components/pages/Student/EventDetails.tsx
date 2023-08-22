@@ -63,11 +63,14 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
 
           <View style={{flexDirection: 'row', alignItems: 'center', width: windowWidth*0.45}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 Tomorrow</Text>
+            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 {event.startTime.toDate().toLocaleDateString()}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>🕑 08:00 PM</Text>
+            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>
+              🕑 {event.startTime.toDate().getHours()}:{event.startTime.toDate().getMinutes()}
+              - {event.endTime ? event.endTime.toDate().getHours() : "End"}:{event.endTime ? event.endTime.toDate().getMinutes() : "End"}
+            </Text>
             {/* extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End") */}
           </View>
 
