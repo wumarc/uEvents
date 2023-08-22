@@ -64,132 +64,96 @@ const EventLine: FC<{
   }
 
   return (
-    <View
-      style={{
-        margin: 10,
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        height: 40,
-      }}
-    >
-      <View
-        style={{
-          height: 40,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text>{event.name}</Text>
-        <Text>{event.organizerType + " - " + organizer}</Text>
+    <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: 120, }} >
+      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "33%", }} >
+        <View style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} >
+          <Text>{event.name}</Text>
+          <Text>{event.organizerType + " - " + organizer}</Text>
+        </View>
       </View>
-
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        <Button
-          onPress={() => {
-            navigation.navigate("EditEvent", { eventId: event.id });
-          }}
-        >
-          Edit
-        </Button>
-      </View>
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        <Button
-          color="error"
-          onPress={() => {
-            del(event.id);
-          }}
-        >
-          Delete
-        </Button>
-      </View>
-
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        <Button
-          color="green"
-          onPress={() => {
-            navigation.navigate("Preview", { eventId: event.id });
-          }}
-        >
-          View
-        </Button>
-      </View>
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        {event.state === "Draft" ? <Text>Draft</Text> : <></>}
-        {event.state === "Pending" ? (
-          <Button
+      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "33%", }} >
+        <View style={{ height: 40, }} >
+          <Button size="sm" titleStyle={{fontSize: 12}}
             onPress={() => {
-              setDoc(doc(fireStore, "events/" + event.id), {
-                ...event,
-                state: "Published",
-              });
+              navigation.navigate("EditEvent", { eventId: event.id });
             }}
           >
-            Approve
+            Edit
           </Button>
-        ) : (
-          <></>
-        )}
-        {event.state === "Published" ? <Text>Approved</Text> : <></>}
-        {event.state === "Rejected" ? <Text>Rejected</Text> : <></>}
-      </View>
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        {event.state === "Pending" ? (
-          <Button
+        </View>
+        <View style={{ marginLeft: 20, height: 40, }} >
+          <Button size="sm" color="error" titleStyle={{fontSize: 12}}
             onPress={() => {
-              setDoc(doc(fireStore, "events/" + event.id), {
-                ...event,
-                state: "Rejected",
-                rejectReason: reason,
-              });
+              del(event.id);
             }}
           >
-            Reject
+            Delete
           </Button>
-        ) : (
-          <></>
-        )}
-      </View>
-      <View
-        style={{
-          marginLeft: 40,
-          height: 40,
-        }}
-      >
-        {event.state === "Pending" ? (
-          <Input
-            placeholder="Reject reason"
-            onChangeText={(t) => setReason(t)}
-            style={{ width: 400 }}
-          />
-        ) : (
-          <></>
-        )}
+        </View>
+
+        <View style={{ marginLeft: 20, height: 40, }} >
+          <Button color="green" size="sm" titleStyle={{fontSize: 12}}
+            onPress={() => {
+              navigation.navigate("Preview", { eventId: event.id });
+            }}
+          >
+            View
+          </Button>
+        </View>
+        <View style={{ marginLeft: 20, height: 40, }} >
+          {event.state === "Draft" ? <Text style={{color: "red"}}>Draft</Text> : <></>}
+          {event.state === "Pending" ? (
+            <Button size="sm" titleStyle={{fontSize: 12}}
+              onPress={() => {
+                setDoc(doc(fireStore, "events/" + event.id), {
+                  ...event,
+                  state: "Published",
+                });
+              }}
+            >
+              Approve
+            </Button>
+          ) : (
+            <></>
+          )}
+          {event.state === "Published" ? <Text style={{color: "red"}}>Approved</Text> : <></>}
+          {event.state === "Rejected" ? <Text style={{color: "red"}}>Rejected</Text> : <></>}
+        </View>
+        <View
+          style={{
+            marginLeft: 20,
+            height: 40,
+          }}
+        >
+          {event.state === "Pending" ? (
+            <Button size="sm" titleStyle={{fontSize: 12}}
+              onPress={() => {
+                setDoc(doc(fireStore, "events/" + event.id), {
+                  ...event,
+                  state: "Rejected",
+                  rejectReason: reason,
+                });
+              }}
+            >
+              Reject
+            </Button>
+          ) : (
+            <></>
+          )}
+        </View>
+        </View>
+        <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "33%", }} >
+        <View style={{ height: "100%", width: "90%"}} >
+          {event.state === "Pending" ? (
+            <Input
+              placeholder="Reject reason"
+              onChangeText={(t) => setReason(t)}
+              style={{ width: "100%", fontSize: 12 }}
+            />
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
     </View>
   );

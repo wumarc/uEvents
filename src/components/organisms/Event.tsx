@@ -77,8 +77,6 @@ const Event: React.FC<EventProps> = (props) => {
 
   }
 
-  console.log(event.emoji)
-
   return (
     <TouchableOpacity
       onPress={() => {

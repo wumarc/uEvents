@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { Input } from "@rneui/themed";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Button } from "@rneui/base";
 import {
   colours,
@@ -620,15 +620,6 @@ export const Step7: FC<{ eventID: string }> = (props) => {
 
 /* ---------------------------------- Tags ---------------------------------- */
 export const Step8: FC<{ eventID: string }> = (props) => {
-  // const [loading, categories, setCategories] = useSateWithFireStore<string[]>(
-  //   "categories/names",
-  //   "list",
-  //   []
-  // );
-
-  // const [loading2, categoriesValue, setCategoriesValue] = useSateWithFireStore<
-  //   number[]
-  // >("categories/values", "list", []);
 
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
@@ -647,6 +638,8 @@ export const Step8: FC<{ eventID: string }> = (props) => {
       setFixedCategories(categories);
     }
   }, [events]);
+
+  const [newCategory, setNewCategory] = useState<string>("");
   
   if (loading || loading2) {
     return <Loading />;
@@ -691,6 +684,9 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
           Select up to 5 tags to represent your event
         </Text>
+        <Text>
+          Tags are used as categories and search keywords.
+        </Text>
       </View>
       <MultiSelect
         search
@@ -701,7 +697,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         data={categoryData}
         maxSelect={5}
         activeColor={colours.purple}
-        value={getSelectedCategories()}
+        value={event.categories}
         labelField={"label"}
         valueField={"value"}
         placeholder={"Select up to 5 tags"}
@@ -710,32 +706,45 @@ export const Step8: FC<{ eventID: string }> = (props) => {
           set({...event, categories: item})
         }}
       />
-      {/* <ButtonGroup
-        buttons={fixedCategories}
-        onPress={(index) => {
-          let selected = getSelectedIndexes();
-          let newSelected = []
-          if (selected.includes(index)) {
-            newSelected = selected.filter((item) => item != index);
-          } else {
-            if (selected.length < 5) {
-              newSelected = [...selected, index];
-            } else {
-              newSelected = [
-                selected[1],
-                selected[2],
-                selected[3],
-                selected[4],
-                index,
-              ];
-            }
-          }
-          updateEvent(newSelected);
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
+          Create a new tag
+        </Text>
+        <Text>
+          Note that the created tag will now show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Use all lowercase and separate words with spaces.
+        </Text>
+      <Input
+        label="New Tag"
+        disabled={getSelectedCategories().length >= 5}
+        selectTextOnFocus={true}
+        selectionColor={colours.purple}
+        labelStyle={{...fonts.regular}}
+        inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, borderRadius: 6}}
+        containerStyle={{ paddingHorizontal: 0}}
+        onChangeText={(text) => setNewCategory(text)}
+        value={newCategory}
+        maxLength={30}
+        defaultValue={event.roomNumber}
+      />
+      <Button
+        buttonStyle={{
+          backgroundColor: colours.purple,
+          padding: 15,
+          paddingHorizontal: 25,
+          borderRadius: 10,
+          width: '50%',
         }}
-        selectedIndexes={getSelectedIndexes()}
-        vertical
-      /> */}
-
+        disabled={getSelectedCategories().length >= 5}
+        title="create"
+        onPress={() =>{
+          if (newCategory == "") {
+            return;
+          }
+          set({...event, categories: [...event.categories, newCategory]})
+          categoryData.push({label: newCategory, value: newCategory});
+          setNewCategory("");
+        }}
+        titleStyle={{ ...fonts.title2, color: colours.white }}
+      />
       <View></View>
     </View>
   );
@@ -761,6 +770,8 @@ export const Step9: FC<{ eventID: string }> = (props) => {
       setFixedCategories(categories);
     }
   }, [events]);
+
+  const [newCategory, setNewCategory] = useState<string>("");
   
   if (loading || loading2) {
     return <Loading />;
@@ -989,6 +1000,39 @@ export const Step9: FC<{ eventID: string }> = (props) => {
             onChange={(item) => {
               set({...event, categories: item})
             }}
+          />
+          <Input
+            label="New Tag (Note that it will not show above once created)"
+            disabled={getSelectedCategories().length >= 5}
+            selectTextOnFocus={true}
+            selectionColor={colours.purple}
+            labelStyle={{...fonts.regular}}
+            inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, borderRadius: 6}}
+            containerStyle={{ paddingHorizontal: 0}}
+            onChangeText={(text) => setNewCategory(text)}
+            value={newCategory}
+            maxLength={30}
+            defaultValue={event.roomNumber}
+          />
+          <Button
+            buttonStyle={{
+              backgroundColor: colours.purple,
+              padding: 15,
+              paddingHorizontal: 25,
+              borderRadius: 10,
+              width: '50%',
+            }}
+            disabled={getSelectedCategories().length >= 5}
+            title="create"
+            onPress={() =>{
+              if (newCategory == "") {
+                return;
+              }
+              set({...event, categories: [...event.categories, newCategory]})
+              categoryData.push({label: newCategory, value: newCategory});
+              setNewCategory("");
+            }}
+            titleStyle={{ ...fonts.title2, color: colours.white }}
           />
         </View>
 

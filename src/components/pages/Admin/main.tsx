@@ -14,6 +14,8 @@ import EditEvent from "./EditEvent";
 import UploadFile from "../../organisms/UploadFile";
 import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
+import { Step0 } from "../EventOrganizer/CreateEvent";
+import HeaderLeft from "../../molecules/HeaderLeft";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -38,7 +40,7 @@ const MainView = ({ route, navigation }: props) => {
     >
       <Tab.Screen
         name="createEvent"
-        component={CreateEvent as any} // TODO fix error
+        component={Step0 as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Create",
@@ -121,6 +123,18 @@ const Main: FC<{ userType: string }> = (props) => {
               name="EventDetailsView"
               component={EventDetails as any} // TODO fix error
             />
+            <Stack.Screen
+            name="Step0"
+            component={Step0 as any}
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerTitle: "",
+              headerLeft: () => (
+                <HeaderLeft navigation={navigation} type={"cross"} />
+              ),
+              animation: "slide_from_bottom",
+            })}
+          />
           </Stack.Navigator>
         </SafeAreaView>
       </NavigationContainer>
