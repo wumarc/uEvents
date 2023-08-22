@@ -247,13 +247,20 @@ export const Step2: FC<{ eventID: string }> = (props) => {
       <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Pick one emoji to represent your event</Text>
       <Text style={fonts.regular}>Who still uses images? Yuck! Emojis are cooler 😎</Text>
 
-      <View style={{ marginVertical: "5%", paddingHorizontal: "30%"}}>
-        <SvgUri
-          width={100}
-          height={100}
-          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
-          fill="black"
-        />
+      <View style={{ marginVertical: "5%", paddingHorizontal: "25%"}}>
+        {event.emoji && (
+          <>
+            <Text>How your emoji will look on our platform</Text>
+            <View style={{alignItems: 'center'}}>
+              <SvgUri
+                width={100}
+                height={100}
+                uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+                fill="black"
+              />
+            </View>
+          </>
+        )}
         <Input
           selectionColor={colours.purple}
           autoCapitalize="none"
