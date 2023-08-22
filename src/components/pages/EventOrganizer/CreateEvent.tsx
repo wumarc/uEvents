@@ -706,21 +706,15 @@ export const Step8: FC<{ eventID: string }> = (props) => {
           set({...event, categories: item})
         }}
       />
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-          Create a new tag
-        </Text>
-        <Text>
-          Note that the created tag will now show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Use all lowercase and separate words with spaces.
-        </Text>
       <Input
-        label="New Tag"
+        label="Create a new tag"
         disabled={getSelectedCategories().length >= 5}
         selectTextOnFocus={true}
         selectionColor={colours.purple}
-        labelStyle={{...fonts.regular}}
-        inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, borderRadius: 6}}
+        labelStyle={{...fonts.title3, paddingTop: 10}}
+        inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 0, borderRadius: 6, padding: 10}}
         containerStyle={{ paddingHorizontal: 0}}
-        onChangeText={(text) => setNewCategory(text)}
+        onChangeText={(text) => setNewCategory(text.toLowerCase())}
         value={newCategory}
         maxLength={30}
         defaultValue={event.roomNumber}
@@ -728,13 +722,12 @@ export const Step8: FC<{ eventID: string }> = (props) => {
       <Button
         buttonStyle={{
           backgroundColor: colours.purple,
-          padding: 15,
-          paddingHorizontal: 25,
+          padding: 10,
           borderRadius: 10,
-          width: '50%',
+          width: '30%',
         }}
         disabled={getSelectedCategories().length >= 5}
-        title="create"
+        title="Add tag"
         onPress={() =>{
           if (newCategory == "") {
             return;
@@ -743,8 +736,11 @@ export const Step8: FC<{ eventID: string }> = (props) => {
           categoryData.push({label: newCategory, value: newCategory});
           setNewCategory("");
         }}
-        titleStyle={{ ...fonts.title2, color: colours.white }}
+        titleStyle={{ ...fonts.title3, color: colours.white}}
       />
+      <Text>
+        Note that the created tag will now show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
+      </Text>
       <View></View>
     </View>
   );
