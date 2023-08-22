@@ -28,6 +28,7 @@ export type RootStackParamList = {
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
   Preview: { eventId: string };
+  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -40,7 +41,7 @@ const MainView = ({ route, navigation }: props) => {
     >
       <Tab.Screen
         name="createEvent"
-        component={Step0 as any} // TODO fix error
+        component={CreateEvent as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Create",

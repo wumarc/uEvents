@@ -41,6 +41,7 @@ import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { SvgUri } from "react-native-svg";
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -108,7 +109,7 @@ export const Step0 = ({ route, navigation }: any) => {
     if (route.params.eventID == undefined) {
       setDoc(doc(fireStore, "events/" + id), {
         id: id,
-        organizer: getFirebaseUserIDOrEmpty(),
+        organizer: route.params.organizerName ?? getFirebaseUserIDOrEmpty(),
 
         // Default event
         state: "Draft",
@@ -123,7 +124,7 @@ export const Step0 = ({ route, navigation }: any) => {
         originalLink: "",
         address: "",
         // recurrence: new recurrence("None"),
-        organizerType: "Organizer Added",
+        organizerType: route.params.organizerName? "Manually Added": "Organizer Added",
       });
     }
   }, []);
@@ -247,6 +248,12 @@ export const Step2: FC<{ eventID: string }> = (props) => {
       <Text style={fonts.regular}>Who still uses images? Yuck! Emojis are cooler 😎</Text>
 
       <View style={{ marginVertical: "5%", paddingHorizontal: "30%"}}>
+        <SvgUri
+          width={100}
+          height={100}
+          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          fill="black"
+        />
         <Input
           selectionColor={colours.purple}
           autoCapitalize="none"

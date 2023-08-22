@@ -115,7 +115,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
           buttonStyle={{backgroundColor: colours.purple, padding: '10%', paddingHorizontal: '8%', borderRadius: 10}}
           title={"Edit"}
           titleStyle={{ fontSize: 20, fontWeight: "600" }}
-          onPress={() => {navigation.navigate("Step0", { eventID: route.params.eventID, useDefault: false })}}
+          onPress={() => {navigation.navigate("Step0", { eventID: route.params.eventID, useDefault: false, organizerName: undefined })}}
         />
       </View>
 

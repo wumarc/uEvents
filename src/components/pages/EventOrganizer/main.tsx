@@ -24,7 +24,7 @@ export type RootStackParamList = {
   CreateEventView: { userType: string };
   Profile: { userType: string };
   OrganizerEventDetails: { eventID: string };
-  Step0: { eventID: string | undefined; useDefault: boolean };
+  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;

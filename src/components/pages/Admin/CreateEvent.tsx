@@ -15,7 +15,7 @@ import { RootStackParamList } from "../Admin/main";
 import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
-import { Slider, Switch } from "react-native-elements";
+import { Button, Input, Slider, Switch } from "react-native-elements";
 import { ToggleButton } from "react-native-paper";
 import { useDownloadURL } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
@@ -26,21 +26,30 @@ type props = NativeStackScreenProps<RootStackParamList, "createEvent">;
 // To access the type of user, use route.params.userType
 
 const CreateEvent = ({ route, navigation }: props) => {
-  const [event, setEvent] = useState<EventObject>(defaultEvent);
-  const [id, setId] = useState<string>(uid());
+  // const [event, setEvent] = useState<EventObject>(defaultEvent);
+  // const [id, setId] = useState<string>(uid());
+  const [organizerName, setOrganizerName] = useState<string>("");
 
   return (
-    <EventEditor default={event} set={(newVal) => setEvent(newVal)}>
+    <View>
+      <Input
+        label="Organizer Name"
+        placeholder="Enter Organizer Name"
+        value={organizerName}
+        onChangeText={(text) => {
+          setOrganizerName(text);
+        }}
+      />
+  
       <CustomButton
         buttonName={"Add Event"}
         onPressListener={() => {
           // Adding the event to the database
-          event.id = id;
-          addDocumentToCollection<EventObject>("events", event.id, event);
-          navigation.navigate("allEvents", {});
+          navigation.navigate("Step0", {useDefault: false, organizerName: organizerName, eventID: undefined});
         }}
       />
-    </EventEditor>
+    </View>
+    
   );
 };
 
