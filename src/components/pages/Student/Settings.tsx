@@ -190,7 +190,7 @@ const Settings = ({ route, navigation }: props) => {
 
         <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={fonts.title2}>admin@uevents.ca</Text>
+            <Text style={fonts.title2}>admin@uevents.org</Text>
             <Button 
               buttonStyle={{backgroundColor: colours.white}} 
               icon={<Icon name="copy" type="feather" color={colours.black} />} 
