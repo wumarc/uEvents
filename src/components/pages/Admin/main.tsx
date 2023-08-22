@@ -28,6 +28,12 @@ export type RootStackParamList = {
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
   Preview: { eventId: string };
+  EventDetailsView: {
+    userType: string;
+    eventID: string;
+    organizerID: string;
+    imageID: string;
+  };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined };
 };
 

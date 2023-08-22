@@ -18,7 +18,10 @@ const EventDetails = ({ route, navigation }: props) => {
     "events",
     route.params.eventID
   );
-  const [organizerName, setOrganizerName] = useState("Organizer Name");
+  const [loading2, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
+    "users",
+    route.params.organizerID
+  );
 
   // useEffect(() => {
   //   if (!loading) {
@@ -32,7 +35,7 @@ const EventDetails = ({ route, navigation }: props) => {
   //   }
   // }, [event]);
 
-  if (loading) {
+  if (loading || loading2) {
     return <ActivityIndicator />;
   }
 
@@ -101,7 +104,7 @@ const EventDetails = ({ route, navigation }: props) => {
                 type='ionicon'
                 color= {colours.grey}
               /> */}
-              <Text style={fonts.regular}>{event.organizerType == "Manually Added" ? event.organizer: organizerName}</Text>
+              <Text style={fonts.regular}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
             </View>
           </View>
 
