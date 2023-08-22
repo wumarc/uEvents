@@ -94,7 +94,7 @@ const EventLine: FC<{
         <View style={{ marginLeft: 20, height: 40, }} >
           <Button color="green" size="sm" titleStyle={{fontSize: 12}}
             onPress={() => {
-              navigation.navigate("Preview", { eventId: event.id });
+              navigation.navigate("Preview", { eventId: event.id, organizerId: event.organizer });
             }}
           >
             View

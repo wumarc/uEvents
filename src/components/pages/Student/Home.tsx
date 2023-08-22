@@ -100,6 +100,9 @@ const Home = ({ route, navigation }: props) => {
     return startTime.toMillis() > Timestamp.now().toMillis();
   });
 
+  filteredEvents = filteredEvents.filter((event) => {
+    event.state == "Published"})
+
   return (
     <View style={styles.container}>
       <StatusBar translucent />
@@ -142,6 +145,7 @@ const Home = ({ route, navigation }: props) => {
           renderItem={({ item, index }) => (
             <View style={styles.event}>
               <Event
+                organizer={item.organizer}
                 id={item.id}
                 navigation={navigation}
                 userType={route.params.userType}

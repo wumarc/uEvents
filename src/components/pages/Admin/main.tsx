@@ -27,7 +27,7 @@ export type RootStackParamList = {
   createEvent: { userType: string };
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
-  Preview: { eventId: string };
+  Preview: { eventId: string, organizerId: string };
   EventDetailsView: {
     userType: string;
     eventID: string;

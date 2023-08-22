@@ -20,13 +20,16 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
     return <Loading />;
   }
 
+  console.log(event.organizer)
+
   let publishOption = event.state === "Draft" ? "Publish" : "Unpublish";
 
   return (
     <TouchableOpacity
       onPress={() =>
-        props.navigation.navigate("OrganizerEventDetails", {
+        props.navigation.navigate("EventDetailsView", {
           eventID: props.eventID,
+          organizerID: event.organizer,
         })
       }
     >

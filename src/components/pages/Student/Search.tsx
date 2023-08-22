@@ -87,6 +87,7 @@ const Search = ({ route, navigation }: props) => {
         data={events?.filter(filterEvents)}
         renderItem={({ item }) => (
           <Event
+            organizer={item.organizer}
             id={item.id}
             userType={route.params.userType}
             navigation={navigation}

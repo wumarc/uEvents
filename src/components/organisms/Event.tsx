@@ -15,6 +15,7 @@ import { SvgUri } from 'react-native-svg';
 // Event component props
 interface EventProps {
   id: string;
+  organizer: string;
   navigation: any;
   userType: string;
   onSaveEvent: any;
@@ -30,7 +31,12 @@ const Event: React.FC<EventProps> = (props) => {
 
   const [loading2, student, setStudent] = useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
 
-  if (loading || loading2 || !event) {
+  const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
+    "users",
+    props.organizer
+  );
+
+  if (loading || loading2 || loading3 || !event) {
     return <Loading />;
   }
 
@@ -117,7 +123,7 @@ const Event: React.FC<EventProps> = (props) => {
               color='black'
             /> */}
             {/* </View> */}
-            <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizer}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

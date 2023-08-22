@@ -15,6 +15,8 @@ import Settings from "./Settings";
 import Profile from "./Profile";
 import HeaderLeft from "../../molecules/HeaderLeft";
 import OrganizerEventDetails from "./OrganizerEventDetails";
+import EventDetails from "../Student/EventDetails";
+import HeaderRight from "../../molecules/HeaderRight";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +27,12 @@ export type RootStackParamList = {
   Profile: { userType: string };
   OrganizerEventDetails: { eventID: string };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined };
+  EventDetailsView: {
+    userType: string;
+    eventID: string;
+    organizerID: string;
+    imageID: string;
+  };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -122,6 +130,21 @@ const Main: FC<{ userType: string }> = (props) => {
                 headerStyle: { backgroundColor: colours.white },
                 headerTintColor: colours.black,
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
+              };
+            }}
+          />
+          <Stack.Screen
+            name="EventDetailsView"
+            component={EventDetails as any} // TODO fix error
+            options={({ route, navigation }) => {
+              return {
+                title: "Event Details",
+                headerStyle: { backgroundColor: colours.white },
+                headerTintColor: colours.black,
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+                headerRight: () => (
+                  <HeaderRight eventID={route.params.eventID} />
+                ),
               };
             }}
           />

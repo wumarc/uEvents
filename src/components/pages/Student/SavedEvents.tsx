@@ -35,6 +35,8 @@ const SavedEvents = ({ route, navigation }: props) => {
               data={(student ?? []).saved}
               renderItem={({ item }) => (
                 <Event
+                  listView={false}
+                  organizer={item.organizer}
                   id={item}
                   userType={route.params.userType}
                   navigation={navigation}

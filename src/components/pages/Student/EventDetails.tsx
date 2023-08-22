@@ -8,6 +8,7 @@ import { Image, Icon, Button } from "@rneui/base";
 import { SvgUri } from 'react-native-svg';
 import { defaultOrganizer } from "../../../utils/model/Organizer";
 import { useEffect, useState } from "react";
+import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -36,7 +37,7 @@ const EventDetails = ({ route, navigation }: props) => {
   // }, [event]);
 
   if (loading || loading2) {
-    return <ActivityIndicator />;
+    return <Loading />;
   }
 
   return (
