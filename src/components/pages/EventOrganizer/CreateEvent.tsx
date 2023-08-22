@@ -918,19 +918,24 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         </View>
 
         {/* Date, time, recurrence */}
-        <View style={{flexDirection: "row"}}>
-          <Input
-            label="Date and time"
-            // leftIcon={<Icon name="date-range" type="ionicons" color={colours.grey} />}
-            selectionColor={colours.purple}
-            // inputStyle={{height: windowHeight*0.08}}
-            inputContainerStyle={{
-              borderColor: colours.grey,
-              borderWidth: 1,
-              paddingVertical: 2,
-              borderRadius: 6,
-            }}
-            containerStyle={{paddingHorizontal: 0}}
+        <View style={{backgroundColor: '#F1F1F1', padding: '1%'}}>
+          <Text style={fonts.title3}>Start Time</Text>
+          <DateTimePicker
+            value={event.startTime == null ? new Date() : event.startTime.toDate()}
+            mode={"datetime"}
+            display="spinner"
+            minimumDate={new Date()}
+            maximumDate={new Date(2023, 31, 31)}
+            onChange={(e) => set({...event, startTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
+          />
+          <Text style={fonts.title3}>End Time</Text>
+          <DateTimePicker
+            value={event.endTime == null ? new Date() : event.endTime.toDate()}
+            mode={"datetime"}
+            display="spinner"
+            minimumDate={event.startTime == null ? new Date() : event.startTime.toDate()}
+            maximumDate={new Date(2023, 31, 31)}
+            onChange={(e) => set({...event, endTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
           />
         </View>
 

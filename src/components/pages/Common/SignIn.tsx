@@ -251,6 +251,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
 
 const Signup: FC = ({ setIsSigningUp }: any) => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState(""); // Only for organizers
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState("");
@@ -259,20 +260,31 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
   async function signUp(validate: boolean): Promise<boolean> {
     
     // Only accept emails from accepted universities
-    if (!universities.some((university) => email.includes(university))) {
-      setError("You must be a uOttawa student to sign up");
-      return false;
+    if(validate) {
+      if (!universities.some((university) => email.includes(university))) {
+        setError("You must be a uOttawa student to sign up");
+        return false;
+      }
     }
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
-        type: userType,
-        saved: [],
-      });
+      if (userType === "student") {
+        await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
+          type: userType,
+          saved: [],
+        });
+      } else {
+          await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
+            type: userType,
+            name: name,
+            saved: [],
+          });
+      }
       setIsSigningUp(false);
       return true;
     } catch (error: any) {
+      console.log(error.message);
       setError("Invalid email or password, please try again");
     }
     
@@ -289,13 +301,24 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
       }}
     >
 
-
       {/* Form */}
       <View>
+
+        <Text style={{color: "black", fontWeight: "500", fontSize: 16, marginBottom: "1%"}}>Account Type</Text>
+        <Dropdown
+            placeholderStyle={{paddingVertical: 4, paddingHorizontal: 8}}
+            data={[{key:1, value:'Student'}, {key:2, value:'Organizer'}]}
+            labelField="value"
+            valueField="key"
+            placeholder={userType == "" ? 'Account Type' : userType.charAt(0).toUpperCase() + userType.slice(1)}
+            style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, paddingVertical: 5, paddingHorizontal: 8, marginBottom: '3%'}}
+            onChange={(item) => (item.key == 1 ? setUserType("student") : setUserType("organizer"))}
+        />
+
         <Input
-          label="School Email"
+          label="Email"
           placeholder="adele078@uottawa.ca"
-          onChangeText={(value) => setEmail(value)}
+          onChangeText={(value) => setName(value)}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
@@ -308,7 +331,30 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             borderRadius: 6,
           }}
         />
-        
+        {userType == 'student' &&
+          <Text style={{color: 'red'}}>Use your uOttawa email if you are signing up as a student</Text>
+        }
+
+        {userType == 'organizer' &&
+          <Input
+            label="Organization Name"
+            placeholder="uOttawa Dancing Club"
+            onChangeText={(value) => setEmail(value)}
+            labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+            autoCapitalize="none"
+            maxLength={30}
+            containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
+            selectionColor={colours.purple}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 8,
+              borderRadius: 6,
+            }}
+          />
+        }
+
         <Input
           label="Password (min 6 characters)"
           placeholder="Password"
@@ -325,17 +371,6 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             paddingHorizontal: 8,
             borderRadius: 6,
           }}
-        />
-        
-        <Text style={{color: "black", fontWeight: "500", fontSize: 16, marginBottom: "1%"}}>Register as a</Text>
-        <Dropdown
-            placeholderStyle={{paddingVertical: 4, paddingHorizontal: 8}}
-            data={[{key:1, value:'Student'}, {key:2, value:'Organizer'}]}
-            labelField="value"
-            valueField="key"
-            placeholder={userType == "" ? 'Account Type' : userType}
-            style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, paddingVertical: 5, paddingHorizontal: 8}}
-            onChange={(item) => (item.key == 1 ? setUserType("student") : setUserType("organizer"))}
         />
 
         <Text style={styles.textAlert}>{error}</Text>
