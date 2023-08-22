@@ -49,6 +49,7 @@ const data = [
   { label: "Desmarais (DMS)", address: "55 Laurier Street, Ottawa, Ontario"},
   { label: "Social Sciences Building (FSS)", address: "120 University Street, Ottawa, Ontario"},
   { label: "Power Plant (CTE)", address: "720 King Edward Street, Ottawa, Ontario"},
+  { label: "Matt Anthony Field", address: "801 King Edward, Ottawa, ON K1N 6N5"},
   { label: "Minto Sports Complex (MNO)", address: "801 King Edward Street, Ottawa, Ontario"},
   { label: "SITE (STE)", address: "800 King Edward Street, Ottawa, Ontario"},
   { label: "D'Iorio (DRO)", address: "10 Marie Curie Street, Ottawa, Ontario"},

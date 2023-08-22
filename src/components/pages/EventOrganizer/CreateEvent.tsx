@@ -76,6 +76,7 @@ const data = [
   { label: "Desmarais (DMS)", address: "55 Laurier Street, Ottawa, Ontario"},
   { label: "Social Sciences Building (FSS)", address: "120 University Street, Ottawa, Ontario"},
   { label: "Power Plant (CTE)", address: "720 King Edward Street, Ottawa, Ontario"},
+  { label: "Matt Anthony Field", address: "801 King Edward, Ottawa, ON K1N 6N5"},
   { label: "Minto Sports Complex (MNO)", address: "801 King Edward Street, Ottawa, Ontario"},
   { label: "SITE (STE)", address: "800 King Edward Street, Ottawa, Ontario"},
   { label: "D'Iorio (DRO)", address: "10 Marie Curie Street, Ottawa, Ontario"},
@@ -604,8 +605,8 @@ export const Step7: FC<{ eventID: string }> = (props) => {
   return (
     <View>
       
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Do you require sign up?</Text>
-      <Text style={fonts.regular}>Skip this step if your event requires no sign up.</Text>
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Do you require sign up or ticket purchasing?</Text>
+      <Text style={fonts.regular}>Skip this step if your event requires no sign up or ticket purchasing.</Text>
       
       <View style={{ marginVertical: "5%" }}>
         <Input
