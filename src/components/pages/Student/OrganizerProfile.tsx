@@ -11,12 +11,12 @@ const OrganizerProfile = () => {
         <ScrollView style={{backgroundColor: colours.white, paddingHorizontal: spacing.page2}}>
 
             <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
-                <Avatar
+                {/* <Avatar
                     size={100}
                     rounded
                     source={require('./1F3A5_color.png')}
                     containerStyle={{ backgroundColor: 'transparent'}}
-                />
+                /> */}
                 <View style={{width: windowWidth*0.6}}>
                     <Text style={fonts.title2}>uOttawa Egyptian Students Club</Text>
                     <Text>Email</Text>

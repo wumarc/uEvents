@@ -27,10 +27,10 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
 
         {/* Image */}
         <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.18}}>
-          <Image source={require('./1F3A5_color.png')}
+          {/* <Image source={require('./1F3A5_color.png')}
             style={{width: '100%', height: '100%'}}
             resizeMode="contain"
-          />
+          /> */}
         </View>
 
         {/* Title */}
