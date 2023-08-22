@@ -825,7 +825,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
           containerStyle={{ paddingHorizontal: 0}}
           onChange={(e) => set({...event, name: e.nativeEvent.text})}
-          maxLength={35}
+          // maxLength={35}
           defaultValue={event.name}
         />
         

@@ -22,6 +22,8 @@ import { fireStore } from "../../../firebaseConfig";
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
+const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
+
 const Profile = ({ route, navigation }: props) => {
   const [loading, events, add, del] =
     useStateWithFireStoreCollection<EventObject>("events");
@@ -33,7 +35,14 @@ const Profile = ({ route, navigation }: props) => {
   return (
     <View>
       <FlatList
-        data={events?.sort((a, b) => a.name.localeCompare(b.name))} // Sort by alphabetical order
+        data={events?.sort((a, b) => {
+          if (a.state == b.state) {
+            // alphabetical order
+            return a.name > b.name ? 1 : -1;
+          } else {
+            return stateOrder.indexOf(a.state) - stateOrder.indexOf(b.state);
+          }
+        })}
         renderItem={({ item }) => (
           <EventLine event={item} del={del} navigation={navigation} />
         )}

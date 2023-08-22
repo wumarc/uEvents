@@ -6,6 +6,7 @@ import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
+import { useEffect } from "react";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType

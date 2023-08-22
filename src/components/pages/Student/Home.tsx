@@ -100,8 +100,8 @@ const Home = ({ route, navigation }: props) => {
     return startTime.toMillis() > Timestamp.now().toMillis();
   });
 
-  filteredEvents = filteredEvents.filter((event) => {
-    event.state == "Published"})
+  filteredEvents = filteredEvents.filter((event) => 
+    event.state == "Published")
 
   return (
     <View style={styles.container}>
