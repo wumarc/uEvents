@@ -6,6 +6,8 @@ import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button } from "@rneui/base";
 import { SvgUri } from 'react-native-svg';
+import { defaultOrganizer } from "../../../utils/model/Organizer";
+import { useEffect, useState } from "react";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -16,6 +18,19 @@ const EventDetails = ({ route, navigation }: props) => {
     "events",
     route.params.eventID
   );
+  const [organizerName, setOrganizerName] = useState("Organizer Name");
+
+  // useEffect(() => {
+  //   if (!loading) {
+  //     const [loading2, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
+  //       "users",
+  //       event.organizer
+  //     );
+  //     if (!loading2) {
+  //       setOrganizerName(organizer.name);
+  //     }
+  //   }
+  // }, [event]);
 
   if (loading) {
     return <ActivityIndicator />;
@@ -86,7 +101,7 @@ const EventDetails = ({ route, navigation }: props) => {
                 type='ionicon'
                 color= {colours.grey}
               /> */}
-              <Text style={fonts.regular}>{event.organizer}</Text>
+              <Text style={fonts.regular}>{event.organizerType == "Manually Added" ? event.organizer: organizerName}</Text>
             </View>
           </View>
 
