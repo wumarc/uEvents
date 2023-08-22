@@ -108,7 +108,7 @@ const Event: React.FC<EventProps> = (props) => {
         <View style={{width: '70%', justifyContent: 'center'}}>
 
           <View>
-            <Text style={{fontWeight: '700', fontSize: 17, color: colours.purple}}>{event.name}</Text>
+            <Text style={{fontWeight: '700', fontSize: 19, color: colours.purple}}>{event.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -132,10 +132,10 @@ const Event: React.FC<EventProps> = (props) => {
               type='ionicon'
               color={colours.grey}
             />
+            <Text style={{...fonts.small, fontWeight: '500'}}>{startTime?.toDate().toLocaleDateString()}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
             <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text>
             {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}
-            <Text style={{...fonts.small, fontWeight: '500'}}> - </Text>
-            <Text style={{...fonts.small, fontWeight: '500'}}>{startTime?.toDate().getDay().toString()}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

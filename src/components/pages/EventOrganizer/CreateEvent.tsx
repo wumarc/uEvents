@@ -339,7 +339,7 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               containerStyle={{ paddingHorizontal: 0, marginTop: '3%'}}
               onChange={(e) => set({...event, roomNumber: e.nativeEvent.text, onCampus: true})}
-              maxLength={10}
+              maxLength={30}
               defaultValue={event.roomNumber}
             />
           </View>
@@ -373,7 +373,7 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               labelStyle={{...fonts.regular}}
               inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
               defaultValue={event.roomNumber}
-              maxLength={10}
+              maxLength={30}
               onChange={(e) => set({ ...event, roomNumber: e.nativeEvent.text, onCampus: false})}
             />
           </View>
@@ -881,7 +881,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
                   inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, borderRadius: 6}}
                   containerStyle={{ paddingHorizontal: 0}}
                   onChange={(e) => set({...event, roomNumber: e.nativeEvent.text, onCampus: true})}
-                  maxLength={10}
+                  maxLength={30}
                   defaultValue={event.roomNumber}
                 />
               </View>
@@ -915,7 +915,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
                   labelStyle={{...fonts.regular}}
                   inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
                   defaultValue={event.roomNumber}
-                  maxLength={10}
+                  maxLength={30}
                   onChange={(e) => set({ ...event, roomNumber: e.nativeEvent.text, onCampus: false})}
                 />
               </View>
@@ -1032,10 +1032,9 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Button
             buttonStyle={{
               backgroundColor: colours.purple,
-              padding: 15,
-              paddingHorizontal: 25,
+              padding: 10,
               borderRadius: 10,
-              width: '50%',
+              width: '30%',
             }}
             disabled={getSelectedCategories().length >= 5}
             title="create"
