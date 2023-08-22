@@ -268,6 +268,8 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
     }
 
     try {
+      console.log(email)
+      console.log(password)
       await createUserWithEmailAndPassword(auth, email, password);
       if (userType === "student") {
         await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
@@ -318,7 +320,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         <Input
           label="Email"
           placeholder="adele078@uottawa.ca"
-          onChangeText={(value) => setName(value)}
+          onChangeText={(value) => setEmail(value)}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
           containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
@@ -339,7 +341,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           <Input
             label="Organization Name"
             placeholder="uOttawa Dancing Club"
-            onChangeText={(value) => setEmail(value)}
+            onChangeText={(value) => setName(value)}
             labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
             autoCapitalize="none"
             maxLength={30}
