@@ -425,7 +425,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
       {Platform.OS === "ios" &&
         <>
-          <Text style={fonts.title3}>End Time (Optional)</Text>
+          <Text style={fonts.title3}>End Time</Text>
           <DateTimePicker
             value={event.endTime == null ? new Date() : event.endTime.toDate()}
             mode={"datetime"}
@@ -531,12 +531,12 @@ export const Step6: FC<{ eventID: string}> = (props) => {
 
         <View style={{width: "48%"}}>
           <Input
-            label="0 if free"
+            label=" "
             selectionColor={colours.purple}
             maxLength={4}
             autoCapitalize="none"
             placeholder=""
-            leftIcon={<Icon name="dollar" type="font-awesome" size={40}color={colours.black}/>}
+            leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
             inputContainerStyle={{borderColor: colours.grey, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
             keyboardType="decimal-pad"
             inputStyle={{ fontSize: 40, fontWeight: "bold" }}
@@ -597,7 +597,7 @@ export const Step7: FC<{ eventID: string }> = (props) => {
         <Input
           selectionColor={colours.purple}
           defaultValue={event?.signUpLink}
-          placeholder="https://docs.google.com/forms/d/e/1FAIpQLSe7-SQCOLPxuD62i9ddBTcMPoA0OdUhrvJWprt7WY06IO3KEg/viewform"
+          placeholder="insert link"
           // inputStyle={{height: windowHeight*0.08}}
           inputContainerStyle={{
             borderColor: colours.grey,
@@ -855,7 +855,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
                 <Dropdown
                   search
                   searchPlaceholder="Search by name or acronym"
-                  placeholderStyle={{ fontSize: 17, padding: 7}}
+                  placeholderStyle={{ fontSize: 17, padding: 10}}
                   data={data}
                   labelField="label"
                   valueField="address"
