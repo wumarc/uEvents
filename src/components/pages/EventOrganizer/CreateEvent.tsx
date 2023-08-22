@@ -1007,7 +1007,7 @@ export const Step10: FC<{ eventID: string }> = (props) => {
           🎉 You're all set! Sit back and relax while we approve your event. 🎉
         </Text>
         <Text style={fonts.regular}>
-          You can view your event on the Events page.
+          Events approval can take up to 2 hours. Check on the Events page to see if your event has been approved!
         </Text>
       </View>
     </View>
