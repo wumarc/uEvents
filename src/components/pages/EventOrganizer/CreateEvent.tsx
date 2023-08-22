@@ -1032,10 +1032,9 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Button
             buttonStyle={{
               backgroundColor: colours.purple,
-              padding: 15,
-              paddingHorizontal: 25,
+              padding: 10,
               borderRadius: 10,
-              width: '50%',
+              width: '30%',
             }}
             disabled={getSelectedCategories().length >= 5}
             title="create"
