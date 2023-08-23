@@ -2,7 +2,7 @@ import { View, Text, Touchable, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import { FC } from "react";
-import { EventObject } from "../../../utils/model/EventObject";
+import { EventObject, getTimeInAMPM } from "../../../utils/model/EventObject";
 import { Button } from "react-native-elements";
 import { deleteDoc, doc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
@@ -19,8 +19,6 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
   if (loading) {
     return <Loading />;
   }
-
-  console.log(event.organizer)
 
   let publishOption = event.state === "Draft" ? "Publish" : "Unpublish";
 
@@ -45,8 +43,8 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           <Text style={{ ...fonts.title2, color: colours.purple }}>
             {event.name}
           </Text>
-          <Text style={fonts.title3}>June 13 2023</Text>
-          <Text style={fonts.title3}>10 PM - 4 PM</Text>
+          {/* <Text style={fonts.title3}>{event.startTime}</Text> */}
+          {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
           <Text style={{...fonts.title3}}>{event.rejectReason}</Text>
           {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
@@ -64,8 +62,8 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
             }}
           >
             <Text style={{
-              ...fonts.title2, 
-              color: event.state == "Draft" ? colours.grey : '#EF9B0F'
+              ...fonts.title3, 
+              color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Reject" ? 'red' : '#EF9B0F'
             }}>
               {event.state}
             </Text>
