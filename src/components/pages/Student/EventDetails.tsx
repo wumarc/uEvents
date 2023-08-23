@@ -85,7 +85,7 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📍 Location</Text>
           <View style={{borderWidth: 2, borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
-            <Text style={fonts.title3}>{event.location}</Text>
+            <Text style={fonts.title3}>{event.location} Room {event.roomNumber}</Text>
             <Text style={fonts.small}>{event.address}</Text>
             <Button title={"Open on Google Maps"}
               buttonStyle={{...buttons.button1, marginTop: '3%'}}
