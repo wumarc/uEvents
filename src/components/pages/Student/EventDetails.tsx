@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
-import { EventObject, formatDateWithoutYear, getTimeInAMPM } from "../../../utils/model/EventObject";
+import { EventObject, formatDateWithoutYear, getTimeInAMPM, relativeDate } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -57,14 +57,14 @@ const EventDetails = ({ route, navigation }: props) => {
 
         {/* Title */}
         <View style={{marginVertical: 5}}>
-          <Text style={fonts.title2}>{event.name}</Text>
+          <Text style={{...fonts.title2, textAlign: 'center'}}>{event.name}</Text>
         </View>
 
         {/* Date */}
         <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
 
           <View style={{flexDirection: 'row', alignItems: 'center', width: windowWidth*0.45}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 {formatDateWithoutYear(event.startTime.toDate())}</Text>
+            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 {relativeDate(event.startTime)}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

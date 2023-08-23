@@ -255,14 +255,3 @@ export const relativeDate = (firebaseTimestamp: any) => {
       return month + "/" + day + "/" + year;
   }
 }
-
-export const formatDateWithoutYear = (date: any) => {
-  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  
-  const dayOfWeek = daysOfWeek[date.getDay()];
-  const dayOfMonth = date.getDate();
-  const month = months[date.getMonth()];
-  
-  return `${dayOfWeek} ${month} ${dayOfMonth}`;
-}
