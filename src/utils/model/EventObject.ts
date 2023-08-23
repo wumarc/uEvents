@@ -217,55 +217,52 @@ export const defaultEvent: EventObject = {
 };
 
 // Utility functions
-export const extractMonth = (timestamp: Timestamp) => {
-  const date = timestamp.toDate();
-  const month = date.getMonth();
-  return monthsOfYear[month];
-};
+export const getTimeInAMPM = (date: any) => {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
 
-export const extractDay = (timestamp: Timestamp) => {
-  const date = timestamp.toDate();
-  const day = date.getDate();
-  return day.toString();
-};
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
 
-export const extractDayOfWeek = (timestamp: Timestamp) => {
-  const date = timestamp.toDate();
-  const day = date.getDay();
-  return daysOfWeek[day];
-};
+  return hours + ':' + minutes + '' + ampm;;
+}
 
-// Extract time in format HH:MM AM/PM
-export const extractTime = (timestamp: Timestamp) => {
-  const date = timestamp.toDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const ampm = hour >= 12 ? "PM" : "AM";
-  const hour12 = hour % 12 || 12;
-  return `${hour12}:${minute} ${ampm}`;
-};
+export const relativeDate = (firebaseTimestamp: any) => {
+  let eventDate = firebaseTimestamp.toDate();
+  eventDate.setHours(0, 0, 0, 0);  // Reset time to midnight
 
-const daysOfWeek: string[] = [
-  "Sunday",
-  "Monday",
-  "Tueday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);  // Reset time to midnight
 
-const monthsOfYear: string[] = [
-  "January",
-  "Febuary",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September ",
-  "October",
-  "November",
-  "December",
-];
+  let daysDifference = (eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+  let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  if (daysDifference === 0) {
+      return "Today";
+  } else if (daysDifference === 1) {
+      return "Tomorrow";
+  } else if (daysDifference > 1 && daysDifference <= 7 && eventDate.getDay() > today.getDay()) {
+      return weekdays[eventDate.getDay()];
+  } else if (daysDifference > 1 && daysDifference <= 14) {
+      return "Next " + weekdays[eventDate.getDay()];
+  } else {
+      let month = eventDate.getMonth() + 1;
+      let day = eventDate.getDate();
+      let year = eventDate.getFullYear();
+      return month + "/" + day + "/" + year;
+  }
+}
+
+export const formatDateWithoutYear = (date: any) => {
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+  const dayOfWeek = daysOfWeek[date.getDay()];
+  const dayOfMonth = date.getDate();
+  const month = months[date.getMonth()];
+  
+  return `${dayOfWeek} ${month} ${dayOfMonth}`;
+}

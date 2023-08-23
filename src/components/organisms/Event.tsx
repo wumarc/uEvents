@@ -8,6 +8,8 @@ import {
   nextStartTime,
   nextEndTime,
   EventObject,
+  getTimeInAMPM,
+  relativeDate,
 } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
 import { SvgUri } from 'react-native-svg';
@@ -69,20 +71,6 @@ const Event: React.FC<EventProps> = (props) => {
     endTime = nextEndTime(event.startTime, startTime, event.endTime);
   }
 
-  const getTimeInAMPM = (date: any) => {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-
-    const strTime = hours + ':' + minutes + ' ' + ampm;
-    return strTime;
-
-  }
-
   return (
     <TouchableOpacity
       onPress={() => {
@@ -132,7 +120,7 @@ const Event: React.FC<EventProps> = (props) => {
               type='ionicon'
               color={colours.grey}
             />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{startTime?.toDate().toLocaleDateString()}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{relativeDate(event.startTime)}</Text>
             <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
             <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text>
             {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}

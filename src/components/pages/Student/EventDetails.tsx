@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
-import { EventObject } from "../../../utils/model/EventObject";
+import { EventObject, formatDateWithoutYear, getTimeInAMPM } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -64,15 +64,13 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
 
           <View style={{flexDirection: 'row', alignItems: 'center', width: windowWidth*0.45}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 {event.startTime.toDate().toLocaleDateString()}</Text>
+            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 {formatDateWithoutYear(event.startTime.toDate())}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>
-              🕑 {event.startTime.toDate().getHours()}:{event.startTime.toDate().getMinutes()}
-              - {event.endTime ? event.endTime.toDate().getHours() : "End"}:{event.endTime ? event.endTime.toDate().getMinutes() : "End"}
+              🕑 {getTimeInAMPM(event.startTime.toDate()) + "-"}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
             </Text>
-            {/* extractTime(event.startTime) + " - " + (event.endTime ? extractTime(event.endTime!) : "End") */}
           </View>
 
         </View>
@@ -114,10 +112,12 @@ const EventDetails = ({ route, navigation }: props) => {
 
         </View>
 
-        <View style={spacing.verticalMargin1}>
-          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🔗 Source Link</Text>
-          <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
-        </View>
+        {event.originalLink &&
+          <View style={spacing.verticalMargin1}>
+            <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🔗 Source Link</Text>
+            <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
+          </View>
+        }
 
       </ScrollView>
 
