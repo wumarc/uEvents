@@ -14,10 +14,10 @@ const Organizer = ({name}: any) => {
         >
             {/* Organizer Icon */}
             <View style={{width: windowWidth*0.1, height: windowHeight*0.05, justifyContent: 'center'}}>
-            <Image
+            {/* <Image
                 source={require('./1.png')}
                 style={{width: "100%", height: "100%"}}
-            />
+            /> */}
             </View>
 
             {/* Organizer name */}

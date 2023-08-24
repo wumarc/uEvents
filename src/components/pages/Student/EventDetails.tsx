@@ -69,7 +69,7 @@ const EventDetails = ({ route, navigation }: props) => {
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>
-              🕑 {getTimeInAMPM(event.startTime.toDate()) + "-"}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
+              🕧 {getTimeInAMPM(event.startTime.toDate()) + "-"}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
             </Text>
           </View>
 
@@ -85,9 +85,9 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📍 Location</Text>
           <View style={{borderWidth: 2, borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
-            <Text style={fonts.title3}>{event.location} Room {event.roomNumber}</Text>
-            <Text style={fonts.small}>{event.address}</Text>
-            <Button title={"Open on Google Maps"}
+            <Text style={{...fonts.title3, textAlign: 'center'}}>{event.location}{event.roomNumber ? ("Room" + event.roomNumber) : ""}</Text>
+            <Text style={{...fonts.small, textAlign: 'center'}}>{event.address}</Text>
+            <Button title={"Google Maps"}
               buttonStyle={{...buttons.button1, marginTop: '3%'}}
               titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
               onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
