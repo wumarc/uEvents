@@ -61,7 +61,7 @@ const OrganizerProfile = () => {
                 />
             </View>
 
-            {/* Club events */}
+            
 
 
         </ScrollView>
