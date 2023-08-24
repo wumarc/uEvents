@@ -4,7 +4,7 @@ import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
-import { Avatar } from "react-native-elements";
+import { Avatar, SearchBar, Switch } from "react-native-elements";
 import {
   useSateWithFireStore,
   useSateWithFireStoreArray,
@@ -18,6 +18,9 @@ import { RootStackParamList } from "./main";
 import { EventObject } from "../../../utils/model/EventObject";
 import { doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
+import { SvgUri } from "react-native-svg";
+import { colours } from "../../subatoms/Theme";
+import { searchAlgo } from "../../../utils/search";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -28,23 +31,57 @@ const Profile = ({ route, navigation }: props) => {
   const [loading, events, add, del] =
     useStateWithFireStoreCollection<EventObject>("events");
 
+  const [search, setSearch] = useState("");
+  const [detailed, setDetailed] = useState(true);
+
   if (loading) {
     return <Text>Loading</Text>;
   }
 
+  let filteredEvents = events as EventObject[];
+  filteredEvents = searchAlgo(search, filteredEvents);
+
   return (
     <View>
+      {/* Search Bar */}
+      <View style={{display: "flex", flexDirection: "row"}}>
+        <SearchBar
+          platform="default"
+          inputContainerStyle={{
+            borderRadius: 6,
+            height: 38,
+            backgroundColor: "#ebebeb",
+          }}
+          containerStyle={{
+            backgroundColor: "white",
+            flex: 1,
+            borderBottomColor: "transparent",
+            borderTopColor: "transparent",
+          }}
+          onChangeText={(value) => setSearch(value)}
+          placeholder="Search events by name or category"
+          // placeholderTextColor="white"
+          value={search}
+          autoCapitalize="none"
+          selectionColor={colours.purple}
+        />
+        <Switch
+          value={detailed}
+          onValueChange={() => setDetailed(!detailed)}
+          color="purple"
+        />
+      </View>
       <FlatList
-        data={events?.sort((a, b) => {
+        data={filteredEvents?.sort((a, b) => {
           if (a.state == b.state) {
-            // alphabetical order
-            return a.name > b.name ? 1 : -1;
+            // Order by start time
+            return a.startTime.toDate().getTime() - b.startTime.toDate().getTime();
           } else {
             return stateOrder.indexOf(a.state) - stateOrder.indexOf(b.state);
           }
         })}
         renderItem={({ item }) => (
-          <EventLine event={item} del={del} navigation={navigation} />
+          <EventLine event={item} del={del} navigation={navigation} detailed={detailed} />
         )}
       />
     </View>
@@ -55,7 +92,8 @@ const EventLine: FC<{
   event: EventObject;
   del: (id: string) => void;
   navigation: any;
-}> = ({ event, del, navigation }) => {
+  detailed?: boolean;
+}> = ({ event, del, navigation, detailed }) => {
   let organizer = event.organizer;
 
   const [reason, setReason] = useState("");
@@ -73,14 +111,22 @@ const EventLine: FC<{
   }
 
   return (
-    <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: 120, }} >
-      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "33%", }} >
+    <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed? 120 : 40 }} >
+      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%", }} >
+      <SvgUri
+          width={40}
+          height={40}
+          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          fill="black"
+        />
         <View style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} >
           <Text>{event.name}</Text>
+          <Text>{event.startTime.toDate().toDateString()}</Text>
           <Text>{event.organizerType + " - " + organizer}</Text>
         </View>
       </View>
-      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "33%", }} >
+      {detailed ? (
+      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "20%", }} >
         <View style={{ height: 40, }} >
           <Button size="sm" titleStyle={{fontSize: 12}}
             onPress={() => {
@@ -151,7 +197,9 @@ const EventLine: FC<{
           )}
         </View>
         </View>
-        <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "33%", }} >
+        ) : <></>}
+        {detailed ? (
+        <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "30%", }} >
         <View style={{ height: "100%", width: "90%"}} >
           {event.state === "Pending" ? (
             <Input
@@ -164,6 +212,7 @@ const EventLine: FC<{
           )}
         </View>
       </View>
+      ) : <></>}
     </View>
   );
 };
