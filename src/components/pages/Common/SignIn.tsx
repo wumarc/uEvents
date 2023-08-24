@@ -111,6 +111,7 @@ const WelcomePage: FC = ({ navigation }: any) => {
 
       <View style={{alignItems: 'center'}}>
         <Text style={{...fonts.small, color: colours.white}}>uEvent Technologies Inc.</Text>
+        <Text style={{...fonts.small, color: colours.white}}>admin@uevents.org</Text>
       </View>
       
     </SafeAreaView>

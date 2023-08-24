@@ -11,7 +11,11 @@
     "android": {
       "package": "com.uevents.dev.uevents",
       "versionCode": 5,
-      "icon": "./assets/adaptive-icon.png"
+      "icon": "./assets/adaptive-icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#D6A9D5"
+      }
     },
     "ios": {
       "bundleIdentifier": "com.uevents.dev.uevents",
