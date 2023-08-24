@@ -2,25 +2,31 @@
   "expo": {
     "name": "uEvents",
     "slug": "uevents",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#D6A9D5"
+    },
+    "android": {
+      "package": "com.uevents.dev.uevents",
+      "versionCode": 5,
+      "icon": "./assets/adaptive-icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#D6A9D5"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.uevents.dev.uevents",
+      "buildNumber": "1.0.3",
+      "icon": "./assets/icon.png"
     },
     "extra": {
       "eas": {
         "projectId": "f1ddc887-9200-4a3b-ab25-46afcc0e6f76"
       }
     },
-    "android": {
-      "package": "com.uevents.dev.uevents",
-      "versionCode": 4
-    },
-    "ios": {
-      "bundleIdentifier": "com.uevents.dev.uevents",
-      "buildNumber": "1.0.2"
-    },
-    "icon": "./assets/icon.png",
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
@@ -34,6 +40,9 @@
         {
           "ios": {
             "useFrameworks": "static"
+          },
+          "android": {
+            "targetSdkVersion": 33
           }
         }
       ]
