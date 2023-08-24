@@ -147,7 +147,7 @@ const EventLine: FC<{
           </Button>
         </View>
         <View style={{ marginLeft: 5, height: 40, }} >
-          <Button size="sm" titleStyle={{fontSize: 12}}
+          <Button size="sm" color="red" titleStyle={{fontSize: 12}}
             onPress={() => {
               if (event.organizerType === "Organizer Added") {
                 setKeep(true);
