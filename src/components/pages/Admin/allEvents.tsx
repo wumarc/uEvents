@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { FlatList, TouchableOpacity, View, Clipboard } from "react-native";
 import { FC, useState } from "react";
 import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
@@ -16,7 +16,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { EventObject } from "../../../utils/model/EventObject";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import { SvgUri } from "react-native-svg";
 import { colours } from "../../subatoms/Theme";
@@ -97,8 +97,9 @@ const EventLine: FC<{
   let organizer = event.organizer;
 
   const [reason, setReason] = useState("");
+  const [keep, setKeep] = useState(false);
 
-  if (event.organizerType === "Organizer Added") {
+  if (event.organizerType === "Organizer Added" || keep) {
     const [loading, organizer2] = useStateWithFireStoreDocument(
       "users",
       event.organizer
@@ -119,11 +120,11 @@ const EventLine: FC<{
           uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
           fill="black"
         />
-        <View style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} >
+        <TouchableOpacity style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} onPress={() => Clipboard.setString(event.id)}>
           <Text>{event.name}</Text>
           <Text>{event.startTime.toDate().toDateString()}</Text>
           <Text>{event.organizerType + " - " + organizer}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       {detailed ? (
       <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "20%", }} >
@@ -136,7 +137,7 @@ const EventLine: FC<{
             Edit
           </Button>
         </View>
-        <View style={{ marginLeft: 20, height: 40, }} >
+        <View style={{ marginLeft: 5, height: 40, }} >
           <Button size="sm" color="error" titleStyle={{fontSize: 12}}
             onPress={() => {
               del(event.id);
@@ -145,8 +146,27 @@ const EventLine: FC<{
             Delete
           </Button>
         </View>
-
-        <View style={{ marginLeft: 20, height: 40, }} >
+        <View style={{ marginLeft: 5, height: 40, }} >
+          <Button size="sm" titleStyle={{fontSize: 12}}
+            onPress={() => {
+              if (event.organizerType === "Organizer Added") {
+                setKeep(true);
+              getDoc(doc(fireStore, "users/" + event.organizer)).then((org) => {
+                setDoc(doc(fireStore, "events/" + event.id), {
+                  ...event,
+                  organizer: org.data()?.name,
+                  organizerType: "Manually Added",
+                }).then(() => {
+                  console.log("done");
+                });
+              }
+            );}
+            }}
+          >
+            Transfer
+          </Button>
+        </View>
+        <View style={{ marginLeft: 5, height: 40, }} >
           <Button color="green" size="sm" titleStyle={{fontSize: 12}}
             onPress={() => {
               navigation.navigate("Preview", { eventId: event.id, organizerId: event.organizer });
@@ -155,7 +175,7 @@ const EventLine: FC<{
             View
           </Button>
         </View>
-        <View style={{ marginLeft: 20, height: 40, }} >
+        <View style={{ marginLeft: 5, height: 40, }} >
           {event.state === "Draft" ? <Text style={{color: "red"}}>Draft</Text> : <></>}
           {event.state === "Pending" ? (
             <Button size="sm" titleStyle={{fontSize: 12}}
@@ -176,7 +196,7 @@ const EventLine: FC<{
         </View>
         <View
           style={{
-            marginLeft: 20,
+            marginLeft: 5,
             height: 40,
           }}
         >
