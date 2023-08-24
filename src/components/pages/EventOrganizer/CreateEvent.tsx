@@ -42,6 +42,7 @@ import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
+import { DatePickerModal } from "../../atoms/DatePickerModal";
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -399,13 +400,13 @@ export const Step4: FC<{ eventID: string }> = (props) => {
 
       {/* Recurrence */}
       <View style={spacing.verticalMargin1}>
-        {/* <ButtonGroup
-          buttons={["Single Event", "Weekly Event"]}
+        <ButtonGroup
+          buttons={["Single Event", "Weekly Event", "Custom Weekly", "Specific dates" ]}
           onPress={(index) => {}}
           selectedIndex={0}
           containerStyle={{ height: 50 }}
           selectedButtonStyle={{ backgroundColor: colours.purple }}
-        /> */}
+        />
       </View>
 
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
@@ -420,6 +421,10 @@ export const Step4: FC<{ eventID: string }> = (props) => {
               maximumDate={new Date(2023, 31, 31)}
               onChange={(e) => set({...event, startTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
             />
+            {/* <DatePickerModal
+              dateValue={event.startTime}
+              setDate={(date) => set({...event, startTime: date})}  
+              /> */}
           </>
         }
         {Platform.OS === "android" &&

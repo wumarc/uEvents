@@ -17,17 +17,13 @@ export enum EventCategory {
 
 export type recurrenceType =
   | "None"
-  | "Daily"
   | "Weekly"
-  | "Monthly"
   | "Custom Weekly"
   | "Specific Dates";
 
 export const recurrenceTypeArray: recurrenceType[] = [
   "None",
-  "Daily",
   "Weekly",
-  "Monthly",
   "Custom Weekly",
   "Specific Dates",
 ];
@@ -37,6 +33,7 @@ export class recurrence {
   customDays?: daysOfWeekBrief[];
   customDates?: Timestamp[];
   end?: Timestamp; // If current > end, event is no longer recurring
+  exceptions?: Timestamp[]; // If current in exceptions, event is not happening on that day
 
   constructor(
     type: recurrenceType,
@@ -109,16 +106,6 @@ export const nextStartTime = (
     case "None":
       foundDate = startDate;
       break;
-    case "Daily":
-      let nextDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate(),
-        startDate.getHours(),
-        startDate.getMinutes()
-      );
-      foundDate = nextDate;
-      break;
     case "Weekly":
       let nextWeekDate = new Date(
         today.getFullYear(),
@@ -131,19 +118,6 @@ export const nextStartTime = (
         nextWeekDate.setDate(nextWeekDate.getDate() + 1);
       }
       foundDate = nextWeekDate;
-      break;
-    case "Monthly":
-      let nextMonthDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        startDate.getDate(),
-        startDate.getHours(),
-        startDate.getMinutes()
-      );
-      if (nextMonthDate < today) {
-        nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
-      }
-      foundDate = nextMonthDate;
       break;
     case "Custom Weekly":
       let nextCustomWeekDate = new Date(
