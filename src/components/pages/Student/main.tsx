@@ -180,7 +180,7 @@ const Main: FC<{ userType: string }> = (props) => {
             name="EventOrganizerView"
             component={OrganizerProfile as any}
             options={({ navigation }) => ({
-              title: "Organizer",
+              title: "Profile",
               headerStyle: { backgroundColor: colours.white },
               headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
