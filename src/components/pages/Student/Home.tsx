@@ -274,6 +274,7 @@ export const styles = StyleSheet.create({
     // justifyContent: "center",
     // margin: 1
     marginVertical: "2%",
+    
   },
   titleContainer: {
     paddingLeft: "3%",

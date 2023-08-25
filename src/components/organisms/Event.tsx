@@ -82,7 +82,11 @@ const Event: React.FC<EventProps> = (props) => {
       });
       }}
     >
-      <View style={{flexDirection: 'row', borderColor: 'black', borderRadius: 13, backgroundColor: colours.white}}>
+      <View style={{
+        flexDirection: 'row', 
+        borderRadius: 13, 
+        ...styles.shadowProp
+      }}>
         
         <View style={{justifyContent: 'center', width: windowWidth*0.25, height: windowHeight*0.15}}>
         <SvgUri
@@ -149,6 +153,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     maxWidth: "100%",
   },
+  // shadowProp: {
+  //   shadowColor: '#171717',
+  //   shadowOffset: {width: -2, height: 4},
+  //   shadowOpacity: 0.2,
+  //   shadowRadius: 3,
+  // },
 });
 
 export default Event;
