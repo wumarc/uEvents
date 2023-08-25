@@ -12,6 +12,7 @@ import { Loading } from "../Common/Loading";
 import { BottomSheet } from "@rneui/themed";
 import CustomInput from "../../atoms/CustomInput";
 import CustomButton from "../../atoms/CustomButton";
+import { Badge } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -93,7 +94,7 @@ const EventDetails = ({ route, navigation }: props) => {
             {event.roomNumber && <Text style={{...fonts.title3, textAlign: 'center'}}>{event.roomNumber}</Text>}
             <Text style={{...fonts.small, textAlign: 'center'}}>{event.address}</Text>
             <Button title={"Google Maps"}
-              buttonStyle={{...buttons.button1, marginTop: '3%'}}
+              buttonStyle={{...buttons.button1, marginTop: '3%', backgroundColor: '#4285F4'}}
               titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
               onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
             />
@@ -112,6 +113,32 @@ const EventDetails = ({ route, navigation }: props) => {
                 color= {colours.grey}
               /> */}
               <Text style={fonts.regular}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
+            </View>
+          </View>
+
+        </View>
+
+        {/* Tags */}
+        <View style={spacing.verticalMargin1}>
+          <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏷️ Tags</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {event.categories.map((category, index) => {
+                return (
+                  <Badge
+                    key={index}
+                    value={category}
+                    badgeStyle={{
+                      backgroundColor: colours.white, 
+                      marginHorizontal: 3, 
+                      borderWidth: 1, 
+                      borderColor: colours.grey,
+                    }}
+                    textStyle={{...fonts.regular}}
+                    containerStyle={{marginVertical: 2}}
+                  />
+                )
+              })}
             </View>
           </View>
 
