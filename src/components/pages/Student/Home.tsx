@@ -39,17 +39,17 @@ const Home = ({ route, navigation }: props) => {
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [loading2, categories, setCategories] = useSateWithFireStore<string[]>(
-    "categories/names",
-    "list",
-    []
-  );
+  // const [loading2, categories, setCategories] = useSateWithFireStore<string[]>(
+  //   "categories/names",
+  //   "list",
+  //   []
+  // );
 
-  const [loading3, categoriesValue, setCategoriesValue] = useSateWithFireStore<
-    number[]
-  >("categories/values", "list", []);
+  // const [loading3, categoriesValue, setCategoriesValue] = useSateWithFireStore<
+  //   number[]
+  // >("categories/values", "list", []);
 
-  if (loading || loading2 || loading3) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -67,18 +67,18 @@ const Home = ({ route, navigation }: props) => {
   };
 
   /* --------------------------- Categories handling -------------------------- */
-  let numberOfEvents = calculateNumberOfEvents(categories, categoriesValue);
-  if (
-    numberOfEvents != events?.length &&
-    events != undefined &&
-    !Number.isNaN(numberOfEvents)
-  ) {
-    // Case where the categories are not updated
-    // Should never happen but just in case
-    let [newCategories, newCategoriesValue] = buildCategories(events);
-    setCategories(newCategories);
-    setCategoriesValue(newCategoriesValue);
-  }
+  // let numberOfEvents = calculateNumberOfEvents(categories, categoriesValue);
+  // if (
+  //   numberOfEvents != events?.length &&
+  //   events != undefined &&
+  //   !Number.isNaN(numberOfEvents)
+  // ) {
+  //   // Case where the categories are not updated
+  //   // Should never happen but just in case
+  //   let [newCategories, newCategoriesValue] = buildCategories(events);
+  //   setCategories(newCategories);
+  //   setCategoriesValue(newCategoriesValue);
+  // }
 
   /* ---------------------------- Filter the events --------------------------- */
 

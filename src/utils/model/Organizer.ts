@@ -8,6 +8,7 @@ export type Organizer = {
   email: string;
   instagram: string;
   description: string;
+  approved: boolean;
 };
 
 export const defaultOrganizer: Organizer = {
@@ -18,4 +19,5 @@ export const defaultOrganizer: Organizer = {
   instagram: "",
   description: "",
   id: "",
+  approved: false,
 };

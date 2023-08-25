@@ -272,6 +272,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
       console.log(email)
       console.log(password)
       await createUserWithEmailAndPassword(auth, email, password);
+      // Student
       if (userType === "student") {
         await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
           type: userType,
@@ -279,12 +280,14 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           id: getFirebaseUserIDOrEmpty(),
         });
       } else {
+        // Organizer
           await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
             type: userType,
             name: name,
             saved: [],
             id: getFirebaseUserIDOrEmpty(),
             email: email,
+            approved: false,
           });
       }
       setIsSigningUp(false);

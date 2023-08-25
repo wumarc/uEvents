@@ -8,7 +8,7 @@ import { Platform } from "react-native";
 import { colours } from "../../subatoms/Theme";
 import { FC } from "react";
 import Profile from "./Profile";
-import allEvents from "./allEvents";
+import allEvents from "./AllEvents";
 import CreateEvent from "./CreateEvent";
 import EditEvent from "./EditEvent";
 import UploadFile from "../../organisms/UploadFile";
@@ -16,6 +16,8 @@ import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
 import { Step0 } from "../EventOrganizer/CreateEvent";
 import HeaderLeft from "../../molecules/HeaderLeft";
+import { AllOrganizers, allOrganizers } from "./AllOrganizers";
+import AllEvents from "./AllEvents";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,7 +25,7 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   MainView: { userType: string };
   Profile: { userType: string };
-  allEvents: {};
+  AllEvents: {};
   createEvent: { userType: string };
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
@@ -35,6 +37,7 @@ export type RootStackParamList = {
     imageID: string;
   };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined };
+  AllOrganizers: {};
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -61,10 +64,24 @@ const MainView = ({ route, navigation }: props) => {
         }}
       />
       <Tab.Screen
-        name="allEvents"
-        component={allEvents as any} // TODO fix error
+        name="AllEvents"
+        component={AllEvents as any} // TODO fix error
         options={{
           tabBarLabel: "All Events",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="ticket"
+              color={colours.primaryPurple}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AllOrganizers"
+        component={AllOrganizers as any} // TODO fix error
+        options={{
+          tabBarLabel: "All Organizers",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="ticket"
