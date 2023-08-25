@@ -121,27 +121,24 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Tags */}
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏷️ Tags</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {event.categories.map((category, index) => {
-                return (
-                  <Badge
-                    key={index}
-                    value={category}
-                    badgeStyle={{
-                      backgroundColor: colours.white, 
-                      marginHorizontal: 3, 
-                      borderWidth: 1, 
-                      borderColor: colours.grey,
-                    }}
-                    textStyle={{...fonts.regular}}
-                    containerStyle={{marginVertical: 2}}
-                  />
-                )
-              })}
-            </View>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            {event.categories.map((category, index) => {
+              return (
+                <Badge
+                  key={index}
+                  value={category}
+                  badgeStyle={{
+                    backgroundColor: colours.white, 
+                    marginHorizontal: 3, 
+                    borderWidth: 1, 
+                    borderColor: colours.grey,
+                  }}
+                  textStyle={{...fonts.regular}}
+                  containerStyle={{marginVertical: 2}}
+                />
+              )
+            })}
           </View>
-
         </View>
 
         {event.originalLink &&
