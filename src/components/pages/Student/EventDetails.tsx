@@ -157,10 +157,10 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Report link */}
         <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
           <Text 
-            style={{...fonts.small, color: 'blue'}}
+            style={{...fonts.small, color: 'blue', textDecorationLine: 'underline'}}
             onPress={() => {setIsVisible(true)}}
           >
-            Something wrong? Click to report the event
+            Something wrong? Click here to report the event
           </Text>
         </View>
 
