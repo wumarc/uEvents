@@ -28,10 +28,13 @@ const Organizer = ({name, imageID}: any) => {
         >
             {/* Organizer Icon */}
             <View style={{width: windowWidth*0.1, height: windowHeight*0.05, justifyContent: 'center'}}>
-            {url? <Image
+            {url? 
+            <Image
                 source={{uri: url}}
-                style={{width: "100%", height: "100%"}}
-            />: <Icon name="person" />}
+                style={{width: "100%", height: "100%", borderRadius: 50}}
+            />
+            : <Icon name="person" />
+            }
             </View>
 
             {/* Organizer name */}
