@@ -135,6 +135,8 @@ export const Step0 = ({ route, navigation }: any) => {
     return <Loading />;
   }
 
+  const isAdmin = route.params.organizerName != undefined;
+
   return (
     <View style={{flex: 1, backgroundColor: colours.white, justifyContent: "space-between"}}>
     {/* behavior={Platform.OS === "ios" ? "padding" : "height"} */}

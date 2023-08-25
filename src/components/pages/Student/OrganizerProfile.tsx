@@ -11,7 +11,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { RootStackParamList } from "./main";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Organizer } from "../../../utils/model/Organizer";
-import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
@@ -19,11 +19,12 @@ type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 const OrganizerProfile = ({route, navigation}: props) => {
 
     const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
+    const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
 
     const [dialogVisible, setdialogVisible] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
-    if (loading) {
+    if (loading || loading2) {
         return <Loading />;
     }
 
@@ -36,12 +37,13 @@ const OrganizerProfile = ({route, navigation}: props) => {
             
             {/* Club logo */}
             <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
-                <Avatar
+                {url? <Avatar
                     size={150}
                     rounded
-                    source={{uri: 'https://files.jotform.com/jufs/cvuo/91997878083278/5057107869824708883/logo.png?md5=6dY9Wg6_82qC1Q9bMfDynw&expires=1692906356'}}
+                    source={{uri: url}}
                     containerStyle={{ backgroundColor: 'transparent'}}
-                />
+                />: <Icon name="person" />}
+                
             </View>
 
             {/* Club title */}

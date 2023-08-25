@@ -39,7 +39,7 @@ export type RootStackParamList = {
   Search: { userType: string };
   Profile: { userType: string };
   HeaderLeft: { userType: string };
-  EventOrganizerView: { organizerID: string };
+  EventOrganizerView: { organizerID: string, imageID: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
