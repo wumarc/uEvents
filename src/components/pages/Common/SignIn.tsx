@@ -22,7 +22,7 @@ import { spacing } from "../../subatoms/Theme";
 import { Dropdown } from "react-native-element-dropdown";
 
 // Accepted universities
-const universities = ["@uottawa.ca"];
+const universities = ["@uottawa.ca", "@uevents.org"];
 const Stack = createNativeStackNavigator();
 
 const SignIn: FC = () => {
