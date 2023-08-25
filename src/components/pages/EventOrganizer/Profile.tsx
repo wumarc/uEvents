@@ -138,7 +138,7 @@ const Profile = ({ route, navigation }: props) => {
               }
             />
 
-            <Input
+            {/* <Input
               label="Email"
               defaultValue={profile.email}
               labelStyle={{
@@ -150,7 +150,7 @@ const Profile = ({ route, navigation }: props) => {
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
               onChangeText={(value: string) => setProfile({ ...profile, email: value })}
-            />
+            /> */}
 
             <Input
               label="Instagram"

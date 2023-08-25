@@ -284,6 +284,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             name: name,
             saved: [],
             id: getFirebaseUserIDOrEmpty(),
+            email: email,
           });
       }
       setIsSigningUp(false);
