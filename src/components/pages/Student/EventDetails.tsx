@@ -4,17 +4,21 @@ import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { Image, Icon, Button } from "@rneui/base";
+import { Image, Icon, Button, color } from "@rneui/base";
 import { SvgUri } from 'react-native-svg';
 import { defaultOrganizer } from "../../../utils/model/Organizer";
 import { useEffect, useState } from "react";
 import { Loading } from "../Common/Loading";
+import { BottomSheet } from "@rneui/themed";
+import CustomInput from "../../atoms/CustomInput";
+import CustomButton from "../../atoms/CustomButton";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
 
 const EventDetails = ({ route, navigation }: props) => {
   
+  const [isVisible, setIsVisible] = useState(false);
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
     route.params.eventID
@@ -85,7 +89,8 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📍 Location</Text>
           <View style={{borderWidth: 2, borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
-            <Text style={{...fonts.title3, textAlign: 'center'}}>{event.location}{event.roomNumber ? ("Room" + event.roomNumber) : ""}</Text>
+            <Text style={{...fonts.title3, textAlign: 'center'}}>{event.location}</Text>
+            {event.roomNumber && <Text style={{...fonts.title3, textAlign: 'center'}}>{event.roomNumber}</Text>}
             <Text style={{...fonts.small, textAlign: 'center'}}>{event.address}</Text>
             <Button title={"Google Maps"}
               buttonStyle={{...buttons.button1, marginTop: '3%'}}
@@ -118,6 +123,54 @@ const EventDetails = ({ route, navigation }: props) => {
             <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
           </View>
         }
+
+        {/* Report link */}
+        <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
+          <Text 
+            style={{...fonts.small, color: 'blue'}}
+            onPress={() => {setIsVisible(true)}}
+          >
+            Something wrong? Click to report the event
+          </Text>
+        </View>
+
+        <BottomSheet 
+            modalProps={{animationType: 'fade'}}
+            onBackdropPress={() => setIsVisible(false)}
+            isVisible={isVisible}
+            scrollViewProps={{scrollEnabled:false}}
+        >
+            <View style={{
+                backgroundColor: 'white', 
+                paddingVertical: '7%',
+                borderRadius: 15
+            }}>
+                <View style={{alignItems: 'center'}}>
+                  <Text style={{...fonts.title1, fontSize: 100}} >👮</Text>
+                  <Text style={{...fonts.regular, textAlign: 'center', marginBottom: '2%', marginHorizontal: '4%'}}>
+                      Thank you for taking the time to report, we will look into it as soon as possible!
+                  </Text>
+                </View>
+                <View style={{marginHorizontal: spacing.horizontalMargin1}}>
+                    <CustomButton
+                        buttonName="Submit report"
+                        onPressListener={() => {}}
+                    />
+                    <Button
+                        style={{
+                            paddingHorizontal: 10,
+                            borderRadius: 15,
+                            marginVertical: '1%'
+                        }}
+                        color={'transparent'}
+                        titleStyle={{color: colours.purple, fontWeight: '600'}}
+                        title={"Cancel"}
+                        onPress={() => setIsVisible(false)}
+                    />
+                </View>
+
+            </View>
+        </BottomSheet>
 
       </ScrollView>
 

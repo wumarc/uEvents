@@ -10,7 +10,7 @@
     },
     "android": {
       "package": "com.uevents.dev.uevents",
-      "versionCode": 5,
+      "versionCode": 6,
       "icon": "./assets/adaptive-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -19,7 +19,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.uevents.dev.uevents",
-      "buildNumber": "1.0.3",
+      "buildNumber": "1.0.4",
       "icon": "./assets/icon.png"
     },
     "extra": {
