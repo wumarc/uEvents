@@ -1,5 +1,5 @@
 import { Linking, ScrollView, View } from "react-native";
-import { BottomSheet, Icon, Text } from "@rneui/themed";
+import { BottomSheet, Dialog, Icon, Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { Button} from "@rneui/themed";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
@@ -20,6 +20,7 @@ import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import SettingsButton from "../../molecules/SettingsButton";
 import { useState } from "react";
+import * as Clipboard from 'expo-clipboard';
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -27,6 +28,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 const Settings = ({ route, navigation }: props) => {
   
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [dialogVisible, setdialogVisible] = useState(false);
 
   const [loading, profile, setProfile] = useSateWithFireStore<Organizer>(
     "organizer" + "/" + getFirebaseUserID(),
@@ -62,12 +64,16 @@ const Settings = ({ route, navigation }: props) => {
         {/* Settings */}
         <View style={{ marginTop: "10%" }}>
           <SettingsButton
-            buttonName={"Organization Profile"}
+            buttonName={"My Profile"}
             onPressListener={() => navigation.navigate("Profile")}
           />
           <SettingsButton
             buttonName={"Privacy Policy"}
             onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
+          />
+          <SettingsButton
+            buttonName={"Contact Us"}
+            onPressListener={() =>setdialogVisible(true)}
           />
           <SettingsButton
             buttonName={"Delete Account"}
@@ -143,6 +149,17 @@ const Settings = ({ route, navigation }: props) => {
                 />
             </View>
         </BottomSheet>
+        
+        <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={fonts.title2}>admin@uevents.org</Text>
+            <Button 
+              buttonStyle={{backgroundColor: colours.white}} 
+              icon={<Icon name="copy" type="feather" color={colours.black} />} 
+              onPress={() => Clipboard.setStringAsync('admin@uevents.org')}
+            />
+          </View>
+        </Dialog>
 
       </ScrollView>
       

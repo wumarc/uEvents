@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground } from "react-native";
-import { EventObject, formatDateWithoutYear, getTimeInAMPM, relativeDate } from "../../../utils/model/EventObject";
+import { EventObject, getTimeInAMPM, relativeDate } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -118,7 +118,13 @@ const EventDetails = ({ route, navigation }: props) => {
                 type='ionicon'
                 color= {colours.grey}
               /> */}
-              <Text style={fonts.regular}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
+              { event.organizerType == "Organizer Added" ? (
+                <Text style={fonts.regular}>{event.organizer}</Text>
+              ) : (
+                <>
+                  
+                </>
+              )}
             </View>
           </View>
 

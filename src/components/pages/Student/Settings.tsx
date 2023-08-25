@@ -86,7 +86,7 @@ const Settings = ({ route, navigation }: props) => {
         {/* Settings */}
         <View style={{ marginTop: "10%" }}>
           <SettingsButton
-            buttonName={"Account Settings"}
+            buttonName={"My Profile"}
             onPressListener={() =>
               navigation.navigate("AccountSettingsView", {})
             }
