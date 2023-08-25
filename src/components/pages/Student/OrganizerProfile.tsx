@@ -17,7 +17,6 @@ import { Loading } from "../Common/Loading";
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 const OrganizerProfile = ({route, navigation}: props) => {
 
-    console.log(route.params.organizerID)
     const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
 
     const [dialogVisible, setdialogVisible] = useState(false);
