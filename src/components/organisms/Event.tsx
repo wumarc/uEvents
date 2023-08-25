@@ -13,6 +13,7 @@ import {
 } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
 import { SvgUri } from 'react-native-svg';
+import { Image } from "@rneui/themed";
 
 // Event component props
 interface EventProps {
@@ -104,17 +105,12 @@ const Event: React.FC<EventProps> = (props) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {/* <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}> */}
+            <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
               {/* <Image
-                source={{uri:'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg'}}
+                source={{uri: image.uri}}
                 style={{width: "100%", height: "100%"}}
               /> */}
-            {/* <Icon
-              name='font-awesome'
-              type='building-o'
-              color='black'
-            /> */}
-            {/* </View> */}
+            </View>
             <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
           </View>
 

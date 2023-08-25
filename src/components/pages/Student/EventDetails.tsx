@@ -48,7 +48,7 @@ const EventDetails = ({ route, navigation }: props) => {
   return (
     <View style={{flex: 1, backgroundColor: colours.white}}>
 
-      <ScrollView style={{paddingHorizontal: spacing.horizontalMargin1, paddingBottom: 100}}>
+      <ScrollView style={{paddingHorizontal: spacing.horizontalMargin1, paddingBottom: 100}} showsVerticalScrollIndicator={false}>
 
         {/* Image */}
         <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.18}}>
