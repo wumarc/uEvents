@@ -112,6 +112,22 @@ const EventLine: FC<{
     organizer = organizer2?.name;
   }
 
+  let status = "";
+  let statusColor = "black";
+
+  if (event.state === "Published") {
+    status = "Published";
+    statusColor = "green";
+  } else if (event.state === "Rejected") {
+    status = "Rejected";
+    statusColor = "orange";
+  } else if (event.state === "Pending") {
+    status = "Pending";
+    statusColor = "blue";
+  } else if (event.state === "Draft") {
+    status = "Draft";
+  }
+
   return (
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed? 120 : 40 }} >
       <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%", }} >
@@ -123,7 +139,7 @@ const EventLine: FC<{
         />
         <TouchableOpacity style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} onPress={() => Clipboard.setString(event.id)}>
           <Text>{event.name}</Text>
-          <Text>{event.startTime.toDate().toDateString()}</Text>
+          <View style={{display: "flex", flexDirection: "row"}}><Text>{event.startTime.toDate().toDateString() + " - "}</Text><Text style={{color: statusColor}}>{status}</Text></View>
           <Text>{event.organizerType + " - " + organizer}</Text>
         </TouchableOpacity>
       </View>
@@ -178,7 +194,6 @@ const EventLine: FC<{
           </Button>
         </View>
         <View style={{ marginLeft: 5, height: 40, }} >
-          {event.state === "Draft" ? <Text style={{color: "red"}}>Draft</Text> : <></>}
           {event.state === "Pending" ? (
             <Button size="sm" titleStyle={{fontSize: 12}}
               onPress={() => {
@@ -193,8 +208,7 @@ const EventLine: FC<{
           ) : (
             <></>
           )}
-          {event.state === "Published" ? <Text style={{color: "red"}}>Approved</Text> : <></>}
-          {event.state === "Rejected" ? <Text style={{color: "red"}}>Rejected</Text> : <></>}
+          
         </View>
         <View
           style={{
@@ -202,7 +216,7 @@ const EventLine: FC<{
             height: 40,
           }}
         >
-          {event.state === "Pending" ? (
+          {event.state === "Pending" || event.state === "Published" ? (
             <Button size="sm" titleStyle={{fontSize: 12}}
               onPress={() => {
                 setDoc(doc(fireStore, "events/" + event.id), {
@@ -223,7 +237,7 @@ const EventLine: FC<{
         {detailed ? (
         <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "30%", }} >
         <View style={{ height: "100%", width: "90%"}} >
-          {event.state === "Pending" ? (
+          {event.state === "Pending" || event.state === "Published" ? (
             <Input
               placeholder="Reject reason"
               onChangeText={(t) => setReason(t)}
