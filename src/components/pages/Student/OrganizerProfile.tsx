@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, Linking } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Linking, FlatList } from "react-native";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import Event from "../../organisms/Event";
 import { Avatar, ButtonGroup, Icon } from "react-native-elements";
@@ -11,25 +11,52 @@ import CustomButton from "../../atoms/CustomButton";
 import { RootStackParamList } from "./main";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Organizer } from "../../../utils/model/Organizer";
-import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
+import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
+import { searchAlgo } from "../../../utils/search";
+import { Timestamp } from "firebase/firestore";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 
 const OrganizerProfile = ({route, navigation}: props) => {
 
     const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
-
+    const [listView, setListView] = useState(true);
+    const [loading2, events, add] =useStateWithFireStoreCollection<EventObject>("events");
     const [dialogVisible, setdialogVisible] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [search, setSearch] = useState("");
 
     if (loading) {
         return <Loading />;
     }
 
     if (!organizer) {
-        return <Text>Id field is missing in organizer</Text>;
+        return <Text>ID field is missing in organizer</Text>;
     }
+
+    /* ---------------------------- Filter the events --------------------------- */
+    // Filtered events
+    let filteredEvents = events as EventObject[];
+    filteredEvents = searchAlgo(search, filteredEvents);
+    // if (selectedIndex !== 0) {
+    //   filteredEvents = filteredEvents.filter((event) =>
+    //     event.categories.includes(
+    //       Object.values(EventCategory)[selectedIndex] as EventCategory
+    //     )
+    //   );
+    // }
+    filteredEvents = filteredEvents.filter((event) => {
+        let startTime = nextStartTime(event.startTime, event.recurrence);
+        if (!startTime) {
+        return false;
+        }
+        return startTime.toMillis() > Timestamp.now().toMillis();
+    });
+
+    filteredEvents = filteredEvents.filter((event) => 
+        event.state == "Published")
 
     return (
         <ScrollView style={{backgroundColor: colours.white, paddingHorizontal: spacing.page2}}>
@@ -83,6 +110,23 @@ const OrganizerProfile = ({route, navigation}: props) => {
                     selectedButtonStyle={{backgroundColor: colours.purple}}
                     textStyle={{...fonts.regular}}
                 />
+                {/* List */}
+                <FlatList
+                style={{}}
+                showsVerticalScrollIndicator={false}
+                data={filteredEvents}
+                renderItem={({ item, index }) => (
+                    <View style={{marginVertical: "2%"}}>
+                    <Event
+                        organizer={item.organizer}
+                        id={item.id}
+                        navigation={navigation}
+                        userType={route.params.organizerID}
+                        listView={listView}
+                    />
+                    </View>
+                )}
+                />
             </View>
             
             {/* Report section */}
@@ -107,43 +151,42 @@ const OrganizerProfile = ({route, navigation}: props) => {
             </Dialog>
 
             <BottomSheet 
-            modalProps={{animationType: 'fade'}}
-            onBackdropPress={() => setIsVisible(false)}
-            isVisible={isVisible}
-            scrollViewProps={{scrollEnabled:false}}
-        >
-            <View style={{
-                backgroundColor: 'white', 
-                paddingVertical: '7%',
-                borderRadius: 15
-            }}>
-                <View style={{alignItems: 'center'}}>
-                  <Text style={{...fonts.title1, fontSize: 100}} >👮</Text>
-                  <Text style={{...fonts.regular, textAlign: 'center', marginBottom: '2%', marginHorizontal: '4%'}}>
-                      Thank you for taking the time to report the user, we will look into it as soon as possible!
-                  </Text>
-                </View>
-                <View style={{marginHorizontal: spacing.horizontalMargin1}}>
-                    <CustomButton
-                        buttonName="Report organizer"
-                        onPressListener={() => {}}
-                    />
-                    <Button
-                        style={{
-                            paddingHorizontal: 10,
-                            borderRadius: 15,
-                            marginVertical: '1%'
-                        }}
-                        color={'transparent'}
-                        titleStyle={{color: colours.purple, fontWeight: '600'}}
-                        title={"Cancel"}
-                        onPress={() => setIsVisible(false)}
-                    />
-                </View>
+                modalProps={{animationType: 'fade'}}
+                onBackdropPress={() => setIsVisible(false)}
+                isVisible={isVisible}
+                scrollViewProps={{scrollEnabled:false}}
+            >
+                <View style={{
+                    backgroundColor: 'white', 
+                    paddingVertical: '7%',
+                    borderRadius: 15
+                }}>
+                    <View style={{alignItems: 'center'}}>
+                    <Text style={{...fonts.title1, fontSize: 100}} >👮</Text>
+                    <Text style={{...fonts.regular, textAlign: 'center', marginBottom: '2%', marginHorizontal: '4%'}}>
+                        Thank you for taking the time to report the user, we will look into it as soon as possible!
+                    </Text>
+                    </View>
+                    <View style={{marginHorizontal: spacing.horizontalMargin1}}>
+                        <CustomButton
+                            buttonName="Report organizer"
+                            onPressListener={() => {}}
+                        />
+                        <Button
+                            style={{
+                                paddingHorizontal: 10,
+                                borderRadius: 15,
+                                marginVertical: '1%'
+                            }}
+                            color={'transparent'}
+                            titleStyle={{color: colours.purple, fontWeight: '600'}}
+                            title={"Cancel"}
+                            onPress={() => setIsVisible(false)}
+                        />
+                    </View>
 
-            </View>
-        </BottomSheet>
-
+                </View>
+            </BottomSheet>
 
         </ScrollView>
     );

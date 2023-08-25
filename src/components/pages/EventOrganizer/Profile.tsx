@@ -9,6 +9,7 @@ import { Input, Avatar, Text } from "@rneui/themed";
 import { Button } from "react-native-elements";
 import {
   useSateWithFireStore,
+  useStateWithFireStoreCollection,
   useStateWithFireStoreDocument,
   useStateWithFireStoreImage,
 } from "../../../utils/useStateWithFirebase";
@@ -27,6 +28,7 @@ import { useUploadFile } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
 import { storage } from "../../../firebaseConfig";
 import { Loading } from "../Common/Loading";
+import { EventObject } from "../../../utils/model/EventObject";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -39,6 +41,7 @@ const Profile = ({ route, navigation }: props) => {
       "users",
       getFirebaseUserIDOrEmpty()
     );
+  
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
 
   const [loading2, url, found] = useStateWithFireStoreImage(
