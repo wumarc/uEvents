@@ -76,7 +76,7 @@ const OrganizerProfile = ({route, navigation}: props) => {
                     rounded
                     source={{uri: url}}
                     containerStyle={{ backgroundColor: 'transparent'}}
-                />: <Icon name="person" />}
+                /> : <Icon name="person" />}
                 
             </View>
 
