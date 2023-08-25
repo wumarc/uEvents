@@ -1,6 +1,6 @@
 import { colours } from "../subatoms/Theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import {
@@ -24,27 +24,34 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
   const saved = (userData?.saved ?? []).includes(props.eventID);
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        if (saved) {
-          setUserData({
-            saved: (userData?.saved ?? []).filter(
-              (id: string) => id !== props.eventID
-            ),
-          });
-        } else {
-          setUserData({
-            saved: [...(userData?.saved ?? []), props.eventID],
-          });
-        }
-      }}
-    >
+    <View style={{backgroundColor: colours.white, flexDirection: 'row'}}>  
       <MaterialCommunityIcons
         name={saved ? "heart" : "heart-outline"}
         color={saved ? colours.purple : colours.black}
         size={30}
+        onPress={() => {
+          if (saved) {
+            setUserData({
+              saved: (userData?.saved ?? []).filter(
+                (id: string) => id !== props.eventID
+              ),
+            });
+          } else {
+            setUserData({
+              saved: [...(userData?.saved ?? []), props.eventID],
+            });
+          }
+        }}
       />
-    </TouchableOpacity>
+      <MaterialCommunityIcons
+        name="dots-vertical"
+        color={colours.black}
+        size={30}
+        onPress={() => {
+          console.log("open menu")
+        }}
+      />
+    </View>
   );
 };
 
