@@ -123,7 +123,7 @@ const Profile = ({ route, navigation }: props) => {
         <View style={styles.studentInfo}>
           <View style={{ flexDirection: "column", flex: 1 }}>
             <Input
-              label="Organization Name"
+              label={<Text>Organization Name{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
               defaultValue={profile.name}
               labelStyle={{
                 color: "black",
@@ -176,9 +176,10 @@ const Profile = ({ route, navigation }: props) => {
                 fontWeight: "500",
                 marginBottom: "1%",
               }}
-              inputStyle={{ height: windowHeight * 0.2 }}
+              inputStyle={{ height: windowHeight * 0.15}}
               textAlignVertical="top"
               multiline={true}
+              maxLength={700}
               autoCapitalize="none"
               // rightIcon={{ type: 'entypo', name: 'cross'}}
               containerStyle={{ paddingHorizontal: 0 }}
