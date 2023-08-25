@@ -276,12 +276,14 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
           type: userType,
           saved: [],
+          id: getFirebaseUserIDOrEmpty(),
         });
       } else {
           await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
             type: userType,
             name: name,
             saved: [],
+            id: getFirebaseUserIDOrEmpty(),
           });
       }
       setIsSigningUp(false);

@@ -8,11 +8,28 @@ import * as Clipboard from 'expo-clipboard';
 import { BottomSheet } from "@rneui/themed";
 import { Button } from "@rneui/base";
 import CustomButton from "../../atoms/CustomButton";
+import { RootStackParamList } from "./main";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Organizer } from "../../../utils/model/Organizer";
+import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { Loading } from "../Common/Loading";
 
-const OrganizerProfile = () => {
+type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
+const OrganizerProfile = ({route, navigation}: props) => {
+
+    console.log(route.params.organizerID)
+    const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
 
     const [dialogVisible, setdialogVisible] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (!organizer) {
+        return <Text>Id field is missing in organizer</Text>;
+    }
 
     return (
         <ScrollView style={{backgroundColor: colours.white, paddingHorizontal: spacing.page2}}>
@@ -29,7 +46,7 @@ const OrganizerProfile = () => {
 
             {/* Club title */}
             <View>
-                <Text style={{...fonts.title2, textAlign: 'center'}}>University of Ottawa Astronomy Club</Text>
+                <Text style={{...fonts.title2, textAlign: 'center'}}>{organizer.name}</Text>
             </View>
 
             {/* Club description */}

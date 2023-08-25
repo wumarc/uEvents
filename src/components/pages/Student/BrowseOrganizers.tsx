@@ -1,10 +1,22 @@
 import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
+import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
+import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
+import { Loading } from "../Common/Loading";
 
 const BrowseOrganizers = ({navigation}: any) => {
 
-    const names = ["uOttawa Climate Crisis Coalition", "uOttawa Rock Climbing Club", "uOttawa Anime Club", "uOttawa Rocketry", "uO Triathlon", "UOttawa Quadball Club", "uOttawa Bioethics Association", "University of Ottawa Squash Club", "Egyptian Student Association", "University of Ottawa Glee Gees"]
+  const [loading, users, add] =
+  useStateWithFireStoreCollection<OrganizerType>("users");
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  let organizers = users?.filter((user) => user.type === "organizer") ?? [];
+
+
 
     return (
         <View style={styles.container}>
@@ -15,17 +27,16 @@ const BrowseOrganizers = ({navigation}: any) => {
               <Text style={fonts.title1}>Clubs</Text>
             </View>
 
-            {/* Organizer */}
-            <ScrollView/>
-              {names.map((name, index) => (
-                <View key={index}>
-                  <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView")}>
-                    <Organizer name={name}/>
+              <FlatList
+                data={organizers}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView", {organizerID: item.id})}>
+                    <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name}/>
                   </TouchableOpacity>
-                </View>
-              ))}
-            </ScrollView>
+                )}
+              />
 
+            </ScrollView>
         </View>
     )
 
