@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Linking } from "react-native";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import Event from "../../organisms/Event";
 import { Avatar, ButtonGroup, Icon } from "react-native-elements";
@@ -15,6 +15,7 @@ import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFireba
 import { Loading } from "../Common/Loading";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
+
 const OrganizerProfile = ({route, navigation}: props) => {
 
     const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
@@ -50,7 +51,7 @@ const OrganizerProfile = ({route, navigation}: props) => {
 
             {/* Club description */}
             <View style={spacing.verticalMargin1}>
-                <Text style={{...fonts.regular, textAlign: 'center'}}>The University of Ottawa Chess Club is a space where students of all strengths can get together and share their passion for chess. We hold bi-weekly meetings where players compete both casually and competitively. Once a year we compete in the annual Canadian University Chess Championship (CUCC) against other Canadian universities.</Text>
+                <Text style={{...fonts.regular, textAlign: 'center'}}>{organizer.description}</Text>
             </View>
 
             {/* Club socials */}
@@ -61,7 +62,7 @@ const OrganizerProfile = ({route, navigation}: props) => {
                     color={colours.black}
                     size={35}
                     containerStyle={{...spacing.verticalMargin1}}
-                    onPress={() => console.log('hello')}
+                    onPress={() => Linking.openURL(organizer.instagram)}
                 />
                 <Icon
                     name='at-outline'
@@ -96,7 +97,7 @@ const OrganizerProfile = ({route, navigation}: props) => {
 
             <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={fonts.title2}>admin@uevents.org</Text>
+                    <Text style={fonts.title2}>{organizer.email}</Text>
                     <Button
                         buttonStyle={{backgroundColor: colours.white}} 
                         icon={<Icon name="copy" type="feather" color={colours.black} />} 
