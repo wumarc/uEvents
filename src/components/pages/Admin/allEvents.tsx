@@ -72,6 +72,7 @@ const Profile = ({ route, navigation }: props) => {
         />
       </View>
       <FlatList
+        style={{ height: "90%" }}
         data={filteredEvents?.sort((a, b) => {
           if (a.state == b.state) {
             // Order by start time
@@ -146,7 +147,8 @@ const EventLine: FC<{
             Delete
           </Button>
         </View>
-        <View style={{ marginLeft: 5, height: 40, }} >
+        {/* To be used for special purposes */}
+        {/* <View style={{ marginLeft: 5, height: 40, }} >
           <Button size="sm" color="red" titleStyle={{fontSize: 12}}
             onPress={() => {
               if (event.organizerType === "Organizer Added") {
@@ -165,7 +167,7 @@ const EventLine: FC<{
           >
             Transfer
           </Button>
-        </View>
+        </View> */}
         <View style={{ marginLeft: 5, height: 40, }} >
           <Button color="green" size="sm" titleStyle={{fontSize: 12}}
             onPress={() => {
