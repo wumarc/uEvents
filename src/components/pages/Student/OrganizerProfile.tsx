@@ -1,11 +1,18 @@
-import { View, Text, ScrollView } from "react-native";
-import { StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import Event from "../../organisms/Event";
 import { Avatar, ButtonGroup, Icon } from "react-native-elements";
-
+import { useState } from "react";
+import { Dialog } from "react-native-elements";
+import * as Clipboard from 'expo-clipboard';
+import { BottomSheet } from "@rneui/themed";
+import { Button } from "@rneui/base";
+import CustomButton from "../../atoms/CustomButton";
 
 const OrganizerProfile = () => {
+
+    const [dialogVisible, setdialogVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     return (
         <ScrollView style={{backgroundColor: colours.white, paddingHorizontal: spacing.page2}}>
@@ -46,7 +53,7 @@ const OrganizerProfile = () => {
                     color={colours.black}
                     size={35}
                     containerStyle={{...spacing.verticalMargin1}}
-                    onPress={() => console.log('hello')}
+                    onPress={() => setdialogVisible(true)}
                 />
             </View>
 
@@ -60,8 +67,65 @@ const OrganizerProfile = () => {
                     textStyle={{...fonts.regular}}
                 />
             </View>
-
             
+            {/* Report section */}
+            <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
+            <Text 
+                style={{...fonts.small, color: 'blue'}}
+                onPress={() => {setIsVisible(true)}}
+            >
+                Something wrong? Click to report the organizer
+            </Text>
+            </View>
+
+            <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={fonts.title2}>admin@uevents.org</Text>
+                    <Button
+                        buttonStyle={{backgroundColor: colours.white}} 
+                        icon={<Icon name="copy" type="feather" color={colours.black} />} 
+                        onPress={() => Clipboard.setStringAsync('admin@uevents.org')}
+                    />
+                </View>
+            </Dialog>
+
+            <BottomSheet 
+            modalProps={{animationType: 'fade'}}
+            onBackdropPress={() => setIsVisible(false)}
+            isVisible={isVisible}
+            scrollViewProps={{scrollEnabled:false}}
+        >
+            <View style={{
+                backgroundColor: 'white', 
+                paddingVertical: '7%',
+                borderRadius: 15
+            }}>
+                <View style={{alignItems: 'center'}}>
+                  <Text style={{...fonts.title1, fontSize: 100}} >👮</Text>
+                  <Text style={{...fonts.regular, textAlign: 'center', marginBottom: '2%', marginHorizontal: '4%'}}>
+                      Thank you for taking the time to report the user, we will look into it as soon as possible!
+                  </Text>
+                </View>
+                <View style={{marginHorizontal: spacing.horizontalMargin1}}>
+                    <CustomButton
+                        buttonName="Report organizer"
+                        onPressListener={() => {}}
+                    />
+                    <Button
+                        style={{
+                            paddingHorizontal: 10,
+                            borderRadius: 15,
+                            marginVertical: '1%'
+                        }}
+                        color={'transparent'}
+                        titleStyle={{color: colours.purple, fontWeight: '600'}}
+                        title={"Cancel"}
+                        onPress={() => setIsVisible(false)}
+                    />
+                </View>
+
+            </View>
+        </BottomSheet>
 
 
         </ScrollView>
