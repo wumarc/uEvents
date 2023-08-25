@@ -13,6 +13,7 @@ import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase"
 import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
 import { Error } from "./src/components/pages/Common/Error";
 import { LogBox } from "react-native";
+import { Button } from "react-native-elements";
 
 export default function App() {
   
@@ -74,7 +75,13 @@ const AppInner: FC = () => {
 
   if (!userData) {
     // TODO: why is this giving an error?
-    return <Error message="Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account."/>;
+    return (
+    <View>
+      <Text style={{marginTop: "40%", textAlign: "center", margin: 20}}>Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account.</Text>
+      <Button style={{marginTop: "20%", margin: 20}} title="Sign Out" onPress={() => auth.signOut()} />
+    </View>
+    )
+    
   }
 
   if (userData.type === "student") {

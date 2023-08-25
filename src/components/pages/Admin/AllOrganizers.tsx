@@ -29,7 +29,8 @@ export const AllOrganizers = ({}: props) => {
         if (!a.approved) {
             return -1;
         }
-        return b 
+        // approved last
+        return 1; 
     });  
 
     return (
@@ -42,7 +43,12 @@ export const AllOrganizers = ({}: props) => {
                         <Text> {item.approved != undefined ? (item.approved? "Approved": "Created"): "Undefined"} </Text>
                         <Button size="sm" style={{marginLeft: 2}}
                             onPress={() => {
-                                setDoc(doc(fireStore, "users/" + item.id), {...item, approved: !item.approved})
+                                if (item.id == undefined) {
+                                    console.log("Undefined id")
+                                    return;
+                                }
+                                let nextValue = item.approved != undefined ? !item.approved : true;
+                                setDoc(doc(fireStore, "users/" + item.id), {...item, approved: nextValue})
                             }}
                         >Toggle</Button>
                         <Button size="sm" style={{marginLeft: 2}}

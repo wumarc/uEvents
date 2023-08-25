@@ -269,8 +269,6 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
     }
 
     try {
-      console.log(email)
-      console.log(password)
       await createUserWithEmailAndPassword(auth, email, password);
       // Student
       if (userType === "student") {

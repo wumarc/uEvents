@@ -27,6 +27,7 @@ import {
   buildCategories,
   calculateNumberOfEvents,
 } from "../../../utils/categories";
+import { Organizer } from "../../../utils/model/Organizer";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -38,7 +39,8 @@ const Home = ({ route, navigation }: props) => {
   const [listView, setListView] = useState(true);
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
+  // const [selectedIndex, setSelectedIndex] = useState(0);
   // const [loading2, categories, setCategories] = useSateWithFireStore<string[]>(
   //   "categories/names",
   //   "list",
@@ -49,9 +51,11 @@ const Home = ({ route, navigation }: props) => {
   //   number[]
   // >("categories/values", "list", []);
 
-  if (loading) {
+  if (loading || loading2) {
     return <Loading />;
   }
+
+  let organizers = users?.filter((user) => user.type === "organizer") ?? [];
 
   /* ---------------------------------- Toast --------------------------------- */
 
@@ -92,6 +96,8 @@ const Home = ({ route, navigation }: props) => {
   //     )
   //   );
   // }
+
+  // Make sure the events are not in the past
   filteredEvents = filteredEvents.filter((event) => {
     let startTime = nextStartTime(event.startTime, event.recurrence);
     if (!startTime) {
@@ -100,8 +106,18 @@ const Home = ({ route, navigation }: props) => {
     return startTime.toMillis() > Timestamp.now().toMillis();
   });
 
+  // Make sure the events are published
   filteredEvents = filteredEvents.filter((event) => 
     event.state == "Published")
+
+  // Make sure the organizer is approved
+  filteredEvents = filteredEvents.filter((event) => {
+    if (event.organizerType === "Manually Added") {
+      return true;
+    }
+    let organizer = organizers.find((organizer) => organizer.id === event.organizer);
+    return organizer?.approved ?? false;
+  });
 
   return (
     <View style={styles.container}>
