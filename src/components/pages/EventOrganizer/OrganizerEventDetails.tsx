@@ -22,7 +22,7 @@ const data = [
   { label: "William Commanda (WCA)", address: "52 University Street, Ottawa, Ontario"},
   { label: "Tabaret Hall (TBT)", address: "550 Cumberland Street, Ottawa, Ontario"},
   { label: "Department of Visual Arts (LRR)", address: "100 Laurier Street, Ottawa, Ontario"},
-  { label: "Hamelin (MHN)", address: "70 Laurier Street, Ottawa, Ontario"},
+  { label: "Hamelin (MHN)", address: "70 Laurier Street East, Ottawa, Ontario"},
   { label: "Morisset (MRT)", address: "65 University Street, Ottawa, Ontario"},
   { label: "University Centre (UCU)", address: "85 University Street, Ottawa, Ontario"},
   { label: "University Square", address: "136 University Private, Ottawa, ON K1N 1H3"},
