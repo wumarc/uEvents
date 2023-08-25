@@ -37,6 +37,7 @@ export type RootStackParamList = {
   Saved: { userType: string };
   Home: { userType: string };
   Search: { userType: string };
+  OrganizerProfile: { organizerID: string };
   Profile: { userType: string };
   HeaderLeft: { userType: string };
   EventOrganizerView: { organizerID: string, imageID: string };
