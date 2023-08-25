@@ -92,7 +92,14 @@ const Main: FC<{ userType: string }> = (props) => {
         barStyle="dark-content"
       />
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator initialRouteName="MainView">
+        <Stack.Navigator 
+          initialRouteName="MainView"
+          screenOptions={{
+            headerTitleAlign: "center",
+            animation: "slide_from_right",
+            //see this for more animation: https://stackoverflow.com/questions/69984434/not-work-transitionpresets-react-navigation-version-6
+          }}
+        >
           {/* Main View */}
           <Stack.Screen
             name="MainView"
