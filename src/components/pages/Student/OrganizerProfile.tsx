@@ -35,7 +35,13 @@ const OrganizerProfile = ({route, navigation}: props) => {
     }
 
     if (!organizer) {
-        return <Text>ID field is missing in organizer</Text>;
+        return (
+            <View style={{alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: colours.white}}>
+                <Text style={fonts.title2}>Sorry an error has occured</Text>
+                <Text style={fonts.regular}>ID field is missing in organizer</Text>
+                <Text style={fonts.regular}>Please reach out to us at admin@uevents.org</Text>
+            </View>
+        );
     }
 
     /* ---------------------------- Filter the events --------------------------- */
