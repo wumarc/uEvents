@@ -43,6 +43,7 @@ import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
 import { DatePickerModal } from "../../atoms/DatePickerModal";
+import SegmentedPicker from 'react-native-segmented-picker';
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -412,6 +413,8 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       </View>
 
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
+        {/* hehe */}
+        
         {Platform.OS === "ios" &&
           <>
             <Text style={fonts.title3}>Start Time</Text>
@@ -484,7 +487,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
     props.eventID
   );
 
-  const [charactersAvailable, setCharactersAvailable] = useState<number>(400);
+  const [charactersAvailable, setCharactersAvailable] = useState<number>(750);
 
   if (loading) return <Loading />;
 
@@ -519,10 +522,10 @@ export const Step5: FC<{ eventID: string }> = (props) => {
           multiline={true}
           containerStyle={{ paddingHorizontal: 0 }}
           onChange={(e) => {
-            setCharactersAvailable(400 - e.nativeEvent.text.length);
+            setCharactersAvailable(750 - e.nativeEvent.text.length);
             set({...event, description: e.nativeEvent.text})
           }}
-          maxLength={400}
+          maxLength={750}
         />
       </View>
     </View>
@@ -600,6 +603,7 @@ export const Step6: FC<{ eventID: string}> = (props) => {
 /* ------------------------------- Sign up link ----------------------------- */
 export const Step7: FC<{ eventID: string }> = (props) => {
 
+  const [showField, setShowField] = useState<boolean>(false);
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
     props.eventID
@@ -613,28 +617,46 @@ export const Step7: FC<{ eventID: string }> = (props) => {
     <View>
       
       <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Do you require sign up or ticket purchasing?</Text>
-      <Text style={fonts.regular}>Skip this step if your event requires no sign up or ticket purchasing.</Text>
+      <Text style={fonts.regular}>Provide the link where students can sign up or purchase tickets to the event.</Text>
       
       <View style={{ marginVertical: "5%" }}>
-        <Input
-          selectionColor={colours.purple}
-          defaultValue={event?.signUpLink}
-          placeholder="insert link"
-          // inputStyle={{height: windowHeight*0.08}}
-          inputContainerStyle={{
-            borderColor: colours.grey,
-            borderWidth: 1,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
+        <ButtonGroup
+          buttons={["No", "Yes"]}
+          onPress={(index) => {
+            if (index == 0) {
+              set({...event, signUpLink: ""}) //TODO Ask Antoine Lavigne
+              setShowField(false)
+            } else {
+              setShowField(true)
+            }
           }}
-          textAlignVertical="top"
-          multiline={true}
-          containerStyle={{paddingHorizontal: 0}}
-          onChange={(e) => set({...event, signUpLink: e.nativeEvent.text})}
-          maxLength={300}
+          selectedIndex={(showField || event.signUpLink || event.signUpLink != "") ? 1 : 0}
+          containerStyle={{ height: 50, paddingHorizontal: 0}}
+          selectedButtonStyle={{ backgroundColor: colours.purple }}
         />
       </View>
+
+      {(event.signUpLink || event.signUpLink != "" || showField) && 
+        <View style={{ marginVertical: "5%" }}>
+          <Input
+            selectionColor={colours.purple}
+            defaultValue={event?.signUpLink}
+            placeholder="Insert link"
+            // inputStyle={{height: windowHeight*0.08}}
+            inputContainerStyle={{
+              borderColor: colours.grey,
+              borderWidth: 1,
+              paddingVertical: 4,
+              paddingHorizontal: 10,
+              borderRadius: 6,
+            }}
+            textAlignVertical="top"
+            containerStyle={{paddingHorizontal: 0}}
+            onChange={(e) => set({...event, signUpLink: e.nativeEvent.text})}
+            maxLength={300}
+          />
+        </View>
+      }
 
     </View>
   );
@@ -959,7 +981,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           label="Description"
           selectionColor={colours.purple}
           multiline={true}
-          maxLength={400}
+          maxLength={750}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           onChange={(e) => set({ ...event, description: e.nativeEvent.text })}
           defaultValue={event.description}

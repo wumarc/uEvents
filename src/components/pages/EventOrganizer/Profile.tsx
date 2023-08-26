@@ -125,72 +125,64 @@ const Profile = ({ route, navigation }: props) => {
         {/* Club Info Section */}
         <View style={styles.studentInfo}>
           <View style={{ flexDirection: "column", flex: 1 }}>
+
             <Input
               label={<Text>Organization Name{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
+              placeholder="Organization name"
               defaultValue={profile.name}
-              labelStyle={{
-                color: "black",
-                fontWeight: "500",
-                marginBottom: "1%",
-              }}
-              autoCapitalize="none"
-              containerStyle={{ paddingHorizontal: 0 }}
-              selectionColor={colours.purple}
+              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) =>
                 setProfile({ ...profile, name: value })
               }
-            />
-
-            {/* <Input
-              label="Email"
-              defaultValue={profile.email}
-              labelStyle={{
-                color: "black",
-                fontWeight: "500",
-                marginBottom: "1%",
-              }}
-              autoCapitalize="none"
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
-              onChangeText={(value: string) => setProfile({ ...profile, email: value })}
-            /> */}
+              inputContainerStyle={{
+                borderColor: colours.grey,
+                borderWidth: 1,
+                paddingVertical: 4,
+                paddingHorizontal: 8,
+                borderRadius: 6,
+              }}
+            />
 
             <Input
-              label="Instagram"
+              label={<Text>Instagram{' '}<Text style={{ color: 'red' }}></Text></Text>}
+              placeholder="Instagram"
               defaultValue={profile.instagram}
-              labelStyle={{color: "black", fontWeight: "500", marginBottom: "1%"}}
-              autoCapitalize="none"
+              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+              onChangeText={(value: string) => setProfile({ ...profile, instagram: value })}
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
-              // rightIcon={{
-              //   type: 'entypo', name: 'cross',
-              //   onPress: () => {}
-              // }}
-              onChangeText={(value: string) =>
-                setProfile({ ...profile, instagram: value })
-              }
+              inputContainerStyle={{
+                borderColor: colours.grey,
+                borderWidth: 1,
+                paddingVertical: 4,
+                paddingHorizontal: 8,
+                borderRadius: 6,
+              }}
             />
 
-            <Input
-              label="Organization Description"
+            <Input 
+              label={<Text>Organization Description{' '}<Text style={{ color: 'red' }}></Text></Text>}
+              placeholder="Insert Description"
               defaultValue={profile.description}
-              labelStyle={{
-                color: "black",
-                fontWeight: "500",
-                marginBottom: "1%",
-              }}
-              inputStyle={{ height: windowHeight * 0.15}}
-              textAlignVertical="top"
               multiline={true}
               maxLength={700}
-              autoCapitalize="none"
-              // rightIcon={{ type: 'entypo', name: 'cross'}}
+              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+              onChangeText={(value: string) =>setProfile({ ...profile, description: value })}
               containerStyle={{ paddingHorizontal: 0 }}
+              inputStyle={{ height: windowHeight * 0.15}}
+              textAlignVertical="top"
               selectionColor={colours.purple}
-              onChangeText={(value: string) =>
-                setProfile({ ...profile, description: value })
-              }
+              inputContainerStyle={{
+                borderColor: colours.grey,
+                borderWidth: 1,
+                paddingVertical: 4,
+                paddingHorizontal: 8,
+                borderRadius: 6,
+              }}
             />
+
           </View>
         </View>
       </ScrollView>
