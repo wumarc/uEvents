@@ -121,8 +121,15 @@ const EventDetails = ({ route, navigation }: props) => {
                 type='ionicon'
                 color= {colours.grey}
               /> */}
-              <Text style={fonts.regular}>
-                {event.organizerType == "Manually Added" ? event.organizer : organizer.name}
+              <Text
+                style={fonts.title2}
+                onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
+              >
+                {event.organizerType == "Manually Added" ? event.organizer : 
+                  <Text style={fonts.title3}>
+                    {organizer.name}
+                  </Text>
+                }
               </Text>
             </View>
           </View>
