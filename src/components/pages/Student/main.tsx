@@ -19,6 +19,7 @@ import HeaderLeft from "../../molecules/HeaderLeft";
 import { colours, fonts, renTheme } from "../../subatoms/Theme";
 import HeaderRight from "../../molecules/HeaderRight";
 import { ThemeProvider } from "@rneui/themed";
+import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -183,6 +184,7 @@ const Main: FC<{ userType: string }> = (props) => {
               title: "Profile",
               headerStyle: { backgroundColor: colours.white },
               headerLeft: () => <HeaderLeft navigation={navigation} />,
+              headerRight: () => <ProfileHeaderRight eventID={""} />,
             })}
           />
         </Stack.Navigator>

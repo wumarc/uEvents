@@ -50,13 +50,15 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
       <Menu
         visible={visible}
         onDismiss={() => setVisible(false)}
+        style={{backgroundColor: colours.white}}
+        contentStyle={{backgroundColor: colours.white}}
         anchor={
           <MaterialCommunityIcons
-          name="dots-vertical"
-          color={colours.black}
-          size={30}
-          onPress={() => setVisible(true)}
-        />
+            name="dots-vertical"
+            color={colours.black}
+            size={30}
+            onPress={() => setVisible(true)}
+          />
         }
       >
         <Menu.Item onPress={() => {}} title="Report" />
