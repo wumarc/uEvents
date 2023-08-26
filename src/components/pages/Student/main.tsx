@@ -160,9 +160,7 @@ const Main: FC<{ userType: string }> = (props) => {
                 headerStyle: { backgroundColor: colours.white },
                 headerTintColor: colours.black,
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
-                headerRight: () => (
-                  <HeaderRight eventID={route.params.eventID} />
-                ),
+                headerRight: () => (<HeaderRight eventID={route.params.eventID} />),
               };
             }}
           />

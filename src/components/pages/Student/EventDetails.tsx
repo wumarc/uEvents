@@ -66,15 +66,21 @@ const EventDetails = ({ route, navigation }: props) => {
         </View>
 
         {/* Date and time */}
-        <View style={{...spacing.verticalMargin1, alignItems: 'center'}}>
-          <Text style={{...fonts.regular, ...spacing.bottomMargin1}}>
+        <View style={{...spacing.verticalMargin1}}>
+          <Text style={fonts.regular}>
             <Text style={fonts.title2}>📅 </Text>
             {relativeDate(event.startTime)}
           </Text>
           <Text style={fonts.regular}>
             <Text style={fonts.title2}>🕧 </Text>
-            {getTimeInAMPM(event.startTime.toDate()) + "-"}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
+            {getTimeInAMPM(event.startTime.toDate()) + " - "}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
           </Text>
+          { event.recurrence &&
+            <Text style={fonts.regular}>
+            <Text style={fonts.title2}>🔁 </Text>
+              {event.recurrence.type == "Weekly" ? "Weekly" : "Biweekly"}
+            </Text>
+          }
         </View>
 
         {/* Description */}
