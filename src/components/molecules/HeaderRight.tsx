@@ -2,18 +2,22 @@ import { colours } from "../subatoms/Theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   useSateWithFireStore,
   useStateWithFireStoreDocument,
 } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
+import { Menu } from "react-native-paper";
+import { Button } from "react-native-elements";
 
 const HeaderRight: FC<{ eventID: string }> = (props) => {
   const [loading, userData, setUserData] = useStateWithFireStoreDocument(
     "users",
     getFirebaseUserIDOrEmpty()
   );
+
+  const [visible, setVisible] = useState(false);
 
   if (loading) {
     return (
@@ -43,14 +47,23 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
           }
         }}
       />
-      <MaterialCommunityIcons
-        name="dots-vertical"
-        color={colours.black}
-        size={30}
-        onPress={() => {
-          console.log("open menu")
-        }}
-      />
+      <Menu
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        anchor={
+          <MaterialCommunityIcons
+          name="dots-vertical"
+          color={colours.black}
+          size={30}
+          onPress={() => setVisible(true)}
+        />
+        }
+      >
+        <Menu.Item onPress={() => {}} title="Report" />
+        <Menu.Item onPress={() => {}} title="Block" />
+        <Menu.Item onPress={() => {}} title="Claim event" />
+        <Menu.Item onPress={() => {}} title="Hide" />
+      </Menu>
     </View>
   );
 };

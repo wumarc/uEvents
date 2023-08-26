@@ -92,14 +92,16 @@ const OrganizerProfile = ({route, navigation}: props) => {
 
             {/* Club socials */}
             <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-                <Icon
-                    name='logo-instagram'
-                    type='ionicon'
-                    color={colours.black}
-                    size={35}
-                    containerStyle={{...spacing.verticalMargin1}}
-                    onPress={() => Linking.openURL(organizer.instagram)}
-                />
+                {organizer.instagram && 
+                    <Icon
+                        name='logo-instagram'
+                        type='ionicon'
+                        color={colours.black}
+                        size={35}
+                        containerStyle={{...spacing.verticalMargin1}}
+                        onPress={() => Linking.openURL(organizer.instagram)}
+                    />
+            }
                 <Icon
                     name='at-outline'
                     type='ionicon'
@@ -137,22 +139,12 @@ const OrganizerProfile = ({route, navigation}: props) => {
                 )}
                 />
             </View>
-            
-            {/* Report section */}
-            <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
-            <Text 
-                style={{...fonts.small, color: 'blue'}}
-                onPress={() => {setIsVisible(true)}}
-            >
-                Something wrong? Click to report the organizer
-            </Text>
-            </View>
 
             <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={fonts.title2}>{organizer.email}</Text>
                     <Button
-                        buttonStyle={{backgroundColor: colours.white}} 
+                        buttonStyle={{backgroundColor: colours.white}}
                         icon={<Icon name="copy" type="feather" color={colours.black} />} 
                         onPress={() => Clipboard.setStringAsync('admin@uevents.org')}
                     />

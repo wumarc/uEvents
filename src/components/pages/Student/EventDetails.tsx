@@ -136,16 +136,17 @@ const EventDetails = ({ route, navigation }: props) => {
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
             {event.categories.map((category, index) => {
               return (
+                //TODO use something else other than badge in the future
                 <Badge
                   key={index}
                   value={category}
                   badgeStyle={{
-                    backgroundColor: colours.white, 
-                    marginHorizontal: 3, 
-                    borderWidth: 1, 
+                    backgroundColor: colours.white,
+                    marginHorizontal: 3,
+                    borderWidth: 1,
                     borderColor: colours.grey,
                   }}
-                  textStyle={{...fonts.regular}}
+                  textStyle={{fontSize: 13, color: colours.grey}}
                   containerStyle={{marginVertical: 2}}
                 />
               )
@@ -159,16 +160,6 @@ const EventDetails = ({ route, navigation }: props) => {
             <Text style={{...fonts.small, textDecorationLine: 'underline'}} onPress={() => Linking.openURL(event.originalLink)}>{event.originalLink}</Text>
           </View>
         }
-
-        {/* Report link */}
-        <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
-          <Text 
-            style={{...fonts.small, color: 'blue', textDecorationLine: 'underline'}}
-            onPress={() => {setIsVisible(true)}}
-          >
-            Something wrong? Click here to report the event
-          </Text>
-        </View>
 
         <BottomSheet 
             modalProps={{animationType: 'fade'}}

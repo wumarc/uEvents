@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
-import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import {
   nextStartTime,
@@ -33,7 +33,7 @@ const Event: React.FC<EventProps> = (props) => {
   );
 
   const [loading2, student, setStudent] = useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
-
+  
   const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
     "users",
     props.organizer
@@ -107,7 +107,7 @@ const Event: React.FC<EventProps> = (props) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
               {/* <Image
-                source={{uri: image.uri}}
+                source={{uri: url}}
                 style={{width: "100%", height: "100%"}}
               /> */}
             </View>

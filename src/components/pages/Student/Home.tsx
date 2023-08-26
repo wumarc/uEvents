@@ -124,6 +124,7 @@ const Home = ({ route, navigation }: props) => {
       <StatusBar translucent />
 
       <ScrollView showsVerticalScrollIndicator={false}>
+        
         {/* Event title */}
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Upcoming Events</Text>
@@ -167,6 +168,7 @@ const Home = ({ route, navigation }: props) => {
                 userType={route.params.userType}
                 onSaveEvent={showToast}
                 listView={listView}
+                route={route}
               />
             </View>
           )}

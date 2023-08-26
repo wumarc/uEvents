@@ -14,6 +14,7 @@ import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
 import { Error } from "./src/components/pages/Common/Error";
 import { LogBox } from "react-native";
 import { Button } from "react-native-elements";
+import { Provider as PaperProvider } from 'react-native-paper';
 
 export default function App() {
   
@@ -47,7 +48,11 @@ export default function App() {
       </View>
     );
   } else if (user) {
-    return <AppInner />;
+    return (
+      <PaperProvider>
+        <AppInner />
+      </PaperProvider>
+    ); 
   } else {
     return <SignIn />;
   }
