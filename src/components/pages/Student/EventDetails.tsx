@@ -65,19 +65,16 @@ const EventDetails = ({ route, navigation }: props) => {
           <Text style={{...fonts.title2, textAlign: 'center'}}>{event.name}</Text>
         </View>
 
-        {/* Date */}
-        <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
-
-          <View style={{flexDirection: 'row', alignItems: 'center', width: windowWidth*0.45}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>📅 {relativeDate(event.startTime)}</Text>
-          </View>
-
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{...fonts.regular, marginLeft: windowWidth*0.01}}>
-              🕧 {getTimeInAMPM(event.startTime.toDate()) + "-"}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
-            </Text>
-          </View>
-
+        {/* Date and time */}
+        <View style={{...spacing.verticalMargin1, alignItems: 'center'}}>
+          <Text style={{...fonts.regular, ...spacing.bottomMargin1}}>
+            <Text style={fonts.title2}>📅 </Text>
+            {relativeDate(event.startTime)}
+          </Text>
+          <Text style={fonts.regular}>
+            <Text style={fonts.title2}>🕧 </Text>
+            {getTimeInAMPM(event.startTime.toDate()) + "-"}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
+          </Text>
         </View>
 
         {/* Description */}
