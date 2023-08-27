@@ -42,8 +42,7 @@ import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
-import { DatePickerModal } from "../../atoms/DatePickerModal";
-import SegmentedPicker from 'react-native-segmented-picker';
+import WheelPickerExpo from 'react-native-wheel-picker-expo';
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -395,6 +394,13 @@ export const Step4: FC<{ eventID: string }> = (props) => {
 
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
   if (loading) return <Loading />;
+  
+  const hours = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  const minutes = ['0', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
+  const ampm = ['AM', 'PM'];
+  const days = [
+
+  ];
 
   return (
     <View>
@@ -412,9 +418,39 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         />
       </View>
 
-      <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
         {/* hehe */}
-        
+        <View style={{flexDirection: 'row'}}>
+          {/* <WheelPickerExpo
+            height={200}
+            width={150}
+            initialSelectedIndex={3}
+            items={[CITIES].map(name => ({ label: name, value: '' }))}
+            onChange={({ item }) => {}} 
+          /> */}
+          <WheelPickerExpo
+            height={200}
+            width={150}
+            initialSelectedIndex={3}
+            items={hours.map(name => ({ label: name, value: '' }))}
+            onChange={({ item }) => {}} 
+          />
+          <WheelPickerExpo
+            height={200}
+            width={150}
+            initialSelectedIndex={3}
+            items={minutes.map(name => ({ label: name, value: '' }))}
+            onChange={({ item }) => {}} 
+          />
+          <WheelPickerExpo
+            height={200}
+            width={150}
+            initialSelectedIndex={3}
+            items={ampm.map(name => ({ label: name, value: '' }))}
+            onChange={({ item }) => {}} 
+          />
+        </View>
+
+      <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
         {Platform.OS === "ios" &&
           <>
             <Text style={fonts.title3}>Start Time</Text>
