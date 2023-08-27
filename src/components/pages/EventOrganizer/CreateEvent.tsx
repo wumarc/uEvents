@@ -451,64 +451,11 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         </View>
 
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
-        {Platform.OS === "ios" &&
-          <>
-            <Text style={fonts.title3}>Start Time</Text>
-            <DateTimePicker
-              value={event.startTime == null ? new Date() : event.startTime.toDate()}
-              mode={"datetime"}
-              display="spinner"
-              minimumDate={new Date()}
-              maximumDate={new Date(2023, 31, 31)}
-              onChange={(e) => set({...event, startTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
-            />
-            {/* <DatePickerModal
-              dateValue={event.startTime}
-              setDate={(date) => set({...event, startTime: date})}  
-              /> */}
-          </>
-        }
-        {Platform.OS === "android" &&
-          <>
-            <Text style={fonts.title3}>Start Time (MM-DD-YYYY-HH-MM)</Text>
-            <Input
-              selectionColor={colours.purple}
-              defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})}
-              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
-              maxLength={50}
-              onChange={(e) => set({...event, startTime: Timestamp.fromMillis(Date.parse(e.nativeEvent.text))})}
-            />
-          </>
-        }
 
       </View>
 
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
-      {Platform.OS === "ios" &&
-        <>
-          <Text style={fonts.title3}>End Time</Text>
-          <DateTimePicker
-            value={event.endTime == null ? new Date() : event.endTime.toDate()}
-            mode={"datetime"}
-            display="spinner"
-            minimumDate={event.startTime == null ? new Date() : event.startTime.toDate()}
-            maximumDate={new Date(2023, 31, 31)}
-            onChange={(e) => set({...event, endTime: Timestamp.fromMillis(e.nativeEvent.timestamp!)})}
-          />
-        </>
-      }
-      {Platform.OS === "android" &&
-        <>
-          <Text>End Time (Optional)</Text>
-          <Input
-              selectionColor={colours.purple}
-              defaultValue={event.startTime == null ? "" : event.startTime.toDate().toLocaleDateString() + "-" + event.startTime.toDate().toLocaleTimeString()}
-              inputContainerStyle={{borderColor: colours.grey,borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
-              maxLength={50}
-              onChange={(e) => set({...event, startTime: Timestamp.fromMillis(Date.parse(e.nativeEvent.text))})}
-            />
-        </>
-      }
+
       </View>
 
     </View>
