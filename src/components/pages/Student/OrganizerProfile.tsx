@@ -16,6 +16,7 @@ import { Loading } from "../Common/Loading";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 
@@ -23,14 +24,17 @@ const OrganizerProfile = ({route, navigation}: props) => {
 
     const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
     const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
-
-    const [listView, setListView] = useState(true);
     const [loading3, events, add] =useStateWithFireStoreCollection<EventObject>("events");
+    const [loading4, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
+    const [loading5, student, setStudent] = useStateWithFireStoreDocument(
+        "users",
+        getFirebaseUserIDOrEmpty()
+      );
     const [dialogVisible, setdialogVisible] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
-    const [search, setSearch] = useState("");
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
-    if (loading || loading2 || loading3) {
+    if (loading || loading2 || loading3 || loading4 || loading5) {
         return <Loading />;
     }
 
@@ -45,26 +49,37 @@ const OrganizerProfile = ({route, navigation}: props) => {
     }
 
     /* ---------------------------- Filter the events --------------------------- */
-    // Filtered events
-    let filteredEvents = events as EventObject[];
-    filteredEvents = searchAlgo(search, filteredEvents);
-    // if (selectedIndex !== 0) {
-    //   filteredEvents = filteredEvents.filter((event) =>
-    //     event.categories.includes(
-    //       Object.values(EventCategory)[selectedIndex] as EventCategory
-    //     )
-    //   );
-    // }
-    filteredEvents = filteredEvents.filter((event) => {
-        let startTime = nextStartTime(event.startTime, event.recurrence);
-        if (!startTime) {
-        return false;
-        }
-        return startTime.toMillis() > Timestamp.now().toMillis();
-    });
 
-    filteredEvents = filteredEvents.filter((event) => 
-        event.state == "Published")
+    let isPresent = selectedIndex === 0 ? true : false;
+    let organizers = users?.filter((user) => user.type === "organizer") ?? [];
+
+      // Filtered events
+  let filteredEvents = events as EventObject[];
+  filteredEvents = searchAlgo("", filteredEvents);
+
+  // Make sure the events are not in the past
+  filteredEvents = filteredEvents.filter((event) => {
+    let startTime = nextStartTime(event.startTime, event.recurrence);
+    if (!startTime) {
+      return false;
+    }
+    return isPresent? startTime.toMillis() > Timestamp.now().toMillis() : startTime.toMillis() < Timestamp.now().toMillis();
+  });
+
+  // Make sure the events are published
+  filteredEvents = filteredEvents.filter((event) => 
+    event.state == "Published")
+
+  // Remove blocked or hidden events
+  filteredEvents = filteredEvents.filter((event) => {
+    if ((student?.hidden ?? []).includes(event.id)) {
+      return false;
+    }
+    return true;
+  });
+
+    // Make sure the event is from the organizer
+    filteredEvents = filteredEvents.filter((event) => event.organizer === organizer.id);
 
     return (
         <ScrollView style={{backgroundColor: colours.white, paddingHorizontal: spacing.page2}}>
@@ -116,12 +131,14 @@ const OrganizerProfile = ({route, navigation}: props) => {
             <View>
                 <ButtonGroup
                     buttons={['Upcoming', 'Past']}
-                    selectedIndex={0}
+                    selectedIndex={selectedIndex}
                     containerStyle={{height: 50}}
                     selectedButtonStyle={{backgroundColor: colours.purple}}
                     textStyle={{...fonts.regular}}
+                    onPress={(index) => setSelectedIndex(index)}
                 />
                 {/* List */}
+                {filteredEvents.length === 0? <Text style={{...fonts.regular, textAlign: 'center', margin: 5}}>No events</Text> : 
                 <FlatList
                 style={{}}
                 showsVerticalScrollIndicator={false}
@@ -133,11 +150,11 @@ const OrganizerProfile = ({route, navigation}: props) => {
                         id={item.id}
                         navigation={navigation}
                         userType={route.params.organizerID}
-                        listView={listView}
+                        listView={false}
                     />
                     </View>
                 )}
-                />
+                />}
             </View>
 
             <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
