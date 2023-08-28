@@ -146,12 +146,15 @@ const Profile = ({ route, navigation }: props) => {
             />
 
             <Input
-              label={<Text>Instagram{' '}<Text style={{ color: 'red' }}></Text></Text>}
-              placeholder="Instagram"
+              label={<Text>Instagram Handle{' '}<Text style={{ color: 'red' }}></Text></Text>}
+              leftIcon={{ type: "font-awesome", name: "at" }}
+              leftIconContainerStyle={{marginRight: 10}}
+              placeholder="uevents_official"
               defaultValue={profile.instagram}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) => setProfile({ ...profile, instagram: value })}
               containerStyle={{ paddingHorizontal: 0 }}
+              autoCapitalize="none"
               selectionColor={colours.purple}
               inputContainerStyle={{
                 borderColor: colours.grey,

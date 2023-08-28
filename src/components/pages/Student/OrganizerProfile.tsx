@@ -99,7 +99,7 @@ const OrganizerProfile = ({route, navigation}: props) => {
                         color={colours.black}
                         size={35}
                         containerStyle={{...spacing.verticalMargin1}}
-                        onPress={() => Linking.openURL(organizer.instagram)}
+                        onPress={() => Linking.openURL("https://www.instagram.com/" + organizer.instagram)}
                     />
             }
                 <Icon

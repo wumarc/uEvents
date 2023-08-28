@@ -206,7 +206,7 @@ export const Step1: FC<{ eventID: string }> = (props) => {
 
   return (
     <View>
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2}}>How should we call your event?</Text>
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2}}>What is the name of your event?</Text>
       <Text style={fonts.regular}>Short names work best. Have fun with it!</Text>
 
       <View style={{ marginVertical: "5%" }}>
@@ -248,7 +248,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
 
   return (
     <View>
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Pick one emoji to represent your event</Text>
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Pick <Text style={{color: 'red', textDecorationLine: 'underline'}}>one</Text> emoji to represent your event</Text>
       <Text style={fonts.regular}>Who still uses images? Yuck! Emojis are cooler 😎</Text>
 
       <View style={{ marginVertical: "5%", paddingHorizontal: "25%"}}>
@@ -303,10 +303,10 @@ export const Step3: FC<{ eventID: string}> = (props) => {
 
   return (
     <View>
-      <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Is your event taking place on campus?</Text>
+      <Text style={{...fonts.title1, ...spacing.verticalMargin2}}>Where is your event taking place?</Text>
       
       <ButtonGroup
-        buttons={["Yes", "No"]}
+        buttons={["On-campus", "Off-campus"]}
         onPress={(index) => {
           if (index == 0) {
             set({ ...event, onCampus: true });
@@ -395,11 +395,134 @@ export const Step4: FC<{ eventID: string }> = (props) => {
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
   if (loading) return <Loading />;
   
-  const hours = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-  const minutes = ['0', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
+  const hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
   const ampm = ['AM', 'PM'];
   const days = [
-
+    'Wed Aug 30',
+    'Thu Aug 31',
+    'Fri Sep 01',
+    'Sat Sep 02',
+    'Sun Sep 03',
+    'Mon Sep 04',
+    'Tue Sep 05',
+    'Wed Sep 06',
+    'Thu Sep 07',
+    'Fri Sep 08',
+    'Sat Sep 09',
+    'Sun Sep 10',
+    'Mon Sep 11',
+    'Tue Sep 12',
+    'Wed Sep 13',
+    'Thu Sep 14',
+    'Fri Sep 15',
+    'Sat Sep 16',
+    'Sun Sep 17',
+    'Mon Sep 18',
+    'Tue Sep 19',
+    'Wed Sep 20',
+    'Thu Sep 21',
+    'Fri Sep 22',
+    'Sat Sep 23',
+    'Sun Sep 24',
+    'Mon Sep 25',
+    'Tue Sep 26',
+    'Wed Sep 27',
+    'Thu Sep 28',
+    'Fri Sep 29',
+    'Sat Sep 30',
+    'Sun Oct 01',
+    'Mon Oct 02',
+    'Tue Oct 03',
+    'Wed Oct 04',
+    'Thu Oct 05',
+    'Fri Oct 06',
+    'Sat Oct 07',
+    'Sun Oct 08',
+    'Mon Oct 09',
+    'Tue Oct 10',
+    'Wed Oct 11',
+    'Thu Oct 12',
+    'Fri Oct 13',
+    'Sat Oct 14',
+    'Sun Oct 15',
+    'Mon Oct 16',
+    'Tue Oct 17',
+    'Wed Oct 18',
+    'Thu Oct 19',
+    'Fri Oct 20',
+    'Sat Oct 21',
+    'Sun Oct 22',
+    'Mon Oct 23',
+    'Tue Oct 24',
+    'Wed Oct 25',
+    'Thu Oct 26',
+    'Fri Oct 27',
+    'Sat Oct 28',
+    'Sun Oct 29',
+    'Mon Oct 30',
+    'Tue Oct 31',
+    'Wed Nov 01',
+    'Thu Nov 02',
+    'Fri Nov 03',
+    'Sat Nov 04',
+    'Sun Nov 05',
+    'Mon Nov 06',
+    'Tue Nov 07',
+    'Wed Nov 08',
+    'Thu Nov 09',
+    'Fri Nov 10',
+    'Sat Nov 11',
+    'Sun Nov 12',
+    'Mon Nov 13',
+    'Tue Nov 14',
+    'Wed Nov 15',
+    'Thu Nov 16',
+    'Fri Nov 17',
+    'Sat Nov 18',
+    'Sun Nov 19',
+    'Mon Nov 20',
+    'Tue Nov 21',
+    'Wed Nov 22',
+    'Thu Nov 23',
+    'Fri Nov 24',
+    'Sat Nov 25',
+    'Sun Nov 26',
+    'Mon Nov 27',
+    'Tue Nov 28',
+    'Wed Nov 29',
+    'Thu Nov 30',
+    'Fri Dec 01',
+    'Sat Dec 02',
+    'Sun Dec 03',
+    'Mon Dec 04',
+    'Tue Dec 05',
+    'Wed Dec 06',
+    'Thu Dec 07',
+    'Fri Dec 08',
+    'Sat Dec 09',
+    'Sun Dec 10',
+    'Mon Dec 11',
+    'Tue Dec 12',
+    'Wed Dec 13',
+    'Thu Dec 14',
+    'Fri Dec 15',
+    'Sat Dec 16',
+    'Sun Dec 17',
+    'Mon Dec 18',
+    'Tue Dec 19',
+    'Wed Dec 20',
+    'Thu Dec 21',
+    'Fri Dec 22',
+    'Sat Dec 23',
+    'Sun Dec 24',
+    'Mon Dec 25',
+    'Tue Dec 26',
+    'Wed Dec 27',
+    'Thu Dec 28',
+    'Fri Dec 29',
+    'Sat Dec 30',
+    'Sun Dec 31'
   ];
 
   return (
@@ -418,45 +541,43 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         />
       </View>
 
-        {/* hehe */}
-        <View style={{flexDirection: 'row'}}>
-          {/* <WheelPickerExpo
-            height={200}
-            width={150}
-            initialSelectedIndex={3}
-            items={[CITIES].map(name => ({ label: name, value: '' }))}
-            onChange={({ item }) => {}} 
-          /> */}
+      <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3, flexDirection: 'row'}}>
           <WheelPickerExpo
             height={200}
-            width={150}
-            initialSelectedIndex={3}
+            width={130}
+            initialSelectedIndex={0}
+            items={days.map(name => ({ label: name, value: '' }))}
+            onChange={({ item }) => {}}
+            selectedStyle={{borderColor: 'black', borderWidth: 1}}
+          />
+          <WheelPickerExpo
+            height={200}
+            width={50}
+            initialSelectedIndex={0}
             items={hours.map(name => ({ label: name, value: '' }))}
-            onChange={({ item }) => {}} 
+            selectedStyle={{borderColor: 'black', borderWidth: 1}}
+            onChange={({ item }) => {}}
           />
           <WheelPickerExpo
             height={200}
-            width={150}
-            initialSelectedIndex={3}
+            width={50}
+            initialSelectedIndex={0}
             items={minutes.map(name => ({ label: name, value: '' }))}
+            selectedStyle={{borderColor: 'black', borderWidth: 1}}
             onChange={({ item }) => {}} 
           />
           <WheelPickerExpo
             height={200}
-            width={150}
-            initialSelectedIndex={3}
+            width={50}
+            initialSelectedIndex={0}
             items={ampm.map(name => ({ label: name, value: '' }))}
+            selectedStyle={{borderColor: 'black', borderWidth: 1}}
             onChange={({ item }) => {}} 
           />
-        </View>
-
-      <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
-
       </View>
 
-      <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
-
-      </View>
+      {/* <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
+      </View> */}
 
     </View>
   );
@@ -518,6 +639,7 @@ export const Step5: FC<{ eventID: string }> = (props) => {
 /* --------------------------------- Price: Free or Nah? ---------------------------------- */
 export const Step6: FC<{ eventID: string}> = (props) => {
 
+  const [showField, setShowField] = useState<boolean>(false);
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
     props.eventID
@@ -531,53 +653,72 @@ export const Step6: FC<{ eventID: string}> = (props) => {
     <View>
 
       <View>
-        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price of your event</Text>
-        <Text style={fonts.regular}>Skip this step if your event is free.</Text>
+        <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Enter the price your event</Text>
+        <Text style={fonts.regular}></Text>
       </View>
 
-      <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
+      <View style={{ marginVertical: "5%" }}>
+        <ButtonGroup
+          buttons={["Free", "Paid"]}
+          onPress={(index) => {
+            if (index == 0) {
+              setShowField(false);
+              set({ ...event, priceMin: 0, priceMax: 0});
+            } else {
+              setShowField(true);
+            }
+          }}
+          selectedIndex={(showField || event.priceMin != 0) ? 1 : 0}
+          containerStyle={{ height: 50, paddingHorizontal: 0}}
+          selectedButtonStyle={{ backgroundColor: colours.purple }}
+        />
+      </View>
 
-        <View style={{width: "48%"}}>
+      {(showField || event.priceMin != 0) &&
+        <View style={{flexDirection: 'row', ...spacing.verticalMargin1}}>
+          
+          <View style={{width: "48%"}}>
+            <Input
+              label=" "
+              selectionColor={colours.purple}
+              maxLength={4}
+              autoCapitalize="none"
+              defaultValue={event.priceMin == 0 ? "" : event.priceMin.toString()}
+              leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
+              inputContainerStyle={{borderColor: colours.grey, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
+              keyboardType="decimal-pad"
+              inputStyle={{ fontSize: 40, fontWeight: "bold" }}
+              containerStyle={{
+                padding: 20,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onChange={(e) => {set({...event, priceMin: parseInt(e.nativeEvent.text)})}}
+            />
+          </View>
+          
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{...fonts.title1}}>-</Text>
+          </View>
+      
+          <View style={{width: "48%"}}>
           <Input
-            label=" "
+            label="Max (Optional)"
             selectionColor={colours.purple}
             maxLength={4}
             autoCapitalize="none"
-            placeholder=""
             leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
             inputContainerStyle={{borderColor: colours.grey, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
             keyboardType="decimal-pad"
             inputStyle={{ fontSize: 40, fontWeight: "bold" }}
-            containerStyle={{
-              padding: 20,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onChange={(e) => {set({...event, priceMin: parseInt(e.nativeEvent.text)})}}
+            containerStyle={{padding: 20, justifyContent: "center", alignItems: "center"}}
+            onChange={(e) => {set({...event, priceMax: parseInt(e.nativeEvent.text)})}}
           />
-        </View>
-        
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{...fonts.title1}}>-</Text>
-        </View>
-    
-        <View style={{width: "48%"}}>
-        <Input
-          label="Max (Optional)"
-          selectionColor={colours.purple}
-          maxLength={4}
-          autoCapitalize="none"
-          leftIcon={<Icon name="dollar" type="font-awesome" size={40} color={colours.black}/>}
-          inputContainerStyle={{borderColor: colours.grey, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6}}
-          keyboardType="decimal-pad"
-          inputStyle={{ fontSize: 40, fontWeight: "bold" }}
-          containerStyle={{padding: 20, justifyContent: "center", alignItems: "center"}}
-          onChange={(e) => {set({...event, priceMax: parseInt(e.nativeEvent.text)})}}
-        />
+
+          </View>
 
         </View>
-
-      </View>
+      }
       
     </View>
   );
@@ -599,7 +740,7 @@ export const Step7: FC<{ eventID: string }> = (props) => {
   return (
     <View>
       
-      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Do you require sign up or ticket purchasing?</Text>
+      <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>Does your event require sign up or ticket purchasing?</Text>
       <Text style={fonts.regular}>Provide the link where students can sign up or purchase tickets to the event.</Text>
       
       <View style={{ marginVertical: "5%" }}>
@@ -709,7 +850,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
     <View>
       <View>
         <Text style={{ ...fonts.title1, ...spacing.verticalMargin2 }}>
-          Select up to 5 tags to represent your event
+          Select up to 5 tags for your event
         </Text>
         <Text>
           Tags are used as categories and search keywords.
@@ -766,7 +907,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         titleStyle={{ ...fonts.title3, color: colours.white}}
       />
       <Text>
-        Note that the created tag will now show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
+        Note that the created tag will not show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
       </Text>
       <View></View>
     </View>
@@ -1078,7 +1219,7 @@ export const Step10: FC<{ eventID: string }> = (props) => {
           🎉 You're all set! Sit back and relax while we approve your event. 🎉
         </Text>
         <Text style={fonts.regular}>
-          Events approval can take up to 2 hours. Check on the Events page to see if your event has been approved!
+          Events approval can take up to 2 hours.
         </Text>
       </View>
     </View>
