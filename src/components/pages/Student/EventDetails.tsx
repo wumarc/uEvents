@@ -107,7 +107,7 @@ const EventDetails = ({ route, navigation }: props) => {
                 <Button title={"Google Maps"}
                   buttonStyle={{...buttons.button1, marginTop: '3%', backgroundColor: '#4285F4'}}
                   titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
-                  onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.address)}}
+                  onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + event.location + " " + event.address)}}
                 />
               </View>
             </ImageBackground>

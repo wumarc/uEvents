@@ -82,7 +82,8 @@ const MainView = ({ route, navigation }: props) => {
 };
 
 const Main: FC<{ userType: string }> = (props) => {
-  const [form, setForm] = useState({});
+
+  
 
   return (
     <NavigationContainer>

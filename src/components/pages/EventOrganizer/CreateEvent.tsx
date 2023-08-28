@@ -149,7 +149,7 @@ export const Step0 = ({ route, navigation }: any) => {
           {step == 4 && <Step4 eventID={id} />}
           {step == 5 && <Step5 eventID={id} />}
           {step == 6 && <Step6 eventID={id} />}
-          {step == 7 && <Step7 eventID={id} />}
+          {step == 7 && <Step7 eventID={id} isAdmin={isAdmin} />}
           {step == 8 && <Step8 eventID={id} />}
           {step == 9 && <Step9 eventID={id} />}
           {step == 10 && <Step10 eventID={id} />}
@@ -750,7 +750,7 @@ export const Step6: FC<{ eventID: string}> = (props) => {
 };
 
 /* ------------------------------- Sign up link ----------------------------- */
-export const Step7: FC<{ eventID: string }> = (props) => {
+export const Step7: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
 
   const [showField, setShowField] = useState<boolean>(false);
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
@@ -805,6 +805,26 @@ export const Step7: FC<{ eventID: string }> = (props) => {
             maxLength={300}
           />
         </View>
+      }
+
+      {props.isAdmin && 
+        <Input
+        selectionColor={colours.purple}
+        defaultValue={event?.originalLink}
+        placeholder="Insert original link"
+        // inputStyle={{height: windowHeight*0.08}}
+        inputContainerStyle={{
+          borderColor: colours.grey,
+          borderWidth: 1,
+          paddingVertical: 4,
+          paddingHorizontal: 10,
+          borderRadius: 6,
+        }}
+        textAlignVertical="top"
+        containerStyle={{paddingHorizontal: 0}}
+        onChange={(e) => set({...event, originalLink: e.nativeEvent.text})}
+        maxLength={300}
+      />
       }
 
     </View>

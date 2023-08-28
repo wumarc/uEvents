@@ -8,7 +8,6 @@ import { Platform } from "react-native";
 import { colours } from "../../subatoms/Theme";
 import { FC } from "react";
 import Profile from "./Profile";
-// import allEvents from "./AllEvents";
 import CreateEvent from "./CreateEvent";
 import EditEvent from "./EditEvent";
 import UploadFile from "../../organisms/UploadFile";
@@ -16,9 +15,8 @@ import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
 import { Step0 } from "../EventOrganizer/CreateEvent";
 import HeaderLeft from "../../molecules/HeaderLeft";
-import AllEvents from "./AllEvents";
+import AllEvents from "./allEvents";
 import { AllOrganizers } from "./AllOrganizers";
-// import AllEvents from "./AllEvents";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -72,7 +70,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="ticket"
-              color={colours.primaryPurple}
+              color={colours.purple}
               size={30}
             />
           ),
@@ -86,7 +84,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="ticket"
-              color={colours.primaryPurple}
+              color={colours.purple}
               size={30}
             />
           ),
@@ -101,7 +99,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account-circle"
-              color={colours.primaryPurple}
+              color={colours.purple}
               size={30}
             />
           ),
