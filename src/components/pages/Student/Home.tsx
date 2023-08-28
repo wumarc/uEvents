@@ -11,6 +11,7 @@ import {
   useSateWithFireStore,
   useSateWithFireStoreArray,
   useStateWithFireStoreCollection,
+  useStateWithFireStoreDocument,
 } from "../../../utils/useStateWithFirebase";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
@@ -28,6 +29,7 @@ import {
   calculateNumberOfEvents,
 } from "../../../utils/categories";
 import { Organizer } from "../../../utils/model/Organizer";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -40,6 +42,11 @@ const Home = ({ route, navigation }: props) => {
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
+  const [loading3, student, setStudent] = useStateWithFireStoreDocument(
+    "users",
+    getFirebaseUserIDOrEmpty()
+  );
+
   // const [selectedIndex, setSelectedIndex] = useState(0);
   // const [loading2, categories, setCategories] = useSateWithFireStore<string[]>(
   //   "categories/names",
@@ -51,7 +58,7 @@ const Home = ({ route, navigation }: props) => {
   //   number[]
   // >("categories/values", "list", []);
 
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
@@ -117,6 +124,17 @@ const Home = ({ route, navigation }: props) => {
     }
     let organizer = organizers.find((organizer) => organizer.id === event.organizer);
     return organizer?.approved ?? false;
+  });
+
+  // Remove blocked or hidden events
+  filteredEvents = filteredEvents.filter((event) => {
+    if (student?.hidden.includes(event.id)) {
+      return false;
+    }
+    if (student?.blocked.includes(event.organizer)) {
+      return false;
+    }
+    return true;
   });
 
   return (
