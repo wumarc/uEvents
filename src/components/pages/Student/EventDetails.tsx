@@ -116,24 +116,45 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Organizer */}
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏠 Organizer</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{
+            flexDirection: 'row', 
+            justifyContent: 'space-between', 
+            borderWidth: event.organizerType == "Organizer Added" ? 1 : 0,
+            borderColor: colours.grey,
+            opacity: 0.7,
+            padding: '3.5%',
+            backgroundColor: event.organizerType == "Organizer Added" ? colours.primaryGrey : colours.white,
+            borderRadius: 10,
+          }}>
             {/* Icon / name */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <FirebaseImage
-                style={{width: 20, height: 20, borderRadius: 50, marginRight: 5}}
-                id={event.organizer}
-              />
+              {event.organizerType == "Organizer Added" &&
+                <FirebaseImage
+                  style={{width: 20, height: 20, borderRadius: 50, marginRight: 5}}
+                  id={event.organizer}
+                />
+              }
               <Text
                 style={fonts.title2}
+                disabled={event.organizerType == "Manually Added"}
                 onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
               >
                 {event.organizerType == "Manually Added" ? event.organizer : 
-                  <Text style={fonts.title3}>
+                  <Text style={fonts.title2}>
                     {organizer.name}
                   </Text>
                 }
               </Text>
             </View>
+            {event.organizerType == "Organizer Added" &&
+              <View>
+                <Icon
+                  name="chevron-right"
+                  size={20}
+                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
+                />
+              </View>
+            }
           </View>
 
         </View>
