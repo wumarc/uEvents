@@ -135,7 +135,8 @@ export const Step0 = ({ route, navigation }: any) => {
     return <Loading />;
   }
 
-  const isAdmin = route.params.organizerName != undefined;
+  const isAdmin = route.params.isAdmin;
+  console.log("isAdmin: " + isAdmin)
 
   return (
     <View style={{flex: 1, backgroundColor: colours.white, justifyContent: "space-between"}}>

@@ -166,7 +166,7 @@ const EventLine: FC<{
         <View style={{ height: 40, }} >
           <Button size="sm" titleStyle={{fontSize: 12}}
             onPress={() => {
-              navigation.navigate("Step0", { eventID: event.id, useDefault: false });
+              navigation.navigate("Step0", { eventID: event.id, useDefault: false, isAdmin: true });
             }}
           >
             Edit

@@ -45,7 +45,7 @@ const CreateEvent = ({ route, navigation }: props) => {
         buttonName={"Add Event"}
         onPressListener={() => {
           // Adding the event to the database
-          navigation.navigate("Step0", {useDefault: false, organizerName: organizerName, eventID: undefined});
+          navigation.navigate("Step0", {useDefault: false, organizerName: organizerName, eventID: undefined, isAdmin: true});
         }}
       />
     </View>

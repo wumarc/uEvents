@@ -35,7 +35,7 @@ export type RootStackParamList = {
     organizerID: string;
     imageID: string;
   };
-  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined };
+  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined, isAdmin?: boolean };
   AllOrganizers: {};
 };
 
