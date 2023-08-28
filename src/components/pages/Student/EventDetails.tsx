@@ -3,7 +3,7 @@ import { EventObject, getTimeInAMPM, relativeDate } from "../../../utils/model/E
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button, color } from "@rneui/base";
 import { SvgUri } from 'react-native-svg';
 import { defaultOrganizer } from "../../../utils/model/Organizer";
@@ -13,6 +13,7 @@ import { BottomSheet } from "@rneui/themed";
 import CustomInput from "../../atoms/CustomInput";
 import CustomButton from "../../atoms/CustomButton";
 import { Badge } from "react-native-elements";
+import FirebaseImage from "../../organisms/FirebaseImage";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -118,11 +119,10 @@ const EventDetails = ({ route, navigation }: props) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             {/* Icon / name */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {/* <Icon
-                name='calendar-outline'
-                type='ionicon'
-                color= {colours.grey}
-              /> */}
+              <FirebaseImage
+                style={{width: 20, height: 20, borderRadius: 50, marginRight: 5}}
+                id={event.organizer}
+              />
               <Text
                 style={fonts.title2}
                 onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}

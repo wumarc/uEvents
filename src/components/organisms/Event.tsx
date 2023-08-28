@@ -14,6 +14,7 @@ import {
 import { Student } from "../../utils/model/Student";
 import { SvgUri } from 'react-native-svg';
 import { Image } from "@rneui/themed";
+import FirebaseImage from "./FirebaseImage";
 
 // Event component props
 interface EventProps {
@@ -106,10 +107,10 @@ const Event: React.FC<EventProps> = (props) => {
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
-              {/* <Image
-                source={{uri: url}}
-                style={{width: "100%", height: "100%"}}
-              /> */}
+              <FirebaseImage
+                style={{width: "100%", height: "100%", borderRadius: 50}}
+                id={event.organizer}
+              />
             </View>
             <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
           </View>

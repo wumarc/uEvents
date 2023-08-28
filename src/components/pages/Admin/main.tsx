@@ -16,7 +16,8 @@ import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
 import { Step0 } from "../EventOrganizer/CreateEvent";
 import HeaderLeft from "../../molecules/HeaderLeft";
-import { AllOrganizers, allOrganizers } from "./AllOrganizers";
+import AllEvents from "./AllEvents";
+import { AllOrganizers } from "./AllOrganizers";
 // import AllEvents from "./AllEvents";
 
 const Tab = createMaterialBottomTabNavigator();
