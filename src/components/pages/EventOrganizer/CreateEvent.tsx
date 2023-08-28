@@ -396,9 +396,6 @@ export const Step3: FC<{ eventID: string}> = (props) => {
 /* ---------------------------------- Date ---------------------------------- */
 export const Step4: FC<{ eventID: string }> = (props) => {
 
-  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
-  if (loading) return <Loading />;
-  
   const hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
   const ampm = ['AM', 'PM'];
@@ -528,6 +525,23 @@ export const Step4: FC<{ eventID: string }> = (props) => {
     'Sat Dec 30',
     'Sun Dec 31'
   ];
+  const [date, setDate] = useState({
+    day: "",
+    hour: "",
+    minute: "",
+    ampm: "",
+  });
+
+  const convert = () => {
+    const dateString = date.day + ' ' + new Date().getFullYear() + ' ' + ((date.ampm === "PM" && date.hour !== "12") ? date.hour+12 : date.hour) + ':' + date.minute + ' ' + date.ampm;
+    const dateObj = new Date(dateString);
+    // const firebaseTimestamp = Timestamp.fromMillis(dateObj)
+    // Timestamp.fromMillis(e.nativeEvent.timestamp!)}
+    console.log(dateObj);
+  }
+
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
+  if (loading) return <Loading />;
 
   return (
     <View>
@@ -546,38 +560,45 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       </View>
 
       <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3, flexDirection: 'row'}}>
-          <WheelPickerExpo
-            height={200}
-            width={130}
-            initialSelectedIndex={0}
-            items={days.map(name => ({ label: name, value: '' }))}
-            onChange={({ item }) => {}}
-            selectedStyle={{borderColor: 'black', borderWidth: 1}}
-          />
-          <WheelPickerExpo
-            height={200}
-            width={50}
-            initialSelectedIndex={0}
-            items={hours.map(name => ({ label: name, value: '' }))}
-            selectedStyle={{borderColor: 'black', borderWidth: 1}}
-            onChange={({ item }) => {}}
-          />
-          <WheelPickerExpo
-            height={200}
-            width={50}
-            initialSelectedIndex={0}
-            items={minutes.map(name => ({ label: name, value: '' }))}
-            selectedStyle={{borderColor: 'black', borderWidth: 1}}
-            onChange={({ item }) => {}} 
-          />
-          <WheelPickerExpo
-            height={200}
-            width={50}
-            initialSelectedIndex={0}
-            items={ampm.map(name => ({ label: name, value: '' }))}
-            selectedStyle={{borderColor: 'black', borderWidth: 1}}
-            onChange={({ item }) => {}} 
-          />
+        <WheelPickerExpo
+          height={200}
+          width={130}
+          initialSelectedIndex={0}
+          items={days.map(name => ({ label: name, value: ''}))}
+          onChange={({ item }) => setDate({...date, day: item.label})}
+          selectedStyle={{borderColor: 'black', borderWidth: 1}}
+        />
+        <WheelPickerExpo
+          height={200}
+          width={50}
+          initialSelectedIndex={0}
+          items={hours.map(name => ({ label: name, value: '' }))}
+          selectedStyle={{borderColor: 'black', borderWidth: 1}}
+          onChange={({ item }) => setDate({...date, hour: item.label})}
+        />
+        <WheelPickerExpo
+          height={200}
+          width={50}
+          initialSelectedIndex={0}
+          items={minutes.map(name => ({ label: name, value: '' }))}
+          selectedStyle={{borderColor: 'black', borderWidth: 1}}
+          onChange={({ item }) => setDate({...date, minute: item.label})}
+        />
+        <WheelPickerExpo
+          height={200}
+          width={50}
+          initialSelectedIndex={0}
+          items={ampm.map(name => ({ label: name, value: '' }))}
+          selectedStyle={{borderColor: 'black', borderWidth: 1}}
+          onChange={({ item }) => setDate({...date, ampm: item.label})}
+        />
+        <Button
+          title="Set"
+          onPress={() => {
+            console.log(date)
+            convert();
+          }}
+        ></Button>
       </View>
 
       {/* <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
