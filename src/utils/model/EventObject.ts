@@ -220,8 +220,6 @@ export const relativeDate = (firebaseTimestamp: any) => {
       return "Tomorrow";
   } else if (daysDifference > 1 && daysDifference <= 7 && eventDate.getDay() > today.getDay()) {
       return weekdays[eventDate.getDay()];
-  } else if (daysDifference > 1 && daysDifference <= 14) {
-      return "Next " + weekdays[eventDate.getDay()];
   } else {
       let month = eventDate.getMonth() + 1;
       let day = eventDate.getDate();

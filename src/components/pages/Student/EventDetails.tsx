@@ -69,7 +69,9 @@ const EventDetails = ({ route, navigation }: props) => {
         <View style={{...spacing.verticalMargin1}}>
           <Text style={fonts.regular}>
             <Text style={fonts.title2}>📅 </Text>
-            {relativeDate(event.startTime)}
+            {/* {relativeDate(event.startTime)} */}
+            {/* Return the startTime in the format of day of the week month day */}
+            {event.startTime.toDate().toDateString()}
           </Text>
           <Text style={fonts.regular}>
             <Text style={fonts.title2}>🕧 </Text>
