@@ -143,7 +143,7 @@ export const Step0 = ({ route, navigation }: any) => {
 
       <ScrollView>
         <View style={{ paddingHorizontal: spacing.page2, ...spacing.verticalPadding1 }}>
-          {step == 1 && <Step1 eventID={id} />}
+          {step == 1 && <Step1 eventID={id} isAdmin={isAdmin} />}
           {step == 2 && <Step2 eventID={id} />}
           {step == 3 && <Step3 eventID={id} />}
           {step == 4 && <Step4 eventID={id} />}
@@ -199,7 +199,7 @@ export const Step0 = ({ route, navigation }: any) => {
 };
 
 /* ---------------------------------- Name ---------------------------------- */
-export const Step1: FC<{ eventID: string }> = (props) => {
+export const Step1: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
 
   const [charactersAvailable, setCharactersAvailable] = useState<number>(35);
@@ -235,6 +235,24 @@ export const Step1: FC<{ eventID: string }> = (props) => {
           maxLength={35}
           defaultValue={event.name}
         />
+        {props.isAdmin? 
+        <Input
+          label="Organizer"
+          selectionColor={colours.purple}
+          inputContainerStyle={{
+            borderColor: colours.grey,
+            borderWidth: 1,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderRadius: 6,
+          }}
+          containerStyle={{ paddingHorizontal: 0}}
+          onChange={(e) => {
+            set({...event, organizer: e.nativeEvent.text});
+          }}
+          defaultValue={event.organizer}
+        /> : <></>
+      }
       </View>
     </View>
   );
