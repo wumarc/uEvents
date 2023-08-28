@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Image,
+  Platform,
 } from "react-native";
 import { Input, Avatar, Text } from "@rneui/themed";
 import { Button } from "react-native-elements";
@@ -191,7 +192,11 @@ const Profile = ({ route, navigation }: props) => {
       </ScrollView>
 
       {/* Static Footer */}
-      <KeyboardAvoidingView style={{ marginBottom: windowHeight * 0.01 }}>
+      <KeyboardAvoidingView 
+        style={{ marginBottom: windowHeight * 0.01 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 95 : 0}
+      >
         <View style={styles.footer_buttons}>
           <Button
             buttonStyle={{

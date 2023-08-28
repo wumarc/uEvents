@@ -157,7 +157,11 @@ export const Step0 = ({ route, navigation }: any) => {
       </ScrollView>
 
       {/* Static Footer */}
-      <KeyboardAvoidingView style={{ marginBottom: windowHeight * 0.01 }}>
+      <KeyboardAvoidingView 
+        style={{ marginBottom: windowHeight * 0.01 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 95 : 0}
+      >
         <ProgressBar progress={step * 0.1} color={colours.purple} />
         <View style={styles.footer_buttons}>
           <Button
