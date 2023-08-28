@@ -128,10 +128,10 @@ const Home = ({ route, navigation }: props) => {
 
   // Remove blocked or hidden events
   filteredEvents = filteredEvents.filter((event) => {
-    if (student?.hidden.includes(event.id)) {
+    if ((student?.hidden ?? []).includes(event.id)) {
       return false;
     }
-    if (student?.blocked.includes(event.organizer)) {
+    if ((student?.blocked ?? []).includes(event.organizer)) {
       return false;
     }
     return true;
