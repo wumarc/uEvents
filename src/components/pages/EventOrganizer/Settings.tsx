@@ -12,6 +12,7 @@ import {
   signOut,
   updatePassword,
 } from "firebase/auth";
+import { auth, fireStore } from "../../../firebaseConfig";
 import { deleteDoc, doc } from "firebase/firestore";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";

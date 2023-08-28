@@ -14,7 +14,7 @@ const BrowseOrganizers = ({navigation}: any) => {
     return <Loading />;
   }
 
-  let organizers = users?.filter((user) => user.type === "organizer") ?? [];
+  let organizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
 
 
 

@@ -169,8 +169,8 @@ const Settings = ({ route, navigation }: props) => {
             <CustomButton
               buttonName="Delete Account"
               onPressListener={() => {
-                deleteUser(auth.currentUser as User);
                 deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
+                deleteUser(auth.currentUser as User);
               }}
               disabled={false}
             />
