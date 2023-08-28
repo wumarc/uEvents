@@ -63,7 +63,7 @@ export const daysToInt = (days: daysOfWeekBrief[]): number[] => {
 /// Optional fields are marked with a question mark. They can be undefined or empty to represent no value
 export type EventObject = {
   id: string; // Unique id for each event
-  state: "Draft" | "Pending" | "Published" | "Rejected"; // Draft: Event is created but not submitted for approval. Pending: Event is submitted for approval. Published: Event is approved and published
+  state: "Draft" | "Pending" | "Published" | "Rejected" | "Reported"; // Draft: Event is created but not submitted for approval. Pending: Event is submitted for approval. Published: Event is approved and published
   rejectReason: string;
   name: string;
   priceMin: number; // If no max price is specified, this is the exact price

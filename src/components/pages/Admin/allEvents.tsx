@@ -30,16 +30,30 @@ const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
 const AllEvents = ({ route, navigation }: props) => {
   const [loading, events, add, del] =
     useStateWithFireStoreCollection<EventObject>("events");
+  const [loading2, users, add2] = useStateWithFireStoreCollection<Student>("users");
 
   const [search, setSearch] = useState("");
   const [detailed, setDetailed] = useState(true);
 
-  if (loading) {
+  if (loading || loading2) {
     return <Text>Loading</Text>;
   }
 
   let filteredEvents = events as EventObject[];
   filteredEvents = searchAlgo(search, filteredEvents);
+
+  // Extract reported status
+  let reportedEvents: string[] = [];
+  for (let user of users ?? []) {
+    if (user.reported) {
+      reportedEvents = reportedEvents.concat(user.reported);
+    }
+  }
+  filteredEvents.map((event) => {
+    if (reportedEvents.includes(event.id)) {
+      event.state = "Reported";
+    }
+  });
 
   return (
     <View>
@@ -127,6 +141,10 @@ const EventLine: FC<{
   } else if (event.state === "Draft") {
     status = "Draft";
   }
+    else if (event.state === "Reported") {
+    status = "!!! Reported !!!";
+    statusColor = "red";
+  }
 
   return (
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed? 120 : 40 }} >
@@ -194,7 +212,7 @@ const EventLine: FC<{
           </Button>
         </View>
         <View style={{ marginLeft: 5, height: 40, }} >
-          {event.state === "Pending" ? (
+          {event.state === "Pending" || event.state === "Rejected" ? (
             <Button size="sm" titleStyle={{fontSize: 12}}
               onPress={() => {
                 setDoc(doc(fireStore, "events/" + event.id), {
@@ -216,7 +234,7 @@ const EventLine: FC<{
             height: 40,
           }}
         >
-          {event.state === "Pending" || event.state === "Published" ? (
+          {event.state === "Pending" || event.state === "Published" || event.state === "Reported" ? (
             <Button size="sm" titleStyle={{fontSize: 12}}
               onPress={() => {
                 setDoc(doc(fireStore, "events/" + event.id), {
