@@ -26,6 +26,8 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
   const [visible, setVisible] = useState(false);
 
   const [reportVisible, setReportVisible] = useState(false);
+  const [hideVisible, setHideVisible] = useState(false);
+  const [blockVisible, setBlockVisible] = useState(false);
 
   if (loading || loading2) {
     return (
@@ -70,9 +72,9 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
         }
       >
         <Menu.Item onPress={() => {setReportVisible(true)}} title="Report" />
-        <Menu.Item onPress={() => {}} title="Block" />
+        {event.organizerType === "Organizer Added"? <Menu.Item onPress={() => {setBlockVisible(true)}} title="Block" /> : <></>}
         {/* <Menu.Item onPress={() => {}} title="Claim event" /> */}
-        <Menu.Item onPress={() => {}} title="Hide" />
+        <Menu.Item onPress={() => {setBlockVisible(true)}} title="Hide" />
       </Menu>
       {/* Report dialog */}
       <Dialog
@@ -84,6 +86,11 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
         <Button
           title="Report"
           onPress={() => {
+            setUserData({
+              ...userData,
+              reported: [...(userData?.reported ?? []), props.eventID],
+              hidden: [...(userData?.hidden ?? []), props.eventID],
+            }); 
             setReportVisible(false);
             setVisible(false);
           }}
@@ -98,44 +105,52 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
       </Dialog>
       {/* Hide dialog */}
       <Dialog
-        isVisible={reportVisible}
-        onDismiss={() => setReportVisible(false)}
+        isVisible={hideVisible}
+        onDismiss={() => setHideVisible(false)}
         style={{backgroundColor: colours.white}}
       >
         <Text>This option will hide this event from your feed. You can undo this action in the settings. This only affects you. Report this even instead if you judge it is inappropriate for all users.</Text>
         <Button
-          title="Report"
+          title="Hide"
           onPress={() => {
-            setReportVisible(false);
+            setUserData({
+              ...userData,
+              hidden: [...(userData?.hidden ?? []), props.eventID],
+            });
+            setHideVisible(false);
             setVisible(false);
           }}
         />
         <Button
           title="Cancel"
           onPress={() => {
-            setReportVisible(false);
+            setHideVisible(false);
             setVisible(false);
           }}
         />
       </Dialog>
       {/* Block dialog */}
       <Dialog
-        isVisible={reportVisible}
-        onDismiss={() => setReportVisible(false)}
+        isVisible={blockVisible}
+        onDismiss={() => setBlockVisible(false)}
         style={{backgroundColor: colours.white}}
       >
         <Text>Blocking will block all events from this organizer. You will not be able to see any of their events on your feed. You can unblock anytime in settings.</Text>
         <Button
-          title="Report"
+          title="Block"
           onPress={() => {
-            setReportVisible(false);
+            setUserData({
+              ...userData,
+              blocked: [...(userData?.blocked ?? []), event?.organizer],
+            });
+            setBlockVisible(false);
             setVisible(false);
           }}
         />
         <Button
           title="Cancel"
           onPress={() => {
-            setReportVisible(false);
+            setBlockVisible(false);
             setVisible(false);
           }}
         />
