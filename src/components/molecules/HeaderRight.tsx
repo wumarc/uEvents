@@ -71,7 +71,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
       >
         <Menu.Item onPress={() => {setReportVisible(true)}} title="Report" />
         <Menu.Item onPress={() => {}} title="Block" />
-        <Menu.Item onPress={() => {}} title="Claim event" />
+        {/* <Menu.Item onPress={() => {}} title="Claim event" /> */}
         <Menu.Item onPress={() => {}} title="Hide" />
       </Menu>
       {/* Report dialog */}
@@ -141,7 +141,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
         />
       </Dialog>
       {/* Claim dialog */}
-      <Dialog
+      {/* <Dialog
         isVisible={reportVisible}
         onDismiss={() => setReportVisible(false)}
         style={{backgroundColor: colours.white}}
@@ -161,7 +161,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
             setVisible(false);
           }}
         />
-      </Dialog>
+      </Dialog> */}
     </View>
   );
 };
