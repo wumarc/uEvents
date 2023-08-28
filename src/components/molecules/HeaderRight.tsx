@@ -8,9 +8,9 @@ import {
   useStateWithFireStoreDocument,
 } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { Menu, Modal } from "react-native-paper";
 import { Button, Dialog } from "react-native-elements";
 import { Text } from "react-native";
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
 const HeaderRight: FC<{ eventID: string }> = (props) => {
   const [loading, userData, setUserData] = useStateWithFireStoreDocument(
@@ -59,9 +59,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
       />
       <Menu
         visible={visible}
-        onDismiss={() => setVisible(false)}
         style={{backgroundColor: colours.white}}
-        contentStyle={{backgroundColor: colours.white}}
         anchor={
           <MaterialCommunityIcons
             name="dots-vertical"
@@ -70,12 +68,15 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
             onPress={() => setVisible(true)}
           />
         }
+        onRequestClose={() => {setVisible(false)}}
       >
-        <Menu.Item onPress={() => {setReportVisible(true)}} title="Report" />
-        {event.organizerType === "Organizer Added"? <Menu.Item onPress={() => {setBlockVisible(true)}} title="Block" /> : <></>}
+        {event.organizerType === "Organizer Added"? <MenuItem onPress={() => {setBlockVisible(true)}}>Block</MenuItem> : <></>}
+        <MenuItem onPress={() => {setReportVisible(true)}}>Report</MenuItem>
         {/* <Menu.Item onPress={() => {}} title="Claim event" /> */}
-        <Menu.Item onPress={() => {setBlockVisible(true)}} title="Hide" />
+        <MenuItem onPress={() => {setBlockVisible(true)}}>Hide</MenuItem>
       </Menu>
+
+      
       {/* Report dialog */}
       <Dialog
         isVisible={reportVisible}
