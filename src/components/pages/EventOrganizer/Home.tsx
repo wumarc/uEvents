@@ -34,7 +34,7 @@ const Home = ({ navigation }: any) => {
   if(!profile.name || !profile.description || !profile.image || profile.name == "" || profile.description == "" || profile.image == "") {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1, paddingHorizontal: '5%'}}>
-        <Text style={{textAlign: 'center', ...fonts.title3, marginBottom: '2%'}}>Your account is currently incomplete</Text>
+        <Text style={{textAlign: 'center', ...fonts.title3, marginBottom: '2%'}}>Your account is currently incomplete.</Text>
         <Text style={{textAlign: 'center', ...fonts.title3}}>To get started with creating events, please begin by completing your organizer profile. You can do this by navigating to Settings {">"} Profile. Once your profile is complete, you'll be all set to start crafting your events.</Text>
       </View>
     )
