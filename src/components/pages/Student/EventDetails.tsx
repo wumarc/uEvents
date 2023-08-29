@@ -190,7 +190,7 @@ const EventDetails = ({ route, navigation }: props) => {
           </View>
         }
 
-        <BottomSheet 
+        {/* <BottomSheet 
             modalProps={{animationType: 'fade'}}
             onBackdropPress={() => setIsVisible(false)}
             isVisible={isVisible}
@@ -226,7 +226,7 @@ const EventDetails = ({ route, navigation }: props) => {
                 </View>
 
             </View>
-        </BottomSheet>
+        </BottomSheet> */}
 
       </ScrollView>
 
