@@ -43,6 +43,7 @@ import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
+import { DatePickerModal } from "../../atoms/DatePickerModal";
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -136,7 +137,6 @@ export const Step0 = ({ route, navigation }: any) => {
   }
 
   const isAdmin = route.params.isAdmin;
-  console.log("isAdmin: " + isAdmin)
 
   return (
     <View style={{flex: 1, backgroundColor: colours.white, justifyContent: "space-between"}}>
@@ -415,152 +415,8 @@ export const Step3: FC<{ eventID: string}> = (props) => {
 /* ---------------------------------- Date ---------------------------------- */
 export const Step4: FC<{ eventID: string }> = (props) => {
 
-  const hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-  const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
-  const ampm = ['AM', 'PM'];
-  const days = [
-    'Wed Aug 30',
-    'Thu Aug 31',
-    'Fri Sep 01',
-    'Sat Sep 02',
-    'Sun Sep 03',
-    'Mon Sep 04',
-    'Tue Sep 05',
-    'Wed Sep 06',
-    'Thu Sep 07',
-    'Fri Sep 08',
-    'Sat Sep 09',
-    'Sun Sep 10',
-    'Mon Sep 11',
-    'Tue Sep 12',
-    'Wed Sep 13',
-    'Thu Sep 14',
-    'Fri Sep 15',
-    'Sat Sep 16',
-    'Sun Sep 17',
-    'Mon Sep 18',
-    'Tue Sep 19',
-    'Wed Sep 20',
-    'Thu Sep 21',
-    'Fri Sep 22',
-    'Sat Sep 23',
-    'Sun Sep 24',
-    'Mon Sep 25',
-    'Tue Sep 26',
-    'Wed Sep 27',
-    'Thu Sep 28',
-    'Fri Sep 29',
-    'Sat Sep 30',
-    'Sun Oct 01',
-    'Mon Oct 02',
-    'Tue Oct 03',
-    'Wed Oct 04',
-    'Thu Oct 05',
-    'Fri Oct 06',
-    'Sat Oct 07',
-    'Sun Oct 08',
-    'Mon Oct 09',
-    'Tue Oct 10',
-    'Wed Oct 11',
-    'Thu Oct 12',
-    'Fri Oct 13',
-    'Sat Oct 14',
-    'Sun Oct 15',
-    'Mon Oct 16',
-    'Tue Oct 17',
-    'Wed Oct 18',
-    'Thu Oct 19',
-    'Fri Oct 20',
-    'Sat Oct 21',
-    'Sun Oct 22',
-    'Mon Oct 23',
-    'Tue Oct 24',
-    'Wed Oct 25',
-    'Thu Oct 26',
-    'Fri Oct 27',
-    'Sat Oct 28',
-    'Sun Oct 29',
-    'Mon Oct 30',
-    'Tue Oct 31',
-    'Wed Nov 01',
-    'Thu Nov 02',
-    'Fri Nov 03',
-    'Sat Nov 04',
-    'Sun Nov 05',
-    'Mon Nov 06',
-    'Tue Nov 07',
-    'Wed Nov 08',
-    'Thu Nov 09',
-    'Fri Nov 10',
-    'Sat Nov 11',
-    'Sun Nov 12',
-    'Mon Nov 13',
-    'Tue Nov 14',
-    'Wed Nov 15',
-    'Thu Nov 16',
-    'Fri Nov 17',
-    'Sat Nov 18',
-    'Sun Nov 19',
-    'Mon Nov 20',
-    'Tue Nov 21',
-    'Wed Nov 22',
-    'Thu Nov 23',
-    'Fri Nov 24',
-    'Sat Nov 25',
-    'Sun Nov 26',
-    'Mon Nov 27',
-    'Tue Nov 28',
-    'Wed Nov 29',
-    'Thu Nov 30',
-    'Fri Dec 01',
-    'Sat Dec 02',
-    'Sun Dec 03',
-    'Mon Dec 04',
-    'Tue Dec 05',
-    'Wed Dec 06',
-    'Thu Dec 07',
-    'Fri Dec 08',
-    'Sat Dec 09',
-    'Sun Dec 10',
-    'Mon Dec 11',
-    'Tue Dec 12',
-    'Wed Dec 13',
-    'Thu Dec 14',
-    'Fri Dec 15',
-    'Sat Dec 16',
-    'Sun Dec 17',
-    'Mon Dec 18',
-    'Tue Dec 19',
-    'Wed Dec 20',
-    'Thu Dec 21',
-    'Fri Dec 22',
-    'Sat Dec 23',
-    'Sun Dec 24',
-    'Mon Dec 25',
-    'Tue Dec 26',
-    'Wed Dec 27',
-    'Thu Dec 28',
-    'Fri Dec 29',
-    'Sat Dec 30',
-    'Sun Dec 31'
-  ];
-  const [date, setDate] = useState({
-    day: "",
-    hour: "",
-    minute: "",
-    ampm: "",
-  });
-
-  const convert = () => {
-    const dateString = date.day + ' ' + new Date().getFullYear() + ' ' + ((date.ampm === "PM" && date.hour !== "12") ? date.hour+12 : date.hour) + ':' + date.minute + ' ' + date.ampm;
-    const dateObj = new Date(dateString);
-    // const firebaseTimestamp = Timestamp.fromMillis(dateObj)
-    // Timestamp.fromMillis(e.nativeEvent.timestamp!)}
-    console.log(dateObj);
-  }
-
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
-  if (loading) return <Loading />;
+  if (loading || !event) return <Loading />;
 
   return (
     <View>
@@ -568,7 +424,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       <Text style={fonts.regular}>Tells us when we can find you!</Text>
 
       {/* Recurrence */}
-      <View style={spacing.verticalMargin1}>
+      {/* <View style={spacing.verticalMargin1}>
         <ButtonGroup
           buttons={["Single Event", "Weekly Event", "Custom Weekly", "Specific dates" ]}
           onPress={(index) => {}}
@@ -576,52 +432,18 @@ export const Step4: FC<{ eventID: string }> = (props) => {
           containerStyle={{ height: 50 }}
           selectedButtonStyle={{ backgroundColor: colours.purple }}
         />
-      </View>
-
-      <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3, flexDirection: 'row'}}>
-        <WheelPickerExpo
-          height={200}
-          width={130}
-          initialSelectedIndex={0}
-          items={days.map(name => ({ label: name, value: ''}))}
-          onChange={({ item }) => setDate({...date, day: item.label})}
-          selectedStyle={{borderColor: 'black', borderWidth: 1}}
-        />
-        <WheelPickerExpo
-          height={200}
-          width={50}
-          initialSelectedIndex={0}
-          items={hours.map(name => ({ label: name, value: '' }))}
-          selectedStyle={{borderColor: 'black', borderWidth: 1}}
-          onChange={({ item }) => setDate({...date, hour: item.label})}
-        />
-        <WheelPickerExpo
-          height={200}
-          width={50}
-          initialSelectedIndex={0}
-          items={minutes.map(name => ({ label: name, value: '' }))}
-          selectedStyle={{borderColor: 'black', borderWidth: 1}}
-          onChange={({ item }) => setDate({...date, minute: item.label})}
-        />
-        <WheelPickerExpo
-          height={200}
-          width={50}
-          initialSelectedIndex={0}
-          items={ampm.map(name => ({ label: name, value: '' }))}
-          selectedStyle={{borderColor: 'black', borderWidth: 1}}
-          onChange={({ item }) => setDate({...date, ampm: item.label})}
-        />
-        <Button
-          title="Set"
-          onPress={() => {
-            console.log(date)
-            convert();
-          }}
-        ></Button>
-      </View>
-
-      {/* <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3}}>
       </View> */}
+
+      <Text>Start Date</Text>
+      <DatePickerModal
+        dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
+        setDate={(date) => {set({...event, startTime: date})}}
+      />
+      <Text>End Date</Text>
+      <DatePickerModal
+        dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
+        setDate={(date) => {set({...event, endTime: date})}}
+      />
 
     </View>
   );
