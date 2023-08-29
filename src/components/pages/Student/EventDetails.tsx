@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground, TouchableOpacity } from "react-native";
 import { EventObject, getTimeInAMPM, relativeDate } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -116,46 +116,49 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Organizer */}
         <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏠 Organizer</Text>
-          <View style={{
-            flexDirection: 'row', 
-            justifyContent: 'space-between', 
-            borderWidth: event.organizerType == "Organizer Added" ? 1 : 0,
-            borderColor: colours.grey,
-            opacity: 0.7,
-            padding: '3.5%',
-            backgroundColor: event.organizerType == "Organizer Added" ? colours.primaryGrey : colours.white,
-            borderRadius: 10,
-          }}>
-            {/* Icon / name */}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {event.organizerType == "Organizer Added" &&
-                <FirebaseImage
-                  style={{width: 20, height: 20, borderRadius: 50, marginRight: 5}}
-                  id={event.organizer}
-                />
-              }
-              <Text
-                style={fonts.title2}
-                disabled={event.organizerType == "Manually Added"}
-                onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
-              >
-                {event.organizerType == "Manually Added" ? event.organizer : 
-                  <Text style={fonts.title2}>
-                    {organizer.name}
-                  </Text>
+          <TouchableOpacity
+            onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation, organizerID: event.organizer, imageID: organizer.image })}}
+          >
+            <View style={{
+              flexDirection: 'row', 
+              justifyContent: 'space-between', 
+              borderWidth: event.organizerType == "Organizer Added" ? 1 : 0,
+              borderColor: colours.grey,
+              opacity: 0.7,
+              padding: '3.5%',
+              backgroundColor: event.organizerType == "Organizer Added" ? colours.primaryGrey : colours.white,
+              borderRadius: 10,
+            }}>
+              {/* Icon / name */}
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                {event.organizerType == "Organizer Added" &&
+                  <FirebaseImage
+                    style={{width: 20, height: 20, borderRadius: 50, marginRight: 5}}
+                    id={event.organizer}
+                  />
                 }
-              </Text>
-            </View>
-            {event.organizerType == "Organizer Added" &&
-              <View>
-                <Icon
-                  name="chevron-right"
-                  size={20}
-                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation, organizerID: event.organizer, imageID: organizer.image })}}
-                />
+                <Text
+                  style={fonts.title2}
+                  disabled={event.organizerType == "Manually Added"}
+                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
+                >
+                  {event.organizerType == "Manually Added" ? event.organizer : 
+                    <Text style={fonts.title2}>
+                      {organizer.name}
+                    </Text>
+                  }
+                </Text>
               </View>
-            }
-          </View>
+              {event.organizerType == "Organizer Added" &&
+                <View>
+                  <Icon
+                    name="chevron-right"
+                    size={20}
+                  />
+                </View>
+              }
+            </View>
+          </TouchableOpacity>
 
         </View>
 
