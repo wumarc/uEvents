@@ -6,7 +6,7 @@ import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button, color } from "@rneui/base";
 import { SvgUri } from 'react-native-svg';
-import { defaultOrganizer } from "../../../utils/model/Organizer";
+import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import { useEffect, useState } from "react";
 import { Loading } from "../Common/Loading";
 import { BottomSheet } from "@rneui/themed";
@@ -25,7 +25,7 @@ const EventDetails = ({ route, navigation }: props) => {
     "events",
     route.params.eventID
   );
-  const [loading2, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
+  const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>(
     "users",
     route.params.organizerID
   );
@@ -151,7 +151,7 @@ const EventDetails = ({ route, navigation }: props) => {
                 <Icon
                   name="chevron-right"
                   size={20}
-                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
+                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation, organizerID: event.organizer, imageID: organizer.image })}}
                 />
               </View>
             }
