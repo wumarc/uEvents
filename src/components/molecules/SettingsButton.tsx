@@ -17,6 +17,8 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
     {"Privacy Policy": {icon: "shield-lock-outline",type: "material-community"}},
     {"Contact Us": { icon: "mail-outline", type: "ionicon" }},
     {"Delete Account": { icon: "trash-outline", type: "ionicon" }},
+    {"Hidden Events": { icon: "eye-off-outline", type: "ionicon" }},
+    {"Blocked Organizers": { icon: "person-remove-outline", type: "ionicon" }},
   ];
 
   const findIconByKey = (key: any) => {

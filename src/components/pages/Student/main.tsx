@@ -20,6 +20,8 @@ import { colours, fonts, renTheme } from "../../subatoms/Theme";
 import HeaderRight from "../../molecules/HeaderRight";
 import { ThemeProvider } from "@rneui/themed";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
+import { HiddenEvents } from "./HiddenEvents";
+import BlockedOrganizers from "./BlockedOrganizers";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -42,6 +44,8 @@ export type RootStackParamList = {
   Profile: { userType: string };
   HeaderLeft: { userType: string };
   EventOrganizerView: { organizerID: string, imageID: string };
+  HiddenEventsView: {};
+  BlockedOrganizersView: {};
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -183,6 +187,20 @@ const Main: FC<{ userType: string }> = (props) => {
               headerStyle: { backgroundColor: colours.white },
               headerLeft: () => <HeaderLeft navigation={navigation} />,
               headerRight: () => <ProfileHeaderRight eventID={""} />,
+            })}
+          />
+          <Stack.Screen
+            name="HiddenEventsView"
+            component={HiddenEvents as any}
+            options={({ navigation }) => ({
+              title: "Hidden Events",
+            })}
+          />
+          <Stack.Screen
+            name="BlockedOrganizersView"
+            component={BlockedOrganizers as any}
+            options={({ navigation }) => ({
+              title: "Blocked Organizers",
             })}
           />
         </Stack.Navigator>

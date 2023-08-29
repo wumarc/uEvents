@@ -102,6 +102,14 @@ const Settings = ({ route, navigation }: props) => {
             onPressListener={() =>setdialogVisible(true)}
           />
           <SettingsButton
+            buttonName={"Hidden Events"}
+            onPressListener={() => {navigation.navigate("HiddenEventsView", {})}}
+          />
+          <SettingsButton
+            buttonName={"Blocked Organizers"}
+            onPressListener={() => {navigation.navigate("BlockedOrganizersView", {})}}
+          />
+          <SettingsButton
             buttonName={"Delete Account"}
             onPressListener={() => setConfirmDelete(true)}
           />
