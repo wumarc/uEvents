@@ -8,7 +8,7 @@ import {
   useStateWithFireStoreDocument,
 } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { Menu, Modal } from "react-native-paper";
+import { Modal, Menu } from "react-native-paper";
 import { Dialog } from "react-native-elements";
 import { Button } from "@rneui/base";
 import { Text } from "react-native";
@@ -148,6 +148,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
           }}
         />
       </Dialog>
+
       {/* Block dialog */}
       <Dialog
         isVisible={blockVisible}
@@ -181,6 +182,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
           }}
         />
       </Dialog>
+      
       {/* Claim dialog */}
       {/* <Dialog
         isVisible={reportVisible}
