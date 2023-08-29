@@ -103,6 +103,7 @@ export const HiddenEvents = ({ route, navigation }: props) => {
                 />
                 <Button
                     title="Unhide"
+                    color={colours.purple}
                     onPress={() => {
                         let newHiddenEvents = student?.hidden ?? [];
                         newHiddenEvents = newHiddenEvents.filter((eventID: string) => eventID !== item.id);
