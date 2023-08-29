@@ -11,22 +11,39 @@ import { FlatList } from "react-native";
 import OrganizerEvent from "./OrganizerEvent";
 import { FAB } from "react-native-elements";
 import { useState } from "react";
-import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { EventObject } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { Organizer } from "../../../utils/model/Organizer";
 
 const Home = ({ navigation }: any) => {
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
 
-  if (loading || !events) {
+  const [loading2, profile, setProfile] =
+    useStateWithFireStoreDocument<Organizer>(
+      "users",
+      getFirebaseUserIDOrEmpty()
+  );
+
+  if (loading || loading2 || !events) {
     return <Loading />;
+  }
+
+  if(!profile.name || !profile.description || !profile.image || profile.name == "" || profile.description == "" || profile.image == "") {
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1, paddingHorizontal: '5%'}}>
+        <Text style={{textAlign: 'center', ...fonts.title3, marginBottom: '2%'}}>Your account is currently incomplete</Text>
+        <Text style={{textAlign: 'center', ...fonts.title3}}>To get started with creating events, please begin by completing your organizer profile. You can do this by navigating to Settings {">"} Profile. Once your profile is complete, you'll be all set to start crafting your events.</Text>
+      </View>
+    )
   }
 
   let myEvents = events.filter(
     (event) => event.organizer === getFirebaseUserIDOrEmpty()
   );
+  
 
   return (
     <View style={styles.container}>

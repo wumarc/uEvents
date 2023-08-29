@@ -41,7 +41,7 @@ const Profile = ({ route, navigation }: props) => {
     useStateWithFireStoreDocument<Organizer>(
       "users",
       getFirebaseUserIDOrEmpty()
-    );
+  );
   
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
 
@@ -122,6 +122,10 @@ const Profile = ({ route, navigation }: props) => {
             />
           </Avatar>
         </View>
+        
+        {image == null &&
+          <Text style={{textAlign: 'center'}}>Please ensure to upload an image of your organization!</Text>
+        }
 
         {/* Club Info Section */}
         <View style={styles.studentInfo}>
@@ -146,16 +150,17 @@ const Profile = ({ route, navigation }: props) => {
               }}
             />
 
-            <Input
-              label={<Text>Instagram Handle{' '}<Text style={{ color: 'red' }}></Text></Text>}
-              leftIcon={{ type: "font-awesome", name: "at" }}
-              leftIconContainerStyle={{marginRight: 10}}
-              placeholder="uevents_official"
-              defaultValue={profile.instagram}
+            <Input 
+              label={<Text>Organization Description{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
+              placeholder="Insert Description"
+              defaultValue={profile.description}
+              multiline={true}
+              maxLength={700}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) => setProfile({ ...profile, instagram: value })}
+              onChangeText={(value: string) =>setProfile({ ...profile, description: value })}
               containerStyle={{ paddingHorizontal: 0 }}
-              autoCapitalize="none"
+              inputStyle={{ height: windowHeight * 0.15}}
+              textAlignVertical="top"
               selectionColor={colours.purple}
               inputContainerStyle={{
                 borderColor: colours.grey,
@@ -166,17 +171,16 @@ const Profile = ({ route, navigation }: props) => {
               }}
             />
 
-            <Input 
-              label={<Text>Organization Description{' '}<Text style={{ color: 'red' }}></Text></Text>}
-              placeholder="Insert Description"
-              defaultValue={profile.description}
-              multiline={true}
-              maxLength={700}
+          <Input
+              label={<Text>Instagram Handle{' '}<Text style={{ color: 'red' }}></Text></Text>}
+              leftIcon={{ type: "font-awesome", name: "at" }}
+              leftIconContainerStyle={{marginRight: 10}}
+              placeholder="Insert Instagram Handle"
+              defaultValue={profile.instagram}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) =>setProfile({ ...profile, description: value })}
+              onChangeText={(value: string) => setProfile({ ...profile, instagram: value })}
               containerStyle={{ paddingHorizontal: 0 }}
-              inputStyle={{ height: windowHeight * 0.15}}
-              textAlignVertical="top"
+              autoCapitalize="none"
               selectionColor={colours.purple}
               inputContainerStyle={{
                 borderColor: colours.grey,
