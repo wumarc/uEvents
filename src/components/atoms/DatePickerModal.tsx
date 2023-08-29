@@ -4,6 +4,7 @@ import { Modal, View, Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button, Input } from "react-native-elements";
 import WheelPickerExpo from "react-native-wheel-picker-expo";
+import CustomButton from "./CustomButton";
 
 export const DatePickerModal: FC<{
     setDate: (date: Timestamp) => void;
@@ -273,16 +274,8 @@ export const DatePickerModal: FC<{
                         marginTop: "auto",
                         marginBottom: "auto",
                         padding: 10,
-                        borderWidth: 1,
                     }}
                 >
-                    <Button
-                    onPress={() => {
-                        setShow(false);
-                        props.setDate(Timestamp.fromDate(convert()));
-                    }}
-                    title="Done"
-                    />
                     <View style={{borderWidth: 1, borderRadius: 10, margin: 3, padding: 3, flexDirection: 'row'}}>
                         {/* Days */}
                         <WheelPickerExpo
@@ -321,7 +314,14 @@ export const DatePickerModal: FC<{
                         onChange={({ item }) => setDate({...date, ampm: item.label})}
                         />
                         
-                        </View>
+                    </View>
+                    <CustomButton
+                        buttonName="Done"
+                        onPressListener={() => {
+                            setShow(false);
+                            props.setDate(Timestamp.fromDate(convert()));
+                        }}
+                    />
                     </View>          
                 </Modal>
             </View>
