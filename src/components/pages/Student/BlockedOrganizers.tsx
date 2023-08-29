@@ -20,9 +20,18 @@ const BlockedOrganizers = ({navigation}: any) => {
     return <Loading />;
   }
 
-  let organizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
+  let organizers = users?.filter((user) => user.type === "organizer") ?? [];
+  let blockedOrganizers = student.blocked ?? [];
 
-  let filteredOrganizers = organizers.filter((organizer) => {(student.blocked ??[]).includes(organizer.id)});
+
+  let filteredOrganizers = organizers.filter((organizer) => {
+    for (let i = 0; i < blockedOrganizers.length; i++) {
+      if (blockedOrganizers[i] === organizer.id) {
+        return true;
+      }
+    }
+    return false;
+    });
 
     return (
         <View style={styles.container}>

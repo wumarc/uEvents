@@ -71,10 +71,9 @@ export const HiddenEvents = ({ route, navigation }: props) => {
     });
 
     // Only hidden events
-    let hiddenEvents = student?.hiddenEvents ?? [];
+    let hiddenEvents = student?.hidden ?? [];
     filteredEvents = filteredEvents.filter((event) => hiddenEvents.includes(event.id)); 
 
-  
 
   
     return (
@@ -105,9 +104,9 @@ export const HiddenEvents = ({ route, navigation }: props) => {
                 <Button
                     title="Unhide"
                     onPress={() => {
-                        let newHiddenEvents = student?.hiddenEvents ?? [];
+                        let newHiddenEvents = student?.hidden ?? [];
                         newHiddenEvents = newHiddenEvents.filter((eventID: string) => eventID !== item.id);
-                        setStudent({...student, hiddenEvents: newHiddenEvents});
+                        setStudent({...student, hidden: newHiddenEvents});
                     }}
                 />
               </View>
