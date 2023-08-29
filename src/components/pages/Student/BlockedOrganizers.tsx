@@ -29,7 +29,10 @@ const BlockedOrganizers = ({navigation}: any) => {
           
           <ScrollView showsVerticalScrollIndicator={true}>
 
-              {filteredOrganizers.length == 0 && <Text style={{}}>You have no blocked clubs.</Text>}
+              {filteredOrganizers.length == 0 && 
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={fonts.title2}>You have no blocked clubs.</Text>
+              </View>}
               <FlatList
                 data={filteredOrganizers}
                 renderItem={({ item }) => (

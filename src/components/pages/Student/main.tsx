@@ -194,6 +194,8 @@ const Main: FC<{ userType: string }> = (props) => {
             component={HiddenEvents as any}
             options={({ navigation }) => ({
               title: "Hidden Events",
+              headerStyle: { backgroundColor: colours.white },
+              headerLeft: () => <HeaderLeft navigation={navigation} />
             })}
           />
           <Stack.Screen
@@ -201,6 +203,8 @@ const Main: FC<{ userType: string }> = (props) => {
             component={BlockedOrganizers as any}
             options={({ navigation }) => ({
               title: "Blocked Organizers",
+              headerStyle: { backgroundColor: colours.white },
+              headerLeft: () => <HeaderLeft navigation={navigation} />
             })}
           />
         </Stack.Navigator>

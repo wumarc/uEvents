@@ -85,7 +85,9 @@ export const HiddenEvents = ({ route, navigation }: props) => {
   
           {/* List */}
           {filteredEvents.length === 0 && (
-              <Text style={{}}>You have no hidden events</Text>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={fonts.title2}>You have no hidden events</Text>
+              </View>
           )    
         }
           <FlatList
