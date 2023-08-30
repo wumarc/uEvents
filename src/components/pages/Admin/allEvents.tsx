@@ -27,7 +27,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
 
-const AllEvents = ({ route, navigation }: props) => {
+export const AllEvents = ({ route, navigation }: props) => {
   const [loading, events, add, del] =
     useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Student>("users");
@@ -270,5 +270,3 @@ const EventLine: FC<{
     </View>
   );
 };
-
-export default AllEvents;
