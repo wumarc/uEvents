@@ -72,12 +72,12 @@ const Home = ({ navigation }: any) => {
         {(myEvents ?? []).length == 0 && (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <SvgUri
-              width="20%"
-              height="20%"
-              uri={"https://openmoji.org/data/color/svg/1F388.svg"}
+              width="50%"
+              height="30%"
+              uri={"https://openmoji.org/data/color/svg/E10C.svg"}
               fill="black"
             />
-            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no events. Create one by clicking on the add button!</Text>
+            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no events. Press the red button to launch an event!</Text>
           </View>
         )}
 
@@ -87,7 +87,7 @@ const Home = ({ navigation }: any) => {
         <FAB
           icon={{ name: "add", color: "white" }}
           placement="right"
-          color={colours.purple}
+          color={"red"}
           size="large"
           onPress={() => navigation.navigate("Step0", { useDefault: false })}
         />
