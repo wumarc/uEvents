@@ -173,6 +173,10 @@ const Home = ({ route, navigation }: props) => {
         </View>
 
         {/* List */}
+        {filteredEvents.length == 0 && (
+          <View style={{ alignItems: "center", marginTop: "20%" }}>
+            <Text>No events matched your search</Text>
+          </View> )} 
         <FlatList
           style={{}}
           showsVerticalScrollIndicator={false}

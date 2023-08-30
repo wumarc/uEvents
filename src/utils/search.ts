@@ -144,7 +144,7 @@ export function searchAlgo(
       break;
     }
   }
-  if (!allZero) {
+  if (query != "") {
     for (let [key, value] of sortedMap) {
       if (value === 0) {
         sortedMap.delete(key);
