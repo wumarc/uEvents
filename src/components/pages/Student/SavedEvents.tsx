@@ -76,12 +76,12 @@ const SavedEvents = ({ route, navigation }: props) => {
           {(student.saved ?? []).length == 0 && 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <SvgUri
-              width="20%"
-              height="20%"
-              uri={"https://openmoji.org/data/color/svg/1F90D.svg"}
+              width="60%"
+              height="40%"
+              uri={"https://openmoji.org/data/color/svg/1F3DD.svg"}
               fill="black"
             />
-            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no saved events.</Text>
+            <Text style={{...fonts.title3, textAlign: 'center'}}>You have no saved events. Your event list is as unoccupied as a peaceful oasis in the middle of the desert...</Text>
           </View>
           }
 
