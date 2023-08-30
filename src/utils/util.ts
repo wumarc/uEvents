@@ -51,13 +51,6 @@ export const eventDate = [
   "Friday",
   "Saturday",
   "Sunday",
-  "Next Monday",
-  "Next Tuesday",
-  "Next Wednesday",
-  "Next Thursday",
-  "Next Friday",
-  "Next Saturday",
-  "Next Sunday"
 ]
 
 function describeDate(eventDate: any) {
