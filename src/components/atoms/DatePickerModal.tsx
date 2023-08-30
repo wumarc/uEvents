@@ -18,6 +18,7 @@ export const DatePickerModal: FC<{
     const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
     const ampm = ['AM', 'PM'];
     const days = [
+      'Wed Aug 30',
       'Thu Aug 31',
       'Fri Sep 01',
       'Sat Sep 02',

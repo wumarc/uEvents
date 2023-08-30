@@ -64,7 +64,10 @@ const defaultCategories = [
 export function getOrderedCategories(
   events: EventObject[]
 ): string[] {
-  let [categories, categoriesValues] = buildCategories(events);
+  let filteredEvents = events.filter((event) => {
+    return event.state === "Published";
+  });
+  let [categories, categoriesValues] = buildCategories(filteredEvents);
   for (let value of defaultCategories) {
     if (!categories.includes(value)) {
       categories.push(value);
