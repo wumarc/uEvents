@@ -239,10 +239,10 @@ const EventDetails = ({ route, navigation }: props) => {
         </Text>
         <Button
           buttonStyle={{backgroundColor: colours.purple, padding: 10, borderRadius: 10}}
-          title={event.signUpLink == null ? "No Signup Required" : "Sign Up"}
-          disabled={event.signUpLink == null}
+          title={event.signUpLink == null || event.signUpLink == "" ? "No Signup Required" : "Sign Up"}
+          disabled={event.signUpLink == null || event.signUpLink == ""}
           titleStyle={{ fontSize: 15, fontWeight: "600" }}
-          onPress={() => {if (event.signUpLink != null) { Linking.openURL(event.signUpLink!);}}}
+          onPress={() => {if (event.signUpLink == null || event.signUpLink == "") { Linking.openURL(event.signUpLink!);}}}
         />
       </View>
 
