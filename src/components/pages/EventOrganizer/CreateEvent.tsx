@@ -801,7 +801,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         titleStyle={{ ...fonts.title3, color: colours.white}}
       />
       <Text>
-        Note that the created tag will not show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
+        Note that the created tag will not show up in the list above, but will still be added. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
       </Text>
       <View></View>
     </View>
