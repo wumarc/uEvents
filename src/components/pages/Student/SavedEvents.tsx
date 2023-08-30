@@ -8,6 +8,7 @@ import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { useEffect } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
+import { SvgUri } from "react-native-svg";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
@@ -74,6 +75,12 @@ const SavedEvents = ({ route, navigation }: props) => {
           
           {(student.saved ?? []).length == 0 && 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <SvgUri
+              width="20%"
+              height="20%"
+              uri={"https://openmoji.org/data/color/svg/1F90D.svg"}
+              fill="black"
+            />
             <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no saved events.</Text>
           </View>
           }
