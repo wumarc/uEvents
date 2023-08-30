@@ -46,52 +46,51 @@ const SavedEvents = ({ route, navigation }: props) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
 
-      <View>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
 
-        <View style={styles.pageTitle}>
-          <Text style={fonts.title1}>Saved Events</Text>
-        </View>
+          <View style={{padding: "3%"}}>
+            <Text style={fonts.title1}>Saved Events</Text>
+          </View>
 
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center", ...spacing.verticalMargin1}}>
-          {(student.saved ?? []).length != 0 ? (
-            <FlatList
-              data={savedEvents as EventObject[]}
-              renderItem={({ item }) => (
-                <Event
-                  listView={false}
-                  organizer={item.organizer}
-                  id={item.id}
-                  userType={route.params.userType}
-                  navigation={navigation}
-                  onSaveEvent={() => {}}
-                />
-              )}
-            />
-          ) : (
-            <View style={{ paddingHorizontal: "10%"}}>
-              <Text style={fonts.title3}>You currently have no saved events</Text>
-            </View>
-          )}
-        </View>
+          <View style={{alignItems: 'center', ...spacing.verticalMargin1, backgroundColor: 'red'}}>
+            {(student.saved ?? []).length != 0 && (
+              <FlatList
+                data={savedEvents as EventObject[]}
+                renderItem={({ item }) => (
+                  <Event
+                    listView={false}
+                    organizer={item.organizer}
+                    id={item.id}
+                    userType={route.params.userType}
+                    navigation={navigation}
+                    onSaveEvent={() => {}}
+                  />
+                )}
+              />
+            )}
+          </View>
+          
+          {(student.saved ?? []).length == 0 && 
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no saved events.</Text>
+          </View>
+          }
 
-      </View>
 
-    </ScrollView>
+      </ScrollView>
+
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: spacing.page,
-    flex: 1,
     backgroundColor: colours.white,
+    flex: 1,
   },
-  pageTitle: {
-    flexDirection: "row",
-    padding: "3%",
-  }
 });
 
 export default SavedEvents;

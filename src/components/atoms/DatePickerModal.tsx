@@ -265,7 +265,7 @@ export const DatePickerModal: FC<{
                 onRequestClose={() => setShow(false)}
                 presentationStyle="overFullScreen"
                 transparent={true}
-            >   
+            >
                 <View
                     style={{
                         backgroundColor: "white",
@@ -322,7 +322,7 @@ export const DatePickerModal: FC<{
                             props.setDate(Timestamp.fromDate(convert()));
                         }}
                     />
-                    </View>          
+                    </View>
                 </Modal>
             </View>
         
