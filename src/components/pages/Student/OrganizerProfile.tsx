@@ -138,7 +138,7 @@ const OrganizerProfile = ({route, navigation}: props) => {
                     onPress={(index) => setSelectedIndex(index)}
                 />
                 {/* List */}
-                {filteredEvents.length === 0? <Text style={{...fonts.regular, textAlign: 'center', margin: 5}}>No events</Text> : 
+                {filteredEvents.length === 0? <Text style={{...fonts.regular, textAlign: 'center', margin: 5}}>No events 😔</Text> : 
                 <FlatList
                 style={{}}
                 showsVerticalScrollIndicator={false}

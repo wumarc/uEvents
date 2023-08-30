@@ -1,16 +1,19 @@
 import { View, Text, Touchable, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
+import { Dialog } from "react-native-elements";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { EventObject, getTimeInAMPM } from "../../../utils/model/EventObject";
-import { Button } from "react-native-elements";
+import { Button } from "@rneui/base";
 import { deleteDoc, doc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
+import CustomButton from "../../atoms/CustomButton";
 
 const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
-  
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [loading, event, setEvent] = useStateWithFireStoreDocument(
     "events",
     props.eventID
@@ -45,7 +48,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           </Text>
           {/* <Text style={fonts.title3}>{event.startTime}</Text> */}
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
-          <Text style={{...fonts.title3}}>{event.rejectReason}</Text>
+          {event.rejectionReason && <Text style={{...fonts.small, color: 'red'}}>Reason for rejection: {event.rejectReason}</Text>}
           {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
 
@@ -63,7 +66,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           >
             <Text style={{
               ...fonts.title3, 
-              color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Reject" ? 'red' : '#EF9B0F'
+              color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Rejected" ? 'red' : '#EF9B0F'
             }}>
               {event.state}
             </Text>
@@ -97,7 +100,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
 
             <TouchableOpacity 
               style={{flexDirection: 'row', alignItems: 'center', justifyContent: "flex-end"}}
-              onPress={() => deleteDoc(doc(fireStore, "events/" + props.eventID))}
+              onPress={() => setConfirmDelete(true)}
             >
               <Text style={fonts.title3}>Delete</Text>
               <Icon
@@ -109,6 +112,32 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
                 iconStyle={{...fonts.title1, color: colours.black}}
               />
             </TouchableOpacity>
+            
+
+            <Dialog
+              isVisible={confirmDelete}
+              onDismiss={() => setConfirmDelete(false)}
+              style={{backgroundColor: colours.white, borderRadius: 15}}
+            >
+              <Text style={{...fonts.regular, textAlign: 'center'}}>Are you sure you want to delete the event?</Text>
+              <CustomButton
+                  buttonName="Delete"
+                  onPressListener={() => deleteDoc(doc(fireStore, "events/" + props.eventID))}
+              />
+              <Button
+                style={{
+                    paddingHorizontal: 10,
+                    borderRadius: 15,
+                    marginVertical: '1%'
+                }}
+                color={'transparent'}
+                titleStyle={{color: colours.purple, fontWeight: '600'}}
+                title={"Cancel"}
+                onPress={() => {
+                  setConfirmDelete(false);
+                }}
+              />
+            </Dialog>
 
           </View>
 

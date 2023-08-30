@@ -358,7 +358,6 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               onChange={(item) => set({...event, location: item.label, address: item.address, onCampus: true})}
             />
             <Input
-              
               label="Room number (optional)"
               selectTextOnFocus={true}
               selectionColor={colours.purple}
@@ -369,6 +368,7 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               maxLength={30}
               defaultValue={event.roomNumber}
             />
+            <Text style={fonts.regular}>If the location of your event has not been determined yet, put TBD in the room number field.</Text>
           </View>
         ) :
           <View>
@@ -423,6 +423,9 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       <Text style={fonts.title1}>Provide the date and time of your event</Text>
       <Text style={fonts.regular}>Tells us when we can find you!</Text>
 
+      <Text>{" "}</Text>
+      <Text>{" "}</Text>
+
       {/* Recurrence */}
       {/* <View style={spacing.verticalMargin1}>
         <ButtonGroup
@@ -434,16 +437,21 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         />
       </View> */}
 
-      <Text>Start Date</Text>
-      <DatePickerModal
-        dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
-        setDate={(date) => {set({...event, startTime: date})}}
-      />
-      <Text>End Date</Text>
-      <DatePickerModal
-        dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
-        setDate={(date) => {set({...event, endTime: date})}}
-      />
+      <View style={{marginBottom: 15}}>
+        <DatePickerModal
+          dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
+          setDate={(date) => {set({...event, startTime: date})}}
+          label="Start Date"
+        />
+      </View>
+      
+      <View style={{}}>
+        <DatePickerModal
+          dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
+          setDate={(date) => {set({...event, endTime: date})}}
+          label="End Date (Optional)"
+        />
+      </View>
 
     </View>
   );
@@ -593,7 +601,7 @@ export const Step6: FC<{ eventID: string}> = (props) => {
 /* ------------------------------- Sign up link ----------------------------- */
 export const Step7: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
 
-  const [showField, setShowField] = useState<boolean>(false);
+  const [showField, setShowField] = useState<boolean>();
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
     props.eventID
@@ -612,6 +620,7 @@ export const Step7: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
       <View style={{ marginVertical: "5%" }}>
         <ButtonGroup
           buttons={["No", "Yes"]}
+          selectedIndex={(showField || event.signUpLink || event.signUpLink != "") ? 1 : 0}
           onPress={(index) => {
             if (index == 0) {
               set({...event, signUpLink: ""}) //TODO Ask Antoine Lavigne
@@ -620,7 +629,6 @@ export const Step7: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
               setShowField(true)
             }
           }}
-          selectedIndex={(showField || event.signUpLink || event.signUpLink != "") ? 1 : 0}
           containerStyle={{ height: 50, paddingHorizontal: 0}}
           selectedButtonStyle={{ backgroundColor: colours.purple }}
         />
@@ -793,7 +801,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         titleStyle={{ ...fonts.title3, color: colours.white}}
       />
       <Text>
-        Note that the created tag will not show up in the list above, but will still be created. Choose tags that represent categories of events. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
+        Note that the created tag will not show up in the list above, but will still be added. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
       </Text>
       <View></View>
     </View>
@@ -859,7 +867,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
 
         {/* Name */}
         <Input
-          label="Event Name"
+          label={<Text>Event Name{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
           selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey, borderWidth: 1, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6}}
           // leftIcon={<Icon name="event-note" type="material-icon" color={colours.grey} />}
@@ -871,7 +879,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
         
         {/* Emoji */}
         <Input
-          label="Emoji"
+          label={<Text>Emoji{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
           selectionColor={colours.purple}
           inputContainerStyle={{borderColor: colours.grey,borderWidth: 1,paddingVertical: 4,paddingHorizontal: 8,borderRadius: 6}}
           // leftIcon={<Icon name="sticker-emoji" type="material-community" color={colours.grey} />}
@@ -980,7 +988,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
 
         {/* Description */}
         <Input
-          label="Description"
+          label={<Text>Description{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
           selectionColor={colours.purple}
           multiline={true}
           maxLength={750}

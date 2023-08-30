@@ -108,11 +108,11 @@ const Event: React.FC<EventProps> = (props) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
               <FirebaseImage
-                style={{width: "100%", height: "100%", borderRadius: 50}}
+                style={{width: "100%", height: "100%", borderRadius: '50%', overflow: 'hidden'}}
                 id={event.organizer}
               />
             </View>
-            <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{" "}{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
