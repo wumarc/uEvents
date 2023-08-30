@@ -27,7 +27,7 @@ const Organizer = ({name, imageID}: any) => {
         }}
         >
             {/* Organizer Icon */}
-            <View style={{width: windowWidth*0.1, height: windowHeight*0.05, justifyContent: 'center'}}>
+            <View style={{ width: windowWidth * 0.11, height: windowWidth * 0.11, borderRadius: windowWidth * 0.05, overflow: 'hidden', justifyContent: 'center'}}>
             {url? 
             <Image
                 source={{uri: url}}
@@ -46,3 +46,10 @@ const Organizer = ({name, imageID}: any) => {
 }
 
 export default Organizer;
+
+{/* <View style={{width: windowWidth*0.04, height: windowHeight*0.02}}>
+<FirebaseImage
+  style={{width: "100%", height: "100%", borderRadius: windowWidth*0.02, overflow: 'hidden'}}
+  id={event.organizer}
+/>
+</View> */}

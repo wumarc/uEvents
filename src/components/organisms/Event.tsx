@@ -106,9 +106,9 @@ const Event: React.FC<EventProps> = (props) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{width: windowWidth*0.05, height: windowHeight*0.02}}>
+            <View style={{width: windowWidth*0.04, height: windowHeight*0.02, borderRadius: windowWidth * 0.05, overflow: 'hidden', justifyContent: 'center'}}>
               <FirebaseImage
-                style={{width: "100%", height: "100%", borderRadius: '50%', overflow: 'hidden'}}
+                style={{width: "100%", height: "100%", borderRadius: windowWidth*0.02, overflow: 'hidden'}}
                 id={event.organizer}
               />
             </View>
@@ -119,6 +119,7 @@ const Event: React.FC<EventProps> = (props) => {
             <Icon
               name='time-outline'
               type='ionicon'
+              size={19}
               color={colours.grey}
             />
             <Text style={{...fonts.small, fontWeight: '500'}}>{relativeDate(event.startTime)}</Text>
@@ -131,6 +132,7 @@ const Event: React.FC<EventProps> = (props) => {
             <Icon
               name='location-outline'
               type='ionicon'
+              size={19}
               color={colours.grey}
             />
             <Text style={{...fonts.small, fontWeight: '500'}}>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
