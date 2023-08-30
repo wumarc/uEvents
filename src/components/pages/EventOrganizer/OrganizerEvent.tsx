@@ -45,7 +45,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           </Text>
           {/* <Text style={fonts.title3}>{event.startTime}</Text> */}
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
-          <Text style={{...fonts.title3}}>{event.rejectReason}</Text>
+          <Text style={{...fonts.small}}>Reason for rejection: {event.rejectReason}</Text>
           {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
 
@@ -63,7 +63,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           >
             <Text style={{
               ...fonts.title3, 
-              color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Reject" ? 'red' : '#EF9B0F'
+              color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Rejected" ? 'red' : '#EF9B0F'
             }}>
               {event.state}
             </Text>

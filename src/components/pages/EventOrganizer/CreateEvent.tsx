@@ -439,7 +439,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
         setDate={(date) => {set({...event, startTime: date})}}
       />
-      <Text>End Date</Text>
+      <Text>End Date (Optional)</Text>
       <DatePickerModal
         dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
         setDate={(date) => {set({...event, endTime: date})}}
