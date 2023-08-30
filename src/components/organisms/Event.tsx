@@ -106,7 +106,7 @@ const Event: React.FC<EventProps> = (props) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{width: windowWidth*0.04, height: windowHeight*0.02, borderRadius: windowWidth * 0.05, overflow: 'hidden', justifyContent: 'center'}}>
+            <View style={{paddingLeft: 1, width: windowWidth*0.04, height: windowHeight*0.02, borderRadius: windowWidth * 0.05, overflow: 'hidden', justifyContent: 'center'}}>
               <FirebaseImage
                 style={{width: "100%", height: "100%", borderRadius: windowWidth*0.02, overflow: 'hidden'}}
                 id={event.organizer}
