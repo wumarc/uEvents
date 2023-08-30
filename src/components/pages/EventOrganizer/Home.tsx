@@ -87,7 +87,7 @@ const Home = ({ navigation }: any) => {
         <FAB
           icon={{ name: "add", color: "white" }}
           placement="right"
-          color={"red"}
+          color={"#FD6262"}
           size="large"
           onPress={() => navigation.navigate("Step0", { useDefault: false })}
         />
