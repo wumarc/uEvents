@@ -193,6 +193,10 @@ const Profile = ({ route, navigation }: props) => {
 
           </View>
         </View>
+
+        <View style={{justifyContent: 'center'}}>
+          <Text style={{textAlign: 'center'}}>⚠️ Your changes are automatically saved. ⚠️</Text>
+        </View>
       </ScrollView>
 
       {/* Static Footer */}
