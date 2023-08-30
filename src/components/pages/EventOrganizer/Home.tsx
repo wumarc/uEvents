@@ -16,6 +16,7 @@ import { EventObject } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { Organizer } from "../../../utils/model/Organizer";
+import { SvgUri } from "react-native-svg";
 
 const Home = ({ navigation }: any) => {
   const [loading, events, add] =
@@ -33,7 +34,7 @@ const Home = ({ navigation }: any) => {
 
   if(!profile.name || !profile.description || !profile.image || profile.name == "" || profile.description == "" || profile.image == "") {
     return (
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1, paddingHorizontal: '5%'}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1, paddingHorizontal: '5%', backgroundColor: colours.white}}>
         <Text style={{textAlign: 'center', ...fonts.title3, marginBottom: '2%'}}>Your account is currently incomplete.</Text>
         <Text style={{textAlign: 'center', ...fonts.title3}}>To get started with creating events, please begin by completing your organizer profile. You can do this by navigating to Settings {">"} Profile. Once your profile is complete, you'll be all set to start crafting your events.</Text>
       </View>
@@ -49,12 +50,13 @@ const Home = ({ navigation }: any) => {
     <View style={styles.container}>
       <StatusBar translucent />
       
-      <ScrollView showsHorizontalScrollIndicator={false}>
+      <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}}>
+        
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Upcoming Events</Text>
         </View>
 
-        {(myEvents ?? []).length != 0 ? (
+        {(myEvents ?? []).length != 0 && (
         <FlatList
           style={{}}
           showsVerticalScrollIndicator={false}
@@ -65,9 +67,17 @@ const Home = ({ navigation }: any) => {
             </View>
           )}
         />
-        ) : (
-          <View style={{ paddingHorizontal: "10%"}}>
-            <Text style={fonts.title3}>You currently have no events. Create one by clicking on the add button!</Text>
+        )}
+
+        {(myEvents ?? []).length == 0 && (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <SvgUri
+              width="20%"
+              height="20%"
+              uri={"https://openmoji.org/data/color/svg/1F388.svg"}
+              fill="black"
+            />
+            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no events. Create one by clicking on the add button!</Text>
           </View>
         )}
 

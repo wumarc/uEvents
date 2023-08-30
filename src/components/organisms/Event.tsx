@@ -112,7 +112,7 @@ const Event: React.FC<EventProps> = (props) => {
                 id={event.organizer}
               />
             </View>
-            <Text style={{...fonts.small, fontWeight: '500'}}>{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{" "}{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

@@ -123,8 +123,8 @@ const Profile = ({ route, navigation }: props) => {
           </Avatar>
         </View>
         
-        {image == null &&
-          <Text style={{textAlign: 'center'}}>Please ensure to upload an image of your organization!</Text>
+        {image == "" || image == null &&
+          <Text style={{textAlign: 'center'}}>Please upload an image of your organization to finish setting up your account.</Text>
         }
 
         {/* Club Info Section */}

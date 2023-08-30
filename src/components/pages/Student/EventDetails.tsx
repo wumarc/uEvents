@@ -102,7 +102,7 @@ const EventDetails = ({ route, navigation }: props) => {
             >
               <View style={{borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
                 <Text style={{...fonts.title3, textAlign: 'center'}}>{event.location}</Text>
-                {event.roomNumber && <Text style={{...fonts.title3, textAlign: 'center'}}>Room {event.roomNumber}</Text>}
+                {event.roomNumber && <Text style={{...fonts.title3, textAlign: 'center'}}>Room: {event.roomNumber}</Text>}
                 <Text style={{...fonts.small, textAlign: 'center'}}>{event.address}</Text>
                 <Button title={"Google Maps"}
                   buttonStyle={{...buttons.button1, marginTop: '3%', backgroundColor: '#4285F4'}}
