@@ -14,6 +14,7 @@ import CustomInput from "../../atoms/CustomInput";
 import CustomButton from "../../atoms/CustomButton";
 import { Badge } from "react-native-elements";
 import FirebaseImage from "../../organisms/FirebaseImage";
+import { emojiUrl } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -56,7 +57,7 @@ const EventDetails = ({ route, navigation }: props) => {
         <SvgUri
           width="100%"
           height="100%"
-          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          uri={emojiUrl(event.emoji)}
           fill="black"
         />
         </View>

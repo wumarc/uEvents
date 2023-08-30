@@ -37,7 +37,7 @@ import {
   defaultEvent,
   recurrence,
 } from "../../../utils/model/EventObject";
-import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
+import { emojiUrl, getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -282,7 +282,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
               <SvgUri
                 width={100}
                 height={100}
-                uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+                uri={emojiUrl(event.emoji)}
                 fill="black"
               />
             </View>

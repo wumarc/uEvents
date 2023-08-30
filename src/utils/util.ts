@@ -106,3 +106,14 @@ export function toPrecision(value: number, precision: number) {
   }
   return final;
 }
+
+export function emojiUrl(emoji: string) {
+  let unicodeString = "";
+  for (let i = 0; i < emoji.length; i+= 1) {
+    if (i > 1) unicodeString += "-"
+    if (i != 1) {
+      unicodeString += emoji.codePointAt(i)?.toString(16).toUpperCase();
+    }
+  }
+  return "https://openmoji.org/data/color/svg/" + unicodeString + ".svg"
+}

@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
-import { getFirebaseUserIDOrEmpty } from "../../utils/util";
+import { emojiUrl, getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
@@ -94,7 +94,7 @@ const Event: React.FC<EventProps> = (props) => {
         <SvgUri
           width="100%"
           height="100%"
-          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          uri={emojiUrl(event.emoji)}
           fill="black"
         />
         </View>

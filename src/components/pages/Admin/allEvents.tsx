@@ -11,7 +11,7 @@ import {
   useStateWithFireStoreCollection,
   useStateWithFireStoreDocument,
 } from "../../../utils/useStateWithFirebase";
-import { getFirebaseUserID } from "../../../utils/util";
+import { emojiUrl, getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -152,7 +152,7 @@ const EventLine: FC<{
       <SvgUri
           width={40}
           height={40}
-          uri={"https://openmoji.org/data/color/svg/" + (event.emoji ?? "❓").codePointAt(0)?.toString(16).toUpperCase() + ".svg"}
+          uri={emojiUrl(event.emoji)}
           fill="black"
         />
         <TouchableOpacity style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} onPress={() => Clipboard.setString(event.id)}>
