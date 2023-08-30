@@ -5,19 +5,19 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button, Input } from "react-native-elements";
 import WheelPickerExpo from "react-native-wheel-picker-expo";
 import CustomButton from "./CustomButton";
+import { borderRadius, colours } from "../subatoms/Theme";
 
 export const DatePickerModal: FC<{
     setDate: (date: Timestamp) => void;
     dateValue: Timestamp;
     inputStyle?: any;
+    label?: string;
 }> = (props) => {
     
-
     const hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
     const ampm = ['AM', 'PM'];
     const days = [
-      'Wed Aug 30',
       'Thu Aug 31',
       'Fri Sep 01',
       'Sat Sep 02',
@@ -142,12 +142,14 @@ export const DatePickerModal: FC<{
       'Sat Dec 30',
       'Sun Dec 31'
     ];
+
     const [date, setDate] = useState({
       day: "",
       hour: "",
       minute: "",
       ampm: "",
     });
+
     const [show, setShow] = useState(false);
   
     const convert = () => {
@@ -255,10 +257,18 @@ export const DatePickerModal: FC<{
     return (
         <View>
             <Input
+                label={props.label}
                 style={props.inputStyle}
-               disabled
-               value = {`${dateMonth} ${dateDay} ${initialDate.getHours() % 12}:${initialDate.getMinutes() < 10 ? "0" + initialDate.getMinutes() : initialDate.getMinutes()} ${initialDate.getHours() > 11 ? "PM" : "AM"}`}
-               onPressIn={() => setShow(true)}
+                inputContainerStyle={{
+                    borderColor: colours.black,
+                    borderWidth: 1,
+                    paddingVertical: 4,
+                    paddingHorizontal: 10,
+                    borderRadius: borderRadius.medium,
+                }}
+                disabled
+                value = {`${dateMonth} ${dateDay} ${initialDate.getHours() % 12}:${initialDate.getMinutes() < 10 ? "0" + initialDate.getMinutes() : initialDate.getMinutes()} ${initialDate.getHours() > 11 ? "PM" : "AM"}`}
+                onPressIn={() => setShow(true)}
             />
             <Modal
                 visible={show}

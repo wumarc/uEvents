@@ -368,7 +368,7 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               maxLength={30}
               defaultValue={event.roomNumber}
             />
-            <Text style={fonts.regular}>If the location of your event is not determined yet, put TBD in the room number field.</Text>
+            <Text style={fonts.regular}>If the location of your event has not been determined yet, put TBD in the room number field.</Text>
           </View>
         ) :
           <View>
@@ -423,6 +423,9 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       <Text style={fonts.title1}>Provide the date and time of your event</Text>
       <Text style={fonts.regular}>Tells us when we can find you!</Text>
 
+      <Text>{" "}</Text>
+      <Text>{" "}</Text>
+
       {/* Recurrence */}
       {/* <View style={spacing.verticalMargin1}>
         <ButtonGroup
@@ -434,16 +437,21 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         />
       </View> */}
 
-      <Text>Start Date</Text>
-      <DatePickerModal
-        dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
-        setDate={(date) => {set({...event, startTime: date})}}
-      />
-      <Text>End Date (Optional)</Text>
-      <DatePickerModal
-        dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
-        setDate={(date) => {set({...event, endTime: date})}}
-      />
+      <View style={{marginBottom: 15}}>
+        <DatePickerModal
+          dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
+          setDate={(date) => {set({...event, startTime: date})}}
+          label="Start Date"
+        />
+      </View>
+      
+      <View style={{}}>
+        <DatePickerModal
+          dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
+          setDate={(date) => {set({...event, endTime: date})}}
+          label="End Date (Optional)"
+        />
+      </View>
 
     </View>
   );
