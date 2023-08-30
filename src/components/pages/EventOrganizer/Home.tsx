@@ -53,7 +53,7 @@ const Home = ({ navigation }: any) => {
       <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}}>
         
         <View style={styles.pageTitle}>
-          <Text style={fonts.title1}>Upcoming Events</Text>
+          <Text style={fonts.title1}>Your Events</Text>
         </View>
 
         {(myEvents ?? []).length != 0 && (
@@ -77,7 +77,7 @@ const Home = ({ navigation }: any) => {
               uri={"https://openmoji.org/data/color/svg/E10C.svg"}
               fill="black"
             />
-            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no events. Press the red button to launch an event!</Text>
+            <Text style={{...fonts.title3, textAlign: 'center'}}>You currently have no events. Smash the red button to launch an event!</Text>
           </View>
         )}
 
