@@ -789,7 +789,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
           width: '30%',
         }}
         disabled={getSelectedCategories().length >= 5}
-        title="Add tag"
+        title="Create a new tag"
         onPress={() =>{
           if (newCategory == "") {
             return;
