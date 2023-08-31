@@ -55,7 +55,7 @@ const SavedEvents = ({ route, navigation }: props) => {
             <Text style={fonts.title1}>Saved Events</Text>
           </View>
 
-          <View style={{alignItems: 'center', ...spacing.verticalMargin1, backgroundColor: 'red'}}>
+          <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
             {(student.saved ?? []).length != 0 && (
               <FlatList
                 data={savedEvents as EventObject[]}

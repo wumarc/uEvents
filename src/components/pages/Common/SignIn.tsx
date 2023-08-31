@@ -386,16 +386,15 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           title={
             <Text>
               {" "}
-              I agree to comply with uEvents'
+              I agree to comply with uEvents'{" "}
               <Text
+                style={{ color: colours.purple, textDecorationLine: 'underline' }}
                 onPress={() =>
                   Linking.openURL(
                     "https://uevents.webnode.page/privacy-policy/"
                   )
                 }
-              >
-                {" "}
-                Privacy Policy{" "}
+              >Privacy Policy{" "}
               </Text>
             </Text>
           }
