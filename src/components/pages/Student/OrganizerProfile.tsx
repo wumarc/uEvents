@@ -162,8 +162,8 @@ const OrganizerProfile = ({route, navigation}: props) => {
                     <Text style={fonts.title2}>{organizer.email}</Text>
                     <Button
                         buttonStyle={{backgroundColor: colours.white}}
-                        icon={<Icon name="copy" type="feather" color={colours.black} />} 
-                        onPress={() => Clipboard.setStringAsync('admin@uevents.org')}
+                        icon={<Icon name="copy" type="feather" color={colours.black} />}
+                        onPress={() => Clipboard.setStringAsync(organizer.email)}
                     />
                 </View>
             </Dialog>

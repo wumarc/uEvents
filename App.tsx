@@ -49,9 +49,9 @@ export default function App() {
     );
   } else if (user) {
     return (
-      <PaperProvider>
+      // <PaperProvider>
         <AppInner />
-      </PaperProvider>
+      // {/* </PaperProvider> */}
     ); 
   } else {
     return <SignIn />;

@@ -59,7 +59,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
           }
         }}
       />
-      <Menu
+      {/* <Menu
         visible={visible}
         onDismiss={() => setVisible(false)}
         style={{backgroundColor: colours.white}}
@@ -74,10 +74,10 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
         }
       >
         <Menu.Item onPress={() => {setReportVisible(true)}} title="Report" />
-        {event.organizerType === "Organizer Added"? <Menu.Item onPress={() => {setBlockVisible(true)}} title="Block" /> : <></>}
+        {event.organizerType === "Organizer Added"? <Menu.Item onPress={() => {setBlockVisible(true)}} title="Block" /> : <></>} */}
         {/* <Menu.Item onPress={() => {}} title="Claim event" /> */}
-        <Menu.Item onPress={() => {setHideVisible(true)}} title="Hide" />
-      </Menu>
+        {/* <Menu.Item onPress={() => {setHideVisible(true)}} title="Hide" />
+      </Menu> */}
       
       {/* Report dialog */}
       <Dialog
