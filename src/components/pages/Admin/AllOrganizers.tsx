@@ -11,7 +11,7 @@ import { fireStore } from "../../../firebaseConfig";
 
 
 type props = NativeStackScreenProps<RootStackParamList, "AllOrganizers">;
-export const AllOrganizers = ({}: props) => {
+export const AllOrganizers = ({route, navigation}: props) => {
 
     const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
 
@@ -56,6 +56,11 @@ export const AllOrganizers = ({}: props) => {
                                 Clipboard.setString(item.id);
                             }}
                         >Copy Id</Button>
+                        <Button size="sm" style={{marginLeft: 2}}
+                            onPress={() => {
+                                navigation.navigate("EventOrganizerView", {organizerID: item.id, imageID: item.image})
+                            }}
+                        >Details</Button>
                     </View>
                 </View>
             )}

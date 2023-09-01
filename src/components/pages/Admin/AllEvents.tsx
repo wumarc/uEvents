@@ -117,7 +117,7 @@ const EventLine: FC<{
   if (event.organizerType === "Organizer Added" || keep) {
     const [loading, organizer2] = useStateWithFireStoreDocument(
       "users",
-      event.organizer
+      event.organizer == "" ? "Default" : event.organizer,
     );
 
     if (loading) {
@@ -149,12 +149,15 @@ const EventLine: FC<{
   return (
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed? 120 : 40 }} >
       <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%", }} >
-      <SvgUri
+      {event.emoji? (
+        <SvgUri
           width={40}
           height={40}
           uri={emojiUrl(event.emoji)}
           fill="black"
         />
+      ): <></>}
+      
         <TouchableOpacity style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} onPress={() => Clipboard.setString(event.id)}>
           <Text>{event.name}</Text>
           <View style={{display: "flex", flexDirection: "row"}}><Text>{event.startTime.toDate().toDateString() + " - "}</Text><Text style={{color: statusColor}}>{status}</Text></View>

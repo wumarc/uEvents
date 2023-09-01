@@ -2,7 +2,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
 import { colours } from "../../subatoms/Theme";
@@ -17,6 +17,10 @@ import { Step0 } from "../EventOrganizer/CreateEvent";
 import HeaderLeft from "../../molecules/HeaderLeft";
 import { AllEvents } from "./AllEvents";
 import { AllOrganizers } from "./AllOrganizers";
+import { useTheme } from "react-native-paper";
+import Home from "../Student/Home";
+import OrganizerProfile from "../Student/OrganizerProfile";
+import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,15 +40,20 @@ export type RootStackParamList = {
     imageID: string;
   };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined, isAdmin?: boolean };
-  AllOrganizers: {};
+  AllOrganizers: {};  
+  EventOrganizerView: { organizerID: string, imageID: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
+  useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
+  
   return (
     <Tab.Navigator
-      barStyle={{ backgroundColor: colours.purple }}
+      barStyle={{ backgroundColor: "#f7f7f7" }}
+      activeColor={colours.purple}
+      inactiveColor={colours.grey}
       initialRouteName="allEvents"
     >
       <Tab.Screen
@@ -53,10 +62,10 @@ const MainView = ({ route, navigation }: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Create",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="plus-circle"
-              color={colours.purple}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -67,10 +76,26 @@ const MainView = ({ route, navigation }: props) => {
         component={AllEvents as any} // TODO fix error
         options={{
           tabBarLabel: "All Events",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="ticket"
-              color={colours.purple}
+              color={focused ? colours.purple : colours.grey}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        // listeners={{ tabPress: (e) => showHeader.home }}
+        component={Home as any} // TODO fix error
+        initialParams={{ userType: route.params.userType }}
+        options={{
+          tabBarLabel: "Events",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "jellyfish" : "jellyfish-outline"}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -80,11 +105,11 @@ const MainView = ({ route, navigation }: props) => {
         name="AllOrganizers"
         component={AllOrganizers as any} // TODO fix error
         options={{
-          tabBarLabel: "All Organizers",
-          tabBarIcon: ({ color }) => (
+          tabBarLabel: "Organizers",
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="ticket"
-              color={colours.purple}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -96,10 +121,10 @@ const MainView = ({ route, navigation }: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Profile",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="account-circle"
-              color={colours.purple}
+              color={focused ? colours.purple : colours.grey}
               size={30}
             />
           ),
@@ -147,6 +172,16 @@ const Main: FC<{ userType: string }> = (props) => {
               component={EventDetails as any} // TODO fix error
             />
             <Stack.Screen
+              name="EventOrganizerView"
+              component={OrganizerProfile as any}
+              options={({ navigation }) => ({
+                title: "Profile",
+                headerStyle: { backgroundColor: colours.white },
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+                headerRight: () => <ProfileHeaderRight eventID={""} />,
+              })}
+            />
+            <Stack.Screen
             name="Step0"
             component={Step0 as any}
             options={({ navigation }) => ({
@@ -170,7 +205,7 @@ export default Main;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.purple,
-    paddingTop: Platform.OS === "android" ? 25 : 0,
+    backgroundColor: colours.white,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

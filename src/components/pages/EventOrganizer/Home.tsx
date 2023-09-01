@@ -56,6 +56,10 @@ const Home = ({ navigation }: any) => {
           <Text style={fonts.title1}>Your Events</Text>
         </View>
 
+        {profile.approved ? <></>  : (
+          <Text style={{...fonts.title3, textAlign: 'center'}}>Your club is currently being reviewed. You can start adding events now. They will show once both your club and your events get approved by our team.</Text>
+        )}
+
         {(myEvents ?? []).length != 0 && (
         <FlatList
           style={{}}

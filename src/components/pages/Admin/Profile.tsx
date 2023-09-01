@@ -37,60 +37,6 @@ const Profile = ({ route, navigation }: props) => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.profileHeader}>
-        <Text h4>Your Profile</Text>
-      </View>
-
-      {/* Image Section */}
-      <View style={styles.profileImage}>
-        {/* <Image 
-                    source={{ uri: 'https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w' }}
-                    style={{ 
-                        width: 200,
-                        height: 200,
-                        borderRadius: 200/2,
-                    }}
-                /> */}
-        <Avatar
-          source={{
-            uri: "https://images.squarespace-cdn.com/content/v1/592738c58419c2fe84fbdb81/1515457803870-4HA5BU3QQY2DXLR0LFVB/DBS_StudentLinkedInAlex.jpg?format=1000w",
-          }}
-          // showEditButton
-          rounded
-          size="xlarge"
-        />
-      </View>
-
-      {/* Student Info Section */}
-      <View style={styles.studentInfo}>
-        <View style={{ flexDirection: "column", flex: 1 }}>
-          <Input
-            placeholder="Name"
-            defaultValue={profile.name ? profile.name : ""}
-            leftIcon={{type: "material", name: "person"}}
-            onChangeText={(value) => setProfile({ ...profile, name: value })}
-          />
-          <Input
-            placeholder="Student Id"
-            defaultValue={
-              profile.studentId.toString() ? profile.studentId.toString() : ""
-            }
-            leftIcon={{
-              type: "material",
-              name: "credit-card",
-            }}
-            onChangeText={(value) => {
-              if (parseInt(value) != undefined) {
-                setProfile({ ...profile, studentId: parseInt(value) });
-              }
-            }}
-          />
-        </View>
-      </View>
-
-      {/* Log out button */}
       <View>
         <Button
           onPress={() => {
@@ -100,7 +46,6 @@ const Profile = ({ route, navigation }: props) => {
           style={{ marginBottom: 10 }}
         />
       </View>
-    </View>
   );
 };
 
