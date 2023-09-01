@@ -134,11 +134,11 @@ const Login: FC = ({ setIsSigningUp }: any) => {
       return;
     }
 
-    // Only accept emails from accepted universities
-    if (!universities.some((university) => email.includes(university))) {
-      setError("Email must be from an accepted university");
-      return;
-    }
+    // // Only accept emails from accepted universities
+    // if (!universities.some((university) => email.includes(university))) {
+    //   setError("Email must be from an accepted university");
+    //   return;
+    // }
 
     try {
       await signInWithEmailAndPassword(auth, email, password);

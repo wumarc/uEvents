@@ -178,7 +178,7 @@ const Main: FC<{ userType: string }> = (props) => {
                 title: "Profile",
                 headerStyle: { backgroundColor: colours.white },
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
-                headerRight: () => <ProfileHeaderRight eventID={""} />,
+                headerRight: () => <ProfileHeaderRight eventID={""} navigation={navigation} />,
               })}
             />
             <Stack.Screen

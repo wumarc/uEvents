@@ -14,7 +14,7 @@ import { Button } from "@rneui/base";
 import { Text } from "react-native";
 import CustomButton from "../atoms/CustomButton";
 
-const HeaderRight: FC<{ eventID: string }> = (props) => {
+const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
   const [loading, userData, setUserData] = useStateWithFireStoreDocument(
     "users",
     getFirebaseUserIDOrEmpty()
@@ -22,11 +22,10 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
 
   const [loading2, event, setEvent] = useStateWithFireStoreDocument(
     "events",
-    props.eventID
+    props.eventID === "" ? "0" : props.eventID
   );
 
   const [visible, setVisible] = useState(false);
-
   const [reportVisible, setReportVisible] = useState(false);
   const [hideVisible, setHideVisible] = useState(false);
   const [blockVisible, setBlockVisible] = useState(false);
@@ -59,25 +58,59 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
           }
         }}
       />
-      {/* <Menu
-        visible={visible}
+      {props.eventID === "" ? (
+        <></>) :
+        (
+          <MaterialCommunityIcons
+        name="dots-vertical"
+        color={colours.black}
+        size={30}
+        onPress={() => setVisible(true)}
+      />
+        )
+      }
+      <Dialog
+        isVisible={visible}
         onDismiss={() => setVisible(false)}
         style={{backgroundColor: colours.white}}
-        contentStyle={{backgroundColor: colours.white}}
-        anchor={
-          <MaterialCommunityIcons
-            name="dots-vertical"
-            color={colours.black}
-            size={30}
-            onPress={() => setVisible(true)}
-          />
-        }
       >
-        <Menu.Item onPress={() => {setReportVisible(true)}} title="Report" />
-        {event.organizerType === "Organizer Added"? <Menu.Item onPress={() => {setBlockVisible(true)}} title="Block" /> : <></>} */}
-        {/* <Menu.Item onPress={() => {}} title="Claim event" /> */}
-        {/* <Menu.Item onPress={() => {setHideVisible(true)}} title="Hide" />
-      </Menu> */}
+        <CustomButton
+            buttonName="Report"
+            onPressListener={() => {
+              setReportVisible(true);
+              setVisible(false);
+            }}
+        />
+        {event && event.organizerType === "Organizer Added"? (
+          <CustomButton
+            buttonName="Block"
+            onPressListener={() => {
+              setBlockVisible(true);
+              setVisible(false);
+            }}
+        />
+        ): <></>}
+        <CustomButton
+            buttonName="Hide"
+            onPressListener={() => {
+              setHideVisible(true);
+              setVisible(false);
+            }}
+        />
+        <Button
+          style={{
+              paddingHorizontal: 10,
+              borderRadius: 15,
+              marginVertical: '1%'
+          }}
+          color={'transparent'}
+          titleStyle={{color: colours.purple, fontWeight: '600'}}
+          title={"Cancel"}
+          onPress={() => {
+            setVisible(false);
+          }}
+        />
+      </Dialog>
       
       {/* Report dialog */}
       <Dialog
@@ -96,6 +129,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
               });
               setReportVisible(false);
               setVisible(false);
+              props.navigation.pop();
             }}
         />
         <Button
@@ -131,6 +165,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
             });
             setHideVisible(false);
             setVisible(false);
+            props.navigation.pop();
           }}
         />
         <Button
@@ -165,6 +200,7 @@ const HeaderRight: FC<{ eventID: string }> = (props) => {
             });
             setBlockVisible(false);
             setVisible(false);
+            props.navigation.pop();
           }}
         />
         <Button

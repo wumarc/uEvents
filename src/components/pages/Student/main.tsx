@@ -164,7 +164,7 @@ const Main: FC<{ userType: string }> = (props) => {
                 headerStyle: { backgroundColor: colours.white },
                 headerTintColor: colours.black,
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
-                headerRight: () => (<HeaderRight eventID={route.params.eventID} />),
+                headerRight: () => (<HeaderRight eventID={route.params.eventID} navigation={navigation} />),
               };
             }}
           />
@@ -182,11 +182,11 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="EventOrganizerView"
             component={OrganizerProfile as any}
-            options={({ navigation }) => ({
+            options={({ navigation, route }) => ({
               title: "Profile",
               headerStyle: { backgroundColor: colours.white },
               headerLeft: () => <HeaderLeft navigation={navigation} />,
-              headerRight: () => <ProfileHeaderRight eventID={""} />,
+              headerRight: () => <ProfileHeaderRight organizer={route.params.organizerID} navigation={navigation} />,
             })}
           />
           <Stack.Screen

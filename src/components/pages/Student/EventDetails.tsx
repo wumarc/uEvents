@@ -54,12 +54,15 @@ const EventDetails = ({ route, navigation }: props) => {
 
         {/* Image */}
         <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.18}}>
-        <SvgUri
+        {event.emoji ? (
+          <SvgUri
           width="100%"
           height="100%"
           uri={emojiUrl(event.emoji)}
           fill="black"
         />
+        ): <></>}
+        
         </View>
 
         {/* Title */}
