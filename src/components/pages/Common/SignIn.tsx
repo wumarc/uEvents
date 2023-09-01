@@ -299,6 +299,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
   }
 
   return (
+    
     <View
       style={{
         backgroundColor: "white",
