@@ -159,7 +159,6 @@ const Profile = ({ route, navigation }: props) => {
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) =>setProfile({ ...profile, description: value })}
               containerStyle={{ paddingHorizontal: 0 }}
-              inputStyle={{ height: windowHeight * 0.15}}
               textAlignVertical="top"
               selectionColor={colours.purple}
               inputContainerStyle={{

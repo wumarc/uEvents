@@ -13,7 +13,7 @@ import {
 import { ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { Input } from "@rneui/themed";
 import { FC, useEffect, useRef, useState } from "react";
-import { Button } from "@rneui/base";
+import { Button } from "@rneui/themed";
 import {
   colours,
   fonts,
@@ -786,7 +786,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
           backgroundColor: colours.purple,
           padding: 10,
           borderRadius: 10,
-          width: '30%',
+          width: '50%',
         }}
         disabled={getSelectedCategories().length >= 5}
         title="Create a new tag"
@@ -1072,12 +1072,11 @@ export const Step9: FC<{ eventID: string }> = (props) => {
           <Button
             buttonStyle={{
               backgroundColor: colours.purple,
-              padding: 10,
               borderRadius: 10,
-              width: '30%',
+              width: '50%',
             }}
             disabled={getSelectedCategories().length >= 5}
-            title="create"
+            title="Create a new tag"
             onPress={() =>{
               if (newCategory == "") {
                 return;
@@ -1086,7 +1085,7 @@ export const Step9: FC<{ eventID: string }> = (props) => {
               categoryData.push({label: newCategory, value: newCategory});
               setNewCategory("");
             }}
-            titleStyle={{ ...fonts.title2, color: colours.white }}
+            titleStyle={{ ...fonts.regular, color: colours.white }}
           />
         </View>
 

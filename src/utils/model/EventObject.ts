@@ -215,15 +215,19 @@ export const relativeDate = (firebaseTimestamp: any) => {
   let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   if (daysDifference === 0) {
-      return "Today";
+    return "Today";
   } else if (daysDifference === 1) {
-      return "Tomorrow";
+    return "Tomorrow";
   } else if (daysDifference > 1 && daysDifference <= 7) {
-      return weekdays[eventDate.getDay()];
+    return weekdays[eventDate.getDay()];
   } else {
-      let month = eventDate.getMonth() + 1;
-      let day = eventDate.getDate();
-      let year = eventDate.getFullYear();
-      return month + "/" + day + "/" + year;
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    let day = eventDate.getDate();
+    let daySuffix = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
+    let suffix = (day % 10 < 10 && day > 20) ? daySuffix[day % 10] : "th";
+    
+    return days[eventDate.getDay()] + " " + months[eventDate.getMonth()] + " " + day + suffix;
   }
 }
