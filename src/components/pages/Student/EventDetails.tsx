@@ -31,6 +31,8 @@ const EventDetails = ({ route, navigation }: props) => {
     route.params.organizerID
   );
 
+  const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
+
   // useEffect(() => {
   //   if (!loading) {
   //     const [loading2, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
@@ -58,8 +60,15 @@ const EventDetails = ({ route, navigation }: props) => {
           <SvgUri
           width="100%"
           height="100%"
-          uri={emojiUrl(event.emoji)}
+          uri={backupUrl ?? emojiUrl(event.emoji)}
           fill="black"
+          onError={() => {
+            let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+            // remove last part
+            parts.pop();
+            setBackupUrl(parts.join("-") + ".svg");
+            console.log("error getting emoji. Backup url: " + parts.join("-") + ".svg");
+          }}
         />
         ): <></>}
         

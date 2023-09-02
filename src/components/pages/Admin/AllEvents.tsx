@@ -113,6 +113,7 @@ const EventLine: FC<{
 
   const [reason, setReason] = useState("");
   const [keep, setKeep] = useState(false);
+  const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
 
   if (event.organizerType === "Organizer Added" || keep) {
     const [loading, organizer2] = useStateWithFireStoreDocument(
@@ -153,8 +154,15 @@ const EventLine: FC<{
         <SvgUri
           width={40}
           height={40}
-          uri={emojiUrl(event.emoji)}
+          uri={backupUrl ?? emojiUrl(event.emoji)}
           fill="black"
+          onError={() => {
+            let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+            // remove last part
+            parts.pop();
+            setBackupUrl(parts.join("-") + ".svg");
+            console.log("error getting emoji. Backup url: " + parts.join("-") + ".svg");
+          }}
         />
       ): <></>}
       
