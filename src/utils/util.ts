@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
+import emojiUnicode from "emoji-unicode";
 
 export function getFirebaseUserID(): string | undefined {
   let id = auth.currentUser?.uid;
@@ -101,12 +102,6 @@ export function toPrecision(value: number, precision: number) {
 }
 
 export function emojiUrl(emoji: string) {
-  let unicodeString = "";
-  for (let i = 0; i < emoji.length; i+= 1) {
-    if (i > 1) unicodeString += "-"
-    if (i != 1) {
-      unicodeString += emoji.codePointAt(i)?.toString(16).toUpperCase();
-    }
-  }
+  let unicodeString = (emojiUnicode(emoji) as string).replaceAll(" ", "-").toUpperCase();
   return "https://openmoji.org/data/color/svg/" + unicodeString + ".svg"
 }
