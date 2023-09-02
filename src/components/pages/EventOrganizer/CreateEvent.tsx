@@ -725,10 +725,10 @@ export const Step8: FC<{ eventID: string }> = (props) => {
     return set;
   }
 
-  categories = getOrderedCategories(events as EventObject[]);
+  categories = getOrderedCategories(events as EventObject[], event.id);
 
   let categoryData = [];
-  for (let category of fixedCategories) {
+  for (let category of categories) {
     categoryData.push({label: category, value: category});
   }
 
@@ -801,7 +801,7 @@ export const Step8: FC<{ eventID: string }> = (props) => {
         titleStyle={{ ...fonts.title3, color: colours.white}}
       />
       <Text>
-        Note that the created tag will not show up in the list above, but will still be added. Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
+        Avoid tags that contain information already specified such as "On campus" or "Free". Separate words with spaces.
       </Text>
       <View></View>
     </View>
@@ -844,10 +844,10 @@ export const Step9: FC<{ eventID: string }> = (props) => {
     return set;
   }
 
-  categories = getOrderedCategories(events as EventObject[]);
+  categories = getOrderedCategories(events as EventObject[], event.id);
 
   let categoryData = [];
-  for (let category of fixedCategories) {
+  for (let category of categories) {
     categoryData.push({label: category, value: category});
   }
 

@@ -105,7 +105,7 @@ const OrganizerEventDetails = ({ route, navigation }: props) => {
     return set;
   }
 
-  categories = getOrderedCategories(events as EventObject[]);
+  categories = getOrderedCategories(events as EventObject[], event.id);
 
   let categoryData = [];
   for (let category of fixedCategories) {
