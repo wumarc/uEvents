@@ -161,7 +161,6 @@ const EventLine: FC<{
             // remove last part
             parts.pop();
             setBackupUrl(parts.join("-") + ".svg");
-            console.log("error getting emoji. Backup url: " + parts.join("-") + ".svg");
           }}
         />
       ): <></>}

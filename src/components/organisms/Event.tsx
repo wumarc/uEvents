@@ -104,7 +104,6 @@ const Event: React.FC<EventProps> = (props) => {
             // remove last part
             parts.pop();
             setBackupUrl(parts.join("-") + ".svg");
-            console.log("error getting emoji. Backup url: " + parts.join("-") + ".svg");
           }}
         />
         </View>
