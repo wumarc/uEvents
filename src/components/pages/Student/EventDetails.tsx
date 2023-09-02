@@ -250,7 +250,7 @@ const EventDetails = ({ route, navigation }: props) => {
           title={event.signUpLink == null || event.signUpLink == "" ? "No Signup Required" : "Sign Up"}
           disabled={event.signUpLink == null || event.signUpLink == ""}
           titleStyle={{ fontSize: 15, fontWeight: "600" }}
-          onPress={() => {if (event.signUpLink == null || event.signUpLink == "") { Linking.openURL(event.signUpLink!);}}}
+          onPress={() => {if (event.signUpLink != null && event.signUpLink != "") { Linking.openURL(event.signUpLink!);}}}
         />
       </View>
 
