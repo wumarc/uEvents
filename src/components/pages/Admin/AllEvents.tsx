@@ -55,6 +55,14 @@ export const AllEvents = ({ route, navigation }: props) => {
     }
   });
 
+  // Remove outdated events
+  filteredEvents = filteredEvents.filter((event) => {
+    if (event.startTime.toDate().getTime() < Date.now()) {
+      return false;
+    }
+    return true;
+  });
+
   return (
     <View>
       {/* Search Bar */}
