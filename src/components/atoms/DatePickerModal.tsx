@@ -154,56 +154,78 @@ export const DatePickerModal: FC<{
     const [show, setShow] = useState(false);
   
     const convert = () => {
-      let value = new Date();
-      value.setHours(parseInt(date.hour) + (date.ampm === "PM" ? 12 : 0));
-      value.setMinutes(parseInt(date.minute));
-      value.setSeconds(0);
-      let split = date.day.split(" ");
-      let month = split[1];
-      let day = split[2];
-      value.setDate(parseInt(day as string));
-      let monthNum = 0;
-        switch (month) {
-            case "Jan":
-            monthNum = 0;
-            break;
-            case "Feb":
-            monthNum = 1;
-            break;
-            case "Mar":
-            monthNum = 2;
-            break;
-            case "Apr":
-            monthNum = 3;
-            break;
-            case "May":
-            monthNum = 4;
-            break;
-            case "Jun":
-            monthNum = 5;
-            break;
-            case "Jul":
-            monthNum = 6;
-            break;
-            case "Aug":
-            monthNum = 7;
-            break;
-            case "Sep":
-            monthNum = 8;
-            break;
-            case "Oct":
-            monthNum = 9;
-            break;
-            case "Nov":
-            monthNum = 10;
-            break;
-            case "Dec":
-            monthNum = 11;
-            break;
+        let value = new Date();
+
+        // Hours
+        if (date.hour === "") {
+            value.setHours(props.dateValue.toDate().getHours());
+        } else if (date.ampm === "") {
+            let ampm = props.dateValue.toDate().getHours() > 11 ? "PM" : "AM";
+            value.setHours(parseInt(date.hour) + (ampm === "PM" ? 12 : 0));
+        } else {
+            value.setHours(parseInt(date.hour) + (date.ampm === "PM" ? 12 : 0));
         }
-      value.setMonth(monthNum);
-      value.setFullYear(2023);
-      return value;
+
+        // Minutes
+        if (date.minute === "") {
+            value.setMinutes(props.dateValue.toDate().getMinutes());
+        } else {
+            value.setMinutes(parseInt(date.minute));
+        }
+        value.setSeconds(0);
+
+        // Day
+        if (date.day === "") {
+            value.setDate(props.dateValue.toDate().getDate());
+        } else {
+            let split = date.day.split(" ");
+            let month = split[1];
+            let day = split[2];
+            value.setDate(parseInt(day as string));
+            let monthNum = 0;
+            switch (month) {
+                case "Jan":
+                monthNum = 0;
+                break;
+                case "Feb":
+                monthNum = 1;
+                break;
+                case "Mar":
+                monthNum = 2;
+                break;
+                case "Apr":
+                monthNum = 3;
+                break;
+                case "May":
+                monthNum = 4;
+                break;
+                case "Jun":
+                monthNum = 5;
+                break;
+                case "Jul":
+                monthNum = 6;
+                break;
+                case "Aug":
+                monthNum = 7;
+                break;
+                case "Sep":
+                monthNum = 8;
+                break;
+                case "Oct":
+                monthNum = 9;
+                break;
+                case "Nov":
+                monthNum = 10;
+                break;
+                case "Dec":
+                monthNum = 11;
+                break;
+            }
+            value.setMonth(monthNum);
+        }
+        
+        value.setFullYear(2023);
+        return value;
     }
 
     let dateMonth = "";
@@ -310,7 +332,7 @@ export const DatePickerModal: FC<{
                         <WheelPickerExpo
                         height={200}
                         width={50}
-                        initialSelectedIndex={props.dateValue.toDate().getMinutes() / 5}
+                        initialSelectedIndex={Math.floor(props.dateValue.toDate().getMinutes() / 5)}
                         items={minutes.map(name => ({ label: name, value: '' }))}
                         selectedStyle={{borderColor: 'black', borderWidth: 1}}
                         onChange={({ item }) => setDate({...date, minute: item.label})}
