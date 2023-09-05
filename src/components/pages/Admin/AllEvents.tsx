@@ -165,6 +165,7 @@ const EventLine: FC<{
           uri={backupUrl ?? emojiUrl(event.emoji)}
           fill="black"
           onError={() => {
+            // console.log("Error with emoji: " + emojiUrl(event.emoji));
             let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
             // remove last part
             parts.pop();

@@ -109,6 +109,11 @@ export function emojiUrl(emoji: string) {
   if (unicodeStringRaw == undefined) {
     return "";
   }
-  let unicodeString = unicodeStringRaw.replaceAll(" ", "-").toUpperCase();
-  return "https://openmoji.org/data/color/svg/" + unicodeString + ".svg"
+  for (let i = 0; i < unicodeStringRaw.length; i++) {
+    if (unicodeStringRaw[i] == " ") {
+      // replace with "-"
+      unicodeStringRaw = unicodeStringRaw.slice(0, i) + "-" + unicodeStringRaw.slice(i + 1);
+    }
+  }
+  return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg"
 }
