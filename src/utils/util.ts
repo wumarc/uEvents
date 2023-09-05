@@ -102,6 +102,13 @@ export function toPrecision(value: number, precision: number) {
 }
 
 export function emojiUrl(emoji: string) {
-  let unicodeString = (emojiUnicode(emoji) as string).replaceAll(" ", "-").toUpperCase();
+  let unicodeStringRaw = emojiUnicode(emoji) as string;
+  if (unicodeStringRaw.length == 0) {
+    return "";
+  }
+  if (unicodeStringRaw == undefined) {
+    return "";
+  }
+  let unicodeString = unicodeStringRaw.replaceAll(" ", "-").toUpperCase();
   return "https://openmoji.org/data/color/svg/" + unicodeString + ".svg"
 }

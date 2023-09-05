@@ -10,6 +10,8 @@ import { getFirebaseUserID } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -43,6 +45,13 @@ const Profile = ({ route, navigation }: props) => {
             logout();
           }}
           title="Log out"
+          style={{ marginBottom: 10 }}
+        />
+        <Button
+          onPress={() => {
+            logEvent(analytics, "test_event", { name: "test_name" })
+          }}
+          title="Event"
           style={{ marginBottom: 10 }}
         />
       </View>

@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getFunctions } from "firebase/functions";
 import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
 import {
   API_KEY,
   AUTH_DOMAIN,
@@ -27,6 +28,7 @@ const firebase = initializeApp(firebaseConfig);
 export const auth = getAuth(firebase);
 export const fireStore = getFirestore(firebase);
 export const storage = getStorage(firebase);
+export const analytics = getAnalytics(firebase);
 // export const functions = getFunctions(firebase);
 
 export default firebase;
