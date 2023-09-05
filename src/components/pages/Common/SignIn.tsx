@@ -7,7 +7,7 @@ import { Button } from "@rneui/base";
 import { colours, fonts, windowHeight } from "../../subatoms/Theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { analytics, auth, fireStore } from "../../../firebaseConfig";
+import { auth, fireStore } from "../../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
@@ -20,7 +20,6 @@ import * as Clipboard from 'expo-clipboard';
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
 import { Dropdown } from "react-native-element-dropdown";
-import { logEvent } from "firebase/analytics";
 
 // Accepted universities
 const universities = ["@uottawa.ca", "@uevents.org"];
