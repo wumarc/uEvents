@@ -57,6 +57,9 @@ export const AllEvents = ({ route, navigation }: props) => {
 
   // Remove outdated events
   filteredEvents = filteredEvents.filter((event) => {
+    if (event.state != "Published") {
+      return true;
+    }
     if (event.startTime.toDate().getTime() < Date.now()) {
       return false;
     }
