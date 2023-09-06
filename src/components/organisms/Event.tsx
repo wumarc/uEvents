@@ -22,7 +22,6 @@ interface EventProps {
   id: string;
   organizer: string;
   navigation: any;
-  userType: string;
   onSaveEvent: any;
   listView: boolean;
 }
@@ -80,7 +79,6 @@ const Event: React.FC<EventProps> = (props) => {
     <TouchableOpacity
       onPress={() => {
         props.navigation.navigate("EventDetailsView", {
-        userType: props.userType,
         eventID: props.id,
         organizerID: event.organizer,
         imageID: "",

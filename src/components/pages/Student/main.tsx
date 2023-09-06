@@ -16,9 +16,8 @@ import AccountSettings from "./AccountSettings";
 import OrganizerProfile from "./OrganizerProfile";
 import BrowseOrganizers from "./BrowseOrganizers";
 import HeaderLeft from "../../molecules/HeaderLeft";
-import { colours, fonts, renTheme } from "../../subatoms/Theme";
+import { colours } from "../../subatoms/Theme";
 import HeaderRight from "../../molecules/HeaderRight";
-import { ThemeProvider } from "@rneui/themed";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 import { HiddenEvents } from "./HiddenEvents";
 import BlockedOrganizers from "./BlockedOrganizers";
@@ -27,22 +26,17 @@ const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-  MainView: { userType: string };
+  MainView: {};
   AccountSettingsView: {};
-  EventDetailsView: {
-    userType: string;
-    eventID: string;
-    organizerID: string;
-    imageID: string;
-  };
-  EventSignUpView: { userType: string };
-  Events: { userType: string };
-  Saved: { userType: string };
-  Home: { userType: string };
-  Search: { userType: string };
+  EventDetailsView: { eventID: string; organizerID: string; imageID: string };
+  EventSignUpView: {};
+  Events: {};
+  Saved: {};
+  Home: {};
+  Search: {};
   OrganizerProfile: { organizerID: string };
-  Profile: { userType: string };
-  HeaderLeft: { userType: string };
+  Profile: {};
+  HeaderLeft: {};
   EventOrganizerView: { organizerID: string, imageID: string };
   HiddenEventsView: {};
   BlockedOrganizersView: {};
@@ -62,9 +56,8 @@ const MainView = ({ route, navigation }: props) => {
     >
       <Tab.Screen
         name="Home"
-        // listeners={{ tabPress: (e) => showHeader.home }}
         component={Home as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
+        initialParams={{}}
         options={{
           tabBarLabel: "Events",
           tabBarIcon: ({ focused }) => (
@@ -78,9 +71,8 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="BrowseOrganizers"
-        // listeners={{ tabPress: (e) => showHeader.profile }}
         component={BrowseOrganizers as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
+        initialParams={{}}
         options={{
           tabBarLabel: "Organizers",
           tabBarIcon: ({ focused }) => (
@@ -96,7 +88,7 @@ const MainView = ({ route, navigation }: props) => {
         name="Saved"
         // listeners={{ tabPress: (e) => showHeader.saved }}
         component={SavedEvents as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
+        initialParams={{}}
         options={{
           tabBarLabel: "Saved",
           title: "Saved",
@@ -111,9 +103,8 @@ const MainView = ({ route, navigation }: props) => {
       />
       <Tab.Screen
         name="Settings"
-        // listeners={{ tabPress: (e) => showHeader.profile }}
         component={Settings as any} // TODO fix error
-        initialParams={{ userType: route.params.userType }}
+        initialParams={{}}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ focused }) => (
@@ -151,7 +142,7 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="MainView"
             component={MainView as any} // TODO fix error
-            initialParams={{ userType: props.userType }}
+            initialParams={{}}
             options={{ headerShown: false }}
           />
           {/* Any other view that adds a stack to the main view */}
@@ -210,7 +201,6 @@ const Main: FC<{ userType: string }> = (props) => {
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
-    // </ThemeProvider>
   );
 };
 

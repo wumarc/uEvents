@@ -8,8 +8,6 @@ import {
 } from "react-native";
 import { useState } from "react";
 import {
-  useSateWithFireStore,
-  useSateWithFireStoreArray,
   useStateWithFireStoreCollection,
   useStateWithFireStoreDocument,
 } from "../../../utils/useStateWithFirebase";
@@ -19,15 +17,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { searchAlgo } from "../../../utils/search";
-import { EventCategory } from "../../../utils/model/EventObject";
 import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
 import { SearchBar } from "react-native-elements";
-import {
-  buildCategories,
-  calculateNumberOfEvents,
-} from "../../../utils/categories";
 import { Organizer } from "../../../utils/model/Organizer";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
@@ -39,24 +32,9 @@ const Home = ({ route, navigation }: props) => {
 
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(true);
-  const [loading, events, add] =
-    useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [loading3, student, setStudent] = useStateWithFireStoreDocument(
-    "users",
-    getFirebaseUserIDOrEmpty()
-  );
-
-  // const [selectedIndex, setSelectedIndex] = useState(0);
-  // const [loading2, categories, setCategories] = useSateWithFireStore<string[]>(
-  //   "categories/names",
-  //   "list",
-  //   []
-  // );
-
-  // const [loading3, categoriesValue, setCategoriesValue] = useSateWithFireStore<
-  //   number[]
-  // >("categories/values", "list", []);
+  const [loading3, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
 
   if (loading || loading2 || loading3) {
     return <Loading />;
@@ -77,65 +55,51 @@ const Home = ({ route, navigation }: props) => {
     });
   };
 
-  /* --------------------------- Categories handling -------------------------- */
-  // let numberOfEvents = calculateNumberOfEvents(categories, categoriesValue);
-  // if (
-  //   numberOfEvents != events?.length &&
-  //   events != undefined &&
-  //   !Number.isNaN(numberOfEvents)
-  // ) {
-  //   // Case where the categories are not updated
-  //   // Should never happen but just in case
-  //   let [newCategories, newCategoriesValue] = buildCategories(events);
-  //   setCategories(newCategories);
-  //   setCategoriesValue(newCategoriesValue);
-  // }
-
   /* ---------------------------- Filter the events --------------------------- */
 
   // Filtered events
   let filteredEvents = events as EventObject[];
-  filteredEvents = searchAlgo(search, filteredEvents);
-  // if (selectedIndex !== 0) {
-  //   filteredEvents = filteredEvents.filter((event) =>
-  //     event.categories.includes(
-  //       Object.values(EventCategory)[selectedIndex] as EventCategory
-  //     )
-  //   );
-  // }
 
-  // Make sure the events are not in the past
-  filteredEvents = filteredEvents.filter((event) => {
-    let startTime = nextStartTime(event.startTime, event.recurrence);
-    if (!startTime) {
-      return false;
-    }
-    return startTime.toMillis() > Timestamp.now().toMillis();
-  });
+  try {
+    filteredEvents = searchAlgo(search, filteredEvents);
 
-  // Make sure the events are published
-  filteredEvents = filteredEvents.filter((event) => 
-    event.state == "Published")
+    // Make sure the events are not in the past
+    filteredEvents = filteredEvents.filter((event) => {
+      let startTime = nextStartTime(event.startTime, event.recurrence);
+      if (!startTime) {
+        return false;
+      }
+      return startTime.toMillis() > Timestamp.now().toMillis();
+    });
 
-  // Make sure the organizer is approved
-  filteredEvents = filteredEvents.filter((event) => {
-    if (event.organizerType === "Manually Added") {
+    // Make sure the events are published
+    filteredEvents = filteredEvents.filter((event) => 
+      event.state == "Published")
+
+    // Make sure the organizer is approved
+    filteredEvents = filteredEvents.filter((event) => {
+      if (event.organizerType === "Manually Added") {
+        return true;
+      }
+      let organizer = organizers.find((organizer) => organizer.id === event.organizer);
+      return organizer?.approved ?? false;
+    });
+
+    // Remove blocked or hidden events
+    filteredEvents = filteredEvents.filter((event) => {
+      if ((student?.hidden ?? []).includes(event.id)) {
+        return false;
+      }
+      if ((student?.blocked ?? []).includes(event.organizer)) {
+        return false;
+      }
       return true;
-    }
-    let organizer = organizers.find((organizer) => organizer.id === event.organizer);
-    return organizer?.approved ?? false;
-  });
+    });
+  } catch (e) {
+    console.error("Error filtering events: ", e)
+  }
 
-  // Remove blocked or hidden events
-  filteredEvents = filteredEvents.filter((event) => {
-    if ((student?.hidden ?? []).includes(event.id)) {
-      return false;
-    }
-    if ((student?.blocked ?? []).includes(event.organizer)) {
-      return false;
-    }
-    return true;
-  });
+  
 
   return (
     <View style={styles.container}>
@@ -187,109 +151,13 @@ const Home = ({ route, navigation }: props) => {
                 organizer={item.organizer}
                 id={item.id}
                 navigation={navigation}
-                userType={route.params.userType}
                 onSaveEvent={showToast}
                 listView={listView}
-                route={route}
               />
             </View>
           )}
         />
       </ScrollView>
-
-      {/* Search bar and Filter */}
-      {/* <View
-        style={{
-          top: 0,
-          position: "absolute",
-          width: "100%",
-          flexDirection: "column",
-          display: "flex",
-          backgroundColor: 'white'
-        }}
-      >
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <View style={{ flexGrow: 1 }}>
-            <View style={{ flexGrow: 0 }}>
-            <Toggle
-              trackBar={{
-                activeBackgroundColor: colours.primaryPurple,
-                inActiveBackgroundColor: colours.primaryPurple,
-                width: 80,
-                // height: 45,
-              }}
-              trackBarStyle={{
-                borderColor: colours.primaryPurple,
-              }}
-              thumbButton={{
-                activeBackgroundColor: colours.secondaryPurple,
-                inActiveBackgroundColor: colours.secondaryPurple,
-              }}
-              onPress={() => setListView(!listView)}
-              leftComponent={
-                <Icon size={18} type="feather" name="list" color={"white"} />
-              }
-              rightComponent={
-                <Icon size={18} type="feather" name="square" color={"white"} />
-              }
-            />
-          </View>
-          </View>
-        </View> */}
-      {/* <View style={{ backgroundColor: colours.secondaryPurple }}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <ButtonGroup
-              buttons={Object.values(EventCategory)}
-              selectedIndex={selectedIndex}
-              buttonContainerStyle={{ borderRadius: 20, borderWidth: 0 }}
-              containerStyle={{
-                borderWidth: 0,
-                padding: 3,
-                backgroundColor: colours.secondaryPurple,
-                marginLeft: 0,
-                marginVertical: 0,
-                paddingBottom: 6,
-                marginBottom: 7,
-              }}
-              buttonStyle={{
-                borderRadius: 16,
-                backgroundColor: colours.primaryPurple,
-                marginHorizontal: 4,
-                paddingHorizontal: 12,
-              }}
-              innerBorderStyle={{ width: 0 }}
-              textStyle={{ color: "white" }}
-              selectedButtonStyle={{ backgroundColor: "green" }}
-              onPress={(value) => setSelectedIndex(value)}
-            />
-          </ScrollView>
-        </View> */}
-      {/* </View> */}
-
-      {/* Event List*/}
-      {/* <FlatList
-        style={{ paddingTop: headerHeight - 20 }} // MODIFIED
-        // refreshControl={
-        //   <RefreshControl refreshing={} onRefresh={} />
-        // }
-        scrollEventThrottle={1}
-        contentContainerStyle={{ paddingBottom: 200 }} // MODIFIED: why modified?
-        showsVerticalScrollIndicator={false}
-        data={filteredEvents}
-        renderItem={({ item, index }) => (
-          <View style={styles.event}>
-            <Event
-              id={item.id}
-              navigation={navigation}
-              userType={route.params.userType}
-              onSaveEvent={showToast}
-              listView={listView}
-            />
-          </View>
-        )}
-      /> */}
-
-      {/* Toast */}
       <Toast />
     </View>
   );
