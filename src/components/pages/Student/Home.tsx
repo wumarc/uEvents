@@ -65,11 +65,12 @@ const Home = ({ route, navigation }: props) => {
 
     // Make sure the events are not in the past
     filteredEvents = filteredEvents.filter((event) => {
-      let startTime = nextStartTime(event.startTime, event.recurrence);
-      if (!startTime) {
+      // let startTime = nextStartTime(event.startTime, event.recurrence);
+      let endTime = event.endTime ?? event.startTime;
+      if (!endTime) {
         return false;
       }
-      return startTime.toMillis() > Timestamp.now().toMillis();
+      return endTime.toMillis() > Timestamp.now().toMillis();
     });
 
     // Make sure the events are published

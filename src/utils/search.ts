@@ -113,14 +113,16 @@ export function searchAlgo(
       if (a[1] === b[1]) {
         let eventA = eventList[a[0]];
         let eventB = eventList[b[0]];
-        let nextStartTimeA = nextStartTime(
-          eventA?.startTime as Timestamp,
-          eventA?.recurrence ?? new recurrence("None")
-        );
-        let nextStartTimeB = nextStartTime(
-          eventB?.startTime as Timestamp,
-          eventB?.recurrence ?? new recurrence("None")
-        );
+        // let nextStartTimeA = nextStartTime(
+        //   eventA?.startTime as Timestamp,
+        //   eventA?.recurrence ?? new recurrence("None")
+        // );
+        // let nextStartTimeB = nextStartTime(
+        //   eventB?.startTime as Timestamp,
+        //   eventB?.recurrence ?? new recurrence("None")
+        // );
+        let nextStartTimeA = eventA?.startTime as Timestamp;
+        let nextStartTimeB = eventB?.startTime as Timestamp;
         if (nextStartTimeA === undefined) {
           return 1;
         }
