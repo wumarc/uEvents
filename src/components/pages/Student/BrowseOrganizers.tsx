@@ -5,6 +5,8 @@ import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { SearchBar } from "react-native-elements";
+import { useState } from "react";
 
 const BrowseOrganizers = ({navigation}: any) => {
 
@@ -14,6 +16,8 @@ const BrowseOrganizers = ({navigation}: any) => {
     "users",
     getFirebaseUserIDOrEmpty()
   );
+
+  const [search, setSearch] = useState("");
 
   if (loading || loading2) {
     return <Loading />;
@@ -28,15 +32,52 @@ const BrowseOrganizers = ({navigation}: any) => {
     return true;
   });
 
+    // Sort by name
+    filteredOrganizers.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+
+    // Filter by search
+    if (search !== "") {
+      filteredOrganizers = filteredOrganizers.filter((organizer) => {
+        return (
+          organizer.name.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+    }
+
     return (
         <View style={styles.container}>
-          
           <ScrollView showsVerticalScrollIndicator={true}>
 
-            <View style={styles.pageTitle}>
-              <Text style={fonts.title1}>Clubs</Text>
-            </View>
+          
+          <View style={styles.pageTitle}>
+            <Text style={fonts.title1}>Clubs</Text>
+          </View>
 
+          {/* Search Bar */}
+          <View>
+            <SearchBar
+              platform="default"
+              inputContainerStyle={{
+                borderRadius: 6,
+                height: 38,
+                backgroundColor: "#ebebeb",
+              }}
+              containerStyle={{
+                backgroundColor: "white",
+                flex: 1,
+                borderBottomColor: "transparent",
+                borderTopColor: "transparent",
+              }}
+              onChangeText={(value) => setSearch(value)}
+              placeholder="Search events by name or category"
+              // placeholderTextColor="white"
+              value={search}
+              autoCapitalize="none"
+              selectionColor={colours.purple}
+            />
+          </View>
               <FlatList
                 data={filteredOrganizers}
                 renderItem={({ item }) => (
