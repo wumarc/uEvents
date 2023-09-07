@@ -69,13 +69,10 @@ const styles = StyleSheet.create({
 /// This is an inner component to have access to the user type
 const AppInner: FC = () => {
   
-  // const [loading, userData, setUserData] = useStateWithFireStoreDocument(
-  //   "users",
-  //   getFirebaseUserIDOrEmpty()
-  // );
-
-  const loading = false;
-  const userData = undefined
+  const [loading, userData, setUserData] = useStateWithFireStoreDocument(
+    "users",
+    getFirebaseUserIDOrEmpty()
+  );
 
   if (loading) {
     return <Loading />;
