@@ -9,6 +9,7 @@ import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { useEffect } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
 import { SvgUri } from "react-native-svg";
+import { Timestamp } from "firebase/firestore";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
@@ -45,6 +46,20 @@ const SavedEvents = ({ route, navigation }: props) => {
       });
     }
   }
+
+  // sort saved events by date
+  savedEvents.sort((a, b) => {
+    let aStart = a?.startTime ?? new Timestamp(0, 0);
+    let bStart = b?.startTime ?? new Timestamp(0, 0);
+    return aStart.toMillis() - bStart.toMillis();
+  });
+
+  // remove past events
+  savedEvents = savedEvents.filter((event) => {
+    let now = new Date();
+    let end = event?.endTime ?? event?.startTime ?? new Timestamp(0, 0);
+    return end.toMillis() >= now.getTime();
+  });
 
   return (
     <View style={styles.container}>
