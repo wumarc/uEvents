@@ -203,23 +203,53 @@ export const getTimeInAMPM = (date: any) => {
   return hours + ':' + minutes + '' + ampm;;
 }
 
-export const relativeDate = (firebaseTimestamp: any) => {
+export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd?: Timestamp) => {
+
+  /* ---------------------------- Initialize dates ---------------------------- */
+
   let eventDate = firebaseTimestamp.toDate();
-  eventDate.setHours(0, 0, 0, 0);  // Reset time to midnight
-
+  let eventDateEnd = firebaseTimestampEnd?.toDate();
   let today = new Date();
-  today.setHours(0, 0, 0, 0);  // Reset time to midnight
+  let daysDifference = Math.floor((eventDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
 
-  let daysDifference = (eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
 
+  /* -------------------------------- Constants ------------------------------- */
+  
   let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  let weekdaysShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  /* ------------------------- Case where event is now ------------------------ */
+
+  if (eventDateEnd && firebaseTimestamp.toDate() <= new Date() && eventDateEnd >= new Date()) {
+    if (eventDateEnd.getDate() === today.getDate()) {
+      // Case where event ends today
+      return "Now" + " · " + "Until " + getTimeInAMPM(eventDateEnd);
+      // case where event ends tomorrow
+    } else if (eventDateEnd.getDate() === today.getDate() + 1) {
+      return "Now" + " · " + "Until Tomorrow " + getTimeInAMPM(eventDateEnd);
+      // case where event ends this week
+    } else if (eventDateEnd.getDate() <= today.getDate() + 7) {
+      return "Now" + " · " + "Until " + weekdaysShort[eventDateEnd.getDay()] + " " + getTimeInAMPM(eventDateEnd);
+    }
+    else {
+      // Default case
+      return "Now"
+    }
+  }
+
+  /* ------------------------------ Default case ------------------------------ */
+
+  let endTimeString = "";
+  if (eventDateEnd) {
+    endTimeString = " - " + getTimeInAMPM(eventDateEnd);
+  }
 
   if (daysDifference === 0) {
-    return "Today";
+    return "Today"  + " · " + getTimeInAMPM(eventDate) + endTimeString;
   } else if (daysDifference === 1) {
-    return "Tomorrow";
+    return "Tomorrow"  + " · " + getTimeInAMPM(eventDate) + endTimeString;
   } else if (daysDifference > 1 && daysDifference <= 7) {
-    return weekdays[eventDate.getDay()];
+    return weekdays[eventDate.getDay()]  + " · " + getTimeInAMPM(eventDate) + endTimeString;
   } else {
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -228,6 +258,6 @@ export const relativeDate = (firebaseTimestamp: any) => {
     let daySuffix = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
     let suffix = (day % 10 < 10 && day > 20) ? daySuffix[day % 10] : "th";
     
-    return days[eventDate.getDay()] + " " + months[eventDate.getMonth()] + " " + day + suffix;
+    return days[eventDate.getDay()] + " " + months[eventDate.getMonth()] + " " + day + suffix + " · " + getTimeInAMPM(eventDate);
   }
 }

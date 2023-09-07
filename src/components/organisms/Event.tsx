@@ -9,7 +9,7 @@ import {
   nextEndTime,
   EventObject,
   getTimeInAMPM,
-  relativeDate,
+  formattedDate,
 } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
 import { SvgUri } from 'react-native-svg';
@@ -145,9 +145,9 @@ const Event: React.FC<EventProps> = (props) => {
               size={19}
               color={colours.grey}
             />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{relativeDate(event.startTime)}</Text>
-            <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
-            <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(event.startTime, event.endTime)}</Text>
+            {/* <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text> */}
             {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}
           </View>
 
