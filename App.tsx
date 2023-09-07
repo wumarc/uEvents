@@ -69,10 +69,13 @@ const styles = StyleSheet.create({
 /// This is an inner component to have access to the user type
 const AppInner: FC = () => {
   
-  const [loading, userData, setUserData] = useStateWithFireStoreDocument(
-    "users",
-    getFirebaseUserIDOrEmpty()
-  );
+  // const [loading, userData, setUserData] = useStateWithFireStoreDocument(
+  //   "users",
+  //   getFirebaseUserIDOrEmpty()
+  // );
+
+  const loading = false;
+  const userData = undefined
 
   if (loading) {
     return <Loading />;
@@ -82,7 +85,8 @@ const AppInner: FC = () => {
     // TODO: why is this giving an error?
     return (
     <View>
-      <Text style={{marginTop: "40%", textAlign: "center", margin: 20}}>Your account is corrupted, please reach out to us at uevents.dev@uottawa.ca to recover your account.</Text>
+      <Text style={{marginTop: "40%", textAlign: "center", margin: 20}}>Make sure that you have a stable internet connection.</Text>
+      <Text style={{marginTop: "10%", textAlign: "center", margin: 20}}>It is also possible that your account is corrupted. In that case, please reach out to us at uevents.dev@uottawa.ca to recover your account.</Text>
       <Button style={{marginTop: "20%", margin: 20}} title="Sign Out" onPress={() => auth.signOut()} />
     </View>
     )
