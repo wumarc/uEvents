@@ -130,7 +130,8 @@ const EventDetails = ({ route, navigation }: props) => {
           </View>
 
         {/* Organizer */}
-        <View style={spacing.verticalMargin1}>
+        {event.organizer? (
+          <View style={spacing.verticalMargin1}>
           <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>🏠 Organizer</Text>
           <TouchableOpacity
             disabled={event.organizerType == "Manually Added"}
@@ -157,7 +158,7 @@ const EventDetails = ({ route, navigation }: props) => {
                 <Text
                   style={fonts.title2}
                   disabled={event.organizerType == "Manually Added"}
-                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation})}}
+                  onPress={() => {navigation.navigate("EventOrganizerView", {navigation: navigation, organizerID: event.organizer, imageID: organizer.image })}}
                 >
                   {event.organizerType == "Manually Added" ? event.organizer : 
                     <Text style={fonts.title2}>
@@ -178,6 +179,7 @@ const EventDetails = ({ route, navigation }: props) => {
           </TouchableOpacity>
 
         </View>
+        ) : <></>}
 
         {/* Tags */}
         <View style={spacing.verticalMargin1}>
