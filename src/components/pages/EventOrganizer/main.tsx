@@ -10,13 +10,20 @@ import { useTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
 import { Step0 } from "./CreateEvent";
 import { colours } from "../../subatoms/Theme";
-import Home from "./Home";
+import YourEvents from "./YourEvents";
 import Settings from "./Settings";
 import Profile from "./Profile";
 import HeaderLeft from "../../molecules/HeaderLeft";
 import OrganizerEventDetails from "./OrganizerEventDetails";
 import EventDetails from "../Student/EventDetails";
 import HeaderRight from "../../molecules/HeaderRight";
+import Home from "../Student/Home";
+import BrowseOrganizers from "../Student/BrowseOrganizers";
+import SavedEvents from "../Student/SavedEvents";
+import OrganizerProfile from "../Student/OrganizerProfile";
+import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
+import { HiddenEvents } from "../Student/HiddenEvents";
+import BlockedOrganizers from "../Student/BlockedOrganizers";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -33,6 +40,16 @@ export type RootStackParamList = {
     organizerID: string;
     imageID: string;
   };
+  EventSignUpView: {};
+  Events: {};
+  Saved: {};
+  Home: {};
+  Search: {};
+  OrganizerProfile: { organizerID: string };
+  HeaderLeft: {};
+  EventOrganizerView: { organizerID: string, imageID: string };
+  HiddenEventsView: {};
+  BlockedOrganizersView: {};
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -45,17 +62,65 @@ const MainView = ({ route, navigation }: props) => {
       barStyle={{ backgroundColor: "#f7f7f7" }}
       activeColor={colours.purple}
       inactiveColor={colours.grey}
-      initialRouteName="Home"
+      initialRouteName="YourEvents"
     >
       <Tab.Screen
-        name="Home"
-        component={Home as any} // TODO fix error
+        name="YourEvents"
+        component={YourEvents as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Events",
+          tabBarLabel: "Your Events",
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               name={focused ? "calendar" : "calendar-outline"}
+              color={focused ? colours.purple : colours.grey}
+              size={30}
+            />
+          ),
+        }}
+      />
+      
+      <Tab.Screen
+        name="BrowseOrganizers"
+        component={BrowseOrganizers as any} // TODO fix error
+        initialParams={{}}
+        options={{
+          tabBarLabel: "Organizers",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "office-building" : "office-building-outline"}
+              color={focused ? colours.purple : colours.grey}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={Home as any} // TODO fix error
+        initialParams={{}}
+        options={{
+          tabBarLabel: "Events",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "jellyfish" : "jellyfish-outline"}
+              color={focused ? colours.purple : colours.grey}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Saved"
+        // listeners={{ tabPress: (e) => showHeader.saved }}
+        component={SavedEvents as any} // TODO fix error
+        initialParams={{}}
+        options={{
+          tabBarLabel: "Saved",
+          title: "Saved",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "heart" : "heart-outline"}
               color={focused ? colours.purple : colours.grey}
               size={30}
             />
@@ -151,10 +216,38 @@ const Main: FC<{ userType: string }> = (props) => {
                 headerTintColor: colours.black,
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
                 headerRight: () => (
-                  <HeaderRight eventID={""} navigation={navigation} />
+                  <HeaderRight eventID={route.params.eventID} navigation={navigation} />
                 ),
               };
             }}
+          />
+          <Stack.Screen
+            name="EventOrganizerView"
+            component={OrganizerProfile as any}
+            options={({ navigation, route }) => ({
+              title: "Profile",
+              headerStyle: { backgroundColor: colours.white },
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
+              headerRight: () => <ProfileHeaderRight organizer={route.params.organizerID} navigation={navigation} />,
+            })}
+          />
+          <Stack.Screen
+            name="HiddenEventsView"
+            component={HiddenEvents as any}
+            options={({ navigation }) => ({
+              title: "Hidden Events",
+              headerStyle: { backgroundColor: colours.white },
+              headerLeft: () => <HeaderLeft navigation={navigation} />
+            })}
+          />
+          <Stack.Screen
+            name="BlockedOrganizersView"
+            component={BlockedOrganizers as any}
+            options={({ navigation }) => ({
+              title: "Blocked Organizers",
+              headerStyle: { backgroundColor: colours.white },
+              headerLeft: () => <HeaderLeft navigation={navigation} />
+            })}
           />
         </Stack.Navigator>
       </SafeAreaView>

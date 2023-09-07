@@ -9,6 +9,12 @@ export type Organizer = {
   instagram: string;
   description: string;
   approved: boolean;
+  saved: string[]; // Ids of events saved
+  tickets: string[]; // Ids of events bought
+  hidden: string[]; // Ids of events hidden
+  reported: string[]; // Ids of events reported
+  blocked: string[]; // Ids of organizers blocked
+  claimRequests: string[]; // Ids of events claimed
 };
 
 export const defaultOrganizer: Organizer = {
@@ -20,4 +26,10 @@ export const defaultOrganizer: Organizer = {
   description: "",
   id: "",
   approved: false,
+  saved: [],
+  tickets: [],
+  hidden: [],
+  reported: [],
+  blocked: [],
+  claimRequests: [],
 };

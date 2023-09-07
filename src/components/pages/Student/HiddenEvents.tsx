@@ -46,15 +46,15 @@ export const HiddenEvents = ({ route, navigation }: props) => {
   
     // Filtered events
     let filteredEvents = events as EventObject[];
-    filteredEvents = searchAlgo("", filteredEvents);
   
     // Make sure the events are not in the past
     filteredEvents = filteredEvents.filter((event) => {
-      let startTime = nextStartTime(event.startTime, event.recurrence);
-      if (!startTime) {
+      // let startTime = nextStartTime(event.startTime, event.recurrence);
+      let endTime = event.endTime ?? event.startTime;
+      if (!endTime) {
         return false;
       }
-      return startTime.toMillis() > Timestamp.now().toMillis();
+      return endTime.toMillis() > Timestamp.now().toMillis();
     });
   
     // Make sure the events are published
@@ -72,6 +72,7 @@ export const HiddenEvents = ({ route, navigation }: props) => {
 
     // Only hidden events
     let hiddenEvents = student?.hidden ?? [];
+    console.log(hiddenEvents);
     filteredEvents = filteredEvents.filter((event) => hiddenEvents.includes(event.id)); 
 
 

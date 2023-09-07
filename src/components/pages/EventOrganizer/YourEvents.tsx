@@ -18,7 +18,7 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { Organizer } from "../../../utils/model/Organizer";
 import { SvgUri } from "react-native-svg";
 
-const Home = ({ navigation }: any) => {
+const YourEvents = ({ navigation }: any) => {
   const [loading, events, add] =
     useStateWithFireStoreCollection<EventObject>("events");
 
@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default YourEvents;

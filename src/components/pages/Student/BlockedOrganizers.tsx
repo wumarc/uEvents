@@ -1,11 +1,10 @@
-import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity } from "react-native";
+import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity, Button } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
-import { Button } from "react-native-elements";
 
 const BlockedOrganizers = ({navigation}: any) => {
 
@@ -51,6 +50,7 @@ const BlockedOrganizers = ({navigation}: any) => {
                   </TouchableOpacity>
                   <Button
                     title={"Unblock"}
+                    color={colours.purple}
                     onPress={() => {
                       let blockedOrganizers = student.blocked ?? [];
                       blockedOrganizers = blockedOrganizers.filter((organizerID: string) => organizerID != item.id);
