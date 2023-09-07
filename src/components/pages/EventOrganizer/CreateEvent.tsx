@@ -426,6 +426,11 @@ export const Step4: FC<{ eventID: string }> = (props) => {
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
   if (loading || !event) return <Loading />;
 
+  let dateNow = new Date();
+  dateNow.setMinutes(0);
+  dateNow.setSeconds(0);
+
+
   return (
     <View>
       <Text style={fonts.title1}>Provide the date and time of your event</Text>
@@ -447,7 +452,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
 
       <View style={{marginBottom: 15}}>
         <DatePickerModal
-          dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(new Date()) : event.startTime}
+          dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(dateNow) : event.startTime}
           setDate={(date) => {set({...event, startTime: date})}}
           label="Start Date"
         />
@@ -455,7 +460,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
       
       <View style={{}}>
         <DatePickerModal
-          dateValue={event.endTime ?? Timestamp.fromDate(new Date())}
+          dateValue={event.endTime ?? Timestamp.fromDate(dateNow)}
           setDate={(date) => {set({...event, endTime: date})}}
           label="End Date (Optional)"
         />
