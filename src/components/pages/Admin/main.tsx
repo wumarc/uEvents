@@ -21,6 +21,7 @@ import { useTheme } from "react-native-paper";
 import Home from "../Student/Home";
 import OrganizerProfile from "../Student/OrganizerProfile";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
+import BrowseOrganizers from "../Student/BrowseOrganizers";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -79,6 +80,21 @@ const MainView = ({ route, navigation }: props) => {
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="ticket"
+              color={focused ? colours.purple : colours.grey}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="BrowseOrganizers"
+        component={BrowseOrganizers as any} // TODO fix error
+        initialParams={{}}
+        options={{
+          tabBarLabel: "Organizers",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? "office-building" : "office-building-outline"}
               color={focused ? colours.purple : colours.grey}
               size={30}
             />
