@@ -2,7 +2,7 @@ import { Linking, ScrollView, View } from "react-native";
 import { BottomSheet, Dialog, Icon, Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { Button} from "@rneui/themed";
-import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
+import { useSateWithFireStore, useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
 import {
   User,
@@ -22,6 +22,7 @@ import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import SettingsButton from "../../molecules/SettingsButton";
 import { useState } from "react";
 import * as Clipboard from 'expo-clipboard';
+import { EventObject } from "../../../utils/model/EventObject";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -37,7 +38,9 @@ const Settings = ({ route, navigation }: props) => {
     defaultOrganizer
   );
 
-  if (loading) {
+  const [loading3, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+
+  if (loading || loading3) {
     return <Text>Loading</Text>;
   }
 
@@ -140,6 +143,12 @@ const Settings = ({ route, navigation }: props) => {
                 <CustomButton
                   buttonName="Delete Account"
                   onPressListener={() => {
+                    // first del all his events
+                    events?.forEach((event) => {
+                      if (event.organizer == getFirebaseUserID()) {
+                        deleteDoc(doc(fireStore, "events" + "/" + event.id));
+                      }
+                    });
                     deleteUser(auth.currentUser as User);
                     deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
                   }}

@@ -210,7 +210,11 @@ export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd
   let eventDate = firebaseTimestamp.toDate();
   let eventDateEnd = firebaseTimestampEnd?.toDate();
   let today = new Date();
-  let daysDifference = Math.floor((eventDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+  let todayFlat = today;
+  todayFlat.setHours(0, 0, 0, 0);
+  let eventDateFlat = eventDate;
+  eventDateFlat.setHours(0, 0, 0, 0);
+  let daysDifference = Math.floor((eventDateFlat.getTime() - todayFlat.getTime()) / (1000 * 3600 * 24));
 
 
   /* -------------------------------- Constants ------------------------------- */
@@ -225,10 +229,10 @@ export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd
       // Case where event ends today
       return "Now" + " · " + "Until " + getTimeInAMPM(eventDateEnd);
       // case where event ends tomorrow
-    } else if (eventDateEnd.getDate() === today.getDate() + 1) {
+    } else if (daysDifference == 1) {
       return "Now" + " · " + "Until Tomorrow " + getTimeInAMPM(eventDateEnd);
       // case where event ends this week
-    } else if (eventDateEnd.getDate() <= today.getDate() + 7) {
+    } else if (daysDifference <= 7) {
       return "Now" + " · " + "Until " + weekdaysShort[eventDateEnd.getDay()] + " " + getTimeInAMPM(eventDateEnd);
     }
     else {
