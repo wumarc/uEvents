@@ -75,6 +75,22 @@ const Event: React.FC<EventProps> = (props) => {
     endTime = nextEndTime(event.startTime, startTime, event.endTime);
   }
 
+  let onCampusText = "";
+  switch (event.onCampus) {
+    case true:
+      onCampusText = "On-campus";
+      break;
+    case false:
+      onCampusText = "Off-campus";
+      break;
+    case "TBD":
+      onCampusText = "TBD";
+      break;
+    default:
+      onCampusText = "On-campus";
+      break;
+  }
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -142,7 +158,7 @@ const Event: React.FC<EventProps> = (props) => {
               size={19}
               color={colours.grey}
             />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{event.onCampus == true ? "On-campus" : "Off-campus"}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{onCampusText}</Text>
           </View>
 
         </View>

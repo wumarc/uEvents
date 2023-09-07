@@ -44,6 +44,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import { DatePickerModal } from "../../atoms/DatePickerModal";
+import CustomButton from "../../atoms/CustomButton";
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -146,7 +147,7 @@ export const Step0 = ({ route, navigation }: any) => {
         <View style={{ paddingHorizontal: spacing.page2, ...spacing.verticalPadding1 }}>
           {step == 1 && <Step1 eventID={id} isAdmin={isAdmin} />}
           {step == 2 && <Step2 eventID={id} />}
-          {step == 3 && <Step3 eventID={id} />}
+          {step == 3 && <Step3 eventID={id} setStep={(step) => {setStep(step)}}/>}
           {step == 4 && <Step4 eventID={id} />}
           {step == 5 && <Step5 eventID={id} />}
           {step == 6 && <Step6 eventID={id} />}
@@ -323,7 +324,7 @@ export const Step2: FC<{ eventID: string }> = (props) => {
 };
 
 /* --------------------------------- Location ------------------------------- */
-export const Step3: FC<{ eventID: string}> = (props) => {
+export const Step3: FC<{ setStep: (step: number) => any, eventID: string}> = (props) => {
   
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
     "events",
@@ -376,7 +377,7 @@ export const Step3: FC<{ eventID: string}> = (props) => {
               maxLength={30}
               defaultValue={event.roomNumber}
             />
-            <Text style={fonts.regular}>If the location of your event has not been determined yet, put TBD in the room number field.</Text>
+            {/* <Text style={fonts.regular}>If the location of your event has not been determined yet, put TBD in the room number field.</Text> */}
           </View>
         ) :
           <View>
@@ -414,7 +415,13 @@ export const Step3: FC<{ eventID: string}> = (props) => {
           </View>
         }
       </View>
-
+      <CustomButton
+        buttonName={"Set location as TBD"}
+        onPressListener={() => {
+          set({...event, location: "", address: "", roomNumber: "", onCampus: "TBD"})
+          props.setStep(4);
+        }}
+      />
     </View>
   );
 

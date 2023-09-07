@@ -70,15 +70,15 @@ export type EventObject = {
   priceMax?: number;
   // priceDescription?: string; // If needed, a description of the different prices
   description: string; // 750 characters max TODO change it to 400?
-  location: string; // Building name and room number
-  address: string;
-  roomNumber?: string;
+  location?: string; // Building name and room number // If empty: TBD
+  address?: string; // If empty: TBD
+  roomNumber?: string; // If empty: TBD
   organizerType: "Manually Added" | "Organizer Added";
   organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
   startTime: Timestamp;
   endTime?: Timestamp; // End time doesn't have to be specified
   categories: string[];
-  onCampus: boolean;
+  onCampus?: boolean | "TBD";
   // food?: string;
   // attire?: string;
   // toBring?: string;

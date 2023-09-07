@@ -102,6 +102,9 @@ export function toPrecision(value: number, precision: number) {
 }
 
 export function emojiUrl(emoji: string) {
+  if (emoji == undefined) {
+    return "";
+  }
   let unicodeStringRaw = emojiUnicode(emoji) as string;
   if (unicodeStringRaw.length == 0) {
     return "";

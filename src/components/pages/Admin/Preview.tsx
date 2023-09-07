@@ -21,7 +21,6 @@ const Preview = ({ route, navigation }: props) => {
       id={route.params.eventId}
       organizer={route.params.organizerId}
       navigation={navigation}
-      userType="student"
       onSaveEvent={() => { } } 
       listView={false}    
     />

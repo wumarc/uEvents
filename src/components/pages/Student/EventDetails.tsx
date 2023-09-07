@@ -107,22 +107,26 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Location */}
           <View style={spacing.verticalMargin1}>
             <Text style={{...fonts.title2, ...spacing.bottomMargin1}}>📍 Location</Text>
-            <ImageBackground 
-              source={require('./map.png')} 
-              style={{flex: 1}}
-              imageStyle={{borderRadius: 15, opacity: 0.3}}
-            >
-              <View style={{borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
-                <Text style={{...fonts.title3, textAlign: 'center'}}>{event.location}</Text>
-                {event.roomNumber && <Text style={{...fonts.title3, textAlign: 'center'}}>Room: {event.roomNumber}</Text>}
-                <Text style={{...fonts.small, textAlign: 'center'}}>{event.address}</Text>
-                <Button title={"Google Maps"}
-                  buttonStyle={{...buttons.button1, marginTop: '3%', backgroundColor: '#4285F4'}}
-                  titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
-                  onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query="  + event.address)}}
-                />
-              </View>
-            </ImageBackground>
+            {event.address == ""? 
+              <Text style={{...fonts.regular, textAlign: 'center'}}>To be determined</Text> :
+              <ImageBackground 
+                source={require('./map.png')} 
+                style={{flex: 1}}
+                imageStyle={{borderRadius: 15, opacity: 0.3}}
+              >
+                <View style={{borderColor: colours.primaryGrey, borderRadius: 15, justifyContent: 'center', alignItems: 'center', padding: '3%'}}>
+                  <Text style={{...fonts.title3, textAlign: 'center'}}>{event.location}</Text>
+                  {event.roomNumber && <Text style={{...fonts.title3, textAlign: 'center'}}>Room: {event.roomNumber}</Text>}
+                  <Text style={{...fonts.small, textAlign: 'center'}}>{event.address}</Text>
+                  <Button title={"Google Maps"}
+                    buttonStyle={{...buttons.button1, marginTop: '3%', backgroundColor: '#4285F4'}}
+                    titleStyle={{fontSize: 13, fontWeight: '500', color: colours.white}}
+                    onPress={() => {Linking.openURL("https://www.google.com/maps/search/?api=1&query="  + event.address)}}
+                  />
+                </View>
+              </ImageBackground>
+            }
+            
           </View>
 
         {/* Organizer */}
