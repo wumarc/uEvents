@@ -45,6 +45,7 @@ import { SvgUri } from "react-native-svg";
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import { DatePickerModal } from "../../atoms/DatePickerModal";
 import CustomButton from "../../atoms/CustomButton";
+import { Organizer } from "../../../utils/model/Organizer";
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -203,11 +204,26 @@ export const Step0 = ({ route, navigation }: any) => {
 /* ---------------------------------- Name ---------------------------------- */
 export const Step1: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
-
   const [charactersAvailable, setCharactersAvailable] = useState<number>(35);
+  const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
 
-  if (loading) {
+  if (loading || loading2) {
     return <Loading />;
+  }
+
+  let organizers: Organizer[] = users?.filter((user) => user.type == "organizer") ?? [];
+  let organizerData = [];
+  for (let organizer of organizers) {
+    organizerData.push({label: organizer.name, value: organizer.id});
+  }
+
+  function findOrganizerName(id: string) {
+    for (let organizer of organizers) {
+      if (organizer.id == id) {
+        return organizer.name;
+      }
+    }
+    return "";
   }
 
   return (
@@ -238,21 +254,16 @@ export const Step1: FC<{ eventID: string, isAdmin: boolean }> = (props) => {
           defaultValue={event.name}
         />
         {props.isAdmin? 
-        <Input
-          label="Organizer"
-          selectionColor={colours.purple}
-          inputContainerStyle={{
-            borderColor: colours.grey,
-            borderWidth: 1,
-            paddingVertical: 4,
-            paddingHorizontal: 8,
-            borderRadius: 6,
-          }}
-          containerStyle={{ paddingHorizontal: 0}}
-          onChange={(e) => {
-            set({...event, organizer: e.nativeEvent.text});
-          }}
-          defaultValue={event.organizer}
+        <Dropdown
+          search
+          searchPlaceholder="Choose organizer"
+          placeholderStyle={{ fontSize: 17, padding: 7}}
+          data={organizerData}
+          labelField="label"
+          valueField="value"
+          placeholder={findOrganizerName(event.organizer)}
+          style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
+          onChange={(item) => set({...event, organizer: item.value, organizerType: "Organizer Added"})}
         /> : <></>
       }
       </View>

@@ -22,6 +22,7 @@ import Home from "../Student/Home";
 import OrganizerProfile from "../Student/OrganizerProfile";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 import BrowseOrganizers from "../Student/BrowseOrganizers";
+import {Profile as OrganizerProfile2} from "../EventOrganizer/Profile"
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,6 +44,7 @@ export type RootStackParamList = {
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined, isAdmin?: boolean };
   AllOrganizers: {};  
   EventOrganizerView: { organizerID: string, imageID: string };
+  OrganizerProfile: { userType: string, id?: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -146,6 +148,7 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
+      
     </Tab.Navigator>
   );
 };
@@ -207,6 +210,13 @@ const Main: FC<{ userType: string }> = (props) => {
                 <HeaderLeft navigation={navigation} type={"cross"} />
               ),
               animation: "slide_from_bottom",
+            })}
+          />
+           <Stack.Screen
+            name="OrganizerProfile"
+            component={OrganizerProfile2 as any}
+            options={({ navigation }) => ({
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
           />
           </Stack.Navigator>

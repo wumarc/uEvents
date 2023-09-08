@@ -3,11 +3,12 @@ import { RootStackParamList } from "./main";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
-import { FlatList, View, Text, Clipboard  } from "react-native";
+import { FlatList, View, Text, Clipboard, TouchableOpacity  } from "react-native";
 import Organizer from "../../organisms/Organizer";
-import { Button, Icon, Image } from "@rneui/themed";
-import { doc, setDoc } from "firebase/firestore";
+import { Button, FAB, Icon, Image } from "@rneui/themed";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
+import { uid } from "../../../utils/util";
 
 
 type props = NativeStackScreenProps<RootStackParamList, "AllOrganizers">;
@@ -34,14 +35,15 @@ export const AllOrganizers = ({route, navigation}: props) => {
     });  
 
     return (
-        <FlatList
+        <View>
+           <FlatList
             data={organizers}
             renderItem={({ item }) => (
-                <View style={{margin: 2, borderWidth: 2, borderRadius: 5}}>
+                <TouchableOpacity style={{margin: 2}} onPress={() => navigation.navigate("EventOrganizerView", {organizerID: item.id, imageID: item.image})}>
                     <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.image}/>
                     <View style={{display: 'flex', flexDirection: "row"}}>
                         <Text> {item.approved != undefined ? (item.approved? "Approved": "Created"): "Undefined"} </Text>
-                        <Button size="sm" style={{marginLeft: 2}}
+                        <Button size="sm" style={{marginLeft: 5}} titleStyle={{fontSize: 12}}
                             onPress={() => {
                                 if (item.id == undefined) {
                                     console.log("Undefined id")
@@ -51,20 +53,45 @@ export const AllOrganizers = ({route, navigation}: props) => {
                                 setDoc(doc(fireStore, "users/" + item.id), {...item, approved: nextValue})
                             }}
                         >Toggle</Button>
-                        <Button size="sm" style={{marginLeft: 2}}
+                        <Button size="sm" style={{marginLeft: 5}} titleStyle={{fontSize: 12}}
                             onPress={() => {
                                 Clipboard.setString(item.id);
                             }}
                         >Copy Id</Button>
-                        <Button size="sm" style={{marginLeft: 2}}
+                        <Button size="sm" style={{marginLeft: 5}} titleStyle={{fontSize: 12}}
                             onPress={() => {
-                                navigation.navigate("EventOrganizerView", {organizerID: item.id, imageID: item.image})
+                                navigation.navigate("OrganizerProfile", {userType: "", id: item.id})
                             }}
-                        >Details</Button>
+                        >Edit</Button>
+                        <Button size="sm" style={{marginLeft: 5}} titleStyle={{fontSize: 12}} color="red"
+                            onPress={() => {
+                                deleteDoc(doc(fireStore, "users/" + item.id));
+                            }}
+                        >Delete</Button>
                     </View>
-                </View>
+                </TouchableOpacity>
             )}
-        />
+        /> 
+        <View style={{ position: "absolute", bottom: 0, right: 0 }}>
+        <FAB
+            icon={{ name: "add", color: "white" }}
+            placement="right"
+            color={"#FD6262"}
+            size="large"
+            onPress={() => {
+                let id: string = uid();
+                setDoc(doc(fireStore, "users/" + id), {
+                    type: "organizer",
+                    saved: [],
+                    id: id,
+                    approved: false,
+                  });
+                navigation.navigate("OrganizerProfile", {userType: "", id: id})
+            }}
+            />
+        </View>
+        </View>
+        
     )
 
 }

@@ -40,7 +40,7 @@ const Profile = ({ route, navigation }: props) => {
 
   return (
       <View>
-        <Text>Version 1</Text>
+        <Text>Version 2</Text>
         <Button
           onPress={() => {
             logout();

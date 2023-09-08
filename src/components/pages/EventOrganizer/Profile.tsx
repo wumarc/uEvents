@@ -34,13 +34,13 @@ import { EventObject } from "../../../utils/model/EventObject";
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
-const Profile = ({ route, navigation }: props) => {
+export const Profile = ({ route, navigation }: props) => {
   
   const [image, setImage] = useState<string>("");
   const [loading, profile, setProfile] =
     useStateWithFireStoreDocument<Organizer>(
       "users",
-      getFirebaseUserIDOrEmpty()
+      route.params.id ?? getFirebaseUserIDOrEmpty()
   );
   
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
@@ -56,6 +56,8 @@ const Profile = ({ route, navigation }: props) => {
   if (uploading) {
     return <Loading/>;
   }
+
+  let isAdmin = route.params.id != undefined;
 
   let uri = "";
   if (image != "") {
@@ -149,7 +151,27 @@ const Profile = ({ route, navigation }: props) => {
                 borderRadius: 6,
               }}
             />
-
+            {isAdmin? (
+              <Input
+              label={<Text>Email<Text style={{ color: 'red' }}>*</Text></Text>}
+              placeholder="Email"
+              defaultValue={profile.email}
+              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+              onChangeText={(value: string) =>
+                setProfile({ ...profile, email: value })
+              }
+              containerStyle={{ paddingHorizontal: 0 }}
+              selectionColor={colours.purple}
+              inputContainerStyle={{
+                borderColor: colours.grey,
+                borderWidth: 1,
+                paddingVertical: 4,
+                paddingHorizontal: 8,
+                borderRadius: 6,
+              }}
+            />
+            ) : <></>}
+            
             <Input 
               label={<Text>Organization Description{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
               placeholder="Insert Description"
