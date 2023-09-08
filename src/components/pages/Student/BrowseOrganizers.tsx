@@ -71,7 +71,7 @@ const BrowseOrganizers = ({navigation}: any) => {
                 borderTopColor: "transparent",
               }}
               onChangeText={(value) => setSearch(value)}
-              placeholder="Search events by name or category"
+              placeholder="Search organizer by name"
               // placeholderTextColor="white"
               value={search}
               autoCapitalize="none"
