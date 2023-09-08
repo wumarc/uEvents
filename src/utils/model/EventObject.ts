@@ -210,9 +210,9 @@ export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd
   let eventDate = firebaseTimestamp.toDate();
   let eventDateEnd = firebaseTimestampEnd?.toDate();
   let today = new Date();
-  let todayFlat = today;
+  let todayFlat = new Date();
   todayFlat.setHours(0, 0, 0, 0);
-  let eventDateFlat = eventDate;
+  let eventDateFlat = firebaseTimestamp.toDate();
   eventDateFlat.setHours(0, 0, 0, 0);
   let daysDifference = Math.floor((eventDateFlat.getTime() - todayFlat.getTime()) / (1000 * 3600 * 24));
 
