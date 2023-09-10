@@ -60,7 +60,7 @@ export const AllEvents = ({ route, navigation }: props) => {
     if (event.state != "Published") {
       return true;
     }
-    if (event.startTime.toDate().getTime() < Date.now()) {
+    if ((event.endTime ?? event.startTime).toDate().getTime() < Date.now()) {
       return false;
     }
     return true;
