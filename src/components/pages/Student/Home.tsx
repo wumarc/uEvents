@@ -18,11 +18,12 @@ import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
-import { colours, fonts, spacing } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
 import { Loading } from "../Common/Loading";
 import { SearchBar } from "react-native-elements";
 import { Organizer } from "../../../utils/model/Organizer";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { Divider } from '@rneui/themed';
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
@@ -137,7 +138,75 @@ const Home = ({ route, navigation }: props) => {
           />
         </View>
 
-        {/* List */}
+        {/* Today's event list */}
+        <View style={{marginTop: windowHeight*0.01}}>
+          <Text style={fonts.title2}>🔥 Events happening today 🔥</Text>
+
+          <FlatList
+          style={{}}
+          showsVerticalScrollIndicator={false}
+          data={filteredEvents}
+          renderItem={({ item, index }) => (
+            <View style={styles.event}>
+              <Event
+                organizer={item.organizer}
+                id={item.id}
+                navigation={navigation}
+                onSaveEvent={showToast}
+                listView={listView}
+              />
+            </View>
+          )}
+        />
+
+          {/* <FlatList
+            style={{padding: 15}}
+            horizontal={true}
+            data={filteredEvents}
+            decelerationRate={0}
+            showsHorizontalScrollIndicator={true}
+            snapToInterval={windowWidth}
+            snapToAlignment={"center"}
+            renderItem={({ item, index }) => (
+              <View style={{width: windowWidth}}>
+                <Event
+                  organizer={item.organizer}
+                  id={item.id}
+                  navigation={navigation}
+                  onSaveEvent={showToast}
+                  listView={listView}
+                />
+              </View>
+            )}
+          /> */}
+        </View>
+
+        <Divider width={1} style={{marginVertical: 2}}/>
+
+        {/* This week's event list */}
+        <View style={{marginTop: windowHeight*0.01}}>
+          <Text style={fonts.title2}>Events happening this week</Text>
+          <FlatList
+          style={{}}
+          showsVerticalScrollIndicator={false}
+          data={filteredEvents}
+          renderItem={({ item, index }) => (
+            <View style={styles.event}>
+              <Event
+                organizer={item.organizer}
+                id={item.id}
+                navigation={navigation}
+                onSaveEvent={showToast}
+                listView={listView}
+              />
+            </View>
+          )}
+        />
+        </View>
+
+        {/* All other events */}
+        <View style={{marginTop: windowHeight*0.01}}>
+          <Text style={fonts.title2}>All other events</Text>
         {filteredEvents.length == 0 && (
           <View style={{ alignItems: "center", marginTop: "20%" }}>
             <Text>No events matched your search</Text>
@@ -158,6 +227,10 @@ const Home = ({ route, navigation }: props) => {
             </View>
           )}
         />
+        </View>
+
+
+
       </ScrollView>
       <Toast />
     </View>
