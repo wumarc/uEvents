@@ -42,7 +42,7 @@ export const AllOrganizers = ({route, navigation}: props) => {
                 <TouchableOpacity style={{margin: 2}} onPress={() => navigation.navigate("EventOrganizerView", {organizerID: item.id, imageID: item.image})}>
                     <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.image}/>
                     <View style={{display: 'flex', flexDirection: "row"}}>
-                        <Text> {item.approved != undefined ? (item.approved? "Approved": "Created"): "Undefined"} </Text>
+                        <Text style={{color: item.authentic? "red": "black"}}> {item.approved != undefined ? (item.approved? "Approved": "Created"): "Undefined"} </Text>
                         <Button size="sm" style={{marginLeft: 5}} titleStyle={{fontSize: 12}}
                             onPress={() => {
                                 if (item.id == undefined) {
@@ -85,6 +85,7 @@ export const AllOrganizers = ({route, navigation}: props) => {
                     saved: [],
                     id: id,
                     approved: false,
+                    authentic: false,
                   });
                 navigation.navigate("OrganizerProfile", {userType: "", id: id})
             }}

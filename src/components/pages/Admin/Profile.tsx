@@ -6,12 +6,11 @@ import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { Avatar } from "react-native-elements";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
-import { getFirebaseUserID } from "../../../utils/util";
+import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-// import { logEvent } from "firebase/analytics";
-// import { analytics } from "../../../firebaseConfig";
+import { logEvent } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -48,13 +47,13 @@ const Profile = ({ route, navigation }: props) => {
           title="Log out"
           style={{ marginBottom: 10 }}
         />
-        {/* <Button
+        <Button
           onPress={() => {
-            logEvent(analytics, "test_event", { name: "test_name" })
+            logEvent("test_event", getFirebaseUserIDOrEmpty());
           }}
           title="Event"
           style={{ marginBottom: 10 }}
-        /> */}
+        />
       </View>
   );
 };

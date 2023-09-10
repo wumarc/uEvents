@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "799088132023",
+    "project_id": "uevents-a9365",
+    "storage_bucket": "uevents-a9365.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799088132023:android:29e75c9e177d051dcd7232",
+        "android_client_info": {
+          "package_name": "com.uEvents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799088132023-gs9fivo9tk4ghacg76uj0j9oo53m7kqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHRk2lMW58yT0fEyjmBhlPoPZNAyK1n1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799088132023-gs9fivo9tk4ghacg76uj0j9oo53m7kqh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "799088132023-eh6g8cf5qb6aq7vc6j8iv9q3a6m75oq0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uEvents"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

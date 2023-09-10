@@ -289,6 +289,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             id: getFirebaseUserIDOrEmpty(),
             email: email,
             approved: false,
+            authentic: true
           });
       }
       setIsSigningUp(false);

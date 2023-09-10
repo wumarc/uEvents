@@ -10,18 +10,20 @@
     },
     "version": "1.1.2",
     "android": {
-      "package": "com.uevents.dev.uevents",
+      "package": "com.uEvents",
       "versionCode": 13,
       "icon": "./assets/adaptive-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#D6A9D5"
-      }
+      },
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
       "bundleIdentifier": "com.uevents.dev.uevents",
       "buildNumber": "1.1.2",
-      "icon": "./assets/icon.png"
+      "icon": "./assets/icon.png",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "extra": {
       "eas": {
@@ -46,7 +48,8 @@
             "targetSdkVersion": 33
           }
         }
-      ]
+      ],
+      "@react-native-firebase/app"
     ]
   }
 }

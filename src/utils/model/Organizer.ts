@@ -15,6 +15,7 @@ export type Organizer = {
   reported: string[]; // Ids of events reported
   blocked: string[]; // Ids of organizers blocked
   claimRequests: string[]; // Ids of events claimed
+  authentic: boolean; // true if real organizer
 };
 
 export const defaultOrganizer: Organizer = {
