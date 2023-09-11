@@ -46,7 +46,7 @@ export const Profile = ({ route, navigation }: props) => {
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
 
   const [loading2, url, found] = useStateWithFireStoreImage(
-    "organizers/" + getFirebaseUserIDOrEmpty()
+    "organizers/" + route.params.id ?? getFirebaseUserIDOrEmpty()
   );
 
   if (loading2 || loading) {
@@ -59,6 +59,8 @@ export const Profile = ({ route, navigation }: props) => {
 
   let isAdmin = route.params.id != undefined;
 
+  // console.log("Url: " + url)
+
   let uri = "";
   if (image != "") {
     uri = image;
@@ -69,7 +71,8 @@ export const Profile = ({ route, navigation }: props) => {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   }
 
-  const id = profile.id ?? getFirebaseUserIDOrEmpty();
+  const id = route.params.id ?? profile.id ?? getFirebaseUserIDOrEmpty();
+  console.log("id: " + id)
   const reference = ref(storage, "organizers/" + id);
 
   const pickImage = async () => {
