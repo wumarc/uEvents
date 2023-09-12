@@ -101,6 +101,36 @@ const Home = ({ route, navigation }: props) => {
     console.error("Error filtering events: ", e)
   }
 
+  const restOfTodayMillis = 24 * 60 * 60 * 1000 - (new Date().getHours() * 60 * 60 * 1000 + new Date().getMinutes() * 60 * 1000 + new Date().getSeconds() * 1000 + new Date().getMilliseconds());
+  const dayMillis = 24 * 60 * 60 * 1000;
+
+  // Today's events
+  let todayEvents = filteredEvents.filter((event) => {
+    let startTime = event.startTime
+    let endTime = event.endTime ?? event.startTime
+    let now = Timestamp.now()
+    let diff = startTime.toMillis() - now.toMillis()
+    return diff < restOfTodayMillis
+  });
+
+  // This week's events
+  let thisWeekEvents = filteredEvents.filter((event) => {
+    let startTime = event.startTime
+    let endTime = event.endTime ?? event.startTime
+    let now = Timestamp.now()
+    let diff = startTime.toMillis() - now.toMillis()
+    return diff >= restOfTodayMillis && diff < (restOfTodayMillis + dayMillis * 6)
+  });
+
+  // Other events
+  let otherEvents = filteredEvents.filter((event) => {
+    let startTime = event.startTime
+    let endTime = event.endTime ?? event.startTime
+    let now = Timestamp.now()
+    let diff = startTime.toMillis() - now.toMillis()
+    return diff >= (restOfTodayMillis + dayMillis * 6)
+  });
+
   
 
   return (
@@ -145,7 +175,7 @@ const Home = ({ route, navigation }: props) => {
           <FlatList
           style={{}}
           showsVerticalScrollIndicator={false}
-          data={filteredEvents}
+          data={todayEvents}
           renderItem={({ item, index }) => (
             <View style={styles.event}>
               <Event
@@ -189,7 +219,7 @@ const Home = ({ route, navigation }: props) => {
           <FlatList
           style={{}}
           showsVerticalScrollIndicator={false}
-          data={filteredEvents}
+          data={thisWeekEvents}
           renderItem={({ item, index }) => (
             <View style={styles.event}>
               <Event
@@ -214,7 +244,7 @@ const Home = ({ route, navigation }: props) => {
         <FlatList
           style={{}}
           showsVerticalScrollIndicator={false}
-          data={filteredEvents}
+          data={otherEvents}
           renderItem={({ item, index }) => (
             <View style={styles.event}>
               <Event
@@ -228,8 +258,6 @@ const Home = ({ route, navigation }: props) => {
           )}
         />
         </View>
-
-
 
       </ScrollView>
       <Toast />
