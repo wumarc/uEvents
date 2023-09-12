@@ -167,36 +167,16 @@ const Home = ({ route, navigation }: props) => {
         </View>
 
         {/* Today's event list */}
-        <View style={{marginTop: windowHeight*0.01}}>
-          <Text style={fonts.title2}>🔥 Events happening today 🔥</Text>
+        {todayEvents.length != 0 && (
+          <View style={{marginTop: windowHeight*0.01}}>
+            <Text style={fonts.title2}>🔥 Events happening today 🔥</Text>
 
-          <FlatList
-          style={{}}
-          showsVerticalScrollIndicator={false}
-          data={todayEvents}
-          renderItem={({ item, index }) => (
-            <View style={styles.event}>
-              <Event
-                organizer={item.organizer}
-                id={item.id}
-                navigation={navigation}
-                onSaveEvent={showToast}
-                listView={listView}
-              />
-            </View>
-          )}
-        />
-
-          {/* <FlatList
-            style={{padding: 15}}
-            horizontal={true}
-            data={filteredEvents}
-            decelerationRate={0}
-            showsHorizontalScrollIndicator={true}
-            snapToInterval={windowWidth}
-            snapToAlignment={"center"}
+            <FlatList
+            style={{}}
+            showsVerticalScrollIndicator={false}
+            data={todayEvents}
             renderItem={({ item, index }) => (
-              <View style={{width: windowWidth}}>
+              <View style={styles.event}>
                 <Event
                   organizer={item.organizer}
                   id={item.id}
@@ -206,10 +186,31 @@ const Home = ({ route, navigation }: props) => {
                 />
               </View>
             )}
-          /> */}
-        </View>
+          />
+          <Divider width={1} style={{marginVertical: 2}}/>
+          </View>
+        )}
 
-        <Divider width={1} style={{marginVertical: 2}}/>
+        {/* <FlatList
+          style={{padding: 15}}
+          horizontal={true}
+          data={filteredEvents}
+          decelerationRate={0}
+          showsHorizontalScrollIndicator={true}
+          snapToInterval={windowWidth}
+          snapToAlignment={"center"}
+          renderItem={({ item, index }) => (
+            <View style={{width: windowWidth}}>
+              <Event
+                organizer={item.organizer}
+                id={item.id}
+                navigation={navigation}
+                onSaveEvent={showToast}
+                listView={listView}
+              />
+            </View>
+          )}
+        /> */}
 
         {/* This week's event list */}
         <View style={{marginTop: windowHeight*0.01}}>
