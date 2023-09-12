@@ -131,8 +131,6 @@ const Home = ({ route, navigation }: props) => {
     return diff >= (restOfTodayMillis + dayMillis * 6)
   });
 
-  
-
   return (
     <View style={styles.container}>
       <StatusBar translucent />

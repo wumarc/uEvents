@@ -9,8 +9,9 @@ import {
   Pressable,
   Touchable,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import { ButtonGroup, CheckBox, Icon } from "react-native-elements";
+import { ButtonGroup, CheckBox } from "react-native-elements";
 import { Input } from "@rneui/themed";
 import { FC, useEffect, useRef, useState } from "react";
 import { Button } from "@rneui/themed";
@@ -46,6 +47,7 @@ import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import { DatePickerModal } from "../../atoms/DatePickerModal";
 import CustomButton from "../../atoms/CustomButton";
 import { Organizer } from "../../../utils/model/Organizer";
+import { Icon } from '@rneui/themed';
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario"},
@@ -448,31 +450,50 @@ export const Step4: FC<{ eventID: string }> = (props) => {
   dateNow.setMinutes(0);
   dateNow.setSeconds(0);
 
+  // Recurrence index
+  // const recurrenceOptions = ["None", "Weekly", "Custom Weekly", "Specific Dates"];
+  const recurrenceOptions = ["None", "Weekly"];
+  let recurrenceIndex = 0;
+  if (event.recurrenceType != undefined) {
+    switch (event.recurrenceType) {
+    case "None":
+      recurrenceIndex = 0;
+      break;
+    case "Weekly":
+      recurrenceIndex = 1;
+      break;
+    case "Custom Weekly":
+      recurrenceIndex = 2;
+      break;
+    case "Specific Dates":
+      recurrenceIndex = 3;
+      break;
+  }
+  }
 
   return (
     <View>
       <Text style={fonts.title1}>Provide the date and time of your event</Text>
       <Text style={fonts.regular}>Tells us when we can find you!</Text>
 
-      <Text>{" "}</Text>
-      <Text>{" "}</Text>
-
       {/* Recurrence */}
-      {/* <View style={spacing.verticalMargin1}>
+      <View style={spacing.verticalMargin1}>
         <ButtonGroup
-          buttons={["Single Event", "Weekly Event", "Custom Weekly", "Specific dates" ]}
-          onPress={(index) => {}}
-          selectedIndex={0}
+          buttons={recurrenceOptions}
+          onPress={(index) => {
+            set({...event, recurrenceType: recurrenceOptions[index]}) // Error is fine
+          }}
+          selectedIndex={recurrenceIndex}
           containerStyle={{ height: 50 }}
           selectedButtonStyle={{ backgroundColor: colours.purple }}
         />
-      </View> */}
+      </View>
 
       <View style={{marginBottom: 15}}>
         <DatePickerModal
           dateValue={(event.startTime == undefined || event.startTime.seconds == 0) ? Timestamp.fromDate(dateNow) : event.startTime}
           setDate={(date) => {set({...event, startTime: date})}}
-          label="Start Date"
+          label={event.recurrenceType == "None"? "Start Date": "Start Date (of first event)"}
         />
       </View>
       
@@ -480,9 +501,61 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         <DatePickerModal
           dateValue={event.endTime ?? Timestamp.fromDate(dateNow)}
           setDate={(date) => {set({...event, endTime: date})}}
-          label="End Date (Optional)"
+          label={event.recurrenceType == "None"? "End Date (optional)": "End Date (of first event) (optional)"}
         />
       </View>
+
+      {event.recurrenceType != "None"? (
+        <View>
+        <View style={{}}>
+          <DatePickerModal
+            dateValue={event.recurrenceEnd ?? Timestamp.fromDate(dateNow)}
+            setDate={(date) => {set({...event, recurrenceEnd: date})}}
+            label="End of recurrence"
+          />
+        </View>
+        <FlatList
+          data={event.recurrenceExceptions}
+          renderItem={({ item, index }) => (
+            <View style={{display: "flex", flexDirection: "row"}}>
+            <DatePickerModal
+              dateValue={item ?? Timestamp.fromDate(dateNow)}
+              setDate={(date) => {
+                let exceptions = event.recurrenceExceptions ?? [];
+                exceptions[index] = date;
+                set({...event, recurrenceExceptions: exceptions})}
+              }
+              label={"Recurrence exception " + (index + 1)}
+            />
+            <Icon
+            style={{marginTop: 20}}
+              onPress={() => {
+                let exceptions = event.recurrenceExceptions ?? [];
+                exceptions.splice(index, 1);
+                set({...event, recurrenceExceptions: exceptions})
+              }}
+              name="delete"
+              size={40}
+            />
+            </View>
+          )}
+        />
+        <Button
+          buttonStyle={{
+            backgroundColor: colours.purple,
+            padding: 10,
+            borderRadius: 10,
+            width: '50%',
+          }}
+          title="Add Exception"
+          onPress={() => {
+            let exceptions = event.recurrenceExceptions ?? [];
+            exceptions.push(Timestamp.fromDate(dateNow));
+            set({...event, recurrenceExceptions: exceptions})
+          }}
+        />
+        </View>
+      ) : <></>}
 
     </View>
   );

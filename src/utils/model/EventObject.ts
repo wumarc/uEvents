@@ -88,7 +88,12 @@ export type EventObject = {
   emoji: string;
   signUpLink?: string; // If undefined, no sign up link
   originalLink: string;
-  recurrence: recurrence;
+  // recurrence: recurrence;
+  recurrenceType: | "None" | "Weekly" | "Custom Weekly" | "Specific Dates";
+  recurrenceCustomDays?: daysOfWeekBrief[];
+  recurrenceCustomDates?: Timestamp[];
+  recurrenceEnd?: Timestamp;
+  recurrenceExceptions?: Timestamp[];
 };
 
 export const nextStartTime = (
