@@ -14,7 +14,7 @@ import CustomInput from "../../atoms/CustomInput";
 import CustomButton from "../../atoms/CustomButton";
 import { Badge } from "react-native-elements";
 import FirebaseImage from "../../organisms/FirebaseImage";
-import { emojiUrl } from "../../../utils/util";
+import { emojiUrl, getNextDate } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -48,6 +48,8 @@ const EventDetails = ({ route, navigation }: props) => {
   if (loading || loading2) {
     return <Loading />;
   }
+
+  let [startTime, endTime] = getNextDate(event);
 
   return (
     <View style={{flex: 1, backgroundColor: colours.white}}>
@@ -84,16 +86,16 @@ const EventDetails = ({ route, navigation }: props) => {
             <Text style={fonts.title2}>📅 </Text>
             {/* {relativeDate(event.startTime)} */}
             {/* Return the startTime in the format of day of the week month day */}
-            {event.startTime.toDate().toDateString()}
+            {startTime.toDateString()}
           </Text>
           <Text style={fonts.regular}>
             <Text style={fonts.title2}>🕧 </Text>
-            {getTimeInAMPM(event.startTime.toDate()) + " - "}{event.endTime ? getTimeInAMPM(event.endTime.toDate()) : "End"}
+            {getTimeInAMPM(startTime) + " - "}{event.endTime ? getTimeInAMPM(endTime) : "End"}
           </Text>
-          { event.recurrence &&
+          { event.recurrenceType == "Weekly" &&
             <Text style={fonts.regular}>
             <Text style={fonts.title2}>🔁 </Text>
-              {event.recurrence.type == "Weekly" ? "Weekly" : "Biweekly"}
+              Every week {event.recurrenceEnd ? "until " + event.recurrenceEnd.toDate().toDateString() : ""}
             </Text>
           }
         </View>

@@ -22,7 +22,7 @@ import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subato
 import { Loading } from "../Common/Loading";
 import { SearchBar } from "react-native-elements";
 import { Organizer } from "../../../utils/model/Organizer";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, getNextDate } from "../../../utils/util";
 import { Divider } from '@rneui/themed';
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -66,12 +66,11 @@ const Home = ({ route, navigation }: props) => {
 
     // Make sure the events are not in the past
     filteredEvents = filteredEvents.filter((event) => {
-      // let startTime = nextStartTime(event.startTime, event.recurrence);
-      let endTime = event.endTime ?? event.startTime;
+      let [startTime, endTime] = getNextDate(event);
       if (!endTime) {
         return false;
       }
-      return endTime.toMillis() > Timestamp.now().toMillis();
+      return endTime.getTime() > Timestamp.now().toMillis();
     });
 
     // Make sure the events are published
@@ -106,28 +105,25 @@ const Home = ({ route, navigation }: props) => {
 
   // Today's events
   let todayEvents = filteredEvents.filter((event) => {
-    let startTime = event.startTime
-    let endTime = event.endTime ?? event.startTime
+    let [startTime, endTime] = getNextDate(event);
     let now = Timestamp.now()
-    let diff = startTime.toMillis() - now.toMillis()
+    let diff = startTime.getTime() - now.toMillis()
     return diff < restOfTodayMillis
   });
 
   // This week's events
   let thisWeekEvents = filteredEvents.filter((event) => {
-    let startTime = event.startTime
-    let endTime = event.endTime ?? event.startTime
+    let [startTime, endTime] = getNextDate(event);
     let now = Timestamp.now()
-    let diff = startTime.toMillis() - now.toMillis()
+    let diff = startTime.getTime() - now.toMillis()
     return diff >= restOfTodayMillis && diff < (restOfTodayMillis + dayMillis * 6)
   });
 
   // Other events
   let otherEvents = filteredEvents.filter((event) => {
-    let startTime = event.startTime
-    let endTime = event.endTime ?? event.startTime
+    let [startTime, endTime] = getNextDate(event);
     let now = Timestamp.now()
-    let diff = startTime.toMillis() - now.toMillis()
+    let diff = startTime.getTime() - now.toMillis()
     return diff >= (restOfTodayMillis + dayMillis * 6)
   });
 

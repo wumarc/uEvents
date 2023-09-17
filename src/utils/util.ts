@@ -1,6 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
 import emojiUnicode from "emoji-unicode";
+import { EventObject, recurrenceType } from "./model/EventObject";
 
 export function getFirebaseUserID(): string | undefined {
   let id = auth.currentUser?.uid;
@@ -119,4 +120,67 @@ export function emojiUrl(emoji: string) {
     }
   }
   return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg"
+}
+
+export function getNextDate(event: EventObject): [Date, Date] {
+  let startDate = event.startTime.toDate();
+  let endDate = (event.endTime ?? event.startTime).toDate();
+  let recurrenceType = event.recurrenceType;
+
+  if (!recurrenceType) {
+    return [startDate, endDate];
+  }
+
+  switch (recurrenceType) {
+    case "None":
+      return [startDate, endDate];
+    case "Weekly":
+      let today = new Date();
+      let limit = event.recurrenceEnd?.toDate();
+      let exceptions = event.recurrenceExceptions;
+
+      while (endDate < today) {
+        // Increment the start and end date by 7 days
+        let startEpoch = startDate.getTime();
+        let endEpoch = endDate.getTime();
+        startDate = new Date(startEpoch + 7 * 24 * 60 * 60 * 1000);
+        endDate = new Date(endEpoch + 7 * 24 * 60 * 60 * 1000);
+      }
+
+      // Check if the start date is an exception
+      let flag = true;
+      while (flag)
+        flag = false;
+        if (exceptions) {
+          for (let i = 0; i < exceptions.length; i++) {
+            let exception = (exceptions[i] as Timestamp).toDate();
+            // Set exception time to startDate
+            exception.setHours(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds(), startDate.getMilliseconds());
+            if (exception.getTime() == startDate.getTime()) {
+              // Increment the start and end date by 7 days
+              let startEpoch = startDate.getTime();
+              let endEpoch = endDate.getTime();
+              startDate = new Date(startEpoch + 7 * 24 * 60 * 60 * 1000);
+              endDate = new Date(endEpoch + 7 * 24 * 60 * 60 * 1000);
+              flag = true;
+            }
+          }
+        }
+        
+    // Make sure today is not over limit
+      if (limit) {
+        limit = limit
+        limit.setHours(23, 59, 59, 999);
+      }
+      if (limit && endDate > limit) {
+        // Return start date Epoch 0
+        return [new Date(0), new Date(0)];
+      }
+
+      // Return the right date
+      return [startDate, endDate];
+    default:
+      console.error("Unsupported recurrence type: " + recurrenceType);
+      return [startDate, endDate];
+  }
 }

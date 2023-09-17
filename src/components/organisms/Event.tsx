@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
-import { emojiUrl, getFirebaseUserIDOrEmpty } from "../../utils/util";
+import { emojiUrl, getFirebaseUserIDOrEmpty, getNextDate } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
@@ -16,6 +16,7 @@ import { SvgUri } from 'react-native-svg';
 import { Image } from "@rneui/themed";
 import FirebaseImage from "./FirebaseImage";
 import { useState } from "react";
+import { Timestamp } from "firebase/firestore";
 
 // Event component props
 interface EventProps {
@@ -69,11 +70,7 @@ const Event: React.FC<EventProps> = (props) => {
   };
 
   // True start time and end time
-  let startTime = nextStartTime(event.startTime, event.recurrence);
-  let endTime = undefined;
-  if (startTime != undefined) {
-    endTime = nextEndTime(event.startTime, startTime, event.endTime);
-  }
+  let [startTime, endTime] = getNextDate(event);
 
   let onCampusText = "";
   switch (event.onCampus) {
@@ -145,7 +142,7 @@ const Event: React.FC<EventProps> = (props) => {
               size={19}
               color={colours.grey}
             />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(event.startTime, event.endTime)}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(Timestamp.fromDate(startTime), Timestamp.fromDate(endTime))}</Text>
             {/* <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
             <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text> */}
             {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}
