@@ -122,18 +122,19 @@ export function emojiUrl(emoji: string) {
   return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg"
 }
 
-export function getNextDate(event: EventObject): [Date, Date] {
+export function getNextDate(event: EventObject): [Date, Date, boolean] {
   let startDate = event.startTime.toDate();
   let endDate = (event.endTime ?? event.startTime).toDate();
+  let hasEnd = event.endTime != undefined;
   let recurrenceType = event.recurrenceType;
 
   if (!recurrenceType) {
-    return [startDate, endDate];
+    return [startDate, endDate, hasEnd];
   }
 
   switch (recurrenceType) {
     case "None":
-      return [startDate, endDate];
+      return [startDate, endDate, hasEnd];
     case "Weekly":
       let today = new Date();
       let limit = event.recurrenceEnd?.toDate();
@@ -174,13 +175,13 @@ export function getNextDate(event: EventObject): [Date, Date] {
       }
       if (limit && endDate > limit) {
         // Return start date Epoch 0
-        return [new Date(0), new Date(0)];
+        return [new Date(0), new Date(0), hasEnd];
       }
 
       // Return the right date
-      return [startDate, endDate];
+      return [startDate, endDate, hasEnd];
     default:
       console.error("Unsupported recurrence type: " + recurrenceType);
-      return [startDate, endDate];
+      return [startDate, endDate, hasEnd];
   }
 }

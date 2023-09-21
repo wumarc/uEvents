@@ -230,7 +230,9 @@ export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd
   /* ------------------------- Case where event is now ------------------------ */
 
   if (eventDateEnd && firebaseTimestamp.toDate() <= new Date() && eventDateEnd >= new Date()) {
-    if (eventDateEnd.getDate() === today.getDate()) {
+    if (!eventDateEnd) {
+      return "Now";
+    } else if (eventDateEnd.getDate() === today.getDate()) {
       // Case where event ends today
       return "Now" + " · " + "Until " + getTimeInAMPM(eventDateEnd);
       // case where event ends tomorrow

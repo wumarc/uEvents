@@ -70,7 +70,7 @@ const Event: React.FC<EventProps> = (props) => {
   };
 
   // True start time and end time
-  let [startTime, endTime] = getNextDate(event);
+  let [startTime, endTime, hasEnd] = getNextDate(event);
 
   let onCampusText = "";
   switch (event.onCampus) {
@@ -142,7 +142,7 @@ const Event: React.FC<EventProps> = (props) => {
               size={19}
               color={colours.grey}
             />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(Timestamp.fromDate(startTime), Timestamp.fromDate(endTime))}</Text>
+            <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(Timestamp.fromDate(startTime), hasEnd? Timestamp.fromDate(endTime): undefined)}</Text>
             {/* <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
             <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text> */}
             {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}
