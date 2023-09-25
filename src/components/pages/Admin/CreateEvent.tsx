@@ -48,6 +48,13 @@ const CreateEvent = ({ route, navigation }: props) => {
           navigation.navigate("Step0", {useDefault: false, organizerName: organizerName, eventID: undefined, isAdmin: true});
         }}
       />
+      <CustomButton
+        buttonName={"Add Event One Page"}
+        onPressListener={() => {
+          // Adding the event to the database
+          navigation.navigate("OnePageCreateEvent", {});
+        }}
+      />
     </View>
     
   );
