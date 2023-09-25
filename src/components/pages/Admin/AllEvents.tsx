@@ -11,7 +11,7 @@ import {
   useStateWithFireStoreCollection,
   useStateWithFireStoreDocument,
 } from "../../../utils/useStateWithFirebase";
-import { emojiUrl, getFirebaseUserID } from "../../../utils/util";
+import { emojiUrl, getFirebaseUserID, getNextDate } from "../../../utils/util";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -56,15 +56,18 @@ export const AllEvents = ({ route, navigation }: props) => {
   });
 
   // Remove outdated events
+  // !!! Comment this out to see all events !!!
   filteredEvents = filteredEvents.filter((event) => {
     if (event.state != "Published") {
       return true;
     }
-    if ((event.endTime ?? event.startTime).toDate().getTime() < Date.now()) {
+    let [startTime, endTime] = getNextDate(event);
+    if (endTime.getTime() < Date.now()) {
       return false;
     }
     return true;
   });
+  /// !!! Comment this out to see all events !!!
 
   return (
     <View>

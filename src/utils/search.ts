@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import { EventObject, nextStartTime, recurrence } from "./model/EventObject";
+import { getNextDate } from "./util";
 
 export function searchAlgo(
   query: string,
@@ -121,8 +122,14 @@ export function searchAlgo(
         //   eventB?.startTime as Timestamp,
         //   eventB?.recurrence ?? new recurrence("None")
         // );
-        let nextStartTimeA = eventA?.startTime as Timestamp;
-        let nextStartTimeB = eventB?.startTime as Timestamp;
+        if (eventA === undefined) {
+          return 1;
+        }
+        if (eventB === undefined) {
+          return -1;
+        }
+        let [nextStartTimeA, nextEndTimeA] = getNextDate(eventA);
+        let [nextStartTimeB, nextEndTimeB] = getNextDate(eventB);
         if (nextStartTimeA === undefined) {
           return 1;
         }
@@ -130,7 +137,7 @@ export function searchAlgo(
           return -1;
         }
         return (
-          nextStartTimeA.toDate().getTime() - nextStartTimeB.toDate().getTime()
+          nextStartTimeA.getTime() - nextStartTimeB.getTime()
         );
       } else {
         return b[1] - a[1];
