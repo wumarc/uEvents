@@ -14,7 +14,7 @@ export const DatePickerModal: FC<{
     label?: string;
 }> = (props) => {
     
-    const hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    const hours = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
     const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
     const ampm = ['AM', 'PM'];
     const days = [
@@ -162,6 +162,7 @@ export const DatePickerModal: FC<{
         } else if (date.ampm === "") {
             let ampm = props.dateValue.toDate().getHours() > 11 ? "PM" : "AM";
             value.setHours(parseInt(date.hour) + (ampm === "PM" ? 12 : 0));
+            
         } else {
             value.setHours(parseInt(date.hour) + (date.ampm === "PM" ? 12 : 0));
         }
