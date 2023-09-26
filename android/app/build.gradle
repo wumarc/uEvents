@@ -118,8 +118,8 @@ android {
         applicationId 'com.uEvents'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "1.2.0"
+        versionCode 18
+        versionName "1.4.0"
     }
 
     splits {
