@@ -15,29 +15,25 @@ type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 // To access the type of user, use route.params.userType
 
 const SavedEvents = ({ route, navigation }: props) => {
-  const [loading, student, setStudent] = useStateWithFireStoreDocument(
-    "users",
-    getFirebaseUserIDOrEmpty()
-  );
+  const [loading, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
 
-  const [loading2, events, add] =
-    useStateWithFireStoreCollection<EventObject>("events");
+  const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>("events");
 
   if (loading || loading2 || !events) {
     return <Loading />;
   }
-  
+
   let savedEvents = [];
   for (let i = 0; i < (student.saved ?? []).length; i++) {
     let savedId = student.saved[i];
     let found = false;
-    for (let j = 0; j < (events).length; j++) {
+    for (let j = 0; j < events.length; j++) {
       if (events[j]?.id == savedId) {
         savedEvents.push(events[j]);
         found = true;
         break;
       }
-    } 
+    }
 
     if (!found) {
       // remove from saved
@@ -63,46 +59,38 @@ const SavedEvents = ({ route, navigation }: props) => {
 
   return (
     <View style={styles.container}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={{ padding: "3%" }}>
+          <Text style={fonts.title1}>Saved Events</Text>
+        </View>
 
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-
-          <View style={{padding: "3%"}}>
-            <Text style={fonts.title1}>Saved Events</Text>
-          </View>
-
-          <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
-            {(student.saved ?? []).length != 0 && (
-              <FlatList
-                data={savedEvents as EventObject[]}
-                renderItem={({ item }) => (
-                  <Event
-                    listView={false}
-                    organizer={item.organizer}
-                    id={item.id}
-                    userType={route.params.userType}
-                    navigation={navigation}
-                    onSaveEvent={() => {}}
-                  />
-                )}
-              />
-            )}
-          </View>
-          
-          {(student.saved ?? []).length == 0 && 
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <SvgUri
-              width="60%"
-              height="40%"
-              uri={"https://openmoji.org/data/color/svg/1F3DD.svg"}
-              fill="black"
+        <View style={{ alignItems: "center", ...spacing.verticalMargin1 }}>
+          {(student.saved ?? []).length != 0 && (
+            <FlatList
+              data={savedEvents as EventObject[]}
+              renderItem={({ item }) => (
+                <Event
+                  listView={false}
+                  organizer={item.organizer}
+                  id={item.id}
+                  userType={route.params.userType}
+                  navigation={navigation}
+                  onSaveEvent={() => {}}
+                />
+              )}
             />
-            <Text style={{...fonts.title3, textAlign: 'center'}}>You have no saved events. Your event list is as unoccupied as a peaceful oasis in the middle of the desert...</Text>
+          )}
+        </View>
+
+        {(student.saved ?? []).length == 0 && (
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <SvgUri width="60%" height="40%" uri={"https://openmoji.org/data/color/svg/1F3DD.svg"} fill="black" />
+            <Text style={{ ...fonts.title3, textAlign: "center" }}>
+              You have no saved events. Your event list is as unoccupied as a peaceful oasis in the middle of the desert...
+            </Text>
           </View>
-          }
-
-
+        )}
       </ScrollView>
-
     </View>
   );
 };

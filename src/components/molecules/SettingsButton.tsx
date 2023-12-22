@@ -13,12 +13,12 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
   const fontSize = 23;
   const marginBottom = "4%";
   const settingName = [
-    {"My Profile": {icon: "account-outline",type: "material-community"}},
-    {"Privacy Policy": {icon: "shield-lock-outline",type: "material-community"}},
-    {"Contact Us": { icon: "mail-outline", type: "ionicon" }},
-    {"Delete Account": { icon: "trash-outline", type: "ionicon" }},
-    {"Hidden Events": { icon: "eye-off-outline", type: "ionicon" }},
-    {"Blocked Organizers": { icon: "person-remove-outline", type: "ionicon" }},
+    { "My Profile": { icon: "account-outline", type: "material-community" } },
+    { "Privacy Policy": { icon: "shield-lock-outline", type: "material-community" } },
+    { "Contact Us": { icon: "mail-outline", type: "ionicon" } },
+    { "Delete Account": { icon: "trash-outline", type: "ionicon" } },
+    { "Hidden Events": { icon: "eye-off-outline", type: "ionicon" } },
+    { "Blocked Organizers": { icon: "person-remove-outline", type: "ionicon" } },
   ];
 
   const findIconByKey = (key: any) => {
@@ -33,11 +33,7 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
 
   return (
     <View style={{ marginBottom: marginBottom }}>
-      <Button
-        buttonStyle={{ backgroundColor: colours.primaryGrey }}
-        containerStyle={{ borderRadius: borderRadius.large }}
-        onPress={onPressListener}
-      >
+      <Button buttonStyle={{ backgroundColor: colours.primaryGrey }} containerStyle={{ borderRadius: borderRadius.large }} onPress={onPressListener}>
         <View
           style={{
             flexDirection: "row",

@@ -85,12 +85,7 @@ const UploadFile: FC<{ setImage: (id: string) => void }> = (props) => {
           }}
         >
           Uploading
-          {(
-            ((snapshot?.bytesTransferred ?? 0) /
-              (snapshot?.totalBytes ?? 1000000)) *
-            100
-          ).toPrecision(3)}
-          %
+          {(((snapshot?.bytesTransferred ?? 0) / (snapshot?.totalBytes ?? 1000000)) * 100).toPrecision(3)}%
         </Text>
       )}
     </View>

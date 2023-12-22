@@ -1,9 +1,6 @@
 import { EventObject } from "./model/EventObject";
 
-export function calculateNumberOfEvents(
-  categories: string[],
-  categoriesValues: number[]
-): number {
+export function calculateNumberOfEvents(categories: string[], categoriesValues: number[]): number {
   var sum = 0;
   for (var i = 0; i < categories.length; i++) {
     sum += categoriesValues[i];
@@ -29,15 +26,7 @@ export function buildCategories(events: EventObject[]): [string[], number[]] {
   return [categories, categoriesValues];
 }
 
-const defaultCategories = [
-  "arts",
-  "design",
-  "business",
-  "science",
-  "sports",
-  "games",
-  "nightlife",
-];
+const defaultCategories = ["arts", "design", "business", "science", "sports", "games", "nightlife"];
 
 // export function getOrderedCategories(
 //   categories: string[],
@@ -61,10 +50,7 @@ const defaultCategories = [
 //   return orderedCategories;
 // }
 
-export function getOrderedCategories(
-  events: EventObject[],
-  id: string
-): string[] {
+export function getOrderedCategories(events: EventObject[], id: string): string[] {
   let filteredEvents = events.filter((event) => {
     return event.state === "Published" || event.id === id;
   });

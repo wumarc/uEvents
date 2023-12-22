@@ -2,16 +2,8 @@ import { View, Text, Image, FlatList } from "react-native";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Button, Input, Header } from "@rneui/base";
-import {
-  addDocumentToCollection,
-  useStateWithFireStoreDocument,
-  useStateWithFireStoreImage,
-} from "../../../utils/useStateWithFirebase";
-import {
-  defaultEvent,
-  EventCategory,
-  EventObject,
-} from "../../../utils/model/EventObject";
+import { addDocumentToCollection, useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
+import { defaultEvent, EventCategory, EventObject } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Admin/main";
 import { uid } from "../../../utils/util";
@@ -25,10 +17,7 @@ type props = NativeStackScreenProps<RootStackParamList, "EditEvent">;
 // To access the type of user, use route.params.userType
 
 const EditEvent = ({ route, navigation }: props) => {
-  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
-    "events",
-    route.params.eventId
-  );
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", route.params.eventId);
 
   const [temp, setTemp] = useState<EventObject>(event);
 

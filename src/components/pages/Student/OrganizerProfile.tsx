@@ -4,7 +4,7 @@ import Event from "../../organisms/Event";
 import { Avatar, ButtonGroup, Icon } from "react-native-elements";
 import { useState } from "react";
 import { Dialog } from "react-native-elements";
-import * as Clipboard from 'expo-clipboard';
+import * as Clipboard from "expo-clipboard";
 import { BottomSheet } from "@rneui/themed";
 import { Button } from "@rneui/base";
 import CustomButton from "../../atoms/CustomButton";
@@ -20,40 +20,36 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 
-const OrganizerProfile = ({route, navigation}: props) => {
+const OrganizerProfile = ({ route, navigation }: props) => {
+  const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
+  const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
+  const [loading3, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+  const [loading4, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
+  const [loading5, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  const [dialogVisible, setdialogVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
-    const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
-    const [loading3, events, add] =useStateWithFireStoreCollection<EventObject>("events");
-    const [loading4, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-    const [loading5, student, setStudent] = useStateWithFireStoreDocument(
-        "users",
-        getFirebaseUserIDOrEmpty()
-      );
-    const [dialogVisible, setdialogVisible] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+  if (loading || loading2 || loading3 || loading4 || loading5) {
+    return <Loading />;
+  }
 
-    if (loading || loading2 || loading3 || loading4 || loading5) {
-        return <Loading />;
-    }
+  if (!organizer) {
+    return (
+      <View style={{ alignItems: "center", justifyContent: "center", flex: 1, backgroundColor: colours.white }}>
+        <Text style={fonts.title2}>Sorry an error has occured</Text>
+        <Text style={fonts.regular}>ID field is missing in organizer</Text>
+        <Text style={fonts.regular}>Please reach out to us at admin@uevents.org</Text>
+      </View>
+    );
+  }
 
-    if (!organizer) {
-        return (
-            <View style={{alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: colours.white}}>
-                <Text style={fonts.title2}>Sorry an error has occured</Text>
-                <Text style={fonts.regular}>ID field is missing in organizer</Text>
-                <Text style={fonts.regular}>Please reach out to us at admin@uevents.org</Text>
-            </View>
-        );
-    }
+  /* ---------------------------- Filter the events --------------------------- */
 
-    /* ---------------------------- Filter the events --------------------------- */
+  let isPresent = selectedIndex === 0 ? true : false;
+  let organizers = users?.filter((user) => user.type === "organizer") ?? [];
 
-    let isPresent = selectedIndex === 0 ? true : false;
-    let organizers = users?.filter((user) => user.type === "organizer") ?? [];
-
-      // Filtered events
+  // Filtered events
   let filteredEvents = events as EventObject[];
   filteredEvents = searchAlgo("", filteredEvents);
 
@@ -63,12 +59,11 @@ const OrganizerProfile = ({route, navigation}: props) => {
     if (!startTime) {
       return false;
     }
-    return isPresent? startTime.toMillis() > Timestamp.now().toMillis() : startTime.toMillis() < Timestamp.now().toMillis();
+    return isPresent ? startTime.toMillis() > Timestamp.now().toMillis() : startTime.toMillis() < Timestamp.now().toMillis();
   });
 
   // Make sure the events are published
-  filteredEvents = filteredEvents.filter((event) => 
-    event.state == "Published")
+  filteredEvents = filteredEvents.filter((event) => event.state == "Published");
 
   // Remove blocked or hidden events
   filteredEvents = filteredEvents.filter((event) => {
@@ -78,142 +73,125 @@ const OrganizerProfile = ({route, navigation}: props) => {
     return true;
   });
 
-    // Make sure the event is from the organizer
-    filteredEvents = filteredEvents.filter((event) => event.organizer === organizer.id);
+  // Make sure the event is from the organizer
+  filteredEvents = filteredEvents.filter((event) => event.organizer === organizer.id);
 
-    return (
-        <ScrollView style={{backgroundColor: colours.white, paddingHorizontal: spacing.page2}}>
-            
-            {/* Club logo */}
-            <View style={{alignItems: 'center', ...spacing.verticalMargin1}}>
-                {url? <Avatar
-                    size={150}
-                    rounded
-                    source={{uri: url}}
-                    containerStyle={{ backgroundColor: 'transparent'}}
-                /> : <Icon name="person" />}
-                
-            </View>
+  return (
+    <ScrollView style={{ backgroundColor: colours.white, paddingHorizontal: spacing.page2 }}>
+      {/* Club logo */}
+      <View style={{ alignItems: "center", ...spacing.verticalMargin1 }}>
+        {url ? <Avatar size={150} rounded source={{ uri: url }} containerStyle={{ backgroundColor: "transparent" }} /> : <Icon name="person" />}
+      </View>
 
-            {/* Club title */}
-            <View>
-                <Text style={{...fonts.title2, textAlign: 'center'}}>{organizer.name}</Text>
-            </View>
+      {/* Club title */}
+      <View>
+        <Text style={{ ...fonts.title2, textAlign: "center" }}>{organizer.name}</Text>
+      </View>
 
-            {/* Club description */}
-            <View style={spacing.verticalMargin1}>
-                <Text style={{...fonts.regular, textAlign: 'center'}}>{organizer.description}</Text>
-            </View>
+      {/* Club description */}
+      <View style={spacing.verticalMargin1}>
+        <Text style={{ ...fonts.regular, textAlign: "center" }}>{organizer.description}</Text>
+      </View>
 
-            {/* Club socials */}
-            <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-                {organizer.instagram && 
-                    <Icon
-                        name='logo-instagram'
-                        type='ionicon'
-                        color={colours.black}
-                        size={35}
-                        containerStyle={{...spacing.verticalMargin1}}
-                        onPress={() => Linking.openURL("https://www.instagram.com/" + organizer.instagram)}
-                    />
-            }
-                <Icon
-                    name='at-outline'
-                    type='ionicon'
-                    color={colours.black}
-                    size={35}
-                    containerStyle={{...spacing.verticalMargin1}}
-                    onPress={() => setdialogVisible(true)}
-                />
-            </View>
+      {/* Club socials */}
+      <View style={{ justifyContent: "center", flexDirection: "row" }}>
+        {organizer.instagram && (
+          <Icon
+            name="logo-instagram"
+            type="ionicon"
+            color={colours.black}
+            size={35}
+            containerStyle={{ ...spacing.verticalMargin1 }}
+            onPress={() => Linking.openURL("https://www.instagram.com/" + organizer.instagram)}
+          />
+        )}
+        <Icon
+          name="at-outline"
+          type="ionicon"
+          color={colours.black}
+          size={35}
+          containerStyle={{ ...spacing.verticalMargin1 }}
+          onPress={() => setdialogVisible(true)}
+        />
+      </View>
 
-            {/* Club events */}
-            <View>
-                <ButtonGroup
-                    buttons={['Upcoming', 'Past']}
-                    selectedIndex={selectedIndex}
-                    containerStyle={{height: 50}}
-                    selectedButtonStyle={{backgroundColor: colours.purple}}
-                    textStyle={{...fonts.regular}}
-                    onPress={(index) => setSelectedIndex(index)}
-                />
-                {/* List */}
-                {filteredEvents.length === 0? <Text style={{...fonts.regular, textAlign: 'center', margin: 5}}>No events 😔</Text> : 
-                <FlatList
-                style={{}}
-                showsVerticalScrollIndicator={false}
-                data={filteredEvents}
-                renderItem={({ item, index }) => (
-                    <View style={{marginVertical: "2%"}}>
-                    <Event
-                        organizer={item.organizer}
-                        id={item.id}
-                        navigation={navigation}
-                        userType={route.params.organizerID}
-                        listView={false}
-                    />
-                    </View>
-                )}
-                />}
-            </View>
+      {/* Club events */}
+      <View>
+        <ButtonGroup
+          buttons={["Upcoming", "Past"]}
+          selectedIndex={selectedIndex}
+          containerStyle={{ height: 50 }}
+          selectedButtonStyle={{ backgroundColor: colours.purple }}
+          textStyle={{ ...fonts.regular }}
+          onPress={(index) => setSelectedIndex(index)}
+        />
+        {/* List */}
+        {filteredEvents.length === 0 ? (
+          <Text style={{ ...fonts.regular, textAlign: "center", margin: 5 }}>No events 😔</Text>
+        ) : (
+          <FlatList
+            style={{}}
+            showsVerticalScrollIndicator={false}
+            data={filteredEvents}
+            renderItem={({ item, index }) => (
+              <View style={{ marginVertical: "2%" }}>
+                <Event organizer={item.organizer} id={item.id} navigation={navigation} userType={route.params.organizerID} listView={false} />
+              </View>
+            )}
+          />
+        )}
+      </View>
 
-            <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={fonts.title2}>{organizer.email}</Text>
-                    <Button
-                        buttonStyle={{backgroundColor: colours.white}}
-                        icon={<Icon name="copy" type="feather" color={colours.black} />}
-                        onPress={() => Clipboard.setStringAsync(organizer.email)}
-                    />
-                </View>
-            </Dialog>
+      <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+          <Text style={fonts.title2}>{organizer.email}</Text>
+          <Button
+            buttonStyle={{ backgroundColor: colours.white }}
+            icon={<Icon name="copy" type="feather" color={colours.black} />}
+            onPress={() => Clipboard.setStringAsync(organizer.email)}
+          />
+        </View>
+      </Dialog>
 
-            <BottomSheet 
-                modalProps={{animationType: 'fade'}}
-                onBackdropPress={() => setIsVisible(false)}
-                isVisible={isVisible}
-                scrollViewProps={{scrollEnabled:false}}
-            >
-                <View style={{
-                    backgroundColor: 'white', 
-                    paddingVertical: '7%',
-                    borderRadius: 15
-                }}>
-                    <View style={{alignItems: 'center'}}>
-                    <Text style={{...fonts.title1, fontSize: 100}} >👮</Text>
-                    <Text style={{...fonts.regular, textAlign: 'center', marginBottom: '2%', marginHorizontal: '4%'}}>
-                        Thank you for taking the time to report the user, we will look into it as soon as possible!
-                    </Text>
-                    </View>
-                    <View style={{marginHorizontal: spacing.horizontalMargin1}}>
-                        <CustomButton
-                            buttonName="Report organizer"
-                            onPressListener={() => {}}
-                        />
-                        <Button
-                            style={{
-                                paddingHorizontal: 10,
-                                borderRadius: 15,
-                                marginVertical: '1%'
-                            }}
-                            color={'transparent'}
-                            titleStyle={{color: colours.purple, fontWeight: '600'}}
-                            title={"Cancel"}
-                            onPress={() => setIsVisible(false)}
-                        />
-                    </View>
+      <BottomSheet
+        modalProps={{ animationType: "fade" }}
+        onBackdropPress={() => setIsVisible(false)}
+        isVisible={isVisible}
+        scrollViewProps={{ scrollEnabled: false }}
+      >
+        <View
+          style={{
+            backgroundColor: "white",
+            paddingVertical: "7%",
+            borderRadius: 15,
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ ...fonts.title1, fontSize: 100 }}>👮</Text>
+            <Text style={{ ...fonts.regular, textAlign: "center", marginBottom: "2%", marginHorizontal: "4%" }}>
+              Thank you for taking the time to report the user, we will look into it as soon as possible!
+            </Text>
+          </View>
+          <View style={{ marginHorizontal: spacing.horizontalMargin1 }}>
+            <CustomButton buttonName="Report organizer" onPressListener={() => {}} />
+            <Button
+              style={{
+                paddingHorizontal: 10,
+                borderRadius: 15,
+                marginVertical: "1%",
+              }}
+              color={"transparent"}
+              titleStyle={{ color: colours.purple, fontWeight: "600" }}
+              title={"Cancel"}
+              onPress={() => setIsVisible(false)}
+            />
+          </View>
+        </View>
+      </BottomSheet>
+    </ScrollView>
+  );
+};
 
-                </View>
-            </BottomSheet>
-
-        </ScrollView>
-    );
-
-}
-
-
-const styles = StyleSheet.create({
-});
-
+const styles = StyleSheet.create({});
 
 export default OrganizerProfile;

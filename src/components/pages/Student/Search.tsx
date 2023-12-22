@@ -13,8 +13,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType
 
 const Search = ({ route, navigation }: props) => {
-  const [loading, events, add] =
-    useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
 
   const [value, setValue] = useState<string>("");
 
@@ -85,14 +84,7 @@ const Search = ({ route, navigation }: props) => {
 
       <FlatList
         data={events?.filter(filterEvents)}
-        renderItem={({ item }) => (
-          <Event
-            organizer={item.organizer}
-            id={item.id}
-            userType={route.params.userType}
-            navigation={navigation}
-          />
-        )}
+        renderItem={({ item }) => <Event organizer={item.organizer} id={item.id} userType={route.params.userType} navigation={navigation} />}
       />
     </View>
   );

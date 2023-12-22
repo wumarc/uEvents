@@ -1,13 +1,7 @@
 import { View, Text, FlatList, ScrollView, Button } from "react-native";
 import { FC, useState } from "react";
 import { Timestamp } from "firebase/firestore";
-import {
-  EventCategory,
-  EventObject,
-  daysToInt,
-  recurrenceType,
-  recurrenceTypeArray,
-} from "../../utils/model/EventObject";
+import { EventCategory, EventObject, daysToInt, recurrenceType, recurrenceTypeArray } from "../../utils/model/EventObject";
 import CustomButton from "../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { ButtonGroup, Input, Switch } from "react-native-elements";
@@ -27,8 +21,7 @@ const EventEditor: FC<{
   const [nameError, setNameError] = useState<string>("");
   const [priceMinError, setPriceMinError] = useState<string>("");
   const [priceMaxError, setPriceMaxError] = useState<string>("");
-  const [priceDescriptionError, setPriceDescriptionError] =
-    useState<string>("");
+  const [priceDescriptionError, setPriceDescriptionError] = useState<string>("");
   const [descriptionError, setDescriptionError] = useState<string>("");
   const [locationError, setLocationError] = useState<string>("");
   const [addressError, setAddressError] = useState<string>("");
@@ -44,21 +37,11 @@ const EventEditor: FC<{
   const [signUpLinkError, setSignUpLinkError] = useState<string>("");
   const [originalLinkError, setOriginalLinkError] = useState<string>("");
 
-  const [recurrenceType, setRecurrenceType] = useState<number>(
-    recurrenceTypeArray.indexOf(props.default.recurrence.type)
-  );
+  const [recurrenceType, setRecurrenceType] = useState<number>(recurrenceTypeArray.indexOf(props.default.recurrence.type));
 
-  const [selectedDays, setSelectedDays] = useState<number[]>(
-    props.default.recurrence.customDays
-      ? daysToInt(props.default.recurrence.customDays)
-      : []
-  );
+  const [selectedDays, setSelectedDays] = useState<number[]>(props.default.recurrence.customDays ? daysToInt(props.default.recurrence.customDays) : []);
 
-  const [additionalDates, setAdditionalDates] = useState<Timestamp[]>(
-    props.default.recurrence.customDates
-      ? props.default.recurrence.customDates
-      : []
-  );
+  const [additionalDates, setAdditionalDates] = useState<Timestamp[]>(props.default.recurrence.customDates ? props.default.recurrence.customDates : []);
 
   let event = props.default;
 
@@ -116,12 +99,7 @@ const EventEditor: FC<{
 
         <UploadFile setImage={(id) => props.set({ ...event, images: [id] })} />
 
-        <Input
-          defaultValue={event.name}
-          label="Name"
-          errorMessage={nameError}
-          onChangeText={(value) => props.set({ ...event, name: value })}
-        />
+        <Input defaultValue={event.name} label="Name" errorMessage={nameError} onChangeText={(value) => props.set({ ...event, name: value })} />
         <Input
           defaultValue={event.priceMin?.toString()}
           label="Min Price (Mandatory). If no max price is specified, this is the exact price"
@@ -150,9 +128,7 @@ const EventEditor: FC<{
           multiline={true}
           numberOfLines={4}
           label="Price Description (Optional). If needed, a description of the different prices"
-          onChangeText={(value) =>
-            props.set({ ...event, priceDescription: value })
-          }
+          onChangeText={(value) => props.set({ ...event, priceDescription: value })}
         />
         <Input
           defaultValue={event.description}
@@ -162,18 +138,8 @@ const EventEditor: FC<{
           label="Description (Mandatory)"
           onChangeText={(value) => props.set({ ...event, description: value })}
         />
-        <Input
-          defaultValue={event.location}
-          errorMessage={locationError}
-          label="Location"
-          onChangeText={(value) => props.set({ ...event, location: value })}
-        />
-        <Input
-          defaultValue={event.address}
-          errorMessage={addressError}
-          label="Address"
-          onChangeText={(value) => props.set({ ...event, address: value })}
-        />
+        <Input defaultValue={event.location} errorMessage={locationError} label="Location" onChangeText={(value) => props.set({ ...event, location: value })} />
+        <Input defaultValue={event.address} errorMessage={addressError} label="Address" onChangeText={(value) => props.set({ ...event, address: value })} />
         <Input
           defaultValue={event.organizer}
           errorMessage={organizerError}
@@ -225,15 +191,7 @@ const EventEditor: FC<{
             <Text>Select which days the event will recur on</Text>
             <ButtonGroup
               selectMultiple
-              buttons={[
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-              ]}
+              buttons={["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]}
               selectedIndexes={selectedDays}
               onPress={(indexes) => {
                 setSelectedDays(indexes);
@@ -242,9 +200,7 @@ const EventEditor: FC<{
                   recurrence: {
                     ...event.recurrence,
                     type: "Custom Weekly",
-                    customDays: indexes.map(
-                      (index: number) => daysOfWeekArray[index]
-                    ) as daysOfWeekBrief[],
+                    customDays: indexes.map((index: number) => daysOfWeekArray[index]) as daysOfWeekBrief[],
                   },
                 });
               }}
@@ -323,10 +279,7 @@ const EventEditor: FC<{
                   recurrence: {
                     ...event.recurrence,
                     type: "Specific Dates",
-                    customDates: [
-                      ...event.recurrence.customDates,
-                      new Timestamp(0, 0),
-                    ],
+                    customDates: [...event.recurrence.customDates, new Timestamp(0, 0)],
                   },
                 });
               }}
@@ -355,13 +308,9 @@ const EventEditor: FC<{
         <Input
           defaultValue={categories}
           errorMessage={categoriesError}
-          label={
-            "Categories (Optional, coma separated) (Make sure you write the category exactly as it is in the list of categories!!!)"
-          }
+          label={"Categories (Optional, coma separated) (Make sure you write the category exactly as it is in the list of categories!!!)"}
           onChangeText={(value: string) => {
-            let categories = value
-              .replace(" ", "")
-              .split(",") as EventCategory[];
+            let categories = value.replace(" ", "").split(",") as EventCategory[];
             props.set({
               ...event,
               categories: categories,

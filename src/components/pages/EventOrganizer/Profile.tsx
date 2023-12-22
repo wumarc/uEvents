@@ -1,11 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  View,
-  StyleSheet,
-  Image,
-  Platform,
-} from "react-native";
+import { KeyboardAvoidingView, ScrollView, View, StyleSheet, Image, Platform } from "react-native";
 import { Input, Avatar, Text } from "@rneui/themed";
 import { Button } from "react-native-elements";
 import {
@@ -14,11 +7,7 @@ import {
   useStateWithFireStoreDocument,
   useStateWithFireStoreImage,
 } from "../../../utils/useStateWithFirebase";
-import {
-  getFirebaseUserID,
-  getFirebaseUserIDOrEmpty,
-  uid,
-} from "../../../utils/util";
+import { getFirebaseUserID, getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
@@ -35,26 +24,19 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 export const Profile = ({ route, navigation }: props) => {
-  
   const [image, setImage] = useState<string>("");
-  const [loading, profile, setProfile] =
-    useStateWithFireStoreDocument<Organizer>(
-      "users",
-      route.params.id ?? getFirebaseUserIDOrEmpty()
-  );
-  
+  const [loading, profile, setProfile] = useStateWithFireStoreDocument<Organizer>("users", route.params.id ?? getFirebaseUserIDOrEmpty());
+
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
 
-  const [loading2, url, found] = useStateWithFireStoreImage(
-    "organizers/" + route.params.id ?? getFirebaseUserIDOrEmpty()
-  );
+  const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.id ?? getFirebaseUserIDOrEmpty());
 
   if (loading2 || loading) {
     return <Loading />;
   }
 
   if (uploading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   let isAdmin = route.params.id != undefined;
@@ -67,12 +49,11 @@ export const Profile = ({ route, navigation }: props) => {
   } else if (found && url) {
     uri = url;
   } else {
-    uri =
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+    uri = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   }
 
   const id = route.params.id ?? profile.id ?? getFirebaseUserIDOrEmpty();
-  console.log("id: " + id)
+  console.log("id: " + id);
   const reference = ref(storage, "organizers/" + id);
 
   const pickImage = async () => {
@@ -127,23 +108,23 @@ export const Profile = ({ route, navigation }: props) => {
             />
           </Avatar>
         </View>
-        
-        {image == "" || image == null &&
-          <Text style={{textAlign: 'center'}}>Please upload an image of your organization to finish setting up your account.</Text>
-        }
+
+        {image == "" ||
+          (image == null && <Text style={{ textAlign: "center" }}>Please upload an image of your organization to finish setting up your account.</Text>)}
 
         {/* Club Info Section */}
         <View style={styles.studentInfo}>
           <View style={{ flexDirection: "column", flex: 1 }}>
-
             <Input
-              label={<Text>Organization Name{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
+              label={
+                <Text>
+                  Organization Name <Text style={{ color: "red" }}>*</Text>
+                </Text>
+              }
               placeholder="Organization name"
               defaultValue={profile.name}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) =>
-                setProfile({ ...profile, name: value })
-              }
+              onChangeText={(value: string) => setProfile({ ...profile, name: value })}
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
               inputContainerStyle={{
@@ -154,35 +135,43 @@ export const Profile = ({ route, navigation }: props) => {
                 borderRadius: 6,
               }}
             />
-            {isAdmin? (
+            {isAdmin ? (
               <Input
-              label={<Text>Email<Text style={{ color: 'red' }}>*</Text></Text>}
-              placeholder="Email"
-              defaultValue={profile.email}
-              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) =>
-                setProfile({ ...profile, email: value })
+                label={
+                  <Text>
+                    Email<Text style={{ color: "red" }}>*</Text>
+                  </Text>
+                }
+                placeholder="Email"
+                defaultValue={profile.email}
+                labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+                onChangeText={(value: string) => setProfile({ ...profile, email: value })}
+                containerStyle={{ paddingHorizontal: 0 }}
+                selectionColor={colours.purple}
+                inputContainerStyle={{
+                  borderColor: colours.grey,
+                  borderWidth: 1,
+                  paddingVertical: 4,
+                  paddingHorizontal: 8,
+                  borderRadius: 6,
+                }}
+              />
+            ) : (
+              <></>
+            )}
+
+            <Input
+              label={
+                <Text>
+                  Organization Description <Text style={{ color: "red" }}>*</Text>
+                </Text>
               }
-              containerStyle={{ paddingHorizontal: 0 }}
-              selectionColor={colours.purple}
-              inputContainerStyle={{
-                borderColor: colours.grey,
-                borderWidth: 1,
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-                borderRadius: 6,
-              }}
-            />
-            ) : <></>}
-            
-            <Input 
-              label={<Text>Organization Description{' '}<Text style={{ color: 'red' }}>*</Text></Text>}
               placeholder="Insert Description"
               defaultValue={profile.description}
               multiline={true}
               maxLength={700}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) =>setProfile({ ...profile, description: value })}
+              onChangeText={(value: string) => setProfile({ ...profile, description: value })}
               containerStyle={{ paddingHorizontal: 0 }}
               textAlignVertical="top"
               selectionColor={colours.purple}
@@ -195,10 +184,14 @@ export const Profile = ({ route, navigation }: props) => {
               }}
             />
 
-          <Input
-              label={<Text>Instagram Handle{' '}<Text style={{ color: 'red' }}></Text></Text>}
+            <Input
+              label={
+                <Text>
+                  Instagram Handle <Text style={{ color: "red" }}></Text>
+                </Text>
+              }
               leftIcon={{ type: "font-awesome", name: "at" }}
-              leftIconContainerStyle={{marginRight: 10}}
+              leftIconContainerStyle={{ marginRight: 10 }}
               placeholder="Insert Instagram Handle"
               defaultValue={profile.instagram}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
@@ -214,20 +207,19 @@ export const Profile = ({ route, navigation }: props) => {
                 borderRadius: 6,
               }}
             />
-
           </View>
         </View>
 
-        <View style={{justifyContent: 'center'}}>
-          <Text style={{textAlign: 'center'}}>⚠️ Your changes are automatically saved. ⚠️</Text>
+        <View style={{ justifyContent: "center" }}>
+          <Text style={{ textAlign: "center" }}>⚠️ Your changes are automatically saved. ⚠️</Text>
         </View>
       </ScrollView>
 
       {/* Static Footer */}
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={{ marginBottom: windowHeight * 0.01 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 95 : 0}
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 0}
       >
         <View style={styles.footer_buttons}>
           <Button

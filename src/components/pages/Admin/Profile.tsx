@@ -16,11 +16,7 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
 
 const Profile = ({ route, navigation }: props) => {
-  const [loading, profile, setProfile] = useSateWithFireStore<Student>(
-    "students" + "/" + getFirebaseUserID(),
-    "info",
-    defaultStudent
-  );
+  const [loading, profile, setProfile] = useSateWithFireStore<Student>("students" + "/" + getFirebaseUserID(), "info", defaultStudent);
 
   if (loading) {
     return <Text>Loading</Text>;
@@ -38,23 +34,23 @@ const Profile = ({ route, navigation }: props) => {
   };
 
   return (
-      <View>
-        <Text>Version 2</Text>
-        <Button
-          onPress={() => {
-            logout();
-          }}
-          title="Log out"
-          style={{ marginBottom: 10 }}
-        />
-        <Button
-          onPress={() => {
-            logEvent("test_event", getFirebaseUserIDOrEmpty());
-          }}
-          title="Event"
-          style={{ marginBottom: 10 }}
-        />
-      </View>
+    <View>
+      <Text>Version 2</Text>
+      <Button
+        onPress={() => {
+          logout();
+        }}
+        title="Log out"
+        style={{ marginBottom: 10 }}
+      />
+      <Button
+        onPress={() => {
+          logEvent("test_event", getFirebaseUserIDOrEmpty());
+        }}
+        title="Event"
+        style={{ marginBottom: 10 }}
+      />
+    </View>
   );
 };
 

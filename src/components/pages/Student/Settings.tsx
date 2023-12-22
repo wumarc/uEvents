@@ -5,14 +5,7 @@ import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserID } from "../../../utils/util";
-import {
-  User,
-  deleteUser,
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  updatePassword,
-} from "firebase/auth";
+import { User, deleteUser, getAuth, signInWithEmailAndPassword, signOut, updatePassword } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
@@ -25,8 +18,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import CustomButton from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/base";
 import { Dialog } from "react-native-elements";
-import * as Clipboard from 'expo-clipboard';
-
+import * as Clipboard from "expo-clipboard";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -85,41 +77,25 @@ const Settings = ({ route, navigation }: props) => {
 
         {/* Settings */}
         <View style={{ marginTop: "10%" }}>
-          <SettingsButton
-            buttonName={"My Profile"}
-            onPressListener={() =>
-              navigation.navigate("AccountSettingsView", {})
-            }
-          />
-          <SettingsButton
-            buttonName={"Privacy Policy"}
-            onPressListener={() =>
-              Linking.openURL("https://uevents.webnode.page/privacy-policy/")
-            }
-          />
-          <SettingsButton
-            buttonName={"Contact Us"}
-            onPressListener={() =>setdialogVisible(true)}
-          />
+          <SettingsButton buttonName={"My Profile"} onPressListener={() => navigation.navigate("AccountSettingsView", {})} />
+          <SettingsButton buttonName={"Privacy Policy"} onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")} />
+          <SettingsButton buttonName={"Contact Us"} onPressListener={() => setdialogVisible(true)} />
           <SettingsButton
             buttonName={"Hidden Events"}
-            onPressListener={() => {navigation.navigate("HiddenEventsView", {})}}
+            onPressListener={() => {
+              navigation.navigate("HiddenEventsView", {});
+            }}
           />
           <SettingsButton
             buttonName={"Blocked Organizers"}
-            onPressListener={() => {navigation.navigate("BlockedOrganizersView", {})}}
+            onPressListener={() => {
+              navigation.navigate("BlockedOrganizersView", {});
+            }}
           />
-          <SettingsButton
-            buttonName={"Delete Account"}
-            onPressListener={() => setConfirmDelete(true)}
-          />
+          <SettingsButton buttonName={"Delete Account"} onPressListener={() => setConfirmDelete(true)} />
 
           {/* Log Out Button */}
-          <Button
-            buttonStyle={{ backgroundColor: colours.primaryGrey }}
-            containerStyle={{ borderRadius: borderRadius.large }}
-            onPress={() => logout()}
-          >
+          <Button buttonStyle={{ backgroundColor: colours.primaryGrey }} containerStyle={{ borderRadius: borderRadius.large }} onPress={() => logout()}>
             <View
               style={{
                 flexDirection: "row",
@@ -135,17 +111,8 @@ const Settings = ({ route, navigation }: props) => {
                   margin: 0,
                 }}
               >
-                <Icon
-                  reverse
-                  name="log-out-outline"
-                  type="ionicon"
-                  color="transparent"
-                  size={13}
-                  iconStyle={{ fontSize: 23, color: "red" }}
-                />
-                <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>
-                  Log Out
-                </Text>
+                <Icon reverse name="log-out-outline" type="ionicon" color="transparent" size={13} iconStyle={{ fontSize: 23, color: "red" }} />
+                <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>Log Out</Text>
               </View>
             </View>
           </Button>
@@ -197,16 +164,15 @@ const Settings = ({ route, navigation }: props) => {
         </BottomSheet>
 
         <Dialog isVisible={dialogVisible} onBackdropPress={() => setdialogVisible(false)}>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
             <Text style={fonts.title2}>admin@uevents.org</Text>
-            <Button 
-              buttonStyle={{backgroundColor: colours.white}} 
-              icon={<Icon name="copy" type="feather" color={colours.black} />} 
-              onPress={() => Clipboard.setStringAsync('admin@uevents.org')}
+            <Button
+              buttonStyle={{ backgroundColor: colours.white }}
+              icon={<Icon name="copy" type="feather" color={colours.black} />}
+              onPress={() => Clipboard.setStringAsync("admin@uevents.org")}
             />
           </View>
         </Dialog>
-
       </ScrollView>
     </View>
   );

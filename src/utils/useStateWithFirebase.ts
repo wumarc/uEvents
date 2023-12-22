@@ -1,15 +1,4 @@
-import {
-  addDoc,
-  arrayRemove,
-  arrayUnion,
-  collection,
-  deleteDoc,
-  doc,
-  DocumentData,
-  setDoc,
-  updateDoc,
-  WithFieldValue,
-} from "firebase/firestore";
+import { addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, DocumentData, setDoc, updateDoc, WithFieldValue } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { fireStore, storage } from "../firebaseConfig";
 import { EventObject } from "./model/EventObject";
@@ -26,12 +15,8 @@ export function useStateWithFireStoreImage(path: string) {
   return [loading, url, true] as const;
 }
 
-export function useStateWithFireStoreCollection<T extends { [x: string]: any }>(
-  pathToCollection: string
-) {
-  const [snap, loading, error] = useCollection(
-    collection(fireStore, pathToCollection)
-  );
+export function useStateWithFireStoreCollection<T extends { [x: string]: any }>(pathToCollection: string) {
+  const [snap, loading, error] = useCollection(collection(fireStore, pathToCollection));
 
   if (error) {
     throw error;
@@ -52,10 +37,7 @@ export function useStateWithFireStoreCollection<T extends { [x: string]: any }>(
   return [loading, value, add, del] as const;
 }
 
-export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(
-  pathToDocument: string,
-  id: string
-) {
+export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(pathToDocument: string, id: string) {
   const document = doc(fireStore, pathToDocument + "/" + id);
   const [snap, loading, error] = useDocument(document);
 
@@ -72,20 +54,12 @@ export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(
   return [loading, dbListenedValue, set] as const;
 }
 
-export function addDocumentToCollection<T extends { [x: string]: any }>(
-  pathToCollection: string,
-  id: string,
-  value: T
-) {
+export function addDocumentToCollection<T extends { [x: string]: any }>(pathToCollection: string, id: string, value: T) {
   return setDoc(doc(fireStore, pathToCollection + "/" + id), value);
 }
 
 /// Depreciated
-export function useSateWithFireStore<T>(
-  pathToId: string,
-  fieldName: string,
-  defaultValue: T
-) {
+export function useSateWithFireStore<T>(pathToId: string, fieldName: string, defaultValue: T) {
   const document = doc(fireStore, pathToId);
   const [snap, loading, error] = useDocument(document);
 
@@ -94,12 +68,7 @@ export function useSateWithFireStore<T>(
   }
 
   if (snap == undefined && loading == false) {
-    console.warn(
-      "Dangerous! Initializing firebase. Document does not exist. Path to: ",
-      pathToId,
-      " fieldName: ",
-      fieldName
-    );
+    console.warn("Dangerous! Initializing firebase. Document does not exist. Path to: ", pathToId, " fieldName: ", fieldName);
     setDoc(document, { [fieldName]: defaultValue });
   }
 
@@ -118,10 +87,7 @@ export function useSateWithFireStore<T>(
 }
 
 /// Depreciated
-export function useSateWithFireStoreArray<T>(
-  pathToId: string,
-  fieldName: string
-) {
+export function useSateWithFireStoreArray<T>(pathToId: string, fieldName: string) {
   const document = doc(fireStore, pathToId);
   const [snap, loading, error] = useDocument(document);
 
@@ -130,12 +96,7 @@ export function useSateWithFireStoreArray<T>(
   }
 
   if (snap == undefined && loading == false) {
-    console.warn(
-      "Dangerous! Initializing firebase. Document does not exist. Path to: ",
-      pathToId,
-      " fieldName: ",
-      fieldName
-    );
+    console.warn("Dangerous! Initializing firebase. Document does not exist. Path to: ", pathToId, " fieldName: ", fieldName);
     setDoc(document, { [fieldName]: [] });
   }
 

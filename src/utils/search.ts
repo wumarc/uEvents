@@ -2,10 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import { EventObject, nextStartTime, recurrence } from "./model/EventObject";
 import { getNextDate } from "./util";
 
-export function searchAlgo(
-  query: string,
-  eventList: EventObject[]
-): EventObject[] {
+export function searchAlgo(query: string, eventList: EventObject[]): EventObject[] {
   let keywords = query.split(" ");
   let eventMap = new Map<number, number>(); // Index of event in eventList, score
 
@@ -43,34 +40,19 @@ export function searchAlgo(
       }
 
       // Iterate through each field
-      if (
-        event.name &&
-        event.name.toLowerCase().includes(keyword.toLowerCase())
-      ) {
+      if (event.name && event.name.toLowerCase().includes(keyword.toLowerCase())) {
         score += NAME_WEIGHT;
       }
-      if (
-        event.description &&
-        event.description.toLowerCase().includes(keyword.toLowerCase())
-      ) {
+      if (event.description && event.description.toLowerCase().includes(keyword.toLowerCase())) {
         score += DESCRIPTION_WEIGHT;
       }
-      if (
-        event.location &&
-        event.location.toLowerCase().includes(keyword.toLowerCase())
-      ) {
+      if (event.location && event.location.toLowerCase().includes(keyword.toLowerCase())) {
         score += LOCATION_WEIGHT;
       }
-      if (
-        event.organizer &&
-        event.organizer.toLowerCase().includes(keyword.toLowerCase())
-      ) {
+      if (event.organizer && event.organizer.toLowerCase().includes(keyword.toLowerCase())) {
         score += ORGANIZER_WEIGHT;
       }
-      if (
-        event.categories &&
-        (event.categories as string[]).includes(keyword)
-      ) {
+      if (event.categories && (event.categories as string[]).includes(keyword)) {
         score += CATEGORY_WEIGHT;
       }
       // if (
@@ -136,9 +118,7 @@ export function searchAlgo(
         if (nextStartTimeB === undefined) {
           return -1;
         }
-        return (
-          nextStartTimeA.getTime() - nextStartTimeB.getTime()
-        );
+        return nextStartTimeA.getTime() - nextStartTimeB.getTime();
       } else {
         return b[1] - a[1];
       }

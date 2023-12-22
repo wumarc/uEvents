@@ -78,13 +78,7 @@ export const DatePicker: FC<{
           return;
         }
         try {
-          const time = new Date(
-            yearInt,
-            monthInt - 1,
-            dayInt,
-            hoursInt,
-            minutesInt
-          );
+          const time = new Date(yearInt, monthInt - 1, dayInt, hoursInt, minutesInt);
           setErrorMessage("");
           try {
             props.set(time);

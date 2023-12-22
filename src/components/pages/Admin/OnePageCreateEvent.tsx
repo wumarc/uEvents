@@ -18,66 +18,61 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
 
 export const OnePageCreateEvent = ({ route, navigation }: props) => {
-
   const [id, setId] = useState(uid());
   const [freeEventProps, setFreeEventProps] = useState<any>(null);
-  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
-    "events",
-    id
-  );
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", id);
 
   useEffect(() => {
-      setDoc(doc(fireStore, "events/" + id), {
-        id: id,
+    setDoc(doc(fireStore, "events/" + id), {
+      id: id,
 
-        // Default event
-        state: "Draft",
-        name: "",
-        description: "",
-        startTime: new Timestamp(0, 0),
-        location: "",
-        categories: [],
-        onCampus: true,
-        images: [],
-        priceMin: 0,
-        originalLink: "",
-        address: "",
-        // recurrence: new recurrence("None"),
-        organizerType: "Organizer Added",
-      });
+      // Default event
+      state: "Draft",
+      name: "",
+      description: "",
+      startTime: new Timestamp(0, 0),
+      location: "",
+      categories: [],
+      onCampus: true,
+      images: [],
+      priceMin: 0,
+      originalLink: "",
+      address: "",
+      // recurrence: new recurrence("None"),
+      organizerType: "Organizer Added",
+    });
   }, []);
 
   if (loading) {
     return <Loading />;
   }
 
-  const isAdmin = true
+  const isAdmin = true;
 
-  
-
-    return (
-        <ScrollView style={{margin: 20}}>
-            <Step1 eventID={id} isAdmin={true}/>
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step2 eventID={id} />
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step3 eventID={id} setStep={() => {}}/>
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step4 eventID={id} />
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step5 eventID={id} />
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step6 eventID={id} />
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step7 eventID={id} isAdmin={true}/>
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <Step8 eventID={id} />
-            <View style={{height: 20, borderTopWidth: 5}}/>
-            <CustomButton
-                buttonName="Submit"
-                onPressListener={() => {navigation.pop()}}
-            />
-        </ScrollView>
-    )
-
-}
+  return (
+    <ScrollView style={{ margin: 20 }}>
+      <Step1 eventID={id} isAdmin={true} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step2 eventID={id} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step3 eventID={id} setStep={() => {}} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step4 eventID={id} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step5 eventID={id} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step6 eventID={id} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step7 eventID={id} isAdmin={true} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <Step8 eventID={id} />
+      <View style={{ height: 20, borderTopWidth: 5 }} />
+      <CustomButton
+        buttonName="Submit"
+        onPressListener={() => {
+          navigation.pop();
+        }}
+      />
+    </ScrollView>
+  );
+};

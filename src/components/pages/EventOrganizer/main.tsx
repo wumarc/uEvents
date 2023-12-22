@@ -31,7 +31,7 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   MainView: { userType: string };
   CreateEventView: { userType: string };
-  Profile: { userType: string, id?: string };
+  Profile: { userType: string; id?: string };
   OrganizerEventDetails: { eventID: string };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
   EventDetailsView: {
@@ -47,7 +47,7 @@ export type RootStackParamList = {
   Search: {};
   OrganizerProfile: { organizerID: string };
   HeaderLeft: {};
-  EventOrganizerView: { organizerID: string, imageID: string };
+  EventOrganizerView: { organizerID: string; imageID: string };
   HiddenEventsView: {};
   BlockedOrganizersView: {};
 };
@@ -58,12 +58,7 @@ const MainView = ({ route, navigation }: props) => {
   useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
 
   return (
-    <Tab.Navigator
-      barStyle={{ backgroundColor: "#f7f7f7" }}
-      activeColor={colours.purple}
-      inactiveColor={colours.grey}
-      initialRouteName="YourEvents"
-    >
+    <Tab.Navigator barStyle={{ backgroundColor: "#f7f7f7" }} activeColor={colours.purple} inactiveColor={colours.grey} initialRouteName="YourEvents">
       <Tab.Screen
         name="YourEvents"
         component={YourEvents as any} // TODO fix error
@@ -71,15 +66,11 @@ const MainView = ({ route, navigation }: props) => {
         options={{
           tabBarLabel: "Your Events",
           tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "calendar" : "calendar-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "calendar" : "calendar-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
-      
+
       <Tab.Screen
         name="BrowseOrganizers"
         component={BrowseOrganizers as any} // TODO fix error
@@ -87,11 +78,7 @@ const MainView = ({ route, navigation }: props) => {
         options={{
           tabBarLabel: "Organizers",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "office-building" : "office-building-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "office-building" : "office-building-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
@@ -102,11 +89,7 @@ const MainView = ({ route, navigation }: props) => {
         options={{
           tabBarLabel: "Events",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "jellyfish" : "jellyfish-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "jellyfish" : "jellyfish-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
@@ -119,11 +102,7 @@ const MainView = ({ route, navigation }: props) => {
           tabBarLabel: "Saved",
           title: "Saved",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "heart" : "heart-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
@@ -134,11 +113,7 @@ const MainView = ({ route, navigation }: props) => {
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "cog" : "cog-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "cog" : "cog-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
@@ -147,18 +122,11 @@ const MainView = ({ route, navigation }: props) => {
 };
 
 const Main: FC<{ userType: string }> = (props) => {
-
-  
-
   return (
     <NavigationContainer>
-      <StatusBar
-        backgroundColor="transparent"
-        translucent={true}
-        barStyle="dark-content"
-      />
+      <StatusBar backgroundColor="transparent" translucent={true} barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <Stack.Navigator 
+        <Stack.Navigator
           initialRouteName="MainView"
           screenOptions={{
             headerTitleAlign: "center",
@@ -180,9 +148,7 @@ const Main: FC<{ userType: string }> = (props) => {
             options={({ navigation }) => ({
               headerShown: true,
               headerTitle: "",
-              headerLeft: () => (
-                <HeaderLeft navigation={navigation} type={"cross"} />
-              ),
+              headerLeft: () => <HeaderLeft navigation={navigation} type={"cross"} />,
               animation: "slide_from_bottom",
             })}
           />
@@ -215,9 +181,7 @@ const Main: FC<{ userType: string }> = (props) => {
                 headerStyle: { backgroundColor: colours.white },
                 headerTintColor: colours.black,
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
-                headerRight: () => (
-                  <HeaderRight eventID={route.params.eventID} navigation={navigation} />
-                ),
+                headerRight: () => <HeaderRight eventID={route.params.eventID} navigation={navigation} />,
               };
             }}
           />
@@ -237,7 +201,7 @@ const Main: FC<{ userType: string }> = (props) => {
             options={({ navigation }) => ({
               title: "Hidden Events",
               headerStyle: { backgroundColor: colours.white },
-              headerLeft: () => <HeaderLeft navigation={navigation} />
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
           />
           <Stack.Screen
@@ -246,7 +210,7 @@ const Main: FC<{ userType: string }> = (props) => {
             options={({ navigation }) => ({
               title: "Blocked Organizers",
               headerStyle: { backgroundColor: colours.white },
-              headerLeft: () => <HeaderLeft navigation={navigation} />
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
           />
         </Stack.Navigator>

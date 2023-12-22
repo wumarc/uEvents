@@ -3,10 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { FC, useState } from "react";
-import {
-  useSateWithFireStore,
-  useStateWithFireStoreDocument,
-} from "../../utils/useStateWithFirebase";
+import { useSateWithFireStore, useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { Modal, Menu } from "react-native-paper";
 import { Dialog } from "react-native-elements";
@@ -14,16 +11,10 @@ import { Button } from "@rneui/base";
 import { Text } from "react-native";
 import CustomButton from "../atoms/CustomButton";
 
-const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
-  const [loading, userData, setUserData] = useStateWithFireStoreDocument(
-    "users",
-    getFirebaseUserIDOrEmpty()
-  );
+const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
+  const [loading, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
 
-  const [loading2, event, setEvent] = useStateWithFireStoreDocument(
-    "events",
-    props.eventID === "" ? "0" : props.eventID
-  );
+  const [loading2, event, setEvent] = useStateWithFireStoreDocument("events", props.eventID === "" ? "0" : props.eventID);
 
   const [visible, setVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
@@ -31,15 +22,13 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
   const [blockVisible, setBlockVisible] = useState(false);
 
   if (loading || loading2) {
-    return (
-      <MaterialCommunityIcons name="heart" color={colours.black} size={30} />
-    );
+    return <MaterialCommunityIcons name="heart" color={colours.black} size={30} />;
   }
 
   const saved = (userData?.saved ?? []).includes(props.eventID);
 
   return (
-    <View style={{backgroundColor: colours.white, flexDirection: 'row'}}>  
+    <View style={{ backgroundColor: colours.white, flexDirection: "row" }}>
       <MaterialCommunityIcons
         name={saved ? "heart" : "heart-outline"}
         color={saved ? colours.purple : colours.black}
@@ -47,9 +36,7 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
         onPress={() => {
           if (saved) {
             setUserData({
-              saved: (userData?.saved ?? []).filter(
-                (id: string) => id !== props.eventID
-              ),
+              saved: (userData?.saved ?? []).filter((id: string) => id !== props.eventID),
             });
           } else {
             setUserData({
@@ -58,104 +45,89 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
           }
         }}
       />
-      {props.eventID === "" ? (
-        <></>) :
-        (
-          <MaterialCommunityIcons
-        name="dots-vertical"
-        color={colours.black}
-        size={30}
-        onPress={() => setVisible(true)}
-      />
-        )
-      }
-      <Dialog
-        isVisible={visible}
-        onDismiss={() => setVisible(false)}
-        style={{backgroundColor: colours.white}}
-      >
+      {props.eventID === "" ? <></> : <MaterialCommunityIcons name="dots-vertical" color={colours.black} size={30} onPress={() => setVisible(true)} />}
+      <Dialog isVisible={visible} onDismiss={() => setVisible(false)} style={{ backgroundColor: colours.white }}>
         <CustomButton
-            buttonName="Report"
-            onPressListener={() => {
-              setReportVisible(true);
-              setVisible(false);
-            }}
+          buttonName="Report"
+          onPressListener={() => {
+            setReportVisible(true);
+            setVisible(false);
+          }}
         />
-        {event && event.organizerType === "Organizer Added"? (
+        {event && event.organizerType === "Organizer Added" ? (
           <CustomButton
             buttonName="Block"
             onPressListener={() => {
               setBlockVisible(true);
               setVisible(false);
             }}
-        />
-        ): <></>}
+          />
+        ) : (
+          <></>
+        )}
         <CustomButton
-            buttonName="Hide"
-            onPressListener={() => {
-              setHideVisible(true);
-              setVisible(false);
-            }}
+          buttonName="Hide"
+          onPressListener={() => {
+            setHideVisible(true);
+            setVisible(false);
+          }}
         />
         <Button
           style={{
-              paddingHorizontal: 10,
-              borderRadius: 15,
-              marginVertical: '1%'
+            paddingHorizontal: 10,
+            borderRadius: 15,
+            marginVertical: "1%",
           }}
-          color={'transparent'}
-          titleStyle={{color: colours.purple, fontWeight: '600'}}
+          color={"transparent"}
+          titleStyle={{ color: colours.purple, fontWeight: "600" }}
           title={"Cancel"}
           onPress={() => {
             setVisible(false);
           }}
         />
       </Dialog>
-      
+
       {/* Report dialog */}
-      <Dialog
-        isVisible={reportVisible}
-        onDismiss={() => setReportVisible(false)}
-        style={{backgroundColor: colours.white}}
-      >
-        <Text style={{...fonts.regular, textAlign: 'center'}}>Report an event if you think it is inappropriate for this platform. When an event is reported, we will review the event in a short delay, and remove it from the platform if judged inappropriate.</Text>
+      <Dialog isVisible={reportVisible} onDismiss={() => setReportVisible(false)} style={{ backgroundColor: colours.white }}>
+        <Text style={{ ...fonts.regular, textAlign: "center" }}>
+          Report an event if you think it is inappropriate for this platform. When an event is reported, we will review the event in a short delay, and remove
+          it from the platform if judged inappropriate.
+        </Text>
         <CustomButton
-            buttonName="Report"
-            onPressListener={() => {
-              setUserData({
-                ...userData,
-                reported: [...(userData?.reported ?? []), props.eventID],
-                hidden: [...(userData?.hidden ?? []), props.eventID],
-              });
-              setReportVisible(false);
-              setVisible(false);
-              props.navigation.pop();
-            }}
+          buttonName="Report"
+          onPressListener={() => {
+            setUserData({
+              ...userData,
+              reported: [...(userData?.reported ?? []), props.eventID],
+              hidden: [...(userData?.hidden ?? []), props.eventID],
+            });
+            setReportVisible(false);
+            setVisible(false);
+            props.navigation.pop();
+          }}
         />
         <Button
           style={{
-              paddingHorizontal: 10,
-              borderRadius: 15,
-              marginVertical: '1%'
+            paddingHorizontal: 10,
+            borderRadius: 15,
+            marginVertical: "1%",
           }}
-          color={'transparent'}
-          titleStyle={{color: colours.purple, fontWeight: '600'}}
+          color={"transparent"}
+          titleStyle={{ color: colours.purple, fontWeight: "600" }}
           title={"Cancel"}
           onPress={() => {
             setReportVisible(false);
             setVisible(false);
           }}
         />
-
       </Dialog>
 
       {/* Hide dialog */}
-      <Dialog
-        isVisible={hideVisible}
-        onDismiss={() => setHideVisible(false)}
-        style={{backgroundColor: colours.white}}
-      >
-        <Text style={{...fonts.regular, textAlign: 'center'}}>This option will hide this event from your feed. You can undo this action in the settings. Report this even instead if you judge it is inappropriate for all users.</Text>
+      <Dialog isVisible={hideVisible} onDismiss={() => setHideVisible(false)} style={{ backgroundColor: colours.white }}>
+        <Text style={{ ...fonts.regular, textAlign: "center" }}>
+          This option will hide this event from your feed. You can undo this action in the settings. Report this even instead if you judge it is inappropriate
+          for all users.
+        </Text>
         <CustomButton
           buttonName="Hide"
           onPressListener={() => {
@@ -170,12 +142,12 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
         />
         <Button
           style={{
-              paddingHorizontal: 10,
-              borderRadius: 15,
-              marginVertical: '1%'
+            paddingHorizontal: 10,
+            borderRadius: 15,
+            marginVertical: "1%",
           }}
-          color={'transparent'}
-          titleStyle={{color: colours.purple, fontWeight: '600'}}
+          color={"transparent"}
+          titleStyle={{ color: colours.purple, fontWeight: "600" }}
           title={"Cancel"}
           onPress={() => {
             setHideVisible(false);
@@ -185,12 +157,10 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
       </Dialog>
 
       {/* Block dialog */}
-      <Dialog
-        isVisible={blockVisible}
-        onDismiss={() => setBlockVisible(false)}
-        style={{backgroundColor: colours.white}}
-      >
-        <Text style={{...fonts.regular, textAlign: 'center'}}>Blocking will block all events from this organizer. You will not be able to see any of their events on your feed. You can unblock anytime in settings.</Text>
+      <Dialog isVisible={blockVisible} onDismiss={() => setBlockVisible(false)} style={{ backgroundColor: colours.white }}>
+        <Text style={{ ...fonts.regular, textAlign: "center" }}>
+          Blocking will block all events from this organizer. You will not be able to see any of their events on your feed. You can unblock anytime in settings.
+        </Text>
         <CustomButton
           buttonName="Block"
           onPressListener={() => {
@@ -205,12 +175,12 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
         />
         <Button
           style={{
-              paddingHorizontal: 10,
-              borderRadius: 15,
-              marginVertical: '1%'
+            paddingHorizontal: 10,
+            borderRadius: 15,
+            marginVertical: "1%",
           }}
-          color={'transparent'}
-          titleStyle={{color: colours.purple, fontWeight: '600'}}
+          color={"transparent"}
+          titleStyle={{ color: colours.purple, fontWeight: "600" }}
           title={"Cancel"}
           onPress={() => {
             setBlockVisible(false);
@@ -218,7 +188,7 @@ const HeaderRight: FC<{ eventID: string, navigation: any }> = (props) => {
           }}
         />
       </Dialog>
-      
+
       {/* Claim dialog */}
       {/* <Dialog
         isVisible={reportVisible}

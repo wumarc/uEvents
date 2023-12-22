@@ -21,42 +21,41 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // If navigation id is present, we are editing an event
 // If not, we are creating an event
 export const CreateEventWeb = ({ route, navigation }: props) => {
-
   const [id, setId] = useState(uid());
-  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(
-    "events",
-    id
-  );
-  const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);    
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", id);
+  const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
 
   if (loading) {
     return <Loading />;
   }
 
-    return (
-        <View>
-            <Button onPress={() => {
-                console.log(localEvent);
-            }}>Log Event</Button>
-            <Input
-                placeholder="Name"
-                value={localEvent.name}
-                onChangeText={(text) => {
-                    setLocalEvent({...localEvent, name: text});
-                }}
-            />
-            <Dropdown
-          search
-          searchPlaceholder="Choose organizer"
-          placeholderStyle={{ fontSize: 17, padding: 7}}
-          data={organizerData}
-          labelField="label"
-          valueField="value"
-          placeholder={findOrganizerName(event.organizer)}
-          style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight*0.05}}
-          onChange={(item) => set({...event, organizer: item.value, organizerType: "Organizer Added"})}
-        />  
-        </View>
-    )
-
-}
+  return (
+    <View>
+      <Button
+        onPress={() => {
+          console.log(localEvent);
+        }}
+      >
+        Log Event
+      </Button>
+      <Input
+        placeholder="Name"
+        value={localEvent.name}
+        onChangeText={(text) => {
+          setLocalEvent({ ...localEvent, name: text });
+        }}
+      />
+      <Dropdown
+        search
+        searchPlaceholder="Choose organizer"
+        placeholderStyle={{ fontSize: 17, padding: 7 }}
+        data={organizerData}
+        labelField="label"
+        valueField="value"
+        placeholder={findOrganizerName(event.organizer)}
+        style={{ borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight * 0.05 }}
+        onChange={(item) => set({ ...event, organizer: item.value, organizerType: "Organizer Added" })}
+      />
+    </View>
+  );
+};

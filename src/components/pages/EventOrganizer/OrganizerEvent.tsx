@@ -12,12 +12,8 @@ import { Loading } from "../Common/Loading";
 import CustomButton from "../../atoms/CustomButton";
 
 const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
-
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [loading, event, setEvent] = useStateWithFireStoreDocument(
-    "events",
-    props.eventID
-  );
+  const [loading, event, setEvent] = useStateWithFireStoreDocument("events", props.eventID);
 
   if (loading) {
     return <Loading />;
@@ -42,13 +38,11 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           ...spacing.verticalPadding1,
         }}
       >
-        <View style={{width: windowWidth*0.5}}>
-          <Text style={{ ...fonts.title2, color: colours.purple }}>
-            {event.name}
-          </Text>
+        <View style={{ width: windowWidth * 0.5 }}>
+          <Text style={{ ...fonts.title2, color: colours.purple }}>{event.name}</Text>
           {/* <Text style={fonts.title3}>{event.startTime}</Text> */}
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
-          {event.rejectionReason && <Text style={{...fonts.small, color: 'red'}}>Reason for rejection: {event.rejectReason}</Text>}
+          {event.rejectionReason && <Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>}
           {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
 
@@ -64,22 +58,21 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
               alignItems: "center",
             }}
           >
-            <Text style={{
-              ...fonts.title3, 
-              color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Rejected" ? 'red' : '#EF9B0F'
-            }}>
+            <Text
+              style={{
+                ...fonts.title3,
+                color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Rejected" ? "red" : "#EF9B0F",
+              }}
+            >
               {event.state}
             </Text>
-
           </View>
         </View>
 
-        <View style={{ flexDirection: "row"}}>
-
-          <View style={{justifyContent: "center"}}>
-
-            <TouchableOpacity 
-              style={{flexDirection: 'row', alignItems: 'center', justifyContent: "flex-end"}}
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ justifyContent: "center" }}>
+            <TouchableOpacity
+              style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}
               onPress={() =>
                 props.navigation.navigate("Step0", {
                   eventID: props.eventID,
@@ -94,14 +87,11 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
                 type="material-community"
                 color="transparent"
                 size={15}
-                iconStyle={{...fonts.title1, color: colours.black}}
+                iconStyle={{ ...fonts.title1, color: colours.black }}
               />
-            </TouchableOpacity >
+            </TouchableOpacity>
 
-            <TouchableOpacity 
-              style={{flexDirection: 'row', alignItems: 'center', justifyContent: "flex-end"}}
-              onPress={() => setConfirmDelete(true)}
-            >
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }} onPress={() => setConfirmDelete(true)}>
               <Text style={fonts.title3}>Delete</Text>
               <Icon
                 reverse
@@ -109,39 +99,30 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
                 type="material-community"
                 color="transparent"
                 size={15}
-                iconStyle={{...fonts.title1, color: colours.black}}
+                iconStyle={{ ...fonts.title1, color: colours.black }}
               />
             </TouchableOpacity>
-            
 
-            <Dialog
-              isVisible={confirmDelete}
-              onDismiss={() => setConfirmDelete(false)}
-              style={{backgroundColor: colours.white, borderRadius: 15}}
-            >
-              <Text style={{...fonts.regular, textAlign: 'center'}}>Are you sure you want to delete the event?</Text>
-              <CustomButton
-                  buttonName="Delete"
-                  onPressListener={() => deleteDoc(doc(fireStore, "events/" + props.eventID))}
-              />
+            <Dialog isVisible={confirmDelete} onDismiss={() => setConfirmDelete(false)} style={{ backgroundColor: colours.white, borderRadius: 15 }}>
+              <Text style={{ ...fonts.regular, textAlign: "center" }}>Are you sure you want to delete the event?</Text>
+              <CustomButton buttonName="Delete" onPressListener={() => deleteDoc(doc(fireStore, "events/" + props.eventID))} />
               <Button
                 style={{
-                    paddingHorizontal: 10,
-                    borderRadius: 15,
-                    marginVertical: '1%'
+                  paddingHorizontal: 10,
+                  borderRadius: 15,
+                  marginVertical: "1%",
                 }}
-                color={'transparent'}
-                titleStyle={{color: colours.purple, fontWeight: '600'}}
+                color={"transparent"}
+                titleStyle={{ color: colours.purple, fontWeight: "600" }}
                 title={"Cancel"}
                 onPress={() => {
                   setConfirmDelete(false);
                 }}
               />
             </Dialog>
-
           </View>
 
-{/*           
+          {/*           
           <Button
             title={publishOption}
             onPress={() => {
@@ -153,9 +134,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
             }}
           /> 
           */}
-
         </View>
-
       </View>
     </TouchableOpacity>
   );

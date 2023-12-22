@@ -19,42 +19,13 @@ export function getFirebaseUserIDOrEmpty(): string {
  * @returns
  */
 export function uid() {
-  return (performance.now().toString(36) + Math.random().toString(36)).replace(
-    /\./g,
-    ""
-  );
+  return (performance.now().toString(36) + Math.random().toString(36)).replace(/\./g, "");
 }
 
-export type daysOfWeekBrief =
-  | "Sun"
-  | "Mon"
-  | "Tue"
-  | "Wed"
-  | "Thu"
-  | "Fri"
-  | "Sat";
-export const daysOfWeekArray: daysOfWeekBrief[] = [
-  "Sun",
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat",
-];
+export type daysOfWeekBrief = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+export const daysOfWeekArray: daysOfWeekBrief[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export const eventDate = [
-  "Today",
-  "Tomorrow",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-]
-
+export const eventDate = ["Today", "Tomorrow", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export function toPrecision(value: number, precision: number) {
   let valueStr = value.toString();
@@ -87,7 +58,7 @@ export function emojiUrl(emoji: string) {
       unicodeStringRaw = unicodeStringRaw.slice(0, i) + "-" + unicodeStringRaw.slice(i + 1);
     }
   }
-  return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg"
+  return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg";
 }
 
 export function getNextDate(event: EventObject): [Date, Date, boolean] {
@@ -118,27 +89,26 @@ export function getNextDate(event: EventObject): [Date, Date, boolean] {
 
       // Check if the start date is an exception
       let flag = true;
-      while (flag)
-        flag = false;
-        if (exceptions) {
-          for (let i = 0; i < exceptions.length; i++) {
-            let exception = (exceptions[i] as Timestamp).toDate();
-            // Set exception time to startDate
-            exception.setHours(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds(), startDate.getMilliseconds());
-            if (exception.getTime() == startDate.getTime()) {
-              // Increment the start and end date by 7 days
-              let startEpoch = startDate.getTime();
-              let endEpoch = endDate.getTime();
-              startDate = new Date(startEpoch + 7 * 24 * 60 * 60 * 1000);
-              endDate = new Date(endEpoch + 7 * 24 * 60 * 60 * 1000);
-              flag = true;
-            }
+      while (flag) flag = false;
+      if (exceptions) {
+        for (let i = 0; i < exceptions.length; i++) {
+          let exception = (exceptions[i] as Timestamp).toDate();
+          // Set exception time to startDate
+          exception.setHours(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds(), startDate.getMilliseconds());
+          if (exception.getTime() == startDate.getTime()) {
+            // Increment the start and end date by 7 days
+            let startEpoch = startDate.getTime();
+            let endEpoch = endDate.getTime();
+            startDate = new Date(startEpoch + 7 * 24 * 60 * 60 * 1000);
+            endDate = new Date(endEpoch + 7 * 24 * 60 * 60 * 1000);
+            flag = true;
           }
         }
-        
-    // Make sure today is not over limit
+      }
+
+      // Make sure today is not over limit
       if (limit) {
-        limit = limit
+        limit = limit;
         limit.setHours(23, 59, 59, 999);
       }
       if (limit && endDate > limit) {

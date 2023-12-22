@@ -16,7 +16,7 @@ import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
 import CustomButton from "../../atoms/CustomButton";
-import * as Clipboard from 'expo-clipboard';
+import * as Clipboard from "expo-clipboard";
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
 import { Dropdown } from "react-native-element-dropdown";
@@ -72,35 +72,31 @@ const SignIn: FC = () => {
 
 const WelcomePage: FC = ({ navigation }: any) => {
   return (
-    <SafeAreaView style={{ backgroundColor: "#D6A9D5", flex: 1, justifyContent: 'space-around'}}>
-      
+    <SafeAreaView style={{ backgroundColor: "#D6A9D5", flex: 1, justifyContent: "space-around" }}>
       {/* Image */}
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require("../../../assets/welcome_image.png")}
-        />
+        <Image style={styles.image} source={require("../../../assets/welcome_image.png")} />
       </View>
-      
+
       {/* App Description */}
-      <View style={{alignItems: 'center'}}>
-        <Text style={{...fonts.title1, color: colours.white, fontSize: 50}}>uEvents</Text>
-        <Text style={{...fonts.title2, color: colours.white}}>Find out what you are missing.</Text> 
+      <View style={{ alignItems: "center" }}>
+        <Text style={{ ...fonts.title1, color: colours.white, fontSize: 50 }}>uEvents</Text>
+        <Text style={{ ...fonts.title2, color: colours.white }}>Find out what you are missing.</Text>
       </View>
 
       {/* Sign In Box */}
-      <View style={{paddingHorizontal: spacing.page, paddingVertical: '3%'}}>
+      <View style={{ paddingHorizontal: spacing.page, paddingVertical: "3%" }}>
         <Button
-          style={{margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30}}
-          buttonStyle={{borderRadius: 30}}
-          titleStyle={{fontSize: 18}}
+          style={{ margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30 }}
+          buttonStyle={{ borderRadius: 30 }}
+          titleStyle={{ fontSize: 18 }}
           color={colours.purple}
           title="Login"
           onPress={() => navigation.navigate("Login")}
         />
         <Text></Text>
         <Button
-          style={{margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30}}
+          style={{ margin: 1, borderWidth: 2, borderColor: colours.purple, borderRadius: 30 }}
           titleStyle={{ fontSize: 18 }}
           buttonStyle={{ borderRadius: 30 }}
           color={colours.purple}
@@ -109,11 +105,10 @@ const WelcomePage: FC = ({ navigation }: any) => {
         />
       </View>
 
-      <View style={{alignItems: 'center'}}>
-        <Text style={{...fonts.small, color: colours.white}}>uEvent Technologies Inc.</Text>
-        <Text style={{...fonts.small, color: colours.white}}>admin@uevents.org</Text>
+      <View style={{ alignItems: "center" }}>
+        <Text style={{ ...fonts.small, color: colours.white }}>uEvent Technologies Inc.</Text>
+        <Text style={{ ...fonts.small, color: colours.white }}>admin@uevents.org</Text>
       </View>
-      
     </SafeAreaView>
   );
 };
@@ -157,7 +152,6 @@ const Login: FC = ({ setIsSigningUp }: any) => {
         paddingTop: "25%",
       }}
     >
-
       {/* Form */}
       <View>
         <Input
@@ -200,10 +194,13 @@ const Login: FC = ({ setIsSigningUp }: any) => {
 
       {/* Button */}
       <View>
-        <CustomButton buttonName="Log In" onPressListener={() => {
-          // logEvent(analytics, 'login');
-          signIn();
-        }} />
+        <CustomButton
+          buttonName="Log In"
+          onPressListener={() => {
+            // logEvent(analytics, 'login');
+            signIn();
+          }}
+        />
         {/* <View style={{marginTop: '2%', justifyContent: 'center'}}>
           <Text>
             Don't have an account?
@@ -222,13 +219,11 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           style={{
             backgroundColor: "white",
             paddingVertical: "7%",
-            paddingHorizontal: '2%',
+            paddingHorizontal: "2%",
             borderRadius: 15,
           }}
         >
-          <Text
-            style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}
-          >
+          <Text style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}>
             {/* Enter your email to reset your password */}
             Send us an email to reset your password
           </Text>
@@ -242,7 +237,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           <View>
             <CustomButton
               buttonName="Copy Email"
-              onPressListener={() => Clipboard.setStringAsync('admin@uevents.org')}
+              onPressListener={() => Clipboard.setStringAsync("admin@uevents.org")}
               // onPressListener={() => resetPassword()}
               // disabled={email === ""}
             />
@@ -262,9 +257,8 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
   const [userType, setUserType] = useState("");
 
   async function signUp(validate: boolean): Promise<boolean> {
-    
     // Only accept emails from accepted universities
-    if(validate) {
+    if (validate) {
       if (!universities.some((university) => email.includes(university))) {
         setError("You must be a uOttawa student to sign up");
         return false;
@@ -282,15 +276,15 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         });
       } else {
         // Organizer
-          await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
-            type: userType,
-            name: name,
-            saved: [],
-            id: getFirebaseUserIDOrEmpty(),
-            email: email,
-            approved: false,
-            authentic: true
-          });
+        await setDoc(doc(fireStore, "users/" + getFirebaseUserIDOrEmpty()), {
+          type: userType,
+          name: name,
+          saved: [],
+          id: getFirebaseUserIDOrEmpty(),
+          email: email,
+          approved: false,
+          authentic: true,
+        });
       }
       setIsSigningUp(false);
       return true;
@@ -298,12 +292,11 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
       console.log(error.message);
       setError("Invalid email or password, please try again");
     }
-    
+
     return false;
   }
 
   return (
-    
     <View
       style={{
         backgroundColor: "white",
@@ -312,19 +305,20 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
         paddingTop: "25%",
       }}
     >
-
       {/* Form */}
       <View>
-
-        <Text style={{color: "black", fontWeight: "500", fontSize: 16, marginBottom: "1%"}}>Account Type</Text>
+        <Text style={{ color: "black", fontWeight: "500", fontSize: 16, marginBottom: "1%" }}>Account Type</Text>
         <Dropdown
-            placeholderStyle={{paddingVertical: 4, paddingHorizontal: 8}}
-            data={[{key:1, value:'Student'}, {key:2, value:'Organizer'}]}
-            labelField="value"
-            valueField="key"
-            placeholder={userType == "" ? 'Account Type' : userType.charAt(0).toUpperCase() + userType.slice(1)}
-            style={{borderWidth: 1, borderColor: colours.grey, borderRadius: 6, paddingVertical: 5, paddingHorizontal: 8, marginBottom: '3%'}}
-            onChange={(item) => (item.key == 1 ? setUserType("student") : setUserType("organizer"))}
+          placeholderStyle={{ paddingVertical: 4, paddingHorizontal: 8 }}
+          data={[
+            { key: 1, value: "Student" },
+            { key: 2, value: "Organizer" },
+          ]}
+          labelField="value"
+          valueField="key"
+          placeholder={userType == "" ? "Account Type" : userType.charAt(0).toUpperCase() + userType.slice(1)}
+          style={{ borderWidth: 1, borderColor: colours.grey, borderRadius: 6, paddingVertical: 5, paddingHorizontal: 8, marginBottom: "3%" }}
+          onChange={(item) => (item.key == 1 ? setUserType("student") : setUserType("organizer"))}
         />
 
         <Input
@@ -333,7 +327,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           onChangeText={(value) => setEmail(value)}
           labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
           autoCapitalize="none"
-          containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
+          containerStyle={{ paddingHorizontal: 0, paddingVertical: 0 }}
           selectionColor={colours.purple}
           inputContainerStyle={{
             borderColor: colours.grey,
@@ -343,11 +337,9 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             borderRadius: 6,
           }}
         />
-        {userType == 'student' &&
-          <Text style={{color: 'red'}}>Use your uOttawa email if you are signing up as a student</Text>
-        }
+        {userType == "student" && <Text style={{ color: "red" }}>Use your uOttawa email if you are signing up as a student</Text>}
 
-        {userType == 'organizer' &&
+        {userType == "organizer" && (
           <Input
             label="Organization Name"
             placeholder="uOttawa Dancing Club"
@@ -355,7 +347,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
             labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
             autoCapitalize="none"
             maxLength={30}
-            containerStyle={{ paddingHorizontal: 0, paddingVertical: 0}}
+            containerStyle={{ paddingHorizontal: 0, paddingVertical: 0 }}
             selectionColor={colours.purple}
             inputContainerStyle={{
               borderColor: colours.grey,
@@ -365,7 +357,7 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
               borderRadius: 6,
             }}
           />
-        }
+        )}
 
         <Input
           label="Password (min 6 characters)"
@@ -393,13 +385,10 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
               {" "}
               I agree to comply with uEvents'{" "}
               <Text
-                style={{ color: colours.purple, textDecorationLine: 'underline' }}
-                onPress={() =>
-                  Linking.openURL(
-                    "https://uevents.webnode.page/privacy-policy/"
-                  )
-                }
-              >Privacy Policy{" "}
+                style={{ color: colours.purple, textDecorationLine: "underline" }}
+                onPress={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")}
+              >
+                Privacy Policy{" "}
               </Text>
             </Text>
           }
@@ -422,7 +411,6 @@ const Signup: FC = ({ setIsSigningUp }: any) => {
           }}
         />
       </View>
-
     </View>
   );
 };

@@ -1,15 +1,8 @@
 import { View, Text, FlatList, ScrollView } from "react-native";
 import { FC, useState } from "react";
 import { Timestamp } from "firebase/firestore";
-import {
-  addDocumentToCollection,
-  useStateWithFireStoreImage,
-} from "../../../utils/useStateWithFirebase";
-import {
-  defaultEvent,
-  EventCategory,
-  EventObject,
-} from "../../../utils/model/EventObject";
+import { addDocumentToCollection, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
+import { defaultEvent, EventCategory, EventObject } from "../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Admin/main";
 import { uid } from "../../../utils/util";
@@ -40,12 +33,12 @@ const CreateEvent = ({ route, navigation }: props) => {
           setOrganizerName(text);
         }}
       />
-  
+
       <CustomButton
         buttonName={"Add Event"}
         onPressListener={() => {
           // Adding the event to the database
-          navigation.navigate("Step0", {useDefault: false, organizerName: organizerName, eventID: undefined, isAdmin: true});
+          navigation.navigate("Step0", { useDefault: false, organizerName: organizerName, eventID: undefined, isAdmin: true });
         }}
       />
       <CustomButton
@@ -63,7 +56,6 @@ const CreateEvent = ({ route, navigation }: props) => {
         }}
       />
     </View>
-    
   );
 };
 

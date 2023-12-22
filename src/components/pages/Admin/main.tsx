@@ -22,7 +22,7 @@ import Home from "../Student/Home";
 import OrganizerProfile from "../Student/OrganizerProfile";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 import BrowseOrganizers from "../Student/BrowseOrganizers";
-import {Profile as OrganizerProfile2} from "../EventOrganizer/Profile"
+import { Profile as OrganizerProfile2 } from "../EventOrganizer/Profile";
 import { OnePageCreateEvent } from "./OnePageCreateEvent";
 import { CreateEventWeb } from "./CreateEventWeb";
 
@@ -36,17 +36,17 @@ export type RootStackParamList = {
   createEvent: { userType: string };
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
-  Preview: { eventId: string, organizerId: string };
+  Preview: { eventId: string; organizerId: string };
   EventDetailsView: {
     userType: string;
     eventID: string;
     organizerID: string;
     imageID: string;
   };
-  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined, isAdmin?: boolean };
-  AllOrganizers: {};  
-  EventOrganizerView: { organizerID: string, imageID: string };
-  OrganizerProfile: { userType: string, id?: string };
+  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
+  AllOrganizers: {};
+  EventOrganizerView: { organizerID: string; imageID: string };
+  OrganizerProfile: { userType: string; id?: string };
   OnePageCreateEvent: {};
   CreateEventWeb: { id?: string };
 };
@@ -55,27 +55,16 @@ type props = NativeStackScreenProps<RootStackParamList, "MainView">;
 
 const MainView = ({ route, navigation }: props) => {
   useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
-  
+
   return (
-    <Tab.Navigator
-      barStyle={{ backgroundColor: "#f7f7f7" }}
-      activeColor={colours.purple}
-      inactiveColor={colours.grey}
-      initialRouteName="allEvents"
-    >
+    <Tab.Navigator barStyle={{ backgroundColor: "#f7f7f7" }} activeColor={colours.purple} inactiveColor={colours.grey} initialRouteName="allEvents">
       <Tab.Screen
         name="createEvent"
         component={CreateEvent as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Create",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="plus-circle"
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
-          ),
+          tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="plus-circle" color={focused ? colours.purple : colours.grey} size={30} />,
         }}
       />
       <Tab.Screen
@@ -83,13 +72,7 @@ const MainView = ({ route, navigation }: props) => {
         component={AllEvents as any} // TODO fix error
         options={{
           tabBarLabel: "All Events",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="ticket"
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
-          ),
+          tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="ticket" color={focused ? colours.purple : colours.grey} size={30} />,
         }}
       />
       <Tab.Screen
@@ -99,11 +82,7 @@ const MainView = ({ route, navigation }: props) => {
         options={{
           tabBarLabel: "Organizers",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "office-building" : "office-building-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "office-building" : "office-building-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
@@ -115,11 +94,7 @@ const MainView = ({ route, navigation }: props) => {
         options={{
           tabBarLabel: "Events",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "jellyfish" : "jellyfish-outline"}
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
+            <MaterialCommunityIcons name={focused ? "jellyfish" : "jellyfish-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
@@ -128,13 +103,7 @@ const MainView = ({ route, navigation }: props) => {
         component={AllOrganizers as any} // TODO fix error
         options={{
           tabBarLabel: "Organizers",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="ticket"
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
-          ),
+          tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="ticket" color={focused ? colours.purple : colours.grey} size={30} />,
         }}
       />
       <Tab.Screen
@@ -143,16 +112,9 @@ const MainView = ({ route, navigation }: props) => {
         initialParams={{ userType: route.params.userType }}
         options={{
           tabBarLabel: "Profile",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="account-circle"
-              color={focused ? colours.purple : colours.grey}
-              size={30}
-            />
-          ),
+          tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="account-circle" color={focused ? colours.purple : colours.grey} size={30} />,
         }}
       />
-      
     </Tab.Navigator>
   );
 };
@@ -205,38 +167,36 @@ const Main: FC<{ userType: string }> = (props) => {
               })}
             />
             <Stack.Screen
-            name="Step0"
-            component={Step0 as any}
-            options={({ navigation }) => ({
-              headerShown: true,
-              headerTitle: "",
-              headerLeft: () => (
-                <HeaderLeft navigation={navigation} type={"cross"} />
-              ),
-              animation: "slide_from_bottom",
-            })}
-          />
-           <Stack.Screen
-            name="OrganizerProfile"
-            component={OrganizerProfile2 as any}
-            options={({ navigation }) => ({
-              headerLeft: () => <HeaderLeft navigation={navigation} />,
-            })}
-          />
-          <Stack.Screen
-            name="OnePageCreateEvent"
-            component={OnePageCreateEvent as any}
-            options={({ navigation }) => ({
-              headerLeft: () => <HeaderLeft navigation={navigation} />,
-            })}
-          />
-          <Stack.Screen
-            name="CreateEventWeb"
-            component={CreateEventWeb as any}
-            options={({ navigation }) => ({
-              headerLeft: () => <HeaderLeft navigation={navigation} />,
-            })}
-          />
+              name="Step0"
+              component={Step0 as any}
+              options={({ navigation }) => ({
+                headerShown: true,
+                headerTitle: "",
+                headerLeft: () => <HeaderLeft navigation={navigation} type={"cross"} />,
+                animation: "slide_from_bottom",
+              })}
+            />
+            <Stack.Screen
+              name="OrganizerProfile"
+              component={OrganizerProfile2 as any}
+              options={({ navigation }) => ({
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+              })}
+            />
+            <Stack.Screen
+              name="OnePageCreateEvent"
+              component={OnePageCreateEvent as any}
+              options={({ navigation }) => ({
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+              })}
+            />
+            <Stack.Screen
+              name="CreateEventWeb"
+              component={CreateEventWeb as any}
+              options={({ navigation }) => ({
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+              })}
+            />
           </Stack.Navigator>
         </SafeAreaView>
       </NavigationContainer>

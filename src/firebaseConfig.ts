@@ -3,26 +3,22 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getFunctions } from "firebase/functions";
 import { getStorage } from "firebase/storage";
-import Constants, { ExecutionEnvironment } from 'expo-constants'
+import Constants, { ExecutionEnvironment } from "expo-constants";
 
 // `true` when running in Expo Go.
-const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient
+const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
 
-let analytics: any
+let analytics: any;
 if (!isExpoGo) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  analytics = require('@react-native-firebase/analytics').default
+  analytics = require("@react-native-firebase/analytics").default;
 }
 
 export async function logEvent(event: string, id: string) {
   if (isExpoGo) {
-    console.log(
-      "Analytics event: ",
-      event,
-      "{id: " + id + "}",
-    )
+    console.log("Analytics event: ", event, "{id: " + id + "}");
   } else {
-    await analytics().logEvent(event, { id: id})
+    await analytics().logEvent(event, { id: id });
   }
 }
 

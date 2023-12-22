@@ -4,20 +4,14 @@ import { emojiUrl, getFirebaseUserIDOrEmpty, getNextDate } from "../../utils/uti
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
-import {
-  nextStartTime,
-  nextEndTime,
-  EventObject,
-  getTimeInAMPM,
-  formattedDate,
-} from "../../utils/model/EventObject";
+import { nextStartTime, nextEndTime, EventObject, getTimeInAMPM, formattedDate } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
-import { SvgUri } from 'react-native-svg';
+import { SvgUri } from "react-native-svg";
 import { Image } from "@rneui/themed";
 import FirebaseImage from "./FirebaseImage";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
 // Event component props
 interface EventProps {
@@ -29,18 +23,11 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = (props) => {
-  
-  const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(
-    "events",
-    props.id
-  );
+  const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>("events", props.id);
 
   const [loading2, student, setStudent] = useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
-  
-  const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
-    "users",
-    props.organizer
-  );
+
+  const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>("users", props.organizer);
 
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
 
@@ -93,90 +80,85 @@ const Event: React.FC<EventProps> = (props) => {
     <TouchableOpacity
       onPress={() => {
         props.navigation.navigate("EventDetailsView", {
-        eventID: props.id,
-        organizerID: event.organizer,
-        imageID: "",
-      });
+          eventID: props.id,
+          organizerID: event.organizer,
+          imageID: "",
+        });
       }}
     >
-      <View style={{
-        flexDirection: 'row', 
-        borderRadius: 13, 
-      }}>
-        
-        <View style={{justifyContent: 'center', width: windowWidth*0.25, height: windowHeight*0.15}}>
-        {Platform.OS === 'web' ? (
-          <img
-            src={backupUrl ?? emojiUrl(event.emoji)}
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            onError={() => {
-              let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-              // remove last part
-              parts.pop();
-              setBackupUrl(parts.join("-") + ".svg");
-            }}
-          />
-        ) : (
-          <SvgUri
-          width="100%"
-          height="100%"
-          uri={backupUrl ?? emojiUrl(event.emoji)}
-          fill="black"
-          onError={() => {
-            let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-            // remove last part
-            parts.pop();
-            setBackupUrl(parts.join("-") + ".svg");
-          }}
-        />
-        )}
+      <View
+        style={{
+          flexDirection: "row",
+          borderRadius: 13,
+        }}
+      >
+        <View style={{ justifyContent: "center", width: windowWidth * 0.25, height: windowHeight * 0.15 }}>
+          {Platform.OS === "web" ? (
+            <img
+              src={backupUrl ?? emojiUrl(event.emoji)}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              onError={() => {
+                let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+                // remove last part
+                parts.pop();
+                setBackupUrl(parts.join("-") + ".svg");
+              }}
+            />
+          ) : (
+            <SvgUri
+              width="100%"
+              height="100%"
+              uri={backupUrl ?? emojiUrl(event.emoji)}
+              fill="black"
+              onError={() => {
+                let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+                // remove last part
+                parts.pop();
+                setBackupUrl(parts.join("-") + ".svg");
+              }}
+            />
+          )}
         </View>
 
-        <View style={{width: '70%', justifyContent: 'center'}}>
-
+        <View style={{ width: "70%", justifyContent: "center" }}>
           <View>
-            <Text style={{fontWeight: '700', fontSize: 19, color: colours.purple}}>{event.name}</Text>
+            <Text style={{ fontWeight: "700", fontSize: 19, color: colours.purple }}>{event.name}</Text>
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{paddingLeft: 1, width: windowWidth*0.04, height: windowHeight*0.02, borderRadius: windowWidth * 0.05, overflow: 'hidden', justifyContent: 'center'}}>
-              <FirebaseImage
-                style={{width: "100%", height: "100%", borderRadius: windowWidth*0.02, overflow: 'hidden'}}
-                id={event.organizer}
-              />
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                paddingLeft: 1,
+                width: windowWidth * 0.04,
+                height: windowHeight * 0.02,
+                borderRadius: windowWidth * 0.05,
+                overflow: "hidden",
+                justifyContent: "center",
+              }}
+            >
+              <FirebaseImage style={{ width: "100%", height: "100%", borderRadius: windowWidth * 0.02, overflow: "hidden" }} id={event.organizer} />
             </View>
-            <Text style={{...fonts.small, fontWeight: '500'}}>{" "}{event.organizerType == "Organizer Added" ? organizer.name: event.organizer}</Text>
+            <Text style={{ ...fonts.small, fontWeight: "500" }}> {event.organizerType == "Organizer Added" ? organizer.name : event.organizer}</Text>
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              name='time-outline'
-              type='ionicon'
-              size={19}
-              color={colours.grey}
-            />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(Timestamp.fromDate(startTime), hasEnd? Timestamp.fromDate(endTime): undefined)}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
+            <Text style={{ ...fonts.small, fontWeight: "500" }}>
+              {formattedDate(Timestamp.fromDate(startTime), hasEnd ? Timestamp.fromDate(endTime) : undefined)}
+            </Text>
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              name='location-outline'
-              type='ionicon'
-              size={19}
-              color={colours.grey}
-            />
-            <Text style={{...fonts.small, fontWeight: '500'}}>{onCampusText}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name="location-outline" type="ionicon" size={19} color={colours.grey} />
+            <Text style={{ ...fonts.small, fontWeight: "500" }}>{onCampusText}</Text>
           </View>
-
         </View>
-
       </View>
     </TouchableOpacity>
   );
-  
 };
 
 const styles = StyleSheet.create({
