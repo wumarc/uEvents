@@ -24,6 +24,7 @@ import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 import BrowseOrganizers from "../Student/BrowseOrganizers";
 import {Profile as OrganizerProfile2} from "../EventOrganizer/Profile"
 import { OnePageCreateEvent } from "./OnePageCreateEvent";
+import { CreateEventWeb } from "./CreateEventWeb";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -47,6 +48,7 @@ export type RootStackParamList = {
   EventOrganizerView: { organizerID: string, imageID: string };
   OrganizerProfile: { userType: string, id?: string };
   OnePageCreateEvent: {};
+  CreateEventWeb: { id?: string };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -224,6 +226,13 @@ const Main: FC<{ userType: string }> = (props) => {
           <Stack.Screen
             name="OnePageCreateEvent"
             component={OnePageCreateEvent as any}
+            options={({ navigation }) => ({
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
+            })}
+          />
+          <Stack.Screen
+            name="CreateEventWeb"
+            component={CreateEventWeb as any}
             options={({ navigation }) => ({
               headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}

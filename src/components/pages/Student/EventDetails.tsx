@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground, TouchableOpacity } from "react-native";
-import { EventObject, getTimeInAMPM, relativeDate } from "../../../utils/model/EventObject";
+import { EventObject, getTimeInAMPM } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -15,6 +15,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { Badge } from "react-native-elements";
 import FirebaseImage from "../../organisms/FirebaseImage";
 import { emojiUrl, getNextDate } from "../../../utils/util";
+import { Platform } from 'react-native';
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -59,6 +60,22 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Image */}
         <View style={{justifyContent: 'center', width: '100%', height: windowHeight * 0.18}}>
         {event.emoji ? (
+        <View>
+        {Platform.OS === 'web' ? (
+          <img
+            src={backupUrl ?? emojiUrl(event.emoji)}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            onError={() => {
+              let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+              // remove last part
+              parts.pop();
+              setBackupUrl(parts.join("-") + ".svg");
+            }}
+          />
+        ) : (
           <SvgUri
           width="100%"
           height="100%"
@@ -71,6 +88,8 @@ const EventDetails = ({ route, navigation }: props) => {
             setBackupUrl(parts.join("-") + ".svg");
           }}
         />
+        )}
+        </View>
         ): <></>}
         
         </View>

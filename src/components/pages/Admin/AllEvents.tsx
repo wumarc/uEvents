@@ -1,4 +1,4 @@
-import { FlatList, TouchableOpacity, View, Clipboard } from "react-native";
+import { FlatList, TouchableOpacity, View, Clipboard, Platform } from "react-native";
 import { FC, useState } from "react";
 import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
@@ -165,19 +165,36 @@ const EventLine: FC<{
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed? 120 : 40 }} >
       <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%", }} >
       {event.emoji? (
-        <SvgUri
+        <View>
+        {Platform.OS === 'web' ? (
+          <img
+            src={backupUrl ?? emojiUrl(event.emoji)}
+            style={{
+              width: 40,
+              height: 40,
+            }}
+            onError={() => {
+              let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+              // remove last part
+              parts.pop();
+              setBackupUrl(parts.join("-") + ".svg");
+            }}
+          />
+        ) : (
+          <SvgUri
           width={40}
           height={40}
           uri={backupUrl ?? emojiUrl(event.emoji)}
           fill="black"
           onError={() => {
-            // console.log("Error with emoji: " + emojiUrl(event.emoji));
             let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
             // remove last part
             parts.pop();
             setBackupUrl(parts.join("-") + ".svg");
           }}
         />
+        )}
+        </View>
       ): <></>}
       
         <TouchableOpacity style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start", }} onPress={() => Clipboard.setString(event.id)}>

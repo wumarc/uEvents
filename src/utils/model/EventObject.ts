@@ -189,7 +189,7 @@ export const defaultEvent: EventObject = {
   priceMin: 0,
   originalLink: "",
   address: "",
-  recurrence: new recurrence("None"),
+  recurrenceType: "None",
   organizerType: "Manually Added",
   emoji: "",
   rejectReason: "",

@@ -55,6 +55,13 @@ const CreateEvent = ({ route, navigation }: props) => {
           navigation.navigate("OnePageCreateEvent", {});
         }}
       />
+      <CustomButton
+        buttonName={"Add Event (Web)"}
+        onPressListener={() => {
+          // Adding the event to the database
+          navigation.navigate("CreateEventWeb", {});
+        }}
+      />
     </View>
     
   );

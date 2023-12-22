@@ -17,6 +17,7 @@ import { Image } from "@rneui/themed";
 import FirebaseImage from "./FirebaseImage";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
+import { Platform } from 'react-native';
 
 // Event component props
 interface EventProps {
@@ -101,11 +102,25 @@ const Event: React.FC<EventProps> = (props) => {
       <View style={{
         flexDirection: 'row', 
         borderRadius: 13, 
-        ...styles.shadowProp
       }}>
         
         <View style={{justifyContent: 'center', width: windowWidth*0.25, height: windowHeight*0.15}}>
-        <SvgUri
+        {Platform.OS === 'web' ? (
+          <img
+            src={backupUrl ?? emojiUrl(event.emoji)}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            onError={() => {
+              let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
+              // remove last part
+              parts.pop();
+              setBackupUrl(parts.join("-") + ".svg");
+            }}
+          />
+        ) : (
+          <SvgUri
           width="100%"
           height="100%"
           uri={backupUrl ?? emojiUrl(event.emoji)}
@@ -117,6 +132,7 @@ const Event: React.FC<EventProps> = (props) => {
             setBackupUrl(parts.join("-") + ".svg");
           }}
         />
+        )}
         </View>
 
         <View style={{width: '70%', justifyContent: 'center'}}>
@@ -143,9 +159,6 @@ const Event: React.FC<EventProps> = (props) => {
               color={colours.grey}
             />
             <Text style={{...fonts.small, fontWeight: '500'}}>{formattedDate(Timestamp.fromDate(startTime), hasEnd? Timestamp.fromDate(endTime): undefined)}</Text>
-            {/* <Text style={{...fonts.small, fontWeight: '500'}}> · </Text>
-            <Text style={{...fonts.small, fontWeight: '500'}}>{getTimeInAMPM(startTime?.toDate())}</Text> */}
-            {/* toLocaleString('en-US', { hour: 'numeric', hour12: true }) */}
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
