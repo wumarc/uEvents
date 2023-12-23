@@ -111,7 +111,7 @@ const Settings = ({ route, navigation }: props) => {
             <Text style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}>Confirm deletion of your account?</Text>
             <CustomButton
               buttonName="Delete Account"
-              onPressListener={() => {
+              onPress={() => {
                 // first del all his events
                 events?.forEach((event) => {
                   if (event.organizer == getFirebaseUserID()) {

@@ -69,7 +69,7 @@ const AccountSettings = () => {
             selectionColor={colours.purple}
           />
 
-          <CustomButton buttonName="Change Password" onPressListener={() => setIsVisible(true)} />
+          <CustomButton buttonName="Change Password" onPress={() => setIsVisible(true)} />
 
           <BottomSheet
             modalProps={{ animationType: "fade" }}
@@ -86,19 +86,19 @@ const AccountSettings = () => {
             >
               <Text style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}>Change your password</Text>
               <CustomInput
-                input={oldPassword}
+                value={oldPassword}
                 placeholder="Enter your old password"
-                secureText={true}
-                onChangeListener={(value: string) => setOldPassword(value)}
+                secureTextEntry={true}
+                onChangeText={(value: string) => setOldPassword(value)}
               />
               <CustomInput
-                input={newPassword}
-                secureText={true}
+                value={newPassword}
+                secureTextEntry={true}
                 placeholder="Enter your new password"
-                onChangeListener={(value: string) => setNewPassword(value)}
+                onChangeText={(value: string) => setNewPassword(value)}
               />
               <View>
-                <CustomButton buttonName="Update" onPressListener={() => updateUserPassword()} disabled={oldPassword === "" || newPassword === ""} />
+                <CustomButton buttonName="Update" onPress={() => updateUserPassword()} disabled={oldPassword === "" || newPassword === ""} />
               </View>
             </View>
           </BottomSheet>

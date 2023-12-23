@@ -2,39 +2,48 @@ import { View } from "react-native";
 import { Input } from "react-native-elements";
 import * as React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { borderRadius, colours } from "../subatoms/Theme";
+import { borderRadius, colours, fonts } from "../subatoms/Theme";
 
 interface inputProps {
-  input: string;
-  placeholder: string;
-  onChangeListener: any;
-  secureText: boolean;
+  value?: string;
+  placeholder?: string;
+  onChangeText?: any;
+  secureTextEntry?: boolean;
+  containerStyle?: any;
+  inputStyle?: any;
+  style?: any;
+  multiline?: boolean;
+  errorMessage?: string;
+  label?: string;
 }
 
-const CustomInput = ({ input, placeholder, onChangeListener, secureText }: inputProps) => {
+// TODO: On the web version, the selection color is blue
+// TODO: An extra padding is also added on the web version on both sides of the input
+const CustomInput = ({ value, placeholder, onChangeText, secureTextEntry, containerStyle, inputStyle, style, multiline, errorMessage, label }: inputProps) => {
   return (
     <Input
       disabledInputStyle={{ backgroundColor: "#ddd" }}
-      secureTextEntry={secureText}
-      value={input}
-      onChangeText={onChangeListener}
-      selectionColor={colours.purple}
+      secureTextEntry={secureTextEntry}
+      value={value}
+      label={label}
+      onChangeText={onChangeText}
       placeholder={placeholder}
       autoCapitalize="none"
+      selectionColor={colours.purple}
+      selectTextOnFocus={true}
+      labelStyle={{ ...fonts.regular, padding: 0, margin: 0 }}
       inputContainerStyle={{
-        borderColor: colours.black,
+        borderColor: colours.grey,
         borderWidth: 1,
         paddingVertical: 4,
-        paddingHorizontal: 10,
-        borderRadius: borderRadius.medium,
+        paddingHorizontal: 8,
+        borderRadius: 6,
       }}
-      errorStyle={{}}
-      errorProps={{}}
-      inputStyle={{}}
-      labelStyle={{}}
-      labelProps={{}}
-      leftIconContainerStyle={{}}
-      rightIconContainerStyle={{}}
+      multiline={multiline}
+      containerStyle={containerStyle}
+      inputStyle={inputStyle}
+      style={style}
+      errorMessage={errorMessage}
     />
   );
 };

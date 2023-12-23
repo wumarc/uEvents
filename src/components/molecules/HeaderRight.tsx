@@ -49,7 +49,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
       <Dialog isVisible={visible} onDismiss={() => setVisible(false)} style={{ backgroundColor: colours.white }}>
         <CustomButton
           buttonName="Report"
-          onPressListener={() => {
+          onPress={() => {
             setReportVisible(true);
             setVisible(false);
           }}
@@ -57,7 +57,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         {event && event.organizerType === "Organizer Added" ? (
           <CustomButton
             buttonName="Block"
-            onPressListener={() => {
+            onPress={() => {
               setBlockVisible(true);
               setVisible(false);
             }}
@@ -67,7 +67,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         )}
         <CustomButton
           buttonName="Hide"
-          onPressListener={() => {
+          onPress={() => {
             setHideVisible(true);
             setVisible(false);
           }}
@@ -95,7 +95,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         </Text>
         <CustomButton
           buttonName="Report"
-          onPressListener={() => {
+          onPress={() => {
             setUserData({
               ...userData,
               reported: [...(userData?.reported ?? []), props.eventID],
@@ -130,7 +130,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         </Text>
         <CustomButton
           buttonName="Hide"
-          onPressListener={() => {
+          onPress={() => {
             setUserData({
               ...userData,
               hidden: [...(userData?.hidden ?? []), props.eventID],
@@ -163,7 +163,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         </Text>
         <CustomButton
           buttonName="Block"
-          onPressListener={() => {
+          onPress={() => {
             setUserData({
               ...userData,
               blocked: [...(userData?.blocked ?? []), event?.organizer],

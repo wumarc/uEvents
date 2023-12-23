@@ -589,7 +589,7 @@ export const Step3: FC<{ setStep: (step: number) => any; eventID: string }> = (p
       </View>
       <CustomButton
         buttonName={"Set location as TBD"}
-        onPressListener={() => {
+        onPress={() => {
           set({
             ...event,
             location: "",

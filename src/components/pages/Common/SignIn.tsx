@@ -196,7 +196,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
       <View>
         <CustomButton
           buttonName="Log In"
-          onPressListener={() => {
+          onPress={() => {
             // logEvent(analytics, 'login');
             signIn();
           }}
@@ -237,7 +237,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
           <View>
             <CustomButton
               buttonName="Copy Email"
-              onPressListener={() => Clipboard.setStringAsync("admin@uevents.org")}
+              onPress={() => Clipboard.setStringAsync("admin@uevents.org")}
               // onPressListener={() => resetPassword()}
               // disabled={email === ""}
             />

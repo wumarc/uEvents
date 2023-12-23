@@ -1,26 +1,14 @@
 import { View, Text, FlatList, ScrollView } from "react-native";
-import { FC, useState } from "react";
-import { Timestamp } from "firebase/firestore";
-import { addDocumentToCollection, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
-import { defaultEvent, EventCategory, EventObject } from "../../../utils/model/EventObject";
+import { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Admin/main";
-import { uid } from "../../../utils/util";
 import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
-import { Button, Input, Slider, Switch } from "react-native-elements";
-import { ToggleButton } from "react-native-paper";
-import { useDownloadURL } from "react-firebase-hooks/storage";
-import { ref } from "firebase/storage";
-import FirebaseImage from "../../organisms/FirebaseImage";
-import EventEditor from "../../organisms/EventEditor";
+import { Input } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "createEvent">;
-// To access the type of user, use route.params.userType
 
 const CreateEvent = ({ route, navigation }: props) => {
-  // const [event, setEvent] = useState<EventObject>(defaultEvent);
-  // const [id, setId] = useState<string>(uid());
   const [organizerName, setOrganizerName] = useState<string>("");
 
   return (
@@ -36,21 +24,22 @@ const CreateEvent = ({ route, navigation }: props) => {
 
       <CustomButton
         buttonName={"Add Event"}
-        onPressListener={() => {
+        onPress={() => {
           // Adding the event to the database
           navigation.navigate("Step0", { useDefault: false, organizerName: organizerName, eventID: undefined, isAdmin: true });
         }}
       />
       <CustomButton
         buttonName={"Add Event One Page"}
-        onPressListener={() => {
+        onPress={() => {
           // Adding the event to the database
           navigation.navigate("OnePageCreateEvent", {});
         }}
       />
+      <Text>This is the new updated version of the form. Recommend using that one with a browser.</Text>
       <CustomButton
         buttonName={"Add Event (Web)"}
-        onPressListener={() => {
+        onPress={() => {
           // Adding the event to the database
           navigation.navigate("CreateEventWeb", {});
         }}

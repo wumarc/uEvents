@@ -69,7 +69,7 @@ export const OnePageCreateEvent = ({ route, navigation }: props) => {
       <View style={{ height: 20, borderTopWidth: 5 }} />
       <CustomButton
         buttonName="Submit"
-        onPressListener={() => {
+        onPress={() => {
           navigation.pop();
         }}
       />

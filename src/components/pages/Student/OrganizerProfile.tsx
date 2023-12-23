@@ -173,7 +173,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
             </Text>
           </View>
           <View style={{ marginHorizontal: spacing.horizontalMargin1 }}>
-            <CustomButton buttonName="Report organizer" onPressListener={() => {}} />
+            <CustomButton buttonName="Report organizer" onPress={() => {}} />
             <Button
               style={{
                 paddingHorizontal: 10,

@@ -345,7 +345,7 @@ export const DatePickerModal: FC<{
           </View>
           <CustomButton
             buttonName="Done"
-            onPressListener={() => {
+            onPress={() => {
               setShow(false);
               props.setDate(Timestamp.fromDate(convert()));
             }}

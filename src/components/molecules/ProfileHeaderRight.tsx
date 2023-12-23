@@ -26,7 +26,7 @@ const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) =
       <Dialog isVisible={visible} onDismiss={() => setVisible(false)} style={{ backgroundColor: colours.white }}>
         <CustomButton
           buttonName="Block"
-          onPressListener={() => {
+          onPress={() => {
             setBlockVisible(true);
             setVisible(false);
           }}
@@ -52,7 +52,7 @@ const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) =
         </Text>
         <CustomButton
           buttonName="Block"
-          onPressListener={() => {
+          onPress={() => {
             setUserData({
               ...userData,
               blocked: [...(userData?.blocked ?? []), props.organizer],
