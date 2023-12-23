@@ -59,7 +59,7 @@ export type EventObject = {
   location?: string; // Building name and room number // If empty: TBD
   address?: string; // If empty: TBD
   roomNumber?: string; // If empty: TBD
-  organizerType: "Manually Added" | "Organizer Added";
+  organizerType: "Manually Added" | "Organizer Added"; // TODO: Document organizer type better
   organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
   startTime: Timestamp;
   endTime?: Timestamp; // End time doesn't have to be specified
@@ -73,7 +73,7 @@ export type EventObject = {
   images: string[];
   emoji: string;
   signUpLink?: string; // If undefined, no sign up link
-  originalLink: string;
+  originalLink: string; // TODO: Investigate why this is mandatory. Better document
   // recurrence: recurrence;
   recurrenceType: "None" | "Weekly" | "Custom Weekly" | "Specific Dates";
   recurrenceCustomDays?: daysOfWeekBrief[];
