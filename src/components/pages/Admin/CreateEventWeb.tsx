@@ -14,11 +14,7 @@ import { Organizer } from "../../../utils/model/Organizer";
 import { colours, windowHeight } from "../../subatoms/Theme";
 import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Timestamp } from "firebase/firestore";
-import dayjs from "dayjs";
 import { SvgUri } from "react-native-svg";
 
 // Props has the wrong type is not used
@@ -328,7 +324,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         </View>
 
         {/* Start time */}
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label="Start time"
             onChange={(value: any) => {
@@ -338,10 +334,10 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
               setLocalEvent({ ...localEvent, startTime: Timestamp.fromMillis(timestamp * 1000) });
             }}
           />
-        </LocalizationProvider>
+        </LocalizationProvider> */}
 
         {/* End time */}
-        <CheckBox
+        {/* <CheckBox
           title="Use end time"
           checked={localEvent.endTime != undefined}
           onPress={() => {
@@ -371,7 +367,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           </LocalizationProvider>
         ) : (
           <></>
-        )}
+        )} */}
 
         {/* Sign up link */}
         <View style={{ display: "flex", flexDirection: "row" }}>

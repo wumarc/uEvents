@@ -42,7 +42,54 @@ declare module '@env' {
 - `npx expo export:web`
 - `firebase deploy --only web`
 
-## To Do
+## CLI package management tools
 
-TODO Change the password for the admin account
-TODO Improve security rules by using firebase auth in the GCP bucket api request
+npx: 8.13.2
+n: v9.2.0
+npm: 8.13.2
+node: v21.5.0
+expo (CLI): 0.7.3
+
+## Upgrade Expo
+
+https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/
+
+First remove node modules and package-lock.json
+`npm install expo@latest`
+`npx expo install --fix`
+`npm i`
+
+## Expo setup
+
+Building with expo is complicated...
+
+### Prebuild
+
+I am 90% sure we use Expo prebuild https://docs.expo.dev/workflow/prebuild/#pitch
+
+### Web
+
+I recommend using `npx expo start` and then start he web server with `w`. This should always work.
+
+### IOS
+
+Some stuff on IOS doesn't work with expo. Ideally, we would like to stay compatible with expo and disable extra features when they are not available.
+
+**List of features not supported by Expo**
+
+- Analytics
+
+You can also build the app natively using `npx expo run:ios`
+
+IOS uses Cocapods. Go to the ios folder and run `pod install`
+
+You can also use this sequence to kill and rebuild your pods:
+
+```
+rm -rf ~/Library/Caches/CocoaPods
+rm -rf Pods
+rm -rf ~/Library/Developer/Xcode/DerivedData/*
+pod deintegrate
+pod setup
+pod install
+```
