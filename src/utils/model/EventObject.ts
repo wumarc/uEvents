@@ -63,7 +63,7 @@ export type EventObject = {
   organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
   startTime: Timestamp;
   endTime?: Timestamp; // End time doesn't have to be specified
-  categories: string[];
+  categories: string[]; // Not being used right now
   onCampus?: boolean | "TBD";
   // food?: string;
   // attire?: string;
@@ -76,10 +76,10 @@ export type EventObject = {
   originalLink: string; // TODO: Investigate why this is mandatory. Better document
   // recurrence: recurrence;
   recurrenceType: "None" | "Weekly" | "Custom Weekly" | "Specific Dates";
-  recurrenceCustomDays?: daysOfWeekBrief[];
-  recurrenceCustomDates?: Timestamp[];
-  recurrenceEnd?: Timestamp;
-  recurrenceExceptions?: Timestamp[];
+  recurrenceCustomDays?: daysOfWeekBrief[]; // Only used for custom weekly
+  recurrenceCustomDates?: Timestamp[]; // Only used for specific dates
+  recurrenceEnd?: Timestamp; // Used for all recurrence types
+  recurrenceExceptions?: Timestamp[]; // Used for all recurrence types
 };
 
 export const nextStartTime = (startTime: Timestamp, recurrence: recurrence): Timestamp | undefined => {

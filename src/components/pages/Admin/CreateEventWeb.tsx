@@ -1,15 +1,15 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { useState } from "react";
-import { emojiUrl, uid } from "../../../utils/util";
+import { daysOfWeekArray, daysOfWeekBrief, emojiUrl, uid } from "../../../utils/util";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { EventObject, defaultEvent } from "../../../utils/model/EventObject";
+import { EventObject, defaultEvent, recurrenceTypeArray } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
 import { Button } from "@rneui/themed";
-import { CheckBox, Input } from "react-native-elements";
+import { ButtonGroup, CheckBox, Input } from "react-native-elements";
 import { Icon } from "@rneui/themed";
 import { Dropdown } from "react-native-element-dropdown";
-import { View, StyleSheet, Text, Platform } from "react-native";
+import { View, StyleSheet, Text, Platform, ScrollView } from "react-native";
 import { Organizer } from "../../../utils/model/Organizer";
 import { colours, windowHeight } from "../../subatoms/Theme";
 import CustomButton from "../../atoms/CustomButton";
@@ -17,11 +17,13 @@ import CustomInput from "../../atoms/CustomInput";
 import { Timestamp } from "firebase/firestore";
 import { SvgUri } from "react-native-svg";
 import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
+import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export const CreateEventWeb = ({ route, navigation }: props) => {
+  // States
   const [id, setId] = useState(uid());
   const [loading, dbEvent, setDbEvent] = useStateWithFireStoreDocument<EventObject>("events", id);
   const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
@@ -36,10 +38,12 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [startTimeVisible, setStartTimeVisible] = useState(false);
   const [startDateVisible, setStartDateVisible] = useState(false);
 
+  // Loading
   if (loading || loading2) {
     return <Loading />;
   }
 
+  // Organizers
   const organizers: Organizer[] = users?.filter((user) => user.type == "organizer") ?? [];
   const organizerData = [];
   for (const organizer of organizers) {
@@ -55,13 +59,18 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     return "Choose organizer";
   }
 
-  if (loading) {
-    return <Loading />;
+  // Days of the week to index
+  let daysOfWeek = localEvent.recurrenceCustomDays;
+  let daysOfWeekIndex: number[] = [];
+  if (daysOfWeek) {
+    for (const day of daysOfWeek) {
+      daysOfWeekIndex.push(daysOfWeekArray.indexOf(day));
+    }
   }
 
   // TODO: Investigate why the background color is broken
   return (
-    <View>
+    <ScrollView>
       <View style={{ margin: 50, maxWidth: 1000, marginBottom: windowHeight }}>
         <CustomButton
           style={styles.formElement}
@@ -329,78 +338,18 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         </View>
 
         {/* Start time */}
-        <Text style={{ ...styles.formElement, fontSize: 20 }}>
-          {"Start Date : " +
-            localEvent.startTime.toDate().toLocaleString("default", { month: "long" }) +
-            " " +
-            localEvent.startTime.toDate().getDate() +
-            " " +
-            localEvent.startTime.toDate().getFullYear() +
-            " : " +
-            localEvent.startTime.toDate().getHours() +
-            "h " +
-            localEvent.startTime.toDate().getMinutes() +
-            ""}
-        </Text>
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <CustomButton
-            style={{ ...styles.formElement, marginHorizontal: 10 }}
-            onPress={() => {
-              setStartTimeVisible(true);
-            }}
-          >
-            Select start time
-          </CustomButton>
-          <CustomButton
-            style={{ ...styles.formElement, marginHorizontal: 10 }}
-            onPress={() => {
-              setStartDateVisible(true);
-            }}
-          >
-            Select start date
-          </CustomButton>
-        </View>
-
-        <TimePickerModal
-          visible={startTimeVisible}
-          onDismiss={() => {
-            setStartTimeVisible(false);
+        <CustomDatePicker
+          time={localEvent.startTime}
+          setTime={(time: any) => {
+            setLocalEvent({ ...localEvent, startTime: time });
           }}
-          onConfirm={(value: any) => {
-            let date = localEvent.startTime.toDate();
-            date.setHours(value.hours);
-            date.setMinutes(value.minutes);
-            setLocalEvent({ ...localEvent, startTime: Timestamp.fromDate(date) });
-            setStartTimeVisible(false);
-          }}
-          label="Select start time"
-          cancelLabel="Cancel"
-          confirmLabel="Ok"
-          animationType="fade"
-          locale={"en"}
-        />
-
-        <DatePickerModal
-          visible={startDateVisible}
-          onDismiss={() => {
-            setStartDateVisible(false);
-          }}
-          onConfirm={(value: any) => {
-            let date = localEvent.startTime.toDate();
-            date.setFullYear(value.date.getFullYear());
-            date.setMonth(value.date.getMonth());
-            date.setDate(value.date.getDate());
-            setLocalEvent({ ...localEvent, startTime: Timestamp.fromDate(date) });
-            setStartDateVisible(false);
-          }}
-          mode="single"
-          label="Select start date"
-          animationType="fade"
-          locale={"en"}
+          selectDateString="Select start date"
+          selectTimeString="Select start time"
+          baseStyle={styles.formElement}
         />
 
         {/* End time */}
-        {/* <CheckBox
+        <CheckBox
           title="Use end time"
           checked={localEvent.endTime != undefined}
           onPress={() => {
@@ -417,20 +366,18 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         />
 
         {localEvent.endTime != undefined ? (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateTimePicker
-              label="End time"
-              onChange={(value: any) => {
-                let date = dayjs(value);
-                let timestamp = date.unix();
-                console.log(timestamp);
-                setLocalEvent({ ...localEvent, startTime: Timestamp.fromMillis(timestamp * 1000) });
-              }}
-            />
-          </LocalizationProvider>
+          <CustomDatePicker
+            time={localEvent.endTime}
+            setTime={(time: any) => {
+              setLocalEvent({ ...localEvent, endTime: time });
+            }}
+            selectDateString="Select end date"
+            selectTimeString="Select end time"
+            baseStyle={styles.formElement}
+          />
         ) : (
           <></>
-        )} */}
+        )}
 
         {/* Sign up link */}
         <View style={{ display: "flex", flexDirection: "row" }}>
@@ -468,6 +415,85 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           )}
         </View>
 
+        {/* Recurrence type */}
+        <ButtonGroup
+          buttons={["None", "Weekly", "Custom Weekly", "Specific Dates"]}
+          selectedIndex={recurrenceTypeArray.indexOf(localEvent.recurrenceType)}
+          onPress={(index) => {
+            setLocalEvent({ ...localEvent, recurrenceType: recurrenceTypeArray[index] ?? "None" });
+          }}
+        />
+
+        {/* Recurrence Custom days */}
+        {localEvent.recurrenceType == "Custom Weekly" && (
+          <ButtonGroup
+            buttons={["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]}
+            selectedIndexes={daysOfWeekIndex}
+            onPress={(index) => {
+              let newIndex = daysOfWeekIndex;
+              if (daysOfWeekIndex.includes(index)) {
+                // Remove day
+                newIndex.splice(daysOfWeekIndex.indexOf(index), 1);
+              } else {
+                // Add day
+                newIndex.push(index);
+              }
+              let newDaysOfWeek: daysOfWeekBrief[] = [];
+              for (const index of newIndex) {
+                newDaysOfWeek.push(daysOfWeekArray[index] ?? "Sun");
+              }
+              setLocalEvent({ ...localEvent, recurrenceCustomDays: newDaysOfWeek });
+            }}
+          />
+        )}
+
+        {/* Recurrence Custom Dates */}
+        {localEvent.recurrenceType == "Specific Dates" && (
+          <CustomDatePickerList
+            label="Specific dates"
+            times={localEvent.recurrenceCustomDates}
+            setTimes={(newTimes: any) => {
+              setLocalEvent({ ...localEvent, recurrenceCustomDates: newTimes });
+            }}
+            selectDateString="Select date"
+            selectTimeString="Select time"
+            baseStyle={styles.formElement}
+            useOnlyDate={true}
+          />
+        )}
+
+        {/* Recurrence End */}
+        {localEvent.recurrenceType != "None" && (
+          <View>
+            <Text style={{ ...styles.formElement, fontSize: 20 }}>Recurrence end</Text>
+            <CustomDatePicker
+              time={localEvent.recurrenceEnd ?? Timestamp.now()}
+              setTime={(time: any) => {
+                setLocalEvent({ ...localEvent, recurrenceEnd: time });
+              }}
+              selectDateString="Select end date"
+              selectTimeString="Select end time"
+              baseStyle={styles.formElement}
+              useOnlyDate={true}
+            />
+          </View>
+        )}
+
+        {/* Recurrence exceptions */}
+        {localEvent.recurrenceType != "None" && (
+          <CustomDatePickerList
+            label="Recurrence exceptions"
+            times={localEvent.recurrenceExceptions}
+            setTimes={(newTimes: any) => {
+              setLocalEvent({ ...localEvent, recurrenceExceptions: newTimes });
+            }}
+            selectDateString="Select date"
+            selectTimeString="Select time"
+            baseStyle={styles.formElement}
+            useOnlyDate={true}
+          />
+        )}
+
         {/* Submit */}
         <CustomButton
           style={styles.formElement}
@@ -479,7 +505,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         </CustomButton>
       </View>
       <Text>End of page</Text>
-    </View>
+    </ScrollView>
   );
 };
 

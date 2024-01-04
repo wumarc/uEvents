@@ -3,5 +3,5 @@
   "java.configuration.updateBuildConfiguration": "interactive",
   "prettier.configPath": ".prettierrc",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
