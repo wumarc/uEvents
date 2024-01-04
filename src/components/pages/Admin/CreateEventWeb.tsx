@@ -16,6 +16,7 @@ import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { Timestamp } from "firebase/firestore";
 import { SvgUri } from "react-native-svg";
+import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
@@ -30,6 +31,10 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   // Error messages
   const [minPriceError, setMinPriceError] = useState("");
   const [maxPriceError, setMaxPriceError] = useState("");
+
+  // Time
+  const [startTimeVisible, setStartTimeVisible] = useState(false);
+  const [startDateVisible, setStartDateVisible] = useState(false);
 
   if (loading || loading2) {
     return <Loading />;
@@ -324,17 +329,75 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         </View>
 
         {/* Start time */}
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateTimePicker
-            label="Start time"
-            onChange={(value: any) => {
-              let date = dayjs(value);
-              let timestamp = date.unix();
-              console.log(timestamp);
-              setLocalEvent({ ...localEvent, startTime: Timestamp.fromMillis(timestamp * 1000) });
+        <Text style={{ ...styles.formElement, fontSize: 20 }}>
+          {"Start Date : " +
+            localEvent.startTime.toDate().toLocaleString("default", { month: "long" }) +
+            " " +
+            localEvent.startTime.toDate().getDate() +
+            " " +
+            localEvent.startTime.toDate().getFullYear() +
+            " : " +
+            localEvent.startTime.toDate().getHours() +
+            "h " +
+            localEvent.startTime.toDate().getMinutes() +
+            ""}
+        </Text>
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <CustomButton
+            style={{ ...styles.formElement, marginHorizontal: 10 }}
+            onPress={() => {
+              setStartTimeVisible(true);
             }}
-          />
-        </LocalizationProvider> */}
+          >
+            Select start time
+          </CustomButton>
+          <CustomButton
+            style={{ ...styles.formElement, marginHorizontal: 10 }}
+            onPress={() => {
+              setStartDateVisible(true);
+            }}
+          >
+            Select start date
+          </CustomButton>
+        </View>
+
+        <TimePickerModal
+          visible={startTimeVisible}
+          onDismiss={() => {
+            setStartTimeVisible(false);
+          }}
+          onConfirm={(value: any) => {
+            let date = localEvent.startTime.toDate();
+            date.setHours(value.hours);
+            date.setMinutes(value.minutes);
+            setLocalEvent({ ...localEvent, startTime: Timestamp.fromDate(date) });
+            setStartTimeVisible(false);
+          }}
+          label="Select start time"
+          cancelLabel="Cancel"
+          confirmLabel="Ok"
+          animationType="fade"
+          locale={"en"}
+        />
+
+        <DatePickerModal
+          visible={startDateVisible}
+          onDismiss={() => {
+            setStartDateVisible(false);
+          }}
+          onConfirm={(value: any) => {
+            let date = localEvent.startTime.toDate();
+            date.setFullYear(value.date.getFullYear());
+            date.setMonth(value.date.getMonth());
+            date.setDate(value.date.getDate());
+            setLocalEvent({ ...localEvent, startTime: Timestamp.fromDate(date) });
+            setStartDateVisible(false);
+          }}
+          mode="single"
+          label="Select start date"
+          animationType="fade"
+          locale={"en"}
+        />
 
         {/* End time */}
         {/* <CheckBox
