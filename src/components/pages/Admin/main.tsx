@@ -9,7 +9,7 @@ import { colours } from "../../subatoms/Theme";
 import { FC } from "react";
 import Profile from "./Profile";
 import CreateEvent from "./CreateEvent";
-import EditEvent from "./EditEvent";
+import EditEvent from "./Outdated/EditEvent";
 import UploadFile from "../../organisms/UploadFile";
 import Preview from "./Preview";
 import EventDetails from "../Student/EventDetails";
@@ -23,7 +23,7 @@ import OrganizerProfile from "../Student/OrganizerProfile";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 import BrowseOrganizers from "../Student/BrowseOrganizers";
 import { Profile as OrganizerProfile2 } from "../EventOrganizer/Profile";
-import { OnePageCreateEvent } from "./OnePageCreateEvent";
+import { OnePageCreateEvent } from "./Outdated/OnePageCreateEvent";
 import { CreateEventWeb } from "./CreateEventWeb";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -48,7 +48,7 @@ export type RootStackParamList = {
   EventOrganizerView: { organizerID: string; imageID: string };
   OrganizerProfile: { userType: string; id?: string };
   OnePageCreateEvent: {};
-  CreateEventWeb: { id?: string };
+  CreateEventWeb: { id?: string; fake?: boolean };
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -135,13 +135,6 @@ const Main: FC<{ userType: string }> = (props) => {
               }}
             />
             <Stack.Screen
-              name="EditEvent"
-              component={EditEvent as any} // TODO fix error
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
               name="UploadFile"
               component={UploadFile as any} // TODO fix error
               options={{
@@ -179,13 +172,6 @@ const Main: FC<{ userType: string }> = (props) => {
             <Stack.Screen
               name="OrganizerProfile"
               component={OrganizerProfile2 as any}
-              options={({ navigation }) => ({
-                headerLeft: () => <HeaderLeft navigation={navigation} />,
-              })}
-            />
-            <Stack.Screen
-              name="OnePageCreateEvent"
-              component={OnePageCreateEvent as any}
               options={({ navigation }) => ({
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
               })}

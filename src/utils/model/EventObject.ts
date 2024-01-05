@@ -1,19 +1,88 @@
 import { Timestamp } from "firebase/firestore";
-import { Organizer } from "./Organizer";
-import { Student } from "./Student";
 import { daysOfWeekBrief, daysOfWeekArray } from "../util";
 
-export enum EventCategory {
-  ALL = "All", // Not a real category, used to represent all categories. Don't assign to an event
-  ARTS = "Arts",
-  DESIGN = "Design",
-  BUSINESS = "Business",
-  SCIENCE = "Science",
-  SPORTS = "Sports",
-  GAMES = "Games",
-  SOCIAL_SCI = "Social Sci",
-  NIGHTLIFE = "Nightlife",
-}
+/// Event object
+/// Optional fields are marked with a question mark. They can be undefined or empty to represent no value
+export type EventObject = {
+  // Unique id for each event
+  id: string;
+
+  // True if event is fake and intended only for admins
+  // If this field is true, it does not guarantee that the event is fake. Only for reference
+  // The true marker for fake events is where it is stored in the database. Either "events" or "events-test"
+  fake: boolean;
+
+  // Draft: Event is created but not submitted for approval. Pending: Event is submitted for approval. Published: Event is approved and published
+  state: "Draft" | "Pending" | "Published" | "Rejected" | "Reported";
+
+  rejectReason: string;
+
+  name: string;
+
+  // If no max price is specified, this is the exact price
+  priceMin: number;
+
+  priceMax?: number;
+
+  // 750 characters max TODO change it to 400?
+  description: string;
+
+  // If empty: TBD. In case of on campus, this is the building name. Else, building name
+  location?: string;
+
+  // If empty: TBD. In case of on campus, this is the building address. Else, building address
+  address?: string;
+
+  // If empty: TBD. Optional
+  roomNumber?: string;
+
+  // TODO: Document organizer type better
+  organizerType: "Manually Added" | "Organizer Added";
+
+  // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
+  organizer: string;
+
+  startTime: Timestamp;
+
+  // End time doesn't have to be specified
+  endTime?: Timestamp;
+
+  // Not being used right now
+  categories: string[];
+
+  onCampus?: boolean | "TBD";
+
+  images: string[];
+
+  emoji: string;
+
+  // If undefined, no sign up link
+  signUpLink?: string;
+
+  // TODO: Investigate why this is mandatory. Better document
+  originalLink: string;
+
+  recurrenceType: "None" | "Weekly" | "Custom Weekly" | "Specific Dates";
+
+  // Only used for custom weekly
+  recurrenceCustomDays?: daysOfWeekBrief[];
+
+  // Only used for specific dates
+  recurrenceCustomDates?: Timestamp[];
+
+  // Used for all recurrence types
+  recurrenceEnd?: Timestamp;
+
+  // Used for all recurrence types
+  recurrenceExceptions?: Timestamp[];
+
+  // priceDescription?: string; // If needed, a description of the different prices
+  // food?: string;
+  // attire?: string;
+  // toBring?: string;
+  // includes?: string;
+  // transportation?: string;
+};
 
 export type recurrenceType = "None" | "Weekly" | "Custom Weekly" | "Specific Dates";
 
@@ -43,43 +112,6 @@ export const daysToInt = (days: daysOfWeekBrief[]): number[] => {
     intDays.push(daysOfWeekArray.indexOf(days[i] as daysOfWeekBrief));
   }
   return intDays;
-};
-
-/// Event object
-/// Optional fields are marked with a question mark. They can be undefined or empty to represent no value
-export type EventObject = {
-  id: string; // Unique id for each event
-  state: "Draft" | "Pending" | "Published" | "Rejected" | "Reported"; // Draft: Event is created but not submitted for approval. Pending: Event is submitted for approval. Published: Event is approved and published
-  rejectReason: string;
-  name: string;
-  priceMin: number; // If no max price is specified, this is the exact price
-  priceMax?: number;
-  // priceDescription?: string; // If needed, a description of the different prices
-  description: string; // 750 characters max TODO change it to 400?
-  location?: string; // If empty: TBD. In case of on campus, this is the building name. Else, building name
-  address?: string; // If empty: TBD. In case of on campus, this is the building address. Else, building address
-  roomNumber?: string; // If empty: TBD. Optional
-  organizerType: "Manually Added" | "Organizer Added"; // TODO: Document organizer type better
-  organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
-  startTime: Timestamp;
-  endTime?: Timestamp; // End time doesn't have to be specified
-  categories: string[]; // Not being used right now
-  onCampus?: boolean | "TBD";
-  // food?: string;
-  // attire?: string;
-  // toBring?: string;
-  // includes?: string;
-  // transportation?: string;
-  images: string[];
-  emoji: string;
-  signUpLink?: string; // If undefined, no sign up link
-  originalLink: string; // TODO: Investigate why this is mandatory. Better document
-  // recurrence: recurrence;
-  recurrenceType: "None" | "Weekly" | "Custom Weekly" | "Specific Dates";
-  recurrenceCustomDays?: daysOfWeekBrief[]; // Only used for custom weekly
-  recurrenceCustomDates?: Timestamp[]; // Only used for specific dates
-  recurrenceEnd?: Timestamp; // Used for all recurrence types
-  recurrenceExceptions?: Timestamp[]; // Used for all recurrence types
 };
 
 export const nextStartTime = (startTime: Timestamp, recurrence: recurrence): Timestamp | undefined => {
@@ -136,6 +168,7 @@ export const nextEndTime = (originalStartTime: Timestamp, nextStartTime: Timesta
 
 export const defaultEvent: EventObject = {
   state: "Draft",
+  fake: false,
   id: "1",
   name: "",
   description: "",
@@ -228,3 +261,16 @@ export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd
     return days[eventDate.getDay()] + " " + months[eventDate.getMonth()] + " " + day + suffix + " · " + getTimeInAMPM(eventDate);
   }
 };
+
+// Old event category enum
+// export enum EventCategory {
+//   ALL = "All", // Not a real category, used to represent all categories. Don't assign to an event
+//   ARTS = "Arts",
+//   DESIGN = "Design",
+//   BUSINESS = "Business",
+//   SCIENCE = "Science",
+//   SPORTS = "Sports",
+//   GAMES = "Games",
+//   SOCIAL_SCI = "Social Sci",
+//   NIGHTLIFE = "Nightlife",
+// }

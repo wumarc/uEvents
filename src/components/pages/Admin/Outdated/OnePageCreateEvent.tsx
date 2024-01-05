@@ -1,16 +1,15 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
+import { RootStackParamList } from "../main";
 import { ScrollView, View } from "react-native";
-import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8 } from "../EventOrganizer/CreateEvent";
+import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8 } from "../../EventOrganizer/CreateEvent";
 import { useEffect, useState } from "react";
-import { uid } from "../../../utils/util";
-import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { EventObject } from "../../../utils/model/EventObject";
+import { uid } from "../../../../utils/util";
+import { useStateWithFireStoreDocument } from "../../../../utils/useStateWithFirebase";
+import { EventObject } from "../../../../utils/model/EventObject";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
-import { fireStore } from "../../../firebaseConfig";
-import { Loading } from "../Common/Loading";
-import { blue600 } from "react-native-paper/lib/typescript/src/styles/themes/v2/colors";
-import CustomButton from "../../atoms/CustomButton";
+import { fireStore } from "../../../../firebaseConfig";
+import { Loading } from "../../Common/Loading";
+import CustomButton from "../../../atoms/CustomButton";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType

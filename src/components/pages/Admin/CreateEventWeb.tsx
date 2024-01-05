@@ -12,18 +12,23 @@ import { Organizer } from "../../../utils/model/Organizer";
 import { colours, windowHeight } from "../../subatoms/Theme";
 import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
-import { Timestamp } from "firebase/firestore";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { SvgUri } from "react-native-svg";
 import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
+import { fireStore } from "../../../firebaseConfig";
 
 // Props has the wrong type is not used
-type props = NativeStackScreenProps<RootStackParamList, "Profile">;
+type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
 
 /// Form to create event intended for web use by admin only
 export const CreateEventWeb = ({ route, navigation }: props) => {
+  // Fake event
+  let isFake = route.params?.fake ?? false;
+  let dbPath = isFake ? "events-test" : "events";
+
   // States
   const [id, setId] = useState(uid());
-  const [loading, dbEvent, setDbEvent] = useStateWithFireStoreDocument<EventObject>("events", id);
+  // const [loading, dbEvent, setDbEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, id);
   const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
   const [loading2, users, addUsers] = useStateWithFireStoreCollection<Organizer>("users");
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
@@ -34,7 +39,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [topError, setTopError] = useState("");
 
   // Loading
-  if (loading || loading2) {
+  if (loading2) {
     return <Loading />;
   }
 
@@ -64,13 +69,29 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     }
   }
 
+  // Fields before submitting
+  function beforeSubmit(temp: EventObject) {
+    temp.id = id;
+    temp.state = "Pending";
+    temp.organizerType = "Organizer Added"; // TODO: Confirm
+
+    // Fake
+    if (isFake) {
+      temp.fake = true;
+    } else {
+      temp.fake = false;
+    }
+  }
+
   return (
     <ScrollView>
-      <View style={{ margin: 50, maxWidth: 1000, marginBottom: windowHeight }}>
+      <View style={{ margin: 50, maxWidth: 1000 }}>
         <CustomButton
           style={styles.formElement}
           onPress={() => {
-            console.log(localEvent);
+            let temp = localEvent;
+            beforeSubmit(temp);
+            console.log(temp);
           }}
         >
           Log event object to console
@@ -494,8 +515,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           style={styles.formElement}
           onPress={() => {
             let temp = localEvent;
-            temp.id = id;
-            temp.state = "Pending";
+            beforeSubmit(temp);
 
             // Check name
             if (temp.name == "") {
@@ -516,12 +536,10 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             }
 
             // Check address
-            if (temp.address == "") {
+            if (temp.address == "" && temp.onCampus != "TBD") {
               setTopError("Could not submit event. Please enter an address");
               return;
             }
-
-            temp.organizerType = "Organizer Added"; // TODO: Confirm
 
             // Check organizer
             if (temp.organizer == "") {
@@ -542,12 +560,26 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             }
 
             // Write event
-            setDbEvent(temp);
+            setDoc(doc(fireStore, dbPath + "/" + id), temp);
             navigation.pop();
           }}
         >
-          Submit
+          {isFake ? "Submit test event" : "Submit event"}
         </CustomButton>
+
+        {isFake && (
+          <CustomButton
+            style={styles.formElement}
+            onPress={() => {
+              let temp = localEvent;
+              beforeSubmit(temp);
+              setDoc(doc(fireStore, dbPath + "/" + id), temp);
+              navigation.pop();
+            }}
+          >
+            Force submit test event (Without checks)
+          </CustomButton>
+        )}
         <Text style={{ ...styles.formElement, color: "red" }}>{topError}</Text>
       </View>
       <Text>End of page</Text>

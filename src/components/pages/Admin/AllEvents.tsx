@@ -29,16 +29,18 @@ const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
 
 export const AllEvents = ({ route, navigation }: props) => {
   const [loading, events, add, del] = useStateWithFireStoreCollection<EventObject>("events");
+  const [loading3, eventsFake, addFake, delFake] = useStateWithFireStoreCollection<EventObject>("events-test");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Student>("users");
 
   const [search, setSearch] = useState("");
   const [detailed, setDetailed] = useState(true);
 
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <Text>Loading</Text>;
   }
 
   let filteredEvents = events as EventObject[];
+  filteredEvents = filteredEvents.concat(eventsFake as EventObject[]);
   filteredEvents = searchAlgo(search, filteredEvents);
 
   // Extract reported status
@@ -66,7 +68,7 @@ export const AllEvents = ({ route, navigation }: props) => {
     }
     return true;
   });
-  /// !!! Comment this out to see all events !!!
+  // !!! Comment this out to see all events !!!
 
   return (
     <View>

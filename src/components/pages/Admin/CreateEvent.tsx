@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView } from "react-native";
+import { View, Text, FlatList, ScrollView, Platform } from "react-native";
 import { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Admin/main";
@@ -16,6 +16,7 @@ const CreateEvent = ({ route, navigation }: props) => {
       <Input
         label="Organizer Name"
         placeholder="Enter Organizer Name"
+        disabled={Platform.OS === "web"}
         value={organizerName}
         onChangeText={(text) => {
           setOrganizerName(text);
@@ -24,24 +25,28 @@ const CreateEvent = ({ route, navigation }: props) => {
 
       <CustomButton
         buttonName={"Add Event"}
+        disabled={Platform.OS === "web"}
         onPress={() => {
           // Adding the event to the database
           navigation.navigate("Step0", { useDefault: false, organizerName: organizerName, eventID: undefined, isAdmin: true });
         }}
       />
-      <CustomButton
-        buttonName={"Add Event One Page"}
-        onPress={() => {
-          // Adding the event to the database
-          navigation.navigate("OnePageCreateEvent", {});
-        }}
-      />
-      <Text>This is the new updated version of the form. Recommend using that one with a browser.</Text>
+      <Text style={{ marginTop: 10 }}>This is the new updated version of the form. Recommend using that one with a browser.</Text>
       <CustomButton
         buttonName={"Add Event (Web)"}
+        disabled={Platform.OS !== "web"}
         onPress={() => {
           // Adding the event to the database
           navigation.navigate("CreateEventWeb", {});
+        }}
+      />
+      <Text style={{ marginTop: 10 }}>Add a fake event that will not be shown to the user.</Text>
+      <CustomButton
+        buttonName={"Add test Event (Web)"}
+        disabled={Platform.OS !== "web"}
+        onPress={() => {
+          // Adding the event to the database
+          navigation.navigate("CreateEventWeb", { fake: true });
         }}
       />
     </View>

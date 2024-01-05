@@ -1,17 +1,12 @@
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text } from "react-native";
 import { useState } from "react";
-import { Timestamp } from "firebase/firestore";
-import { Button, Input, Header } from "@rneui/base";
-import { addDocumentToCollection, useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
-import { defaultEvent, EventCategory, EventObject } from "../../../utils/model/EventObject";
+import { Button } from "@rneui/base";
+import { useStateWithFireStoreDocument } from "../../../../utils/useStateWithFirebase";
+import { EventObject } from "../../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../Admin/main";
-import { uid } from "../../../utils/util";
+import { RootStackParamList } from "../main";
 import { StyleSheet } from "react-native";
-import { Slider, Switch } from "react-native-elements";
-import { ToggleButton } from "react-native-paper";
-import FirebaseImage from "../../organisms/FirebaseImage";
-import EventEditor from "../../organisms/EventEditor";
+import EventEditor from "../../../organisms/EventEditor";
 
 type props = NativeStackScreenProps<RootStackParamList, "EditEvent">;
 // To access the type of user, use route.params.userType
