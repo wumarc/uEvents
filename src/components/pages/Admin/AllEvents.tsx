@@ -1,4 +1,4 @@
-import { FlatList, TouchableOpacity, View, Clipboard, Platform, ScrollView } from "react-native";
+import { FlatList, TouchableOpacity, View, Clipboard, Platform, ScrollView, Linking } from "react-native";
 import { FC, useState } from "react";
 import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
@@ -37,6 +37,7 @@ export const AllEvents = ({ route, navigation }: props) => {
   const [showReported, setShowReported] = useState(true);
   const [showFake, setShowFake] = useState(true);
   const [showFakeOnly, setShowFakeOnly] = useState(false);
+  const [showOnlyRecurring, setShowOnlyRecurring] = useState(false);
 
   // Loading
   if (loading || loading2 || loading3) {
@@ -88,6 +89,9 @@ export const AllEvents = ({ route, navigation }: props) => {
       return false;
     }
     if (showFakeOnly && !event.fake) {
+      return false;
+    }
+    if (showOnlyRecurring && (event.recurrenceType === "None" || !event.recurrenceType)) {
       return false;
     }
     return true;
@@ -184,6 +188,13 @@ export const AllEvents = ({ route, navigation }: props) => {
             setShowFakeOnly(!showFakeOnly);
           }}
         />
+        <CheckBox
+          title="Show Only Recurring"
+          checked={showOnlyRecurring}
+          onPress={() => {
+            setShowOnlyRecurring(!showOnlyRecurring);
+          }}
+        />
       </View>
       <FlatList
         style={{ height: "100%" }}
@@ -195,7 +206,7 @@ export const AllEvents = ({ route, navigation }: props) => {
             return stateOrder.indexOf(a.state) - stateOrder.indexOf(b.state);
           }
         })}
-        renderItem={({ item }) => <EventLine event={item} del={del} navigation={navigation} detailed={detailed} />}
+        renderItem={({ item }) => <EventLine event={item} del={item.fake ? delFake : del} navigation={navigation} detailed={detailed} />}
       />
     </View>
   );
@@ -209,6 +220,7 @@ const EventLine: FC<{
 }> = ({ event, del, navigation, detailed }) => {
   let organizer = event.organizer;
 
+  // State
   const [reason, setReason] = useState("");
   const [keep, setKeep] = useState(false);
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
@@ -221,6 +233,13 @@ const EventLine: FC<{
     }
     organizer = organizer2?.name;
   }
+
+  if (!organizer) {
+    organizer = "Organizer name not found";
+  }
+
+  let [nextStartTime, nextEndTime] = getNextDate(event);
+  let containerHeight = event.recurrenceType !== "None" ? 60 : 40;
 
   let status = "";
   let statusColor = "black";
@@ -242,7 +261,7 @@ const EventLine: FC<{
   }
 
   return (
-    <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed ? 120 : 40 }}>
+    <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed ? containerHeight + 100 : containerHeight }}>
       <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%" }}>
         {event.emoji ? (
           <View>
@@ -250,8 +269,8 @@ const EventLine: FC<{
               <img
                 src={backupUrl ?? emojiUrl(event.emoji)}
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: containerHeight,
+                  height: containerHeight,
                 }}
                 onError={() => {
                   let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
@@ -262,8 +281,8 @@ const EventLine: FC<{
               />
             ) : (
               <SvgUri
-                width={40}
-                height={40}
+                width={containerHeight}
+                height={containerHeight}
                 uri={backupUrl ?? emojiUrl(event.emoji)}
                 fill="black"
                 onError={() => {
@@ -279,29 +298,42 @@ const EventLine: FC<{
           <></>
         )}
 
-        <TouchableOpacity style={{ height: 40, alignItems: "flex-start", justifyContent: "flex-start" }} onPress={() => Clipboard.setString(event.id)}>
-          <Text>{event.name}</Text>
+        <View style={{ height: containerHeight, alignItems: "flex-start", justifyContent: "flex-start" }}>
+          <Text style={{ color: event.fake ? "blue" : undefined }}>
+            {event.name}
+            {event.fake && " (Test Event)"}
+          </Text>
           <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text>{event.startTime.toDate().toDateString() + " - "}</Text>
-            <Text style={{ color: statusColor }}>{status}</Text>
+            <Text>{event.startTime.toDate().toDateString()}</Text>
+            <Text style={{ color: statusColor }}>{" - " + status}</Text>
           </View>
-          <Text>{event.organizerType + " - " + organizer}</Text>
-        </TouchableOpacity>
+          {event.recurrenceType !== "None" && (
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <Text style={{ color: "purple" }}>{event.recurrenceType}</Text>
+              <Text style={{ color: "purple" }}>{" (next): " + nextStartTime.toDateString()}</Text>
+              <Text style={{ color: "purple" }}>{" (until): " + event.recurrenceEnd?.toDate().toDateString()}</Text>
+            </View>
+          )}
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Text>{event.organizerType + " - "}</Text>
+            <Text style={{ color: organizer == "Organizer name not found" ? "red" : undefined }}>{organizer}</Text>
+          </View>
+        </View>
       </View>
       {detailed ? (
         <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "20%" }}>
-          <View style={{ height: 40 }}>
+          <View style={{ height: containerHeight }}>
             <Button
               size="sm"
               titleStyle={{ fontSize: 12 }}
               onPress={() => {
-                navigation.navigate("Step0", { eventID: event.id, useDefault: false, isAdmin: true });
+                navigation.navigate("CreateEventWeb", { id: event.id, fake: event.fake });
               }}
             >
               Edit
             </Button>
           </View>
-          <View style={{ marginLeft: 5, height: 40 }}>
+          <View style={{ marginLeft: 5, height: containerHeight }}>
             <Button
               size="sm"
               color="error"
@@ -314,7 +346,7 @@ const EventLine: FC<{
             </Button>
           </View>
           {/* To be used for special purposes */}
-          {/* <View style={{ marginLeft: 5, height: 40, }} >
+          {/* <View style={{ marginLeft: 5, height: containerHeight, }} >
           <Button size="sm" color="red" titleStyle={{fontSize: 12}}
             onPress={() => {
               if (event.organizerType === "Organizer Added") {
@@ -334,7 +366,7 @@ const EventLine: FC<{
             Transfer
           </Button>
         </View> */}
-          <View style={{ marginLeft: 5, height: 40 }}>
+          <View style={{ marginLeft: 5, height: containerHeight }}>
             <Button
               color="green"
               size="sm"
@@ -346,7 +378,37 @@ const EventLine: FC<{
               View
             </Button>
           </View>
-          <View style={{ marginLeft: 5, height: 40 }}>
+          <View style={{ marginLeft: 5, height: containerHeight }}>
+            <Button
+              color="blue"
+              size="sm"
+              titleStyle={{ fontSize: 12 }}
+              onPress={() => {
+                if (event.fake) {
+                  Linking.openURL("https://console.firebase.google.com/u/1/project/uevents-a9365/firestore/data/~2Fevents-test~2F" + event.id);
+                } else {
+                  Linking.openURL("https://console.firebase.google.com/u/1/project/uevents-a9365/firestore/data/~2Fevents~2F" + event.id);
+                }
+              }}
+            >
+              DB event
+            </Button>
+          </View>
+          {event.organizerType === "Organizer Added" && (
+            <View style={{ marginLeft: 5, height: containerHeight }}>
+              <Button
+                color="blue"
+                size="sm"
+                titleStyle={{ fontSize: 12 }}
+                onPress={() => {
+                  Linking.openURL("https://console.firebase.google.com/u/1/project/uevents-a9365/firestore/data/~2Fusers~2F" + event.organizer);
+                }}
+              >
+                DB organizer
+              </Button>
+            </View>
+          )}
+          <View style={{ marginLeft: 5, height: containerHeight }}>
             {event.state === "Pending" || event.state === "Rejected" ? (
               <Button
                 size="sm"
@@ -367,7 +429,7 @@ const EventLine: FC<{
           <View
             style={{
               marginLeft: 5,
-              height: 40,
+              height: containerHeight,
             }}
           >
             {event.state === "Pending" || event.state === "Published" || event.state === "Reported" ? (

@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { daysOfWeekArray, daysOfWeekBrief, emojiUrl, uid } from "../../../utils/util";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { EventObject, defaultEvent, recurrenceTypeArray } from "../../../utils/model/EventObject";
@@ -26,9 +26,14 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   let isFake = route.params?.fake ?? false;
   let dbPath = isFake ? "events-test" : "events";
 
+  // Editing event
+  let editing = route.params?.id != undefined;
+  console.log("Editing event: " + editing + " with id: " + route.params?.id);
+  let previousEventId = route.params?.id ?? "dummy";
+
   // States
-  const [id, setId] = useState(uid());
-  // const [loading, dbEvent, setDbEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, id);
+  const [id, setId] = useState(previousEventId ?? uid());
+  const [loading, dbEvent, setDbEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, previousEventId);
   const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
   const [loading2, users, addUsers] = useStateWithFireStoreCollection<Organizer>("users");
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
@@ -38,8 +43,15 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [maxPriceError, setMaxPriceError] = useState("");
   const [topError, setTopError] = useState("");
 
+  useEffect(() => {
+    if (editing && dbEvent) {
+      console.log("Updating local event with DB event. This only happens if we are editing an event");
+      setLocalEvent(dbEvent);
+    }
+  }, [loading]);
+
   // Loading
-  if (loading2) {
+  if (loading || loading2) {
     return <Loading />;
   }
 
