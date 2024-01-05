@@ -5,9 +5,7 @@ import { daysOfWeekArray, daysOfWeekBrief, emojiUrl, uid } from "../../../utils/
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { EventObject, defaultEvent, recurrenceTypeArray } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
-import { Button } from "@rneui/themed";
 import { ButtonGroup, CheckBox, Input } from "react-native-elements";
-import { Icon } from "@rneui/themed";
 import { Dropdown } from "react-native-element-dropdown";
 import { View, StyleSheet, Text, Platform, ScrollView } from "react-native";
 import { Organizer } from "../../../utils/model/Organizer";
@@ -16,12 +14,12 @@ import CustomButton from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { Timestamp } from "firebase/firestore";
 import { SvgUri } from "react-native-svg";
-import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
 import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
+/// Form to create event intended for web use by admin only
 export const CreateEventWeb = ({ route, navigation }: props) => {
   // States
   const [id, setId] = useState(uid());
@@ -33,10 +31,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   // Error messages
   const [minPriceError, setMinPriceError] = useState("");
   const [maxPriceError, setMaxPriceError] = useState("");
-
-  // Time
-  const [startTimeVisible, setStartTimeVisible] = useState(false);
-  const [startDateVisible, setStartDateVisible] = useState(false);
+  const [topError, setTopError] = useState("");
 
   // Loading
   if (loading || loading2) {
@@ -60,6 +55,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   }
 
   // Days of the week to index
+  // TODO: Move this logic into common code
   let daysOfWeek = localEvent.recurrenceCustomDays;
   let daysOfWeekIndex: number[] = [];
   if (daysOfWeek) {
@@ -68,7 +64,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     }
   }
 
-  // TODO: Investigate why the background color is broken
   return (
     <ScrollView>
       <View style={{ margin: 50, maxWidth: 1000, marginBottom: windowHeight }}>
@@ -498,16 +493,73 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         <CustomButton
           style={styles.formElement}
           onPress={() => {
-            // TODO: Complete
+            let temp = localEvent;
+            temp.id = id;
+            temp.state = "Pending";
+
+            // Check name
+            if (temp.name == "") {
+              setTopError("Could not submit event. Please enter a name");
+              return;
+            }
+
+            // Check priceMin
+            if (isNaN(temp.priceMin)) {
+              setTopError("Could not submit event. Please enter a number for the minimum price");
+              return;
+            }
+
+            // Check description
+            if (temp.description == "") {
+              setTopError("Could not submit event. Please enter a description");
+              return;
+            }
+
+            // Check address
+            if (temp.address == "") {
+              setTopError("Could not submit event. Please enter an address");
+              return;
+            }
+
+            temp.organizerType = "Organizer Added"; // TODO: Confirm
+
+            // Check organizer
+            if (temp.organizer == "") {
+              setTopError("Could not submit event. Please select an organizer");
+              return;
+            }
+
+            // Check start time
+            if (temp.startTime == undefined) {
+              setTopError("Could not submit event. Please select a start time");
+              return;
+            }
+
+            // Check emoji
+            if (temp.emoji == "") {
+              setTopError("Could not submit event. Please enter an emoji");
+              return;
+            }
+
+            // Write event
+            setDbEvent(temp);
+            navigation.pop();
           }}
         >
           Submit
         </CustomButton>
+        <Text style={{ ...styles.formElement, color: "red" }}>{topError}</Text>
       </View>
       <Text>End of page</Text>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  formElement: {
+    marginVertical: 10,
+  },
+});
 
 const data = [
   {
@@ -664,9 +716,3 @@ const data = [
   { label: "RDU", address: "Rideau Residence, Ottawa, Ontario" },
   { label: "Dome", address: "Lees 200 - Bloc F, Ottawa, Ontario" },
 ];
-
-const styles = StyleSheet.create({
-  formElement: {
-    marginVertical: 10,
-  },
-});

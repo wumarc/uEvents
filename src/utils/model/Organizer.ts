@@ -1,5 +1,3 @@
-import { EventObject } from "./EventObject";
-
 export type Organizer = {
   id: string;
   type: "organizer";

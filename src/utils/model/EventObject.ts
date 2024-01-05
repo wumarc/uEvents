@@ -56,9 +56,9 @@ export type EventObject = {
   priceMax?: number;
   // priceDescription?: string; // If needed, a description of the different prices
   description: string; // 750 characters max TODO change it to 400?
-  location?: string; // Building name and room number // If empty: TBD
-  address?: string; // If empty: TBD
-  roomNumber?: string; // If empty: TBD
+  location?: string; // If empty: TBD. In case of on campus, this is the building name. Else, building name
+  address?: string; // If empty: TBD. In case of on campus, this is the building address. Else, building address
+  roomNumber?: string; // If empty: TBD. Optional
   organizerType: "Manually Added" | "Organizer Added"; // TODO: Document organizer type better
   organizer: string; // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
   startTime: Timestamp;
