@@ -1,26 +1,19 @@
-import { FlatList, TouchableOpacity, View, Clipboard, Platform } from "react-native";
+import { FlatList, TouchableOpacity, View, Clipboard, Platform, ScrollView } from "react-native";
 import { FC, useState } from "react";
 import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
-import { StyleSheet } from "react-native";
-import { defaultStudent, Student } from "../../../utils/model/Student";
-import { Avatar, SearchBar, Switch } from "react-native-elements";
-import {
-  useSateWithFireStore,
-  useSateWithFireStoreArray,
-  useStateWithFireStoreCollection,
-  useStateWithFireStoreDocument,
-} from "../../../utils/useStateWithFirebase";
-import { emojiUrl, getFirebaseUserID, getNextDate } from "../../../utils/util";
-import { getAuth, signOut } from "firebase/auth";
+import { CheckBox, SearchBar, Switch } from "react-native-elements";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { emojiUrl, getNextDate } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import { EventObject } from "../../../utils/model/EventObject";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import { SvgUri } from "react-native-svg";
 import { colours } from "../../subatoms/Theme";
 import { searchAlgo } from "../../../utils/search";
+import { Student } from "../../../utils/model/Student";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 // To access the type of user, use route.params.userType
@@ -28,17 +21,29 @@ type props = NativeStackScreenProps<RootStackParamList, "Profile">;
 const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
 
 export const AllEvents = ({ route, navigation }: props) => {
+  // Use state
   const [loading, events, add, del] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading3, eventsFake, addFake, delFake] = useStateWithFireStoreCollection<EventObject>("events-test");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Student>("users");
-
   const [search, setSearch] = useState("");
-  const [detailed, setDetailed] = useState(true);
 
+  // Options
+  const [detailed, setDetailed] = useState(true);
+  const [showOutdated, setShowOutdated] = useState(false);
+  const [showDraft, setShowDraft] = useState(true);
+  const [showPending, setShowPending] = useState(true);
+  const [showPublished, setShowPublished] = useState(true);
+  const [showRejected, setShowRejected] = useState(true);
+  const [showReported, setShowReported] = useState(true);
+  const [showFake, setShowFake] = useState(true);
+  const [showFakeOnly, setShowFakeOnly] = useState(false);
+
+  // Loading
   if (loading || loading2 || loading3) {
     return <Text>Loading</Text>;
   }
 
+  // Filter events
   let filteredEvents = events as EventObject[];
   filteredEvents = filteredEvents.concat(eventsFake as EventObject[]);
   filteredEvents = searchAlgo(search, filteredEvents);
@@ -57,47 +62,131 @@ export const AllEvents = ({ route, navigation }: props) => {
   });
 
   // Remove outdated events
-  // !!! Comment this out to see all events !!!
   filteredEvents = filteredEvents.filter((event) => {
-    if (event.state != "Published") {
-      return true;
+    if (!showOutdated) {
+      let [startTime, endTime] = getNextDate(event);
+      if (endTime.getTime() < Date.now()) {
+        return false;
+      }
     }
-    let [startTime, endTime] = getNextDate(event);
-    if (endTime.getTime() < Date.now()) {
+    if (!showDraft && event.state === "Draft") {
+      return false;
+    }
+    if (!showPending && event.state === "Pending") {
+      return false;
+    }
+    if (!showPublished && event.state === "Published") {
+      return false;
+    }
+    if (!showRejected && event.state === "Rejected") {
+      return false;
+    }
+    if (!showReported && event.state === "Reported") {
+      return false;
+    }
+    if (!showFake && event.fake) {
+      return false;
+    }
+    if (showFakeOnly && !event.fake) {
       return false;
     }
     return true;
   });
-  // !!! Comment this out to see all events !!!
 
   return (
-    <View>
+    <View style={{ height: "100%" }}>
       {/* Search Bar */}
-      <View style={{ display: "flex", flexDirection: "row" }}>
-        <SearchBar
-          platform="default"
-          inputContainerStyle={{
-            borderRadius: 6,
-            height: 38,
-            backgroundColor: "#ebebeb",
+      {/* TODO: Fix error */}
+      <SearchBar
+        platform="default"
+        inputContainerStyle={{
+          borderRadius: 6,
+          height: 38,
+          backgroundColor: "#ebebeb",
+        }}
+        containerStyle={{
+          backgroundColor: "white",
+          flex: 1,
+          borderBottomColor: "transparent",
+          borderTopColor: "transparent",
+        }}
+        onChange={(value) => {
+          setSearch(value.nativeEvent.text);
+        }}
+        placeholder="Search events by name or category"
+        // placeholderTextColor="white"
+        value={search}
+        autoCapitalize="none"
+        selectionColor={colours.purple}
+      />
+      {/* TODO: Fix the weird top margin */}
+      <View style={{ display: "flex", flexDirection: "row", marginTop: 30, flexWrap: "wrap" }}>
+        <CheckBox
+          title="Detailed"
+          checked={detailed}
+          onPress={() => {
+            setDetailed(!detailed);
           }}
-          containerStyle={{
-            backgroundColor: "white",
-            flex: 1,
-            borderBottomColor: "transparent",
-            borderTopColor: "transparent",
-          }}
-          onChangeText={(value) => setSearch(value)}
-          placeholder="Search events by name or category"
-          // placeholderTextColor="white"
-          value={search}
-          autoCapitalize="none"
-          selectionColor={colours.purple}
         />
-        <Switch value={detailed} onValueChange={() => setDetailed(!detailed)} color="purple" />
+        <CheckBox
+          title="Show Outdated"
+          checked={showOutdated}
+          onPress={() => {
+            setShowOutdated(!showOutdated);
+          }}
+        />
+        <CheckBox
+          title="Show Draft"
+          checked={showDraft}
+          onPress={() => {
+            setShowDraft(!showDraft);
+          }}
+        />
+        <CheckBox
+          title="Show Pending"
+          checked={showPending}
+          onPress={() => {
+            setShowPending(!showPending);
+          }}
+        />
+        <CheckBox
+          title="Show Published"
+          checked={showPublished}
+          onPress={() => {
+            setShowPublished(!showPublished);
+          }}
+        />
+        <CheckBox
+          title="Show Rejected"
+          checked={showRejected}
+          onPress={() => {
+            setShowRejected(!showRejected);
+          }}
+        />
+        <CheckBox
+          title="Show Reported"
+          checked={showReported}
+          onPress={() => {
+            setShowReported(!showReported);
+          }}
+        />
+        <CheckBox
+          title="Show Fake"
+          checked={showFake}
+          onPress={() => {
+            setShowFake(!showFake);
+          }}
+        />
+        <CheckBox
+          title="Show Fake Only"
+          checked={showFakeOnly}
+          onPress={() => {
+            setShowFakeOnly(!showFakeOnly);
+          }}
+        />
       </View>
       <FlatList
-        style={{ height: "90%" }}
+        style={{ height: "100%" }}
         data={filteredEvents?.sort((a, b) => {
           if (a.state == b.state) {
             // Order by start time

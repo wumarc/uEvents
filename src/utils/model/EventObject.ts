@@ -36,7 +36,11 @@ export type EventObject = {
   // If empty: TBD. Optional
   roomNumber?: string;
 
-  // TODO: Document organizer type better
+  // This is not a good name, but too late to change now since it is in the database
+  // If manually added, it means this field corresponds to the name of the organizer (not the id)
+  // This option is deprecated.
+  // If organizer added, it means this field corresponds to the id of the organizer (not the name)
+  // To know if an event is manually added or organizer added, check the authentic field of the organizer
   organizerType: "Manually Added" | "Organizer Added";
 
   // If manually added, this is the name of the organizer. If organizer added, this is the id of the organizer
