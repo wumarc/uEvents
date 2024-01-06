@@ -1,13 +1,13 @@
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { SearchBar } from "@rneui/themed";
-import { EventObject } from "../../../utils/model/EventObject";
-import Event from "../../organisms/Event";
-import { colours } from "../../subatoms/Theme";
+import { EventObject } from "../../../../utils/model/EventObject";
+import Event from "../../../organisms/Event";
+import { colours } from "../../../subatoms/Theme";
 import { TouchableOpacity } from "react-native";
-import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection } from "../../../../utils/useStateWithFirebase";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
+import { RootStackParamList } from "../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Search">;
 // To access the type of user, use route.params.userType

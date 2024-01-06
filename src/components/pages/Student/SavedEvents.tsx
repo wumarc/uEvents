@@ -12,11 +12,19 @@ import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { LoginDialog } from "../../atoms/LoginDialog";
 import CustomButton from "../../atoms/CustomButton";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 
 const SavedEvents = ({ route, navigation }: props) => {
-  if (!isLogged()) {
+  const [user, loading3, error] = useAuthState(auth);
+
+  if (loading3) {
+    return <Loading />;
+  }
+
+  if (!user) {
     // User is not logged in
 
     return (

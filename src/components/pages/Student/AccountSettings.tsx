@@ -1,25 +1,17 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
-import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
+import { colours, fonts } from "../../subatoms/Theme";
 import { useState } from "react";
 import { Input } from "react-native-elements";
 import { auth } from "../../../firebaseConfig";
-import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
-import { defaultStudent, Student } from "../../../utils/model/Student";
-import { getFirebaseUserID } from "../../../utils/util";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/themed";
 import CustomInput from "../../atoms/CustomInput";
-import { Button } from "@rneui/themed";
-
-type props = NativeStackScreenProps<RootStackParamList, "Profile">;
-// To access the type of user, use route.params.userType
 
 const AccountSettings = () => {
-  const [loading, profile, setProfile] = useSateWithFireStore<Student>("students" + "/" + getFirebaseUserID(), "info", defaultStudent);
-
+  // States
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);

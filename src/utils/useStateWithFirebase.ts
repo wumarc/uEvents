@@ -55,8 +55,9 @@ export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(pa
   return [loading, dbListenedValue, set] as const;
 }
 
-export function useStateWithFireStoreDocumentLogged<T extends { [x: string]: any }>(pathToDocument: string, id: string) {
-  if (!isLogged()) {
+export function useStateWithFireStoreDocumentLogged<T extends { [x: string]: any }>(logged: boolean, pathToDocument: string, id: string) {
+  if (!logged) {
+    useStateWithFireStoreDocument(pathToDocument, "dummy");
     return [false, undefined, undefined] as const;
   }
   return useStateWithFireStoreDocument<T>(pathToDocument, id);

@@ -12,7 +12,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDocumentToCollection } from "../../../utils/useStateWithFirebase";
 import { defaultStudent, Student } from "../../../utils/model/Student";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
 import CustomButton from "../../atoms/CustomButton";
@@ -113,7 +113,7 @@ export const WelcomePage: FC = ({ navigation }: any) => {
   );
 };
 
-export const Login: FC = ({ setIsSigningUp }: any) => {
+export const Login: FC = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -137,6 +137,8 @@ export const Login: FC = ({ setIsSigningUp }: any) => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      navigation.pop();
+      navigation.pop();
     } catch (error: any) {
       // setError(error.message);
       setError("Invalid email or password, please try again");
@@ -248,7 +250,7 @@ export const Login: FC = ({ setIsSigningUp }: any) => {
   );
 };
 
-export const Signup: FC = ({ setIsSigningUp }: any) => {
+export const Signup: FC = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState(""); // Only for organizers
   const [password, setPassword] = useState("");
@@ -286,7 +288,9 @@ export const Signup: FC = ({ setIsSigningUp }: any) => {
           authentic: true,
         });
       }
-      setIsSigningUp(false);
+      navigation.pop();
+      navigation.pop();
+      // setIsSigningUp(false);
       return true;
     } catch (error: any) {
       console.log(error.message);

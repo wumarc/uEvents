@@ -14,6 +14,8 @@ import { SearchBar } from "react-native-elements";
 import { Organizer } from "../../../utils/model/Organizer";
 import { getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../../utils/util";
 import { Divider } from "@rneui/themed";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -23,10 +25,11 @@ const Home = ({ route, navigation }: props) => {
   const [listView, setListView] = useState(true);
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
+  const [user, loading4, error] = useAuthState(auth);
+  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
   // Loading
-  if (loading || loading2 || loading3) {
+  if (loading || loading2 || loading3 || loading4) {
     return <Loading />;
   }
 
@@ -71,7 +74,7 @@ const Home = ({ route, navigation }: props) => {
       return organizer?.approved ?? false;
     });
 
-    if (isLogged()) {
+    if (user) {
       // Remove blocked or hidden events
       filteredEvents = filteredEvents.filter((event) => {
         if ((student?.hidden ?? []).includes(event.id)) {

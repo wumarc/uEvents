@@ -22,6 +22,8 @@ import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
 import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 
@@ -34,10 +36,11 @@ const OrganizerProfile = ({ route, navigation }: props) => {
   const [dialogVisible, setdialogVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [loading5, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
+  const [user, loading6, error] = useAuthState(auth);
+  const [loading5, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
   // Loading
-  if (loading || loading2 || loading3 || loading4 || loading5) {
+  if (loading || loading2 || loading3 || loading4 || loading5 || loading6) {
     return <Loading />;
   }
 
@@ -72,7 +75,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
   filteredEvents = filteredEvents.filter((event) => event.state == "Published");
 
   // Remove blocked or hidden events
-  if (isLogged()) {
+  if (user) {
     filteredEvents = filteredEvents.filter((event) => {
       if ((student?.hidden ?? []).includes(event.id)) {
         return false;

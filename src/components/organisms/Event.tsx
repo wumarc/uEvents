@@ -12,6 +12,8 @@ import FirebaseImage from "./FirebaseImage";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Platform } from "react-native";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebaseConfig";
 
 // Event component props
 interface EventProps {
@@ -30,16 +32,17 @@ const Event: React.FC<EventProps> = (props) => {
 
   // States
   const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, props.id);
-  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged<Student>("users", getFirebaseUserIDOrEmpty());
   const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>("users", props.organizer);
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
+  const [user, loading4, error] = useAuthState(auth);
+  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged<Student>(user != null, "users", getFirebaseUserIDOrEmpty());
 
-  if (loading || loading2 || loading3 || !event) {
+  if (loading || loading2 || loading3 || loading4 || !event) {
     return <Loading />;
   }
 
   let isSaved = false;
-  if (isLogged() && student) {
+  if (user && student) {
     isSaved = (student.saved ?? []).includes(props.id);
   }
 

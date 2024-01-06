@@ -7,21 +7,24 @@ import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import { SearchBar } from "react-native-elements";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebaseConfig";
 
 const BrowseOrganizers = ({ navigation }: any) => {
   // States
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
   const [search, setSearch] = useState("");
-  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
+  const [user, loading3, error] = useAuthState(auth);
+  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
   // Loading
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
   let filteredOrganizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
 
-  if (isLogged()) {
+  if (user) {
     filteredOrganizers = filteredOrganizers.filter((organizer) => {
       if ((student.blocked ?? []).includes(organizer.id)) {
         return false;

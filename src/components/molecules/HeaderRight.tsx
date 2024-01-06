@@ -9,10 +9,11 @@ import { Button } from "@rneui/base";
 import { Text } from "react-native";
 import CustomButton from "../atoms/CustomButton";
 import { LoginDialog } from "../atoms/LoginDialog";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebaseConfig";
 
 const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
   // States
-  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
   const [loading2, event, setEvent] = useStateWithFireStoreDocument("events", props.eventID === "" ? "0" : props.eventID);
   const [visible, setVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
@@ -20,9 +21,11 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
   const [blockVisible, setBlockVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
   const [loginReason, setLoginReason] = useState("");
+  const [user, loading3, error] = useAuthState(auth);
+  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
   // Loading
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <MaterialCommunityIcons name="heart" color={colours.black} size={30} />;
   }
 
@@ -35,7 +38,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         color={saved ? colours.purple : colours.black}
         size={30}
         onPress={() => {
-          if (!isLogged()) {
+          if (!user) {
             setLoginReason("You need to be logged in to save events.");
             setLoginVisible(true);
             return;
@@ -61,7 +64,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           color={colours.black}
           size={30}
           onPress={() => {
-            if (!isLogged()) {
+            if (!user) {
               setLoginReason("You need to be logged in to report events.");
               setLoginVisible(true);
               return;

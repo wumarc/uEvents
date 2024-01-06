@@ -8,14 +8,18 @@ import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } fr
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { Text } from "react-native";
 import { colours, fonts } from "../subatoms/Theme";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebaseConfig";
 
 const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) => {
-  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
-
+  // States
+  const [user, loading2, error] = useAuthState(auth);
+  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
   const [visible, setVisible] = useState(false);
   const [blockVisible, setBlockVisible] = useState(false);
 
-  if (loading) {
+  // Loading
+  if (loading || loading2) {
     return <MaterialCommunityIcons name="dots-vertical" color={colours.black} size={30} />;
   }
 

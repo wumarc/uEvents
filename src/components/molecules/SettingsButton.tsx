@@ -6,9 +6,10 @@ import { borderRadius, colours, fonts } from "../subatoms/Theme";
 interface buttonProps {
   buttonName: string;
   onPressListener: any;
+  disabled?: boolean;
 }
 
-const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
+const SettingsButton = ({ buttonName, onPressListener, disabled }: buttonProps) => {
   const iconSize = 13;
   const fontSize = 23;
   const marginBottom = "4%";
@@ -33,7 +34,12 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
 
   return (
     <View style={{ marginBottom: marginBottom }}>
-      <Button buttonStyle={{ backgroundColor: colours.primaryGrey }} containerStyle={{ borderRadius: borderRadius.large }} onPress={onPressListener}>
+      <Button
+        buttonStyle={{ backgroundColor: colours.primaryGrey }}
+        containerStyle={{ borderRadius: borderRadius.large }}
+        onPress={onPressListener}
+        disabled={disabled}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -55,9 +61,9 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
               type={findTypebyKey(buttonName)}
               color="transparent"
               size={iconSize}
-              iconStyle={{ fontSize: fontSize, color: colours.black }}
+              iconStyle={{ fontSize: fontSize, color: disabled ? "grey" : colours.black }}
             />
-            <Text style={fonts.title3}>{buttonName}</Text>
+            <Text style={{ ...fonts.title3, color: disabled ? "grey" : undefined }}>{buttonName}</Text>
           </View>
 
           <View>
@@ -67,7 +73,7 @@ const SettingsButton = ({ buttonName, onPressListener }: buttonProps) => {
               type="ionicon"
               color="transparent"
               size={iconSize}
-              iconStyle={fonts.title3}
+              iconStyle={{ ...fonts.title3, color: disabled ? "grey" : undefined }}
               // containerStyle={{padding: 0, margin: 2}}
             />
           </View>

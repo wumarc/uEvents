@@ -7,13 +7,23 @@ import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
 const BlockedOrganizers = ({ navigation }: any) => {
+  // States
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
-  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
+  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
+  // Loading
   if (loading || loading2) {
     return <Loading />;
   }
 
+  // Assuming user is logged in
+  // This page should only be accessible if the user is logged in
+  if (!student) {
+    navigation.navigate("Home", {});
+    return <Loading />;
+  }
+
+  // Filtered organizers
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
   let blockedOrganizers = student.blocked ?? [];
 

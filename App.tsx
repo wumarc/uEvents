@@ -9,14 +9,14 @@ import { View, Text } from "react-native";
 import { FC } from "react";
 // import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
-import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "./src/utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty, isLogged } from "./src/utils/util";
 import { Error } from "./src/components/pages/Common/Error";
 // import { LogBox } from "react-native";
 import { Button } from "react-native-elements";
 
 export default function App() {
-  const [user, loading, error] = useAuthState(auth);
+  // const [user, loading, error] = useAuthState(auth);
 
   // Ignore all log messages
   // LogBox.ignoreAllLogs();
@@ -37,16 +37,16 @@ export default function App() {
   //   );
   // }
 
-  if (loading) {
-    return <Loading />;
-  } else if (error) {
-    console.error(error);
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>{"Oops! There is a problem. Check your internet connection! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // } else if (error) {
+  //   console.error(error);
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <Text>{"Oops! There is a problem. Check your internet connection! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
+  //     </View>
+  //   );
+  // }
   return (
     // <PaperProvider>
     <AppInner />
@@ -64,14 +64,21 @@ const styles = StyleSheet.create({
 
 // This is an inner component to have access to the user type
 const AppInner: FC = () => {
-  if (!isLogged()) {
-    return <MainStudent userType="student" />;
+  // States
+  // const [user, loading, error] = useAuthState(auth);
+  const [loading2, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty() == "" ? "Dummy" : getFirebaseUserIDOrEmpty());
+
+  if (loading2) {
+    return <Loading />;
   }
 
-  const [loading, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  // if (error) {
+  //   console.error(error);
+  //   return <Error message="Oops! There is a problem. Check your internet connection! If the error persists, please contact us at uevents.dev@uottawa.ca" />;
+  // }
 
-  if (loading) {
-    return <Loading />;
+  if (!isLogged()) {
+    return <MainStudent userType="student" />;
   }
 
   if (!userData) {

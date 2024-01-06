@@ -13,6 +13,8 @@ export function getFirebaseUserIDOrEmpty(): string {
   return id ? id : "";
 }
 
+/// Returns if the user is logged in or not
+/// This will not update properly if it changes. Better to use hook instead useAuthState
 export function isLogged(): boolean {
   return auth.currentUser != null;
 }

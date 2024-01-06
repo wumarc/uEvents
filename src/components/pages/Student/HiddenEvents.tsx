@@ -11,23 +11,32 @@ import { Loading } from "../Common/Loading";
 
 import { Organizer } from "../../../utils/model/Organizer";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 // To access the type of user, use route.params.userType
 
 export const HiddenEvents = ({ route, navigation }: props) => {
-  /* ---------------------------------- Hooks --------------------------------- */
+  // States
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
+  const [user, loading4, error] = useAuthState(auth);
+  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
-  if (loading || loading2 || loading3) {
+  // Loading
+  if (loading || loading2 || loading3 || loading4) {
+    return <Loading />;
+  }
+
+  // Assuming user is logged in
+  // This page should only be accessible if the user is logged in
+  if (!student || !setStudent) {
+    navigation.navigate("Home", {});
     return <Loading />;
   }
 
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
-
-  /* ---------------------------- Filter the events --------------------------- */
 
   // Filtered events
   let filteredEvents = events as EventObject[];

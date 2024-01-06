@@ -4,7 +4,7 @@ import { Button } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { defaultStudent, Student } from "../../../utils/model/Student";
 import { useSateWithFireStore } from "../../../utils/useStateWithFirebase";
-import { getFirebaseUserID } from "../../../utils/util";
+import { getFirebaseUserID, isLogged } from "../../../utils/util";
 import { User, deleteUser, getAuth, signInWithEmailAndPassword, signOut, updatePassword } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./main";
@@ -19,13 +19,19 @@ import CustomButton from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/base";
 import { Dialog } from "react-native-elements";
 import * as Clipboard from "expo-clipboard";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
-// To access the type of user, use route.params.userType
 
 const Settings = ({ route, navigation }: props) => {
+  // States
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [dialogVisible, setdialogVisible] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const logout = () => {
     const auth = getAuth();
@@ -38,35 +44,6 @@ const Settings = ({ route, navigation }: props) => {
       });
   };
 
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [email, setEmail] = useState(auth.currentUser?.email);
-
-  const updateUserPassword = () => {
-    let user = auth.currentUser;
-    if (user == null) {
-      return;
-    }
-    signInWithEmailAndPassword(auth, user.email as string, oldPassword)
-      .then((userCredential) => {
-        // Signed in
-        user = userCredential.user;
-        updatePassword(user, newPassword)
-          .then(() => {
-            // Update successful.
-            alert("Password updated successfully");
-            setOldPassword("");
-            setNewPassword("");
-          })
-          .catch((error) => {
-            alert("Could not update password");
-          });
-      })
-      .catch((error) => {
-        alert("You entered the old password incorrectly");
-      });
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -74,48 +51,67 @@ const Settings = ({ route, navigation }: props) => {
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Settings</Text>
         </View>
+        {user && <Text>Hi {auth.currentUser?.email}! Welcome to uEvents.</Text>}
 
         {/* Settings */}
         <View style={{ marginTop: "10%" }}>
-          <SettingsButton buttonName={"My Profile"} onPressListener={() => navigation.navigate("AccountSettingsView", {})} />
+          {/* Login button */}
+          {!user && (
+            <View style={{ marginBottom: "4%" }}>
+              <CustomButton
+                onPress={() => {
+                  navigation.navigate("Welcome", {});
+                }}
+              >
+                Login
+              </CustomButton>
+              <Text>Log in to access all features of this page.</Text>
+            </View>
+          )}
+
+          <SettingsButton buttonName={"My Profile"} onPressListener={() => navigation.navigate("AccountSettingsView", {})} disabled={!user} />
           <SettingsButton buttonName={"Privacy Policy"} onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")} />
           <SettingsButton buttonName={"Contact Us"} onPressListener={() => setdialogVisible(true)} />
           <SettingsButton
+            disabled={!user}
             buttonName={"Hidden Events"}
             onPressListener={() => {
               navigation.navigate("HiddenEventsView", {});
             }}
           />
           <SettingsButton
+            disabled={!user}
             buttonName={"Blocked Organizers"}
             onPressListener={() => {
               navigation.navigate("BlockedOrganizersView", {});
             }}
           />
-          <SettingsButton buttonName={"Delete Account"} onPressListener={() => setConfirmDelete(true)} />
+          <SettingsButton buttonName={"Delete Account"} onPressListener={() => setConfirmDelete(true)} disabled={!user} />
 
           {/* Log Out Button */}
-          <Button buttonStyle={{ backgroundColor: colours.primaryGrey }} containerStyle={{ borderRadius: borderRadius.large }} onPress={() => logout()}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                flex: 1,
-              }}
-            >
+          {user && (
+            <Button buttonStyle={{ backgroundColor: colours.primaryGrey }} containerStyle={{ borderRadius: borderRadius.large }} onPress={() => logout()}>
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: "center",
-                  padding: 0,
-                  margin: 0,
+                  justifyContent: "space-between",
+                  flex: 1,
                 }}
               >
-                <Icon reverse name="log-out-outline" type="ionicon" color="transparent" size={13} iconStyle={{ fontSize: 23, color: "red" }} />
-                <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>Log Out</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
+                  <Icon reverse name="log-out-outline" type="ionicon" color="transparent" size={13} iconStyle={{ fontSize: 23, color: "red" }} />
+                  <Text style={{ fontSize: 17, fontWeight: "300", color: "red" }}>Log Out</Text>
+                </View>
               </View>
-            </View>
-          </Button>
+            </Button>
+          )}
         </View>
 
         {/* Delete Account Confirmation */}
