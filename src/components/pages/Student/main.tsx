@@ -7,7 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SafeAreaView, StatusBar, StyleSheet, Platform } from "react-native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import EventDetails from "./EventDetails";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useTheme } from "react-native-paper";
 import AccountSettings from "./AccountSettings";
 import OrganizerProfile from "./OrganizerProfile";
@@ -18,6 +18,7 @@ import HeaderRight from "../../molecules/HeaderRight";
 import ProfileHeaderRight from "../../molecules/ProfileHeaderRight";
 import { HiddenEvents } from "./HiddenEvents";
 import BlockedOrganizers from "./BlockedOrganizers";
+import SignIn, { Login, Signup, WelcomePage } from "../Common/SignIn";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,7 +26,7 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   MainView: {};
   AccountSettingsView: {};
-  EventDetailsView: { eventID: string; organizerID: string; imageID: string };
+  EventDetailsView: { eventID: string; organizerID: string; imageID: string; fake?: boolean };
   EventSignUpView: {};
   Events: {};
   Saved: {};
@@ -169,6 +170,33 @@ const Main: FC<{ userType: string }> = (props) => {
               headerStyle: { backgroundColor: colours.white },
               headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
+          />
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomePage}
+            options={({ navigation }) => ({
+              headerStyle: { backgroundColor: colours.white },
+              headerLeft: () => <HeaderLeft navigation={navigation} />,
+            })}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            initialParams={{ signInHandler: {} }}
+            options={{
+              headerTintColor: colours.black,
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            initialParams={{ signInHandler: {} }}
+            options={{
+              headerTintColor: colours.black,
+              headerBackTitleVisible: false,
+              headerTitle: "Register",
+            }}
           />
         </Stack.Navigator>
       </SafeAreaView>

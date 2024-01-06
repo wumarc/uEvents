@@ -13,6 +13,10 @@ export function getFirebaseUserIDOrEmpty(): string {
   return id ? id : "";
 }
 
+export function isLogged(): boolean {
+  return auth.currentUser != null;
+}
+
 /**
  * Returns a unique uid
  * TODO: I am not sure this is unique. Could use the GCP one instead

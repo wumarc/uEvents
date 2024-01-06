@@ -1,8 +1,8 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
-import { emojiUrl, getFirebaseUserIDOrEmpty, getNextDate } from "../../utils/util";
+import { emojiUrl, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
-import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 import { nextStartTime, nextEndTime, EventObject, getTimeInAMPM, formattedDate } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
@@ -20,42 +20,28 @@ interface EventProps {
   navigation: any;
   onSaveEvent: any;
   listView: boolean;
+  fake?: boolean;
 }
 
 const Event: React.FC<EventProps> = (props) => {
-  const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>("events", props.id);
+  // Fake
+  let isFake = props.fake ?? false;
+  let dbPath = isFake ? "events-test" : "events";
 
-  const [loading2, student, setStudent] = useStateWithFireStoreDocument<Student>("users", getFirebaseUserIDOrEmpty());
-
+  // States
+  const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, props.id);
+  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged<Student>("users", getFirebaseUserIDOrEmpty());
   const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>("users", props.organizer);
-
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
 
   if (loading || loading2 || loading3 || !event) {
     return <Loading />;
   }
 
-  const isSaved = (student.saved ?? []).includes(props.id);
-
-  let image = { uri: "https://storage.googleapis.com/uevents-a9365.appspot.com/events/" + event.images[0] };
-
-  const saveEvent = () => {
-    if (isSaved) {
-      setStudent({
-        ...student,
-        saved: student.saved.filter((id) => id != props.id),
-      });
-
-      props.onSaveEvent(false);
-    }
-    if (!isSaved) {
-      setStudent({
-        ...student,
-        saved: [...student.saved, props.id],
-      });
-      props.onSaveEvent(true);
-    }
-  };
+  let isSaved = false;
+  if (isLogged() && student) {
+    isSaved = (student.saved ?? []).includes(props.id);
+  }
 
   // True start time and end time
   let [startTime, endTime, hasEnd] = getNextDate(event);
@@ -83,6 +69,7 @@ const Event: React.FC<EventProps> = (props) => {
           eventID: props.id,
           organizerID: event.organizer,
           imageID: "",
+          fake: isFake,
         });
       }}
     >

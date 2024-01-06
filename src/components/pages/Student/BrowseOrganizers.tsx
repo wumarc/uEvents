@@ -1,31 +1,34 @@
 import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import { SearchBar } from "react-native-elements";
 import { useState } from "react";
 
 const BrowseOrganizers = ({ navigation }: any) => {
+  // States
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
-  const [loading2, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
-
   const [search, setSearch] = useState("");
+  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
 
+  // Loading
   if (loading || loading2) {
     return <Loading />;
   }
 
-  let organizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
+  let filteredOrganizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
 
-  let filteredOrganizers = organizers.filter((organizer) => {
-    if ((student.blocked ?? []).includes(organizer.id)) {
-      return false;
-    }
-    return true;
-  });
+  if (isLogged()) {
+    filteredOrganizers = filteredOrganizers.filter((organizer) => {
+      if ((student.blocked ?? []).includes(organizer.id)) {
+        return false;
+      }
+      return true;
+    });
+  }
 
   // Sort by name
   filteredOrganizers.sort((a, b) => {

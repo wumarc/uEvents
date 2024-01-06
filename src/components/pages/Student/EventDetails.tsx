@@ -18,24 +18,16 @@ type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
 
 const EventDetails = ({ route, navigation }: props) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", route.params.eventID);
-  const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
+  // Fake
+  let isFake = route.params.fake ?? false;
+  let dbPath = isFake ? "events-test" : "events";
 
+  // States
+  const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(dbPath, route.params.eventID);
+  const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
 
-  // useEffect(() => {
-  //   if (!loading) {
-  //     const [loading2, organizer, set2] = useStateWithFireStoreDocument<EventObject>(
-  //       "users",
-  //       event.organizer
-  //     );
-  //     if (!loading2) {
-  //       setOrganizerName(organizer.name);
-  //     }
-  //   }
-  // }, [event]);
-
+  // Loading
   if (loading || loading2) {
     return <Loading />;
   }

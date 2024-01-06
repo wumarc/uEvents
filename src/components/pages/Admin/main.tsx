@@ -36,12 +36,13 @@ export type RootStackParamList = {
   createEvent: { userType: string };
   EditEvent: { eventId: string };
   UploadFile: { eventId: string };
-  Preview: { eventId: string; organizerId: string };
+  Preview: { eventId: string; organizerId: string; fake?: boolean };
   EventDetailsView: {
     userType: string;
     eventID: string;
     organizerID: string;
     imageID: string;
+    fake?: boolean;
   };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
   AllOrganizers: {};
@@ -71,19 +72,16 @@ const MainView = ({ route, navigation }: props) => {
         name="AllEvents"
         component={AllEvents as any} // TODO fix error
         options={{
-          tabBarLabel: "All Events",
+          tabBarLabel: "Events (Admin)",
           tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="ticket" color={focused ? colours.purple : colours.grey} size={30} />,
         }}
       />
       <Tab.Screen
-        name="BrowseOrganizers"
-        component={BrowseOrganizers as any} // TODO fix error
-        initialParams={{}}
+        name="AllOrganizers"
+        component={AllOrganizers as any} // TODO fix error
         options={{
-          tabBarLabel: "Organizers",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name={focused ? "office-building" : "office-building-outline"} color={focused ? colours.purple : colours.grey} size={30} />
-          ),
+          tabBarLabel: "Organizers (Admin)",
+          tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="ticket" color={focused ? colours.purple : colours.grey} size={30} />,
         }}
       />
       <Tab.Screen
@@ -92,18 +90,21 @@ const MainView = ({ route, navigation }: props) => {
         component={Home as any} // TODO fix error
         initialParams={{ userType: route.params.userType }}
         options={{
-          tabBarLabel: "Events",
+          tabBarLabel: "Events (User)",
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons name={focused ? "jellyfish" : "jellyfish-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />
       <Tab.Screen
-        name="AllOrganizers"
-        component={AllOrganizers as any} // TODO fix error
+        name="BrowseOrganizers"
+        component={BrowseOrganizers as any} // TODO fix error
+        initialParams={{}}
         options={{
-          tabBarLabel: "Organizers",
-          tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="ticket" color={focused ? colours.purple : colours.grey} size={30} />,
+          tabBarLabel: "Organizers (User)",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons name={focused ? "office-building" : "office-building-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+          ),
         }}
       />
       <Tab.Screen

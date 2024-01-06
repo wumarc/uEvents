@@ -6,7 +6,7 @@ import { EventObject } from "../../../../utils/model/EventObject";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../main";
 import { StyleSheet } from "react-native";
-import EventEditor from "../../../organisms/EventEditor";
+import EventEditor from "../../../organisms/Outdated/EventEditor";
 
 type props = NativeStackScreenProps<RootStackParamList, "EditEvent">;
 // To access the type of user, use route.params.userType

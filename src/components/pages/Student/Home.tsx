@@ -1,6 +1,6 @@
 import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
 import { useState } from "react";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -12,29 +12,27 @@ import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subato
 import { Loading } from "../Common/Loading";
 import { SearchBar } from "react-native-elements";
 import { Organizer } from "../../../utils/model/Organizer";
-import { getFirebaseUserIDOrEmpty, getNextDate } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../../utils/util";
 import { Divider } from "@rneui/themed";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
-// To access the type of user, use route.params.userType
 
 const Home = ({ route, navigation }: props) => {
-  /* ---------------------------------- Hooks --------------------------------- */
-
+  // States
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(true);
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [loading3, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
 
+  // Loading
   if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
 
-  /* ---------------------------------- Toast --------------------------------- */
-
+  // Toast
   const showToast = (save: boolean) => {
     // https://github.com/calintamas/react-native-toast-message/blob/945189fec9746b79d8b5b450e298ef391f8022fb/docs/custom-layouts.md
     Toast.show({
@@ -45,8 +43,6 @@ const Home = ({ route, navigation }: props) => {
       visibilityTime: 1800,
     });
   };
-
-  /* ---------------------------- Filter the events --------------------------- */
 
   // Filtered events
   let filteredEvents = events as EventObject[];
@@ -75,16 +71,18 @@ const Home = ({ route, navigation }: props) => {
       return organizer?.approved ?? false;
     });
 
-    // Remove blocked or hidden events
-    filteredEvents = filteredEvents.filter((event) => {
-      if ((student?.hidden ?? []).includes(event.id)) {
-        return false;
-      }
-      if ((student?.blocked ?? []).includes(event.organizer)) {
-        return false;
-      }
-      return true;
-    });
+    if (isLogged()) {
+      // Remove blocked or hidden events
+      filteredEvents = filteredEvents.filter((event) => {
+        if ((student?.hidden ?? []).includes(event.id)) {
+          return false;
+        }
+        if ((student?.blocked ?? []).includes(event.organizer)) {
+          return false;
+        }
+        return true;
+      });
+    }
   } catch (e) {
     console.error("Error filtering events: ", e);
   }
@@ -171,61 +169,44 @@ const Home = ({ route, navigation }: props) => {
           </View>
         )}
 
-        {/* <FlatList
-          style={{padding: 15}}
-          horizontal={true}
-          data={filteredEvents}
-          decelerationRate={0}
-          showsHorizontalScrollIndicator={true}
-          snapToInterval={windowWidth}
-          snapToAlignment={"center"}
-          renderItem={({ item, index }) => (
-            <View style={{width: windowWidth}}>
-              <Event
-                organizer={item.organizer}
-                id={item.id}
-                navigation={navigation}
-                onSaveEvent={showToast}
-                listView={listView}
-              />
-            </View>
-          )}
-        /> */}
-
         {/* This week's event list */}
-        <View style={{ marginTop: windowHeight * 0.01 }}>
-          <Text style={fonts.title2}>Events happening this week</Text>
-          <FlatList
-            style={{}}
-            showsVerticalScrollIndicator={false}
-            data={thisWeekEvents}
-            renderItem={({ item, index }) => (
-              <View style={styles.event}>
-                <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
-              </View>
-            )}
-          />
-        </View>
+        {thisWeekEvents.length != 0 && (
+          <View style={{ marginTop: windowHeight * 0.01 }}>
+            <Text style={fonts.title2}>Events happening this week</Text>
+            <FlatList
+              style={{}}
+              showsVerticalScrollIndicator={false}
+              data={thisWeekEvents}
+              renderItem={({ item, index }) => (
+                <View style={styles.event}>
+                  <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                </View>
+              )}
+            />
+          </View>
+        )}
 
         {/* All other events */}
-        <View style={{ marginTop: windowHeight * 0.01 }}>
-          <Text style={fonts.title2}>All other events</Text>
-          {filteredEvents.length == 0 && (
-            <View style={{ alignItems: "center", marginTop: "20%" }}>
-              <Text>No events matched your search</Text>
-            </View>
-          )}
-          <FlatList
-            style={{}}
-            showsVerticalScrollIndicator={false}
-            data={otherEvents}
-            renderItem={({ item, index }) => (
-              <View style={styles.event}>
-                <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+        {otherEvents.length != 0 && (
+          <View style={{ marginTop: windowHeight * 0.01 }}>
+            <Text style={fonts.title2}>All other events</Text>
+            {filteredEvents.length == 0 && (
+              <View style={{ alignItems: "center", marginTop: "20%" }}>
+                <Text>No events matched your search</Text>
               </View>
             )}
-          />
-        </View>
+            <FlatList
+              style={{}}
+              showsVerticalScrollIndicator={false}
+              data={otherEvents}
+              renderItem={({ item, index }) => (
+                <View style={styles.event}>
+                  <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                </View>
+              )}
+            />
+          </View>
+        )}
       </ScrollView>
       <Toast />
     </View>

@@ -4,13 +4,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Dialog } from "react-native-elements";
 import CustomButton from "../atoms/CustomButton";
 import { Button } from "@rneui/base";
-import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { Text } from "react-native";
 import { colours, fonts } from "../subatoms/Theme";
 
 const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) => {
-  const [loading, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
 
   const [visible, setVisible] = useState(false);
   const [blockVisible, setBlockVisible] = useState(false);

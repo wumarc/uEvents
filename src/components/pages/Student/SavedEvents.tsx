@@ -1,24 +1,42 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import { RootStackParamList } from "./main";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import Event from "../../organisms/Event";
 import { Loading } from "../Common/Loading";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
-import { useEffect } from "react";
 import { EventObject } from "../../../utils/model/EventObject";
 import { SvgUri } from "react-native-svg";
 import { Timestamp } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { LoginDialog } from "../../atoms/LoginDialog";
+import CustomButton from "../../atoms/CustomButton";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
-// To access the type of user, use route.params.userType
 
 const SavedEvents = ({ route, navigation }: props) => {
-  const [loading, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  if (!isLogged()) {
+    // User is not logged in
 
+    return (
+      <View>
+        <Text style={{ ...fonts.regular, textAlign: "center" }}>{"You need to be logged in to view saved events."}</Text>
+        <CustomButton
+          buttonName="Login"
+          onPress={() => {
+            navigation.navigate("Welcome", {});
+          }}
+        />
+      </View>
+    );
+  }
+
+  // States
+  const [loading, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
   const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>("events");
 
+  // Loading
   if (loading || loading2 || !events) {
     return <Loading />;
   }

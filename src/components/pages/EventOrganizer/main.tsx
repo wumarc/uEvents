@@ -39,6 +39,7 @@ export type RootStackParamList = {
     eventID: string;
     organizerID: string;
     imageID: string;
+    fake?: boolean;
   };
   EventSignUpView: {};
   Events: {};

@@ -1,26 +1,27 @@
 import { colours, fonts } from "../subatoms/Theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
 import React, { FC, useState } from "react";
-import { useSateWithFireStore, useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { Modal, Menu } from "react-native-paper";
+import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
+import { getFirebaseUserIDOrEmpty, isLogged } from "../../utils/util";
 import { Dialog } from "react-native-elements";
 import { Button } from "@rneui/base";
 import { Text } from "react-native";
 import CustomButton from "../atoms/CustomButton";
+import { LoginDialog } from "../atoms/LoginDialog";
 
 const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
-  const [loading, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
-
+  // States
+  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
   const [loading2, event, setEvent] = useStateWithFireStoreDocument("events", props.eventID === "" ? "0" : props.eventID);
-
   const [visible, setVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
   const [hideVisible, setHideVisible] = useState(false);
   const [blockVisible, setBlockVisible] = useState(false);
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [loginReason, setLoginReason] = useState("");
 
+  // Loading
   if (loading || loading2) {
     return <MaterialCommunityIcons name="heart" color={colours.black} size={30} />;
   }
@@ -34,18 +35,41 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         color={saved ? colours.purple : colours.black}
         size={30}
         onPress={() => {
-          if (saved) {
-            setUserData({
-              saved: (userData?.saved ?? []).filter((id: string) => id !== props.eventID),
-            });
-          } else {
-            setUserData({
-              saved: [...(userData?.saved ?? []), props.eventID],
-            });
+          if (!isLogged()) {
+            setLoginReason("You need to be logged in to save events.");
+            setLoginVisible(true);
+            return;
+          }
+          if (setUserData) {
+            if (saved) {
+              setUserData({
+                saved: (userData?.saved ?? []).filter((id: string) => id !== props.eventID),
+              });
+            } else {
+              setUserData({
+                saved: [...(userData?.saved ?? []), props.eventID],
+              });
+            }
           }
         }}
       />
-      {props.eventID === "" ? <></> : <MaterialCommunityIcons name="dots-vertical" color={colours.black} size={30} onPress={() => setVisible(true)} />}
+      {props.eventID === "" ? (
+        <></>
+      ) : (
+        <MaterialCommunityIcons
+          name="dots-vertical"
+          color={colours.black}
+          size={30}
+          onPress={() => {
+            if (!isLogged()) {
+              setLoginReason("You need to be logged in to report events.");
+              setLoginVisible(true);
+              return;
+            }
+            setVisible(true);
+          }}
+        />
+      )}
       <Dialog isVisible={visible} onDismiss={() => setVisible(false)} style={{ backgroundColor: colours.white }}>
         <CustomButton
           buttonName="Report"
@@ -96,11 +120,13 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         <CustomButton
           buttonName="Report"
           onPress={() => {
-            setUserData({
-              ...userData,
-              reported: [...(userData?.reported ?? []), props.eventID],
-              hidden: [...(userData?.hidden ?? []), props.eventID],
-            });
+            if (setUserData) {
+              setUserData({
+                ...userData,
+                reported: [...(userData?.reported ?? []), props.eventID],
+                hidden: [...(userData?.hidden ?? []), props.eventID],
+              });
+            }
             setReportVisible(false);
             setVisible(false);
             props.navigation.pop();
@@ -131,10 +157,12 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         <CustomButton
           buttonName="Hide"
           onPress={() => {
-            setUserData({
-              ...userData,
-              hidden: [...(userData?.hidden ?? []), props.eventID],
-            });
+            if (setUserData) {
+              setUserData({
+                ...userData,
+                hidden: [...(userData?.hidden ?? []), props.eventID],
+              });
+            }
             setHideVisible(false);
             setVisible(false);
             props.navigation.pop();
@@ -164,10 +192,12 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         <CustomButton
           buttonName="Block"
           onPress={() => {
-            setUserData({
-              ...userData,
-              blocked: [...(userData?.blocked ?? []), event?.organizer],
-            });
+            if (setUserData) {
+              setUserData({
+                ...userData,
+                blocked: [...(userData?.blocked ?? []), event?.organizer],
+              });
+            }
             setBlockVisible(false);
             setVisible(false);
             props.navigation.pop();
@@ -188,29 +218,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           }}
         />
       </Dialog>
-
-      {/* Claim dialog */}
-      {/* <Dialog
-        isVisible={reportVisible}
-        onDismiss={() => setReportVisible(false)}
-        style={{backgroundColor: colours.white}}
-      >
-        <Text>The uEvents team add events to the platform regularly. It can happen that we added an event organized by you. After we review your request, we will transfer the ownership of this event to you by claiming it.</Text>
-        <Button
-          title="Report"
-          onPress={() => {
-            setReportVisible(false);
-            setVisible(false);
-          }}
-        />
-        <Button
-          title="Cancel"
-          onPress={() => {
-            setReportVisible(false);
-            setVisible(false);
-          }}
-        />
-      </Dialog> */}
+      <LoginDialog visible={loginVisible} setVisible={setLoginVisible} reason={loginReason} navigation={props.navigation} />
     </View>
   );
 };

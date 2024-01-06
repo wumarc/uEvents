@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { fonts, spacing, windowHeight, windowWidth } from "../subatoms/Theme";
 import { Icon } from "@rneui/base";
 import { Image } from "@rneui/base";
@@ -7,6 +7,10 @@ import { Loading } from "../pages/Common/Loading";
 
 const Organizer = ({ name, imageID }: any) => {
   let url = "";
+
+  let width = Platform.OS != "web" ? windowWidth * 0.11 : 50;
+  let height = Platform.OS != "web" ? windowWidth * 0.11 : 50;
+  let borderRadius = Platform.OS != "web" ? windowWidth * 0.05 : 20;
 
   if (imageID != undefined) {
     const [loading, url2, found] = useStateWithFireStoreImage("organizers/" + imageID);
@@ -25,8 +29,26 @@ const Organizer = ({ name, imageID }: any) => {
       }}
     >
       {/* Organizer Icon */}
-      <View style={{ width: windowWidth * 0.11, height: windowWidth * 0.11, borderRadius: windowWidth * 0.05, overflow: "hidden", justifyContent: "center" }}>
-        {url ? <Image source={{ uri: url }} style={{ width: "100%", height: "100%", borderRadius: 50 }} /> : <Icon name="person" />}
+      <View style={{ width: width, height: height, borderRadius: borderRadius, overflow: "hidden", justifyContent: "center" }}>
+        {url ? (
+          Platform.OS != "web" ? (
+            // Image for mobile
+            <Image source={{ uri: url }} style={{ width: "100%", height: "100%", borderRadius: 50 }} />
+          ) : (
+            // Image for web
+            <img
+              src={url}
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 50,
+                objectFit: "cover",
+              }}
+            />
+          )
+        ) : (
+          <Icon name="person" />
+        )}
       </View>
 
       {/* Organizer name */}

@@ -16,7 +16,16 @@ type props = NativeStackScreenProps<RootStackParamList, "Preview">;
 // To access the type of user, use route.params.userType
 
 const Preview = ({ route, navigation }: props) => {
-  return <Event id={route.params.eventId} organizer={route.params.organizerId} navigation={navigation} onSaveEvent={() => {}} listView={false} />;
+  return (
+    <Event
+      id={route.params.eventId}
+      organizer={route.params.organizerId}
+      navigation={navigation}
+      onSaveEvent={() => {}}
+      listView={false}
+      fake={route.params.fake}
+    />
+  );
 };
 
 export default Preview;

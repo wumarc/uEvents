@@ -11,25 +11,32 @@ import CustomButton from "../../atoms/CustomButton";
 import { RootStackParamList } from "./main";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Organizer } from "../../../utils/model/Organizer";
-import { useStateWithFireStoreDocument, useStateWithFireStoreImage, useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
+import {
+  useStateWithFireStoreDocument,
+  useStateWithFireStoreImage,
+  useStateWithFireStoreCollection,
+  useStateWithFireStoreDocumentLogged,
+} from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 
 const OrganizerProfile = ({ route, navigation }: props) => {
+  // States
   const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
   const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
   const [loading3, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading4, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [loading5, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
   const [dialogVisible, setdialogVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loading5, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
 
+  // Loading
   if (loading || loading2 || loading3 || loading4 || loading5) {
     return <Loading />;
   }
@@ -44,8 +51,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
     );
   }
 
-  /* ---------------------------- Filter the events --------------------------- */
-
+  // Filter events
   let isPresent = selectedIndex === 0 ? true : false;
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
 
@@ -66,12 +72,14 @@ const OrganizerProfile = ({ route, navigation }: props) => {
   filteredEvents = filteredEvents.filter((event) => event.state == "Published");
 
   // Remove blocked or hidden events
-  filteredEvents = filteredEvents.filter((event) => {
-    if ((student?.hidden ?? []).includes(event.id)) {
-      return false;
-    }
-    return true;
-  });
+  if (isLogged()) {
+    filteredEvents = filteredEvents.filter((event) => {
+      if ((student?.hidden ?? []).includes(event.id)) {
+        return false;
+      }
+      return true;
+    });
+  }
 
   // Make sure the event is from the organizer
   filteredEvents = filteredEvents.filter((event) => event.organizer === organizer.id);

@@ -10,7 +10,7 @@ import { FC } from "react";
 // import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
 import { useStateWithFireStoreDocument } from "./src/utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
+import { getFirebaseUserIDOrEmpty, isLogged } from "./src/utils/util";
 import { Error } from "./src/components/pages/Common/Error";
 // import { LogBox } from "react-native";
 import { Button } from "react-native-elements";
@@ -43,18 +43,15 @@ export default function App() {
     console.error(error);
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>{"Oops! There is a problem. Check your internet connexion! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
+        <Text>{"Oops! There is a problem. Check your internet connection! If the error persists, please contact us at uevents.dev@uottawa.ca"}</Text>
       </View>
     );
-  } else if (user) {
-    return (
-      // <PaperProvider>
-      <AppInner />
-      // {/* </PaperProvider> */}
-    );
-  } else {
-    return <SignIn />;
   }
+  return (
+    // <PaperProvider>
+    <AppInner />
+    // {/* </PaperProvider> */}
+  );
 }
 
 const styles = StyleSheet.create({
@@ -67,6 +64,10 @@ const styles = StyleSheet.create({
 
 // This is an inner component to have access to the user type
 const AppInner: FC = () => {
+  if (!isLogged()) {
+    return <MainStudent userType="student" />;
+  }
+
   const [loading, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
 
   if (loading) {

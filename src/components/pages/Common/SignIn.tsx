@@ -70,7 +70,7 @@ const SignIn: FC = () => {
   );
 };
 
-const WelcomePage: FC = ({ navigation }: any) => {
+export const WelcomePage: FC = ({ navigation }: any) => {
   return (
     <SafeAreaView style={{ backgroundColor: "#D6A9D5", flex: 1, justifyContent: "space-around" }}>
       {/* Image */}
@@ -113,7 +113,7 @@ const WelcomePage: FC = ({ navigation }: any) => {
   );
 };
 
-const Login: FC = ({ setIsSigningUp }: any) => {
+export const Login: FC = ({ setIsSigningUp }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -248,7 +248,7 @@ const Login: FC = ({ setIsSigningUp }: any) => {
   );
 };
 
-const Signup: FC = ({ setIsSigningUp }: any) => {
+export const Signup: FC = ({ setIsSigningUp }: any) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState(""); // Only for organizers
   const [password, setPassword] = useState("");

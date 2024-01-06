@@ -28,7 +28,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
   // Editing event
   let editing = route.params?.id != undefined;
-  console.log("Editing event: " + editing + " with id: " + route.params?.id);
   let previousEventId = route.params?.id ?? "dummy";
 
   // States
@@ -45,7 +44,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
   useEffect(() => {
     if (editing && dbEvent) {
-      console.log("Updating local event with DB event. This only happens if we are editing an event");
       setLocalEvent(dbEvent);
     }
   }, [loading]);
@@ -134,6 +132,24 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           style={{ borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight * 0.05, ...styles.formElement }}
           onChange={(item) => setLocalEvent({ ...localEvent, organizer: item.value, organizerType: "Organizer Added" })}
         />
+
+        {/* New Organizer */}
+        <CustomButton
+          onPress={() => {
+            // Creating new organizer
+            let id: string = uid();
+            setDoc(doc(fireStore, "users/" + id), {
+              type: "organizer",
+              saved: [],
+              id: id,
+              approved: false,
+              authentic: false,
+            });
+            navigation.navigate("OrganizerProfile", { userType: "", id: id });
+          }}
+        >
+          Create new organizer
+        </CustomButton>
 
         {/* Emoji */}
         {/* TODO: Create a central component for the emoji */}

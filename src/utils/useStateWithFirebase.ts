@@ -4,6 +4,7 @@ import { fireStore, storage } from "../firebaseConfig";
 import { EventObject } from "./model/EventObject";
 import { useDownloadURL } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
+import { isLogged } from "./util";
 
 export function useStateWithFireStoreImage(path: string) {
   const [url, loading, error] = useDownloadURL(ref(storage, path));
@@ -52,6 +53,13 @@ export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(pa
   let dbListenedValue: T = snap?.data() as T;
 
   return [loading, dbListenedValue, set] as const;
+}
+
+export function useStateWithFireStoreDocumentLogged<T extends { [x: string]: any }>(pathToDocument: string, id: string) {
+  if (!isLogged()) {
+    return [false, undefined, undefined] as const;
+  }
+  return useStateWithFireStoreDocument<T>(pathToDocument, id);
 }
 
 export function addDocumentToCollection<T extends { [x: string]: any }>(pathToCollection: string, id: string, value: T) {

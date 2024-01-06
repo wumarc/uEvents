@@ -372,7 +372,7 @@ const EventLine: FC<{
               size="sm"
               titleStyle={{ fontSize: 12 }}
               onPress={() => {
-                navigation.navigate("Preview", { eventId: event.id, organizerId: event.organizer });
+                navigation.navigate("Preview", { eventId: event.id, organizerId: event.organizer, fake: event.fake });
               }}
             >
               View

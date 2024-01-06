@@ -1,14 +1,14 @@
 import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity, Button } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
 const BlockedOrganizers = ({ navigation }: any) => {
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
-  const [loading2, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
 
   if (loading || loading2) {
     return <Loading />;

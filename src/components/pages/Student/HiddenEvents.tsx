@@ -1,5 +1,5 @@
 import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text, Button } from "react-native";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -19,7 +19,7 @@ export const HiddenEvents = ({ route, navigation }: props) => {
   /* ---------------------------------- Hooks --------------------------------- */
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [loading3, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
+  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged("users", getFirebaseUserIDOrEmpty());
 
   if (loading || loading2 || loading3) {
     return <Loading />;
