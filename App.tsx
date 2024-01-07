@@ -10,11 +10,12 @@ import { View, Text } from "react-native";
 import { FC } from "react";
 // import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
-import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "./src/utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty, isLogged } from "./src/utils/util";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "./src/utils/useStateWithFirebase";
+import { getFirebaseUserIDOrEmpty, isLogged, versionPath } from "./src/utils/util";
 import { Error } from "./src/components/pages/Common/Error";
 // import { LogBox } from "react-native";
 import { Button } from "react-native-elements";
+import { Version, compareVersion, currentVersion, latestVersion } from "./src/utils/model/Version";
 
 export default function App() {
   // const [user, loading, error] = useAuthState(auth);
@@ -68,9 +69,21 @@ const AppInner: FC = () => {
   // States
   // const [user, loading, error] = useAuthState(auth);
   const [loading2, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty() == "" ? "Dummy" : getFirebaseUserIDOrEmpty());
+  const [loading, versions, setVersions] = useStateWithFireStoreCollection(versionPath());
 
-  if (loading2) {
+  if (loading || loading2) {
     return <Loading />;
+  }
+
+  let versionsData = versions as Version[];
+  let lstVersion = latestVersion(versionsData);
+  if (compareVersion(lstVersion, currentVersion) != 0) {
+    // The versions don't match. The app needs an update
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>{"Please update the app to the latest version to continue using the app."}</Text>
+      </View>
+    );
   }
 
   // if (error) {

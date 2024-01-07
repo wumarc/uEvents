@@ -2,7 +2,7 @@ import { ScrollView, View, Text, Modal } from "react-native";
 import { useState } from "react";
 import { Button } from "@rneui/themed";
 import { StyleSheet } from "react-native";
-import { getFirebaseUserID } from "../../../utils/util";
+import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { User, deleteUser, getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
@@ -18,17 +18,25 @@ import { Dialog } from "react-native-elements";
 import * as Clipboard from "expo-clipboard";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { RootStackParamList } from "../../../../main";
+import { appVersion } from "../../../../config";
+import { useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 
-type props = NativeStackScreenProps<RootStackParamList, "Profile">;
+type props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
 const Settings = ({ route, navigation }: props) => {
   // States
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [dialogVisible, setdialogVisible] = useState(false);
   const [user, loading, error] = useAuthState(auth);
+  const [loading2, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
-  if (loading) {
+  if (loading || loading2) {
     return <Loading />;
+  }
+
+  let isAdmin = false;
+  if (userData) {
+    isAdmin = (userData as any).type === "admin";
   }
 
   const logout = () => {
@@ -49,6 +57,11 @@ const Settings = ({ route, navigation }: props) => {
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Settings</Text>
         </View>
+
+        {/* Version number */}
+        <Text>Version {appVersion}</Text>
+
+        {/* Welcome message */}
         {user && <Text>Hi {auth.currentUser?.email}! Welcome to uEvents.</Text>}
 
         {/* Settings */}
@@ -111,6 +124,16 @@ const Settings = ({ route, navigation }: props) => {
             </Button>
           )}
         </View>
+
+        {/* Add version button */}
+        {isAdmin && (
+          <CustomButton
+            buttonName="Add Version"
+            onPress={() => {
+              navigation.navigate("NewVersion", {});
+            }}
+          />
+        )}
 
         {/* Delete Account Confirmation */}
         <BottomSheet

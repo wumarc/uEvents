@@ -110,8 +110,8 @@ export function searchAlgo(query: string, eventList: EventObject[]): EventObject
         if (eventB === undefined) {
           return -1;
         }
-        let [nextStartTimeA, nextEndTimeA] = getNextDate(eventA);
-        let [nextStartTimeB, nextEndTimeB] = getNextDate(eventB);
+        let [nextStartTimeA, nextEndTimeA] = getNextDate(eventA, new Date());
+        let [nextStartTimeB, nextEndTimeB] = getNextDate(eventB, new Date());
         if (nextStartTimeA === undefined) {
           return 1;
         }

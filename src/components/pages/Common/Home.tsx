@@ -9,9 +9,9 @@ import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
 import { Loading } from "./Loading";
-import { SearchBar } from "react-native-elements";
+import { SearchBar, Slider } from "react-native-elements";
 import { Organizer } from "../../../utils/model/Organizer";
-import { eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged, userType } from "../../../utils/util";
 import { Divider } from "@rneui/themed";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
@@ -23,16 +23,24 @@ const Home = ({ route, navigation }: props) => {
   // States
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(true);
-  console.log(eventPath());
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
   const [user, loading4, error] = useAuthState(auth);
   const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [timeShift, setTimeShift] = useState(0); // Only used for admin
 
   // Loading
   if (loading || loading2 || loading3 || loading4) {
     return <Loading />;
   }
+
+  let [isStudent, isOrganizer, isAdmin] = userType(student);
+
+  // Time shift
+  let realTimeShift = Math.round(timeShift * 100);
+  let nowSeconds = Timestamp.now().seconds + realTimeShift * 24 * 60 * 60;
+  let now = new Timestamp(nowSeconds, 0);
+  let today = new Date(now.toMillis());
 
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
 
@@ -56,11 +64,11 @@ const Home = ({ route, navigation }: props) => {
 
     // Make sure the events are not in the past
     filteredEvents = filteredEvents.filter((event) => {
-      let [startTime, endTime] = getNextDate(event);
+      let [startTime, endTime] = getNextDate(event, today);
       if (!endTime) {
         return false;
       }
-      return endTime.getTime() > Timestamp.now().toMillis();
+      return endTime.getTime() > now.toMillis();
     });
 
     // Make sure the events are published
@@ -98,24 +106,21 @@ const Home = ({ route, navigation }: props) => {
 
   // Today's events
   let todayEvents = filteredEvents.filter((event) => {
-    let [startTime, endTime] = getNextDate(event);
-    let now = Timestamp.now();
+    let [startTime, endTime] = getNextDate(event, today);
     let diff = startTime.getTime() - now.toMillis();
     return diff < restOfTodayMillis;
   });
 
   // This week's events
   let thisWeekEvents = filteredEvents.filter((event) => {
-    let [startTime, endTime] = getNextDate(event);
-    let now = Timestamp.now();
+    let [startTime, endTime] = getNextDate(event, today);
     let diff = startTime.getTime() - now.toMillis();
     return diff >= restOfTodayMillis && diff < restOfTodayMillis + dayMillis * 6;
   });
 
   // Other events
   let otherEvents = filteredEvents.filter((event) => {
-    let [startTime, endTime] = getNextDate(event);
-    let now = Timestamp.now();
+    let [startTime, endTime] = getNextDate(event, today);
     let diff = startTime.getTime() - now.toMillis();
     return diff >= restOfTodayMillis + dayMillis * 6;
   });
@@ -129,6 +134,15 @@ const Home = ({ route, navigation }: props) => {
         <View style={styles.pageTitle}>
           <Text style={fonts.title1}>Upcoming Events</Text>
         </View>
+
+        {/* Time slider */}
+        {isAdmin && (
+          <View>
+            <Slider value={timeShift} onValueChange={(value) => setTimeShift(value)} />
+            <Text>Time shift: {realTimeShift} days</Text>
+            <Text>Current day: {today.toDateString()}</Text>
+          </View>
+        )}
 
         {/* Search Bar */}
         <View>

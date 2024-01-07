@@ -2,7 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
 import emojiUnicode from "emoji-unicode";
 import { EventObject, recurrenceType } from "./model/EventObject";
-import { testUsers } from "../../config";
+import { testUsersEvents, testUsersVersion } from "../../userConfig";
 
 export function getFirebaseUserID(): string | undefined {
   let id = auth.currentUser?.uid;
@@ -22,13 +22,44 @@ export function isLogged(): boolean {
 
 export function eventPath() {
   if (auth.currentUser) {
-    for (let i = 0; i < testUsers.length; i++) {
-      if (auth.currentUser.email == testUsers[i]) {
+    for (let i = 0; i < testUsersEvents.length; i++) {
+      if (auth.currentUser.email == testUsersEvents[i]) {
         return "events-test";
       }
     }
   }
   return "events";
+}
+
+export function versionPath() {
+  if (auth.currentUser) {
+    for (let i = 0; i < testUsersVersion.length; i++) {
+      if (auth.currentUser.email == testUsersVersion[i]) {
+        return "versions-test";
+      }
+    }
+  }
+  return "versions";
+}
+
+// [isStudent, isOrganizer, isAdmin]
+export function userType(user: any): [boolean, boolean, boolean] {
+  if (user == undefined) {
+    return [true, false, false];
+  }
+  if (user.type == undefined) {
+    return [true, false, false];
+  }
+  if (user.type == "student") {
+    return [true, false, false];
+  }
+  if (user.type == "organizer") {
+    return [false, true, false];
+  }
+  if (user.type == "admin") {
+    return [false, false, true];
+  }
+  return [true, false, false];
 }
 
 /**
@@ -79,7 +110,7 @@ export function emojiUrl(emoji: string) {
   return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg";
 }
 
-export function getNextDate(event: EventObject): [Date, Date, boolean] {
+export function getNextDate(event: EventObject, today: Date): [Date, Date, boolean] {
   let startDate = event.startTime.toDate();
   let endDate = (event.endTime ?? event.startTime).toDate();
   let hasEnd = event.endTime != undefined;
@@ -93,7 +124,6 @@ export function getNextDate(event: EventObject): [Date, Date, boolean] {
     case "None":
       return [startDate, endDate, hasEnd];
     case "Weekly":
-      let today = new Date();
       let limit = event.recurrenceEnd?.toDate();
       let exceptions = event.recurrenceExceptions;
 

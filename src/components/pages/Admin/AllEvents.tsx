@@ -65,7 +65,7 @@ export const AllEvents = ({ route, navigation }: props) => {
   // Remove outdated events
   filteredEvents = filteredEvents.filter((event) => {
     if (!showOutdated) {
-      let [startTime, endTime] = getNextDate(event);
+      let [startTime, endTime] = getNextDate(event, new Date());
       if (endTime.getTime() < Date.now()) {
         return false;
       }
@@ -238,7 +238,7 @@ const EventLine: FC<{
     organizer = "Organizer name not found";
   }
 
-  let [nextStartTime, nextEndTime] = getNextDate(event);
+  let [nextStartTime, nextEndTime] = getNextDate(event, new Date());
   let containerHeight = event.recurrenceType !== "None" ? 60 : 40;
 
   let status = "";

@@ -32,7 +32,7 @@ const EventDetails = ({ route, navigation }: props) => {
     return <Loading />;
   }
 
-  let [startTime, endTime] = getNextDate(event);
+  let [startTime, endTime] = getNextDate(event, new Date());
 
   return (
     <View style={{ flex: 1, backgroundColor: colours.white }}>

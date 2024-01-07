@@ -3,6 +3,7 @@
 // config.tsx is excluded from git tracking so that you can have your own configuration without affecting others
 
 // This file is intended for configuration
+// Personal config. Global config in is config.tsx
 
 // This is a list of special users that uses test events
 export const testUsers = [];

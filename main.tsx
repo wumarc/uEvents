@@ -32,6 +32,7 @@ import { AllEvents } from "./src/components/pages/Admin/AllEvents";
 import UploadFile from "./src/components/organisms/Outdated/UploadFile";
 import Preview from "./src/components/pages/Admin/Preview";
 import { CreateEventWeb } from "./src/components/pages/Admin/CreateEventWeb";
+import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,6 +64,8 @@ export type RootStackParamList = {
   AllOrganizers: {};
   OnePageCreateEvent: {};
   CreateEventWeb: { id?: string; fake?: boolean };
+  Settings: {};
+  NewVersion: {};
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;
@@ -353,6 +356,16 @@ const Main: FC = (props) => {
             <Stack.Screen
               name="CreateEventWeb"
               component={CreateEventWeb as any}
+              options={({ navigation }) => ({
+                headerLeft: () => <HeaderLeft navigation={navigation} />,
+              })}
+            />
+          )}
+          {/* New version page */}
+          {isAdmin && (
+            <Stack.Screen
+              name="NewVersion"
+              component={NewVersion as any}
               options={({ navigation }) => ({
                 headerLeft: () => <HeaderLeft navigation={navigation} />,
               })}

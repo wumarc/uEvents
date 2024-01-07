@@ -47,7 +47,7 @@ const Event: React.FC<EventProps> = (props) => {
   }
 
   // True start time and end time
-  let [startTime, endTime, hasEnd] = getNextDate(event);
+  let [startTime, endTime, hasEnd] = getNextDate(event, new Date());
 
   let onCampusText = "";
   switch (event.onCampus) {
