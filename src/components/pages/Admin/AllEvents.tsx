@@ -6,7 +6,6 @@ import { CheckBox, SearchBar, Switch } from "react-native-elements";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { emojiUrl, getNextDate } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import { EventObject } from "../../../utils/model/EventObject";
 import { doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
@@ -14,8 +13,9 @@ import { SvgUri } from "react-native-svg";
 import { colours } from "../../subatoms/Theme";
 import { searchAlgo } from "../../../utils/search";
 import { Student } from "../../../utils/model/Student";
+import { RootStackParamList } from "../../../../main";
 
-type props = NativeStackScreenProps<RootStackParamList, "Profile">;
+type props = NativeStackScreenProps<RootStackParamList, "AllEvents">;
 // To access the type of user, use route.params.userType
 
 const stateOrder = ["Pending", "Published", "Rejected", "Draft"];
@@ -260,6 +260,8 @@ const EventLine: FC<{
     statusColor = "red";
   }
 
+  let dbPath = event.fake ? "events-test" : "events";
+
   return (
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed ? containerHeight + 100 : containerHeight }}>
       <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%" }}>
@@ -414,7 +416,7 @@ const EventLine: FC<{
                 size="sm"
                 titleStyle={{ fontSize: 12 }}
                 onPress={() => {
-                  setDoc(doc(fireStore, "events/" + event.id), {
+                  setDoc(doc(fireStore, dbPath + "/" + event.id), {
                     ...event,
                     state: "Published",
                   });
@@ -437,7 +439,7 @@ const EventLine: FC<{
                 size="sm"
                 titleStyle={{ fontSize: 12 }}
                 onPress={() => {
-                  setDoc(doc(fireStore, "events/" + event.id), {
+                  setDoc(doc(fireStore, dbPath + "/" + event.id), {
                     ...event,
                     state: "Rejected",
                     rejectReason: reason,

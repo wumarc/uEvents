@@ -8,7 +8,6 @@ import * as Clipboard from "expo-clipboard";
 import { BottomSheet } from "@rneui/themed";
 import { Button } from "@rneui/base";
 import CustomButton from "../../atoms/CustomButton";
-import { RootStackParamList } from "./main";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Organizer } from "../../../utils/model/Organizer";
 import {
@@ -17,13 +16,14 @@ import {
   useStateWithFireStoreCollection,
   useStateWithFireStoreDocumentLogged,
 } from "../../../utils/useStateWithFirebase";
-import { Loading } from "../Common/Loading";
+import { Loading } from "./Loading";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
-import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 
@@ -31,7 +31,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
   // States
   const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
   const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
-  const [loading3, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+  const [loading3, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading4, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
   const [dialogVisible, setdialogVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(false);

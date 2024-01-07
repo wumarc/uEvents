@@ -2,6 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
 import emojiUnicode from "emoji-unicode";
 import { EventObject, recurrenceType } from "./model/EventObject";
+import { testUsers } from "../../config";
 
 export function getFirebaseUserID(): string | undefined {
   let id = auth.currentUser?.uid;
@@ -17,6 +18,17 @@ export function getFirebaseUserIDOrEmpty(): string {
 /// This will not update properly if it changes. Better to use hook instead useAuthState
 export function isLogged(): boolean {
   return auth.currentUser != null;
+}
+
+export function eventPath() {
+  if (auth.currentUser) {
+    for (let i = 0; i < testUsers.length; i++) {
+      if (auth.currentUser.email == testUsers[i]) {
+        return "events-test";
+      }
+    }
+  }
+  return "events";
 }
 
 /**

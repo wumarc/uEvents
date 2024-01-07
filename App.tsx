@@ -4,6 +4,7 @@ import SignIn from "./src/components/pages/Common/SignIn";
 import MainStudent from "./src/components/pages/Student/main";
 import MainOrganizer from "./src/components/pages/EventOrganizer/main";
 import MainAdmin from "./src/components/pages/Admin/main";
+import Main from "./main";
 import { Loading } from "./src/components/pages/Common/Loading";
 import { View, Text } from "react-native";
 import { FC } from "react";
@@ -78,7 +79,7 @@ const AppInner: FC = () => {
   // }
 
   if (!isLogged()) {
-    return <MainStudent userType="student" />;
+    return <Main />;
   }
 
   if (!userData) {
@@ -94,13 +95,15 @@ const AppInner: FC = () => {
     );
   }
 
-  if (userData.type === "student") {
-    return <MainStudent userType={userData.type} />;
-  } else if (userData.type === "organizer") {
-    return <MainOrganizer userType={userData.type} />;
-  } else if (userData.type === "admin") {
-    return <MainAdmin userType={userData.type} />;
-  } else {
-    return <Error message="A problem has occured. please reach us at uevents.dev@uottawa.ca to recover your account." />;
-  }
+  return <Main />;
+
+  // if (userData.type === "student") {
+  //   return <MainStudent userType={userData.type} />;
+  // } else if (userData.type === "organizer") {
+  //   return <MainOrganizer userType={userData.type} />;
+  // } else if (userData.type === "admin") {
+  //   return <MainAdmin userType={userData.type} />;
+  // } else {
+  //   return <Error message="A problem has occured. please reach us at uevents.dev@uottawa.ca to recover your account." />;
+  // }
 };

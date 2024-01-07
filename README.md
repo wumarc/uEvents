@@ -93,3 +93,9 @@ pod deintegrate
 pod setup
 pod install
 ```
+
+## Test events
+
+I created test events so we can add events that will not show for users. In the database, they are in "events-test".
+They also have a special marking in the admin account and have a special button to create then in the admin web form.
+If you want to see them in your normal view, add your account in the testUsers in the config.tsx file.

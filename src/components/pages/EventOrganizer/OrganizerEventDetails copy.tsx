@@ -2,12 +2,11 @@ import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "
 import { EventObject } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button } from "@rneui/base";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerEventDetails">;
-// To access the type of user, use route.params.userType
 
 const OrganizerEventDetails = ({ route, navigation }: props) => {
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>("events", route.params.eventID);

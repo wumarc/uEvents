@@ -1,16 +1,10 @@
-import { KeyboardAvoidingView, ScrollView, View, StyleSheet, Image, Platform } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View, StyleSheet, Platform } from "react-native";
 import { Input, Avatar, Text } from "@rneui/themed";
 import { Button } from "react-native-elements";
-import {
-  useSateWithFireStore,
-  useStateWithFireStoreCollection,
-  useStateWithFireStoreDocument,
-  useStateWithFireStoreImage,
-} from "../../../utils/useStateWithFirebase";
-import { getFirebaseUserID, getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
+import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
+import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
-import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
+import { Organizer } from "../../../utils/model/Organizer";
 import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
@@ -18,12 +12,11 @@ import { useUploadFile } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
 import { storage } from "../../../firebaseConfig";
 import { Loading } from "../Common/Loading";
-import { EventObject } from "../../../utils/model/EventObject";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Profile">;
-// To access the type of user, use route.params.userType
 
-export const Profile = ({ route, navigation }: props) => {
+export const OrganizerSettings = ({ route, navigation }: props) => {
   const [image, setImage] = useState<string>("");
   const [loading, profile, setProfile] = useStateWithFireStoreDocument<Organizer>("users", route.params.id ?? getFirebaseUserIDOrEmpty());
 
@@ -260,5 +253,3 @@ const styles = StyleSheet.create({
     borderTopColor: colours.primaryGrey,
   },
 });
-
-export default Profile;

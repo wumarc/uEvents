@@ -1,18 +1,18 @@
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Linking, ImageBackground, TouchableOpacity } from "react-native";
 import { EventObject, getTimeInAMPM } from "../../../utils/model/EventObject";
-import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowHeight, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
-import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
-import { Image, Icon, Button, color } from "@rneui/base";
+import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { Icon, Button } from "@rneui/base";
 import { SvgUri } from "react-native-svg";
-import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
-import { useEffect, useState } from "react";
-import { Loading } from "../Common/Loading";
+import { Organizer } from "../../../utils/model/Organizer";
+import { useState } from "react";
+import { Loading } from "./Loading";
 import { Badge } from "react-native-elements";
 import FirebaseImage from "../../organisms/FirebaseImage";
 import { emojiUrl, getNextDate } from "../../../utils/util";
 import { Platform } from "react-native";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType

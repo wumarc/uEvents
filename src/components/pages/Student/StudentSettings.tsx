@@ -4,13 +4,11 @@ import { useState } from "react";
 import { Input } from "react-native-elements";
 import { auth } from "../../../firebaseConfig";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import CustomButton from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/themed";
 import CustomInput from "../../atoms/CustomInput";
 
-const AccountSettings = () => {
+export const StudentSettings = () => {
   // States
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -111,5 +109,3 @@ const styles = StyleSheet.create({
     // backgroundColor: "green"
   },
 });
-
-export default AccountSettings;

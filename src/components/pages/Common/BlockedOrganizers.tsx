@@ -3,7 +3,7 @@ import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
-import { Loading } from "../Common/Loading";
+import { Loading } from "./Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 
 const BlockedOrganizers = ({ navigation }: any) => {

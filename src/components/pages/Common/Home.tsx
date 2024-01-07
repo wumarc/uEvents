@@ -1,21 +1,21 @@
 import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
 import { useState } from "react";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
-import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
+import { EventObject } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
-import { Loading } from "../Common/Loading";
+import { Loading } from "./Loading";
 import { SearchBar } from "react-native-elements";
 import { Organizer } from "../../../utils/model/Organizer";
-import { getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../../utils/util";
 import { Divider } from "@rneui/themed";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -23,7 +23,8 @@ const Home = ({ route, navigation }: props) => {
   // States
   const [search, setSearch] = useState("");
   const [listView, setListView] = useState(true);
-  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+  console.log(eventPath());
+  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
   const [user, loading4, error] = useAuthState(auth);
   const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());

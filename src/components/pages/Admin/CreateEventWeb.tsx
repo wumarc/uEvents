@@ -1,5 +1,4 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import { useEffect, useState } from "react";
 import { daysOfWeekArray, daysOfWeekBrief, emojiUrl, uid } from "../../../utils/util";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
@@ -16,6 +15,7 @@ import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { SvgUri } from "react-native-svg";
 import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
 import { fireStore } from "../../../firebaseConfig";
+import { RootStackParamList } from "../../../../main";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;

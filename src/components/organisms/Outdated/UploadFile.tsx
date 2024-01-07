@@ -1,14 +1,10 @@
 import { getStorage, ref } from "firebase/storage";
 import { useUploadFile } from "react-firebase-hooks/storage";
-import { storage } from "../../firebaseConfig";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../pages/Admin/main";
+import { storage } from "../../../firebaseConfig";
 import { FC, useState } from "react";
-import { useStateWithFireStoreDocument } from "../../utils/useStateWithFirebase";
-import { EventObject } from "../../utils/model/EventObject";
-import { uid } from "../../utils/util";
-import { View, Text, Image } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { uid } from "../../../utils/util";
+import { View, Text } from "react-native";
+import { Button } from "react-native-elements";
 
 const UploadFile: FC<{ setImage: (id: string) => void }> = (props) => {
   const [id, setId] = useState<string>(uid());

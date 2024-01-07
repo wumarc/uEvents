@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { EventObject } from "../../../utils/model/EventObject";
-import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Image, Icon, Button } from "@rneui/base";
 import { ButtonGroup, Input } from "react-native-elements";
@@ -12,9 +11,9 @@ import { getOrderedCategories } from "../../../utils/categories";
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MultiSelect } from "react-native-element-dropdown";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerEventDetails">;
-// To access the type of user, use route.params.userType
 
 const data = [
   { label: "Academic Hall (SMN)", address: "133-135 Séraphin Marion Street, Ottawa, Ontario" },

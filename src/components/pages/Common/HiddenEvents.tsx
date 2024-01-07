@@ -1,25 +1,23 @@
 import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text, Button } from "react-native";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
-import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
+import { EventObject } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
-import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
-import { Loading } from "../Common/Loading";
-
+import { Loading } from "./Loading";
 import { Organizer } from "../../../utils/model/Organizer";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
+import { RootStackParamList } from "../../../../main";
 
-type props = NativeStackScreenProps<RootStackParamList, "Home">;
+type props = NativeStackScreenProps<RootStackParamList, "HiddenEventsView">;
 // To access the type of user, use route.params.userType
 
 export const HiddenEvents = ({ route, navigation }: props) => {
   // States
-  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+  const [loading, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
   const [user, loading4, error] = useAuthState(auth);
   const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());

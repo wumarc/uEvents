@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Dialog } from "react-native-elements";
 import CustomButton from "../atoms/CustomButton";
 import { Button } from "@rneui/base";
-import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
 import { Text } from "react-native";
 import { colours, fonts } from "../subatoms/Theme";

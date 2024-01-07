@@ -1,5 +1,4 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./main";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
@@ -12,6 +11,7 @@ import { uid } from "../../../utils/util";
 import { CheckBox, SearchBar } from "react-native-elements";
 import { useState } from "react";
 import { colours } from "../../subatoms/Theme";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllOrganizers">;
 export const AllOrganizers = ({ route, navigation }: props) => {

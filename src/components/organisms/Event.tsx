@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Icon } from "@rneui/base";
-import { emojiUrl, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../utils/util";
+import { emojiUrl, eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
@@ -28,7 +28,7 @@ interface EventProps {
 const Event: React.FC<EventProps> = (props) => {
   // Fake
   let isFake = props.fake ?? false;
-  let dbPath = isFake ? "events-test" : "events";
+  let dbPath = isFake ? "events-test" : eventPath();
 
   // States
   const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, props.id);

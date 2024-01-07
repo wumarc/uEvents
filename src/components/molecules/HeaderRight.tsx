@@ -3,7 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { View } from "react-native";
 import React, { FC, useState } from "react";
 import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty, isLogged } from "../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../utils/util";
 import { Dialog } from "react-native-elements";
 import { Button } from "@rneui/base";
 import { Text } from "react-native";
@@ -14,7 +14,7 @@ import { auth } from "../../firebaseConfig";
 
 const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
   // States
-  const [loading2, event, setEvent] = useStateWithFireStoreDocument("events", props.eventID === "" ? "0" : props.eventID);
+  const [loading2, event, setEvent] = useStateWithFireStoreDocument(eventPath(), props.eventID === "" ? "0" : props.eventID);
   const [visible, setVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
   const [hideVisible, setHideVisible] = useState(false);

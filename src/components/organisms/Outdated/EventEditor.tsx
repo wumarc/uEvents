@@ -6,7 +6,7 @@ import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { ButtonGroup, Input, Switch } from "react-native-elements";
 import FirebaseImage from "../FirebaseImage";
-import UploadFile from "../UploadFile";
+import UploadFile from "./UploadFile";
 import { deleteObject, ref } from "firebase/storage";
 import { storage } from "../../../firebaseConfig";
 import { daysOfWeekArray, daysOfWeekBrief } from "../../../utils/util";

@@ -1,12 +1,12 @@
 import { View, Text, FlatList, ScrollView, Platform } from "react-native";
 import { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../Admin/main";
 import CustomButton from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { Input } from "react-native-elements";
+import { RootStackParamList } from "../../../../main";
 
-type props = NativeStackScreenProps<RootStackParamList, "createEvent">;
+type props = NativeStackScreenProps<RootStackParamList, "CreateEvent">;
 
 const CreateEvent = ({ route, navigation }: props) => {
   const [organizerName, setOrganizerName] = useState<string>("");

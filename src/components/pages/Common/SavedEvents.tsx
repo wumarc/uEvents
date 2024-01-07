@@ -1,19 +1,17 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
-import { RootStackParamList } from "./main";
-import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import Event from "../../organisms/Event";
-import { Loading } from "../Common/Loading";
+import { Loading } from "./Loading";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { EventObject } from "../../../utils/model/EventObject";
 import { SvgUri } from "react-native-svg";
 import { Timestamp } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { LoginDialog } from "../../atoms/LoginDialog";
 import CustomButton from "../../atoms/CustomButton";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
+import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 
@@ -42,7 +40,7 @@ const SavedEvents = ({ route, navigation }: props) => {
 
   // States
   const [loading, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
-  const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>("events");
+  const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
 
   // Loading
   if (loading || loading2 || !events) {
