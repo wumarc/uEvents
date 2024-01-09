@@ -14,10 +14,13 @@ if (!isExpoGo) {
   analytics = require("@react-native-firebase/analytics").default;
 }
 
+// Function to log an event
+// Only works outside expo
 export async function logEvent(event: string, id: string) {
   if (isExpoGo) {
-    console.log("Analytics event: ", event, "{id: " + id + "}");
+    console.log("Analytics event (won't send. not expo): ", event, "{id: " + id + "}");
   } else {
+    console.log("Analytics event (sending): ", event, "{id: " + id + "}");
     await analytics().logEvent(event, { id: id });
   }
 }

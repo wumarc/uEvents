@@ -99,3 +99,24 @@ pod install
 I created test events so we can add events that will not show for users. In the database, they are in "events-test".
 They also have a special marking in the admin account and have a special button to create then in the admin web form.
 If you want to see them in your normal view, add your account in the testUsersEvents in the userConfig.tsx file.
+
+## DB structure
+
+`events` / `events-test`: Contains the list of all events
+
+`versions` / `versions-test`: List of all versions of the app. Only updated by admin and read by others.
+
+`users`: List of all users profiles. Organizers and students.
+
+## Analytics
+
+Firebase has some default dark magic analytics. It includes screen view, user engagement, os update, first open and session start. It looks like there is a lot of metadata associated with it since you can learn a lot about your users with it. I don't know if it only works for users that are signed up. I don't know if it also collects when we are developing the app. I think somehow they also measure how long people use the app.
+
+See the individual events:
+https://analytics.google.com/analytics/web/?authuser=1&hl=en#/p376543684/reports/explorer?params=_u..pageSize%3D25%26_u..nav%3Dmaui&r=top-events&ruid=top-events,life-cycle,engagement&collectionId=life-cycle
+
+Firebase offers only a high level view of events. You can't dive in and see properties, or make custom queries or not even sure if you can do your own graphs. I exported the firebase analytics data to BigQuery using an integration. There, it should be easier to see the events in detail. Big query is updated once a day and then streamlined (wtv that means).
+
+Analytics events are batched together and sent every hour so it is very annoying to test. It is possible to use what is called the debug view. It is possible to activate the debug view using a chrome extension and then view the events in the firebase debug view console.
+
+The current implementation of analytics to log event doesn't work in the web. TODO: explore using expo-firebase/_ libraries instead of the firebase/_ libraries we currently use.s

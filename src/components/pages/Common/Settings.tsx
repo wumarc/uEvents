@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "./Loading";
 import { Linking } from "react-native";
-import { auth, fireStore } from "../../../firebaseConfig";
+import { auth, fireStore, logEvent } from "../../../firebaseConfig";
 import { Icon } from "@rneui/base";
 import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -134,6 +134,18 @@ const Settings = ({ route, navigation }: props) => {
             }}
           />
         )}
+
+        {/* Send test analytics */}
+        {isAdmin && (
+          <CustomButton
+            buttonName="Send Test Analytics"
+            onPress={() => {
+              logEvent("test_event", getFirebaseUserIDOrEmpty());
+            }}
+          />
+        )}
+
+        {/* Send test notification */}
 
         {/* Delete Account Confirmation */}
         <BottomSheet
