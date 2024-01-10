@@ -14,6 +14,7 @@ import { colours } from "../../subatoms/Theme";
 import { searchAlgo } from "../../../utils/search";
 import { Student } from "../../../utils/model/Student";
 import { RootStackParamList } from "../../../../main";
+import { CustomText } from "../../atoms/CustomText";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllEvents">;
 // To access the type of user, use route.params.userType

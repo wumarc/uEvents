@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import CustomButton from "./CustomButton";
+import { CustomButton } from "./CustomButton";
 import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
 import { EventObject } from "../../utils/model/EventObject";
 import { useState } from "react";

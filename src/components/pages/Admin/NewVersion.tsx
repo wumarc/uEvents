@@ -3,7 +3,7 @@ import { RootStackParamList } from "../../../../main";
 import { View } from "react-native";
 import CustomInput from "../../atoms/CustomInput";
 import { useState } from "react";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { Version } from "../../../utils/model/Version";
 import { doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
@@ -48,7 +48,7 @@ export const NewVersion = ({ route, navigation }: props) => {
         }}
       />
       <CustomButton
-        buttonName={"Add Version (Prod)"}
+        title={"Add Version (Prod)"}
         onPress={() => {
           // Adding the event to the database
           let newVersion: Version = {
@@ -63,7 +63,7 @@ export const NewVersion = ({ route, navigation }: props) => {
         }}
       />
       <CustomButton
-        buttonName={"Add Version (Test)"}
+        title={"Add Version (Test)"}
         onPress={() => {
           // Adding the event to the database
           let newVersion: Version = {

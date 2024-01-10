@@ -1,7 +1,7 @@
 import { View, Text, FlatList, ScrollView, Platform } from "react-native";
 import { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { StyleSheet } from "react-native";
 import { Input } from "react-native-elements";
 import { RootStackParamList } from "../../../../main";
@@ -22,9 +22,8 @@ const CreateEvent = ({ route, navigation }: props) => {
           setOrganizerName(text);
         }}
       />
-
       <CustomButton
-        buttonName={"Add Event"}
+        title={"Add Event"}
         disabled={Platform.OS === "web"}
         onPress={() => {
           // Adding the event to the database
@@ -33,7 +32,7 @@ const CreateEvent = ({ route, navigation }: props) => {
       />
       <Text style={{ marginTop: 10 }}>This is the new updated version of the form. Recommend using that one with a browser.</Text>
       <CustomButton
-        buttonName={"Add Event (Web)"}
+        title={"Add Event (Web)"}
         disabled={Platform.OS !== "web"}
         onPress={() => {
           // Adding the event to the database
@@ -42,7 +41,7 @@ const CreateEvent = ({ route, navigation }: props) => {
       />
       <Text style={{ marginTop: 10 }}>Add a fake event that will not be shown to the user.</Text>
       <CustomButton
-        buttonName={"Add test Event (Web)"}
+        title={"Add test Event (Web)"}
         disabled={Platform.OS !== "web"}
         onPress={() => {
           // Adding the event to the database

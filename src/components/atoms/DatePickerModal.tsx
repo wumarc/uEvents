@@ -4,7 +4,7 @@ import { Modal, View, Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button, Input } from "react-native-elements";
 import WheelPickerExpo from "react-native-wheel-picker-expo";
-import CustomButton from "./CustomButton";
+import { CustomButton } from "./CustomButton";
 import { borderRadius, colours } from "../subatoms/Theme";
 
 export const DatePickerModal: FC<{
@@ -344,7 +344,7 @@ export const DatePickerModal: FC<{
             />
           </View>
           <CustomButton
-            buttonName="Done"
+            title="Done"
             onPress={() => {
               setShow(false);
               props.setDate(Timestamp.fromDate(convert()));

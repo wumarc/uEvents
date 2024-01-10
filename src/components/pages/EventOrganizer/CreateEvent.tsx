@@ -18,7 +18,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
 import WheelPickerExpo from "react-native-wheel-picker-expo";
 import { DatePickerModal } from "../../atoms/DatePickerModal";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { type Organizer } from "../../../utils/model/Organizer";
 import React from "react";
 
@@ -588,7 +588,7 @@ export const Step3: FC<{ setStep: (step: number) => any; eventID: string }> = (p
         )}
       </View>
       <CustomButton
-        buttonName={"Set location as TBD"}
+        title={"Set location as TBD"}
         onPress={() => {
           set({
             ...event,

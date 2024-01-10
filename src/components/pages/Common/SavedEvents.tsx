@@ -8,7 +8,7 @@ import { colours, fonts, spacing } from "../../subatoms/Theme";
 import { EventObject } from "../../../utils/model/EventObject";
 import { SvgUri } from "react-native-svg";
 import { Timestamp } from "firebase/firestore";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
@@ -29,7 +29,7 @@ const SavedEvents = ({ route, navigation }: props) => {
       <View>
         <Text style={{ ...fonts.regular, textAlign: "center" }}>{"You need to be logged in to view saved events."}</Text>
         <CustomButton
-          buttonName="Login"
+          title="Login"
           onPress={() => {
             navigation.navigate("Welcome", {});
           }}

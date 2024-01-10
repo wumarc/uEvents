@@ -15,7 +15,7 @@ import { defaultStudent, Student } from "../../../utils/model/Student";
 import { getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import { defaultOrganizer, Organizer } from "../../../utils/model/Organizer";
 import { CheckBox } from "@rneui/themed";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import * as Clipboard from "expo-clipboard";
 import { addDoc, doc, setDoc } from "firebase/firestore";
 import { spacing } from "../../subatoms/Theme";
@@ -238,7 +238,7 @@ export const Login: FC = ({ navigation }: any) => {
           <Text style={{ ...fonts.title3, textAlign: "center", marginBottom: "5%" }}>admin@uevents.org</Text>
           <View>
             <CustomButton
-              buttonName="Copy Email"
+              title="Copy Email"
               onPress={() => Clipboard.setStringAsync("admin@uevents.org")}
               // onPressListener={() => resetPassword()}
               // disabled={email === ""}

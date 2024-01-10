@@ -7,8 +7,8 @@ import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../utils/util"
 import { Dialog } from "react-native-elements";
 import { Button } from "@rneui/base";
 import { Text } from "react-native";
-import CustomButton from "../atoms/CustomButton";
-import { LoginDialog } from "../atoms/LoginDialog";
+import { CustomButton } from "../atoms/CustomButton";
+import { LoginDialog } from "./LoginDialog";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 
@@ -75,7 +75,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
       )}
       <Dialog isVisible={visible} onDismiss={() => setVisible(false)} style={{ backgroundColor: colours.white }}>
         <CustomButton
-          buttonName="Report"
+          title="Report"
           onPress={() => {
             setReportVisible(true);
             setVisible(false);
@@ -83,7 +83,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         />
         {event && event.organizerType === "Organizer Added" ? (
           <CustomButton
-            buttonName="Block"
+            title="Block"
             onPress={() => {
               setBlockVisible(true);
               setVisible(false);
@@ -93,7 +93,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           <></>
         )}
         <CustomButton
-          buttonName="Hide"
+          title="Hide"
           onPress={() => {
             setHideVisible(true);
             setVisible(false);
@@ -121,7 +121,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           it from the platform if judged inappropriate.
         </Text>
         <CustomButton
-          buttonName="Report"
+          title="Report"
           onPress={() => {
             if (setUserData) {
               setUserData({
@@ -158,7 +158,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           for all users.
         </Text>
         <CustomButton
-          buttonName="Hide"
+          title="Hide"
           onPress={() => {
             if (setUserData) {
               setUserData({
@@ -193,7 +193,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           Blocking will block all events from this organizer. You will not be able to see any of their events on your feed. You can unblock anytime in settings.
         </Text>
         <CustomButton
-          buttonName="Block"
+          title="Block"
           onPress={() => {
             if (setUserData) {
               setUserData({
@@ -221,7 +221,9 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           }}
         />
       </Dialog>
-      <LoginDialog visible={loginVisible} setVisible={setLoginVisible} reason={loginReason} navigation={props.navigation} />
+      <LoginDialog visible={loginVisible} setVisible={setLoginVisible} navigation={props.navigation}>
+        {loginReason}
+      </LoginDialog>
     </View>
   );
 };

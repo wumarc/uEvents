@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "react-native-elements";
 import { auth } from "../../../firebaseConfig";
 import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/themed";
 import CustomInput from "../../atoms/CustomInput";
 
@@ -59,7 +59,7 @@ export const StudentSettings = () => {
             selectionColor={colours.purple}
           />
 
-          <CustomButton buttonName="Change Password" onPress={() => setIsVisible(true)} />
+          <CustomButton title="Change Password" onPress={() => setIsVisible(true)} />
 
           <BottomSheet
             modalProps={{ animationType: "fade" }}
@@ -88,7 +88,7 @@ export const StudentSettings = () => {
                 onChangeText={(value: string) => setNewPassword(value)}
               />
               <View>
-                <CustomButton buttonName="Update" onPress={() => updateUserPassword()} disabled={oldPassword === "" || newPassword === ""} />
+                <CustomButton title="Update" onPress={() => updateUserPassword()} disabled={oldPassword === "" || newPassword === ""} />
               </View>
             </View>
           </BottomSheet>

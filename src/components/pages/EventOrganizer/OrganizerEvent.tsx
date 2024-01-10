@@ -9,7 +9,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 
 const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -105,7 +105,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
 
             <Dialog isVisible={confirmDelete} onDismiss={() => setConfirmDelete(false)} style={{ backgroundColor: colours.white, borderRadius: 15 }}>
               <Text style={{ ...fonts.regular, textAlign: "center" }}>Are you sure you want to delete the event?</Text>
-              <CustomButton buttonName="Delete" onPressListener={() => deleteDoc(doc(fireStore, "events/" + props.eventID))} />
+              <CustomButton title="Delete" onPress={() => deleteDoc(doc(fireStore, "events/" + props.eventID))} />
               <Button
                 style={{
                   paddingHorizontal: 10,

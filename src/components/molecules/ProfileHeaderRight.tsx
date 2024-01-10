@@ -1,22 +1,22 @@
 import { FC, useState } from "react";
 import { View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Dialog } from "react-native-elements";
-import CustomButton from "../atoms/CustomButton";
-import { Button } from "@rneui/base";
 import { useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty } from "../../utils/util";
-import { Text } from "react-native";
-import { colours, fonts } from "../subatoms/Theme";
+import { colours } from "../subatoms/Theme";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
+import { CustomDialog } from "../atoms/CustomDialog";
+import { LoginDialog } from "./LoginDialog";
 
+// Header for the organizer profile page
 const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) => {
   // States
   const [user, loading2, error] = useAuthState(auth);
   const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
   const [visible, setVisible] = useState(false);
   const [blockVisible, setBlockVisible] = useState(false);
+  const [loginVisible, setLoginVisible] = useState(false);
 
   // Loading
   if (loading || loading2) {
@@ -25,62 +25,63 @@ const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) =
 
   return (
     <View style={{ backgroundColor: colours.white, flexDirection: "row" }}>
-      <MaterialCommunityIcons name="dots-vertical" color={colours.black} size={30} onPress={() => setVisible(true)} />
-
-      <Dialog isVisible={visible} onDismiss={() => setVisible(false)} style={{ backgroundColor: colours.white }}>
-        <CustomButton
-          buttonName="Block"
-          onPress={() => {
-            setBlockVisible(true);
-            setVisible(false);
-          }}
-        />
-        <Button
-          style={{
-            paddingHorizontal: 10,
-            borderRadius: 15,
-            marginVertical: "1%",
-          }}
-          color={"transparent"}
-          titleStyle={{ color: colours.purple, fontWeight: "600" }}
-          title={"Cancel"}
-          onPress={() => {
-            setVisible(false);
-          }}
-        />
-      </Dialog>
+      <MaterialCommunityIcons
+        name="dots-vertical"
+        color={colours.black}
+        size={30}
+        onPress={() => {
+          if (user) {
+            setVisible(true);
+          } else {
+            setLoginVisible(true);
+          }
+        }}
+      />
+      {/* Main dialog */}
+      <CustomDialog
+        visible={visible}
+        setVisible={setVisible}
+        navigation={props.navigation}
+        includeCancel
+        buttons={[
+          {
+            buttonName: "block",
+            onPress: () => {
+              setBlockVisible(true);
+              setVisible(false);
+            },
+          },
+        ]}
+      />
       {/* Block dialog */}
-      <Dialog isVisible={blockVisible} onDismiss={() => setBlockVisible(false)} style={{ backgroundColor: colours.white }}>
-        <Text style={{ ...fonts.regular, textAlign: "center" }}>
-          Blocking will block all events from this organizer. You will not be able to see any of their events on your feed. You can unblock anytime in settings.
-        </Text>
-        <CustomButton
-          buttonName="Block"
-          onPress={() => {
-            setUserData({
-              ...userData,
-              blocked: [...(userData?.blocked ?? []), props.organizer],
-            });
-            setBlockVisible(false);
-            setVisible(false);
-            props.navigation.pop();
-          }}
-        />
-        <Button
-          style={{
-            paddingHorizontal: 10,
-            borderRadius: 15,
-            marginVertical: "1%",
-          }}
-          color={"transparent"}
-          titleStyle={{ color: colours.purple, fontWeight: "600" }}
-          title={"Cancel"}
-          onPress={() => {
-            setBlockVisible(false);
-            setVisible(false);
-          }}
-        />
-      </Dialog>
+      <CustomDialog
+        visible={blockVisible}
+        setVisible={setBlockVisible}
+        navigation={props.navigation}
+        includeCancel
+        cancelOnPress={() => setVisible(false)}
+        buttons={[
+          {
+            buttonName: "Block",
+            onPress: () => {
+              if (!userData) return;
+              setUserData({
+                ...userData,
+                blocked: [...(userData?.blocked ?? []), props.organizer],
+              });
+              setBlockVisible(false);
+              setVisible(false);
+              props.navigation.pop();
+            },
+          },
+        ]}
+      >
+        Blocking will block all events from this organizer. You will not be able to see any of their events on your feed. You can unblock anytime in settings.
+      </CustomDialog>
+      {/* Login dialog */}
+      <LoginDialog visible={loginVisible} setVisible={setLoginVisible} navigation={props.navigation}>
+        You must be logged in to block an organizer.
+      </LoginDialog>
     </View>
   );
 };

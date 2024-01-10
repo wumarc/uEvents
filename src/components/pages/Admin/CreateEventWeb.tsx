@@ -9,7 +9,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { View, StyleSheet, Text, Platform, ScrollView } from "react-native";
 import { Organizer } from "../../../utils/model/Organizer";
 import { colours, windowHeight } from "../../subatoms/Theme";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { SvgUri } from "react-native-svg";

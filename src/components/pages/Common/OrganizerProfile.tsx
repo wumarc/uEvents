@@ -7,7 +7,7 @@ import { Dialog } from "react-native-elements";
 import * as Clipboard from "expo-clipboard";
 import { BottomSheet } from "@rneui/themed";
 import { Button } from "@rneui/base";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Organizer } from "../../../utils/model/Organizer";
 import {
@@ -184,7 +184,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
             </Text>
           </View>
           <View style={{ marginHorizontal: spacing.horizontalMargin1 }}>
-            <CustomButton buttonName="Report organizer" onPress={() => {}} />
+            <CustomButton title="Report organizer" onPress={() => {}} />
             <Button
               style={{
                 paddingHorizontal: 10,

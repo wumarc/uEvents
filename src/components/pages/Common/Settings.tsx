@@ -12,7 +12,7 @@ import { auth, fireStore, logEvent } from "../../../firebaseConfig";
 import { Icon } from "@rneui/base";
 import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
-import CustomButton from "../../atoms/CustomButton";
+import { CustomButton } from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/base";
 import { Dialog } from "react-native-elements";
 import * as Clipboard from "expo-clipboard";
@@ -128,7 +128,7 @@ const Settings = ({ route, navigation }: props) => {
         {/* Add version button */}
         {isAdmin && (
           <CustomButton
-            buttonName="Add Version"
+            title="Add Version"
             onPress={() => {
               navigation.navigate("NewVersion", {});
             }}
@@ -138,7 +138,7 @@ const Settings = ({ route, navigation }: props) => {
         {/* Send test analytics */}
         {isAdmin && (
           <CustomButton
-            buttonName="Send Test Analytics"
+            title="Send Test Analytics"
             onPress={() => {
               logEvent("test_event", getFirebaseUserIDOrEmpty());
             }}
@@ -171,7 +171,7 @@ const Settings = ({ route, navigation }: props) => {
               Confirm deletion of your account?
             </Text>
             <CustomButton
-              buttonName="Delete Account"
+              title="Delete Account"
               onPress={() => {
                 deleteDoc(doc(fireStore, "users" + "/" + getFirebaseUserID()));
                 deleteUser(auth.currentUser as User);
