@@ -16,6 +16,7 @@ import { Student } from "../../../utils/model/Student";
 import { RootStackParamList } from "../../../../main";
 import { CustomText } from "../../atoms/CustomText";
 import { CustomDialog } from "../../atoms/CustomDialog";
+import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllEvents">;
 // To access the type of user, use route.params.userType
@@ -102,31 +103,9 @@ export const AllEvents = ({ route, navigation }: props) => {
   return (
     <View style={{ height: "100%" }}>
       {/* Search Bar */}
-      {/* TODO: Fix error */}
-      <SearchBar
-        platform="default"
-        inputContainerStyle={{
-          borderRadius: 6,
-          height: 38,
-          backgroundColor: "#ebebeb",
-        }}
-        containerStyle={{
-          backgroundColor: "white",
-          flex: 1,
-          borderBottomColor: "transparent",
-          borderTopColor: "transparent",
-        }}
-        onChange={(value) => {
-          setSearch(value.nativeEvent.text);
-        }}
-        placeholder="Search events by name or category"
-        // placeholderTextColor="white"
-        value={search}
-        autoCapitalize="none"
-        selectionColor={colours.purple}
-      />
+      <CustomSearchBar placeholder="Search event by name" search={search} setSearch={setSearch} />
       {/* TODO: Fix the weird top margin */}
-      <View style={{ display: "flex", flexDirection: "row", marginTop: 30, flexWrap: "wrap" }}>
+      <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         <CheckBox
           title="Detailed"
           checked={detailed}

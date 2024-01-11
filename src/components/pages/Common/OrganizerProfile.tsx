@@ -20,7 +20,7 @@ import { Loading } from "./Loading";
 import { EventObject, nextStartTime } from "../../../utils/model/EventObject";
 import { searchAlgo } from "../../../utils/search";
 import { Timestamp } from "firebase/firestore";
-import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../../utils/util";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
@@ -62,12 +62,14 @@ const OrganizerProfile = ({ route, navigation }: props) => {
   let filteredEvents = events as EventObject[];
   filteredEvents = searchAlgo("", filteredEvents);
 
+  let today = new Date();
   // Make sure the events are not in the past
   filteredEvents = filteredEvents.filter((event) => {
-    let startTime = nextStartTime(event.startTime, event.recurrence);
-    if (!startTime) {
+    let [startDate, endDate] = getNextDate(event, today);
+    if (!startDate) {
       return false;
     }
+    let startTime = Timestamp.fromDate(startDate);
     return isPresent ? startTime.toMillis() > Timestamp.now().toMillis() : startTime.toMillis() < Timestamp.now().toMillis();
   });
 
@@ -146,7 +148,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
             data={filteredEvents}
             renderItem={({ item, index }) => (
               <View style={{ marginVertical: "2%" }}>
-                <Event organizer={item.organizer} id={item.id} navigation={navigation} userType={route.params.organizerID} listView={false} />
+                <Event organizer={item.organizer} id={item.id} navigation={navigation} listView={false} onSaveEvent={() => {}} />
               </View>
             )}
           />

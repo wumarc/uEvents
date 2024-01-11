@@ -197,7 +197,7 @@ export const Login: FC = ({ navigation }: any) => {
       {/* Button */}
       <View>
         <CustomButton
-          buttonName="Log In"
+          title="Log In"
           onPress={() => {
             // logEvent(analytics, 'login');
             signIn();

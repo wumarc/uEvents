@@ -9,6 +9,7 @@ import { SearchBar } from "react-native-elements";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
+import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 
 const BrowseOrganizers = ({ navigation }: any) => {
   // States
@@ -24,7 +25,7 @@ const BrowseOrganizers = ({ navigation }: any) => {
 
   let filteredOrganizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
 
-  if (user) {
+  if (user && student) {
     filteredOrganizers = filteredOrganizers.filter((organizer) => {
       if ((student.blocked ?? []).includes(organizer.id)) {
         return false;
@@ -53,28 +54,7 @@ const BrowseOrganizers = ({ navigation }: any) => {
         </View>
 
         {/* Search Bar */}
-        <View>
-          <SearchBar
-            platform="default"
-            inputContainerStyle={{
-              borderRadius: 6,
-              height: 38,
-              backgroundColor: "#ebebeb",
-            }}
-            containerStyle={{
-              backgroundColor: "white",
-              flex: 1,
-              borderBottomColor: "transparent",
-              borderTopColor: "transparent",
-            }}
-            onChangeText={(value) => setSearch(value)}
-            placeholder="Search organizer by name"
-            // placeholderTextColor="white"
-            value={search}
-            autoCapitalize="none"
-            selectionColor={colours.purple}
-          />
-        </View>
+        <CustomSearchBar placeholder="Search organizer by name" search={search} setSearch={setSearch} />
         <FlatList
           data={filteredOrganizers}
           renderItem={({ item }) => (

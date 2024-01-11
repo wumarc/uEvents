@@ -16,6 +16,7 @@ import { Divider } from "@rneui/themed";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
+import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -145,28 +146,7 @@ const Home = ({ route, navigation }: props) => {
         )}
 
         {/* Search Bar */}
-        <View>
-          <SearchBar
-            platform="default"
-            inputContainerStyle={{
-              borderRadius: 6,
-              height: 38,
-              backgroundColor: "#ebebeb",
-            }}
-            containerStyle={{
-              backgroundColor: "white",
-              flex: 1,
-              borderBottomColor: "transparent",
-              borderTopColor: "transparent",
-            }}
-            onChangeText={(value) => setSearch(value)}
-            placeholder="Search events by name or category"
-            // placeholderTextColor="white"
-            value={search}
-            autoCapitalize="none"
-            selectionColor={colours.purple}
-          />
-        </View>
+        <CustomSearchBar placeholder="Search events by name or category" search={search} setSearch={setSearch} />
 
         {/* Today's event list */}
         {todayEvents.length != 0 && (

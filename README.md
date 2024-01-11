@@ -36,11 +36,13 @@ declare module '@env' {
 
 - The configuration info can be found on Firebase > Project Settings > General > Your apps > SDK setup and configuration
 
-## Deploy the website
+## Deploy the website (web)
+
+https://uevents-a9365.web.app/
 
 - `firebase login` with your uEvents personal gmail account
 - `npx expo export:web`
-- `firebase deploy --only web`
+- `firebase deploy --only hosting`
 
 ## CLI package management tools
 

@@ -216,7 +216,7 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
       {/* Static Footer */}
       <KeyboardAvoidingView
         style={{ marginBottom: windowHeight * 0.01 }}
-        behavior={Platform.OS === "ios" ? "padding" : null}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 0}
       >
         <View style={styles.footer_buttons}>

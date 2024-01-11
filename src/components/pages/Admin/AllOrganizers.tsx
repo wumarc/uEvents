@@ -12,6 +12,7 @@ import { CheckBox, SearchBar } from "react-native-elements";
 import { useState } from "react";
 import { colours } from "../../subatoms/Theme";
 import { RootStackParamList } from "../../../../main";
+import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllOrganizers">;
 export const AllOrganizers = ({ route, navigation }: props) => {
@@ -68,28 +69,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
   return (
     <View style={{ height: "100%" }}>
       {/* Search Bar */}
-      <View>
-        <SearchBar
-          platform="default"
-          inputContainerStyle={{
-            borderRadius: 6,
-            height: 38,
-            backgroundColor: "#ebebeb",
-          }}
-          containerStyle={{
-            backgroundColor: "white",
-            flex: 1,
-            borderBottomColor: "transparent",
-            borderTopColor: "transparent",
-          }}
-          onChangeText={(value) => setSearch(value)}
-          placeholder="Search organizer by name"
-          // placeholderTextColor="white"
-          value={search}
-          autoCapitalize="none"
-          selectionColor={colours.purple}
-        />
-      </View>
+      <CustomSearchBar placeholder="Search organizer by name" search={search} setSearch={setSearch} />
 
       {/* Filter */}
       <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
@@ -194,15 +174,6 @@ export const AllOrganizers = ({ route, navigation }: props) => {
           color={"#FD6262"}
           size="large"
           onPress={() => {
-            // Creating new organizer
-            // let id: string = uid();
-            // setDoc(doc(fireStore, "users/" + id), {
-            //   type: "organizer",
-            //   saved: [],
-            //   id: id,
-            //   approved: false,
-            //   authentic: false,
-            // });
             navigation.navigate("OrganizerSettings", { id: undefined, new: true });
           }}
         />

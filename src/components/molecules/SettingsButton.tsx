@@ -13,6 +13,7 @@ const SettingsButton = ({ buttonName, onPressListener, disabled }: buttonProps) 
   const iconSize = 13;
   const fontSize = 23;
   const marginBottom = "4%";
+  const fallbackSetting = { icon: "help-circle-outline", type: "ionicon" };
   const settingName = [
     { "My Profile": { icon: "account-outline", type: "material-community" } },
     { "Privacy Policy": { icon: "shield-lock-outline", type: "material-community" } },
@@ -23,12 +24,12 @@ const SettingsButton = ({ buttonName, onPressListener, disabled }: buttonProps) 
   ];
 
   const findIconByKey = (key: any) => {
-    const element = settingName.find((item) => key in item);
+    const element: any = settingName.find((item) => key in item) ?? fallbackSetting;
     return element[key].icon;
   };
 
   const findTypebyKey = (key: any) => {
-    const element = settingName.find((item) => key in item);
+    const element: any = settingName.find((item) => key in item) ?? fallbackSetting;
     return element[key].type;
   };
 

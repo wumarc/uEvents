@@ -34,9 +34,12 @@ import Preview from "./src/components/pages/Admin/Preview";
 import { CreateEventWeb } from "./src/components/pages/Admin/CreateEventWeb";
 import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
+import { en, registerTranslation } from "react-native-paper-dates";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+registerTranslation("en", en);
 
 // Navigator parameters
 export type RootStackParamList = {
@@ -66,6 +69,7 @@ export type RootStackParamList = {
   CreateEventWeb: { id?: string; fake?: boolean };
   Settings: {};
   NewVersion: {};
+  Welcome: {};
 };
 
 type props = NativeStackScreenProps<RootStackParamList, "MainView">;

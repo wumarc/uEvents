@@ -16,6 +16,7 @@ import { SvgUri } from "react-native-svg";
 import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
 import { fireStore } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
+import { CustomText } from "../../atoms/CustomText";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
@@ -104,6 +105,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   return (
     <ScrollView>
       <View style={{ margin: 50, maxWidth: 1000 }}>
+        {isFake && <CustomText style={{ textAlign: "center", color: "red" }}>Warning !!! You are editing / creating a fake event</CustomText>}
         <CustomButton
           style={styles.formElement}
           onPress={() => {
@@ -151,16 +153,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* New Organizer */}
         <CustomButton
           onPress={() => {
-            // Creating new organizer
-            let id: string = uid();
-            setDoc(doc(fireStore, "users/" + id), {
-              type: "organizer",
-              saved: [],
-              id: id,
-              approved: false,
-              authentic: false,
-            });
-            navigation.navigate("OrganizerSettings", { id: id });
+            navigation.navigate("OrganizerSettings", { id: undefined, new: true });
           }}
         >
           Create new organizer
@@ -373,7 +366,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           <CustomInput
             containerStyle={styles.formElement}
             placeholder="Room Number"
-            value={localEvent.roomNumber}
+            value={localEvent.roomNumber ?? ""}
             onChangeText={(text: any) => {
               setLocalEvent({ ...localEvent, roomNumber: text });
             }}
@@ -451,7 +444,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             containerStyle={styles.formElement}
             placeholder="Sign up link"
             label="Link to sign up for the event. This is optional."
-            value={localEvent.signUpLink}
+            value={localEvent.signUpLink ?? ""}
             onChangeText={(text: any) => {
               setLocalEvent({ ...localEvent, signUpLink: text });
             }}
@@ -469,7 +462,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             containerStyle={styles.formElement}
             placeholder="Event link"
             label="Link to the event. This is optional (TODO is it?)"
-            value={localEvent.originalLink}
+            value={localEvent.originalLink ?? ""}
             onChangeText={(text: any) => {
               setLocalEvent({ ...localEvent, originalLink: text });
             }}

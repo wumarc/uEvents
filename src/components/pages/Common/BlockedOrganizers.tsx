@@ -5,14 +5,17 @@ import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStat
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "./Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebaseConfig";
 
 const BlockedOrganizers = ({ navigation }: any) => {
   // States
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
+  const [user, loading3, error] = useAuthState(auth);
   const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
 
   // Loading
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 

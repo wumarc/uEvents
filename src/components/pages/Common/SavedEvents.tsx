@@ -92,16 +92,7 @@ const SavedEvents = ({ route, navigation }: props) => {
           {(student.saved ?? []).length != 0 && (
             <FlatList
               data={savedEvents as EventObject[]}
-              renderItem={({ item }) => (
-                <Event
-                  listView={false}
-                  organizer={item.organizer}
-                  id={item.id}
-                  userType={route.params.userType}
-                  navigation={navigation}
-                  onSaveEvent={() => {}}
-                />
-              )}
+              renderItem={({ item }) => <Event listView={false} organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={() => {}} />}
             />
           )}
         </View>

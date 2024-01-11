@@ -10,7 +10,7 @@ import emojiRegex from "emoji-regex";
 import { useSateWithFireStore, useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 import { getOrderedCategories } from "../../../utils/categories";
-import { type EventObject, defaultEvent, recurrence } from "../../../utils/model/EventObject";
+import { type EventObject, defaultEvent, recurrence, recurrenceType } from "../../../utils/model/EventObject";
 import { emojiUrl, getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
@@ -254,7 +254,7 @@ export const Step0 = ({ route, navigation }: any) => {
       {/* Static Footer */}
       <KeyboardAvoidingView
         style={{ marginBottom: windowHeight * 0.01 }}
-        behavior={Platform.OS === "ios" ? "padding" : null}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 0}
       >
         <ProgressBar progress={step * 0.1} color={colours.purple} />
@@ -644,7 +644,7 @@ export const Step4: FC<{ eventID: string }> = (props) => {
         <ButtonGroup
           buttons={recurrenceOptions}
           onPress={(index) => {
-            set({ ...event, recurrenceType: recurrenceOptions[index] }); // Error is fine
+            set({ ...event, recurrenceType: (recurrenceOptions[index] as recurrenceType) ?? ("None" as recurrenceType) }); // Error is fine
           }}
           selectedIndex={recurrenceIndex}
           containerStyle={{ height: 50 }}

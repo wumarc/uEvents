@@ -1,7 +1,8 @@
 import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
+// @ts-ignore
 import emojiUnicode from "emoji-unicode";
-import { EventObject, recurrenceType } from "./model/EventObject";
+import { EventObject } from "./model/EventObject";
 import { testUsersEvents, testUsersVersion } from "../../userConfig";
 
 export function getFirebaseUserID(): string | undefined {
