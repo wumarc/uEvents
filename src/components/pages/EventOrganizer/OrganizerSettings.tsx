@@ -19,12 +19,9 @@ type props = NativeStackScreenProps<RootStackParamList, "OrganizerSettings">;
 
 export const OrganizerSettings = ({ route, navigation }: props) => {
   // Editing
-  console.log(route.params);
   let isNew = route.params.new ?? false;
   let isEditing = !isNew;
   let dbPath = isEditing ? route.params.id ?? getFirebaseUserIDOrEmpty() : "dummy";
-  console.log("dbPath: " + dbPath);
-  console.log("isNew: " + isNew);
 
   // States
   const [id, setId] = useState<string>(isEditing ? route.params.id ?? getFirebaseUserIDOrEmpty() : uid()); // Id used to store in database.
@@ -167,6 +164,7 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
               placeholder="Insert Description"
               defaultValue={localProfile.description}
               multiline={true}
+              style={{ height: windowHeight * 0.2 }}
               maxLength={700}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) => setLocalProfile({ ...localProfile, description: value })}

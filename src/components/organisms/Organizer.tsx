@@ -7,7 +7,7 @@ import { Loading } from "../pages/Common/Loading";
 
 interface OrganizerProps {
   name: string;
-  imageID?: string;
+  imageID: string;
   noSpacing?: boolean;
 }
 

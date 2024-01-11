@@ -59,7 +59,7 @@ const BrowseOrganizers = ({ navigation }: any) => {
           data={filteredOrganizers}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView", { organizerID: item.id })}>
-              <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} />
+              <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.id} />
             </TouchableOpacity>
           )}
         />

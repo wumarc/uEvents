@@ -102,7 +102,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
         data={organizers}
         renderItem={({ item }) => (
           <View style={{ margin: 20 }}>
-            <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} noSpacing />
+            <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} noSpacing imageID={item.id} />
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Text style={{ color: item.authentic ? "red" : "black" }}>
                 {" "}

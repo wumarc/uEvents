@@ -52,7 +52,7 @@ const BlockedOrganizers = ({ navigation }: any) => {
           renderItem={({ item }) => (
             <View>
               <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView", { organizerID: item.id })}>
-                <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} />
+                <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.id} />
               </TouchableOpacity>
               <Button
                 title={"Unblock"}
