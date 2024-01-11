@@ -1,8 +1,6 @@
-import { View } from "react-native";
 import { Input } from "react-native-elements";
 import * as React from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { borderRadius, colours, fonts } from "../subatoms/Theme";
+import { colours, fonts } from "../subatoms/Theme";
 
 interface inputProps {
   value?: string;

@@ -1,4 +1,4 @@
-import { Icon } from "@rneui/base";
+import { Icon } from "react-native-elements";
 import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
 import { borderRadius, colours, fonts } from "../subatoms/Theme";

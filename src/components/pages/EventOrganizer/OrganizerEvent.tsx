@@ -1,5 +1,5 @@
 import { View, Text, Touchable, TouchableOpacity } from "react-native";
-import { Icon } from "@rneui/themed";
+import { Icon } from "react-native-elements";
 import { Dialog } from "react-native-elements";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import { FC, useState } from "react";

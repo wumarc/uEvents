@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, StyleSheet, Modal, KeyboardAvoidingView, Platform, Pressable, Touchable, TouchableOpacity, FlatList } from "react-native";
 import { ButtonGroup, CheckBox } from "react-native-elements";
-import { Input, Button, Icon } from "@rneui/themed";
+import { Input, Button } from "@rneui/themed";
+import { Icon } from "react-native-elements";
 import { type FC, useEffect, useRef, useState } from "react";
 import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
 import { ProgressBar } from "react-native-paper";

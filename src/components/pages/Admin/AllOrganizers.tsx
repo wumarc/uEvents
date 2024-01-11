@@ -2,15 +2,13 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "../Common/Loading";
-import { FlatList, View, Text, Clipboard, TouchableOpacity, Linking } from "react-native";
+import { FlatList, View, Text, Linking } from "react-native";
 import Organizer from "../../organisms/Organizer";
-import { Button, FAB, Icon, Image } from "@rneui/themed";
+import { Button, FAB } from "@rneui/themed";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
-import { uid } from "../../../utils/util";
-import { CheckBox, SearchBar } from "react-native-elements";
+import { CheckBox } from "react-native-elements";
 import { useState } from "react";
-import { colours } from "../../subatoms/Theme";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 

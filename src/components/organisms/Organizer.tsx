@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { fonts, spacing, windowHeight, windowWidth } from "../subatoms/Theme";
-import { Icon } from "@rneui/base";
+import { Icon } from "react-native-elements";
 import { Image } from "@rneui/base";
 import { useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";

@@ -3,7 +3,7 @@ import { EventObject } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { Image, Icon, Button } from "@rneui/base";
+import { Button } from "@rneui/base";
 import { ButtonGroup, Input } from "react-native-elements";
 import { useEffect, useState } from "react";
 import { Loading } from "../Common/Loading";
@@ -12,6 +12,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MultiSelect } from "react-native-element-dropdown";
 import { RootStackParamList } from "../../../../main";
+import { Timestamp } from "firebase/firestore";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerEventDetails">;
 

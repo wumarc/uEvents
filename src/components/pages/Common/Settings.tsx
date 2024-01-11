@@ -9,7 +9,7 @@ import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "./Loading";
 import { Linking } from "react-native";
 import { auth, fireStore, logEvent } from "../../../firebaseConfig";
-import { Icon } from "@rneui/base";
+import { Icon } from "react-native-elements";
 import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
 import { CustomButton } from "../../atoms/CustomButton";

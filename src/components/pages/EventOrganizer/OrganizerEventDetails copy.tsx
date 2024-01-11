@@ -3,7 +3,8 @@ import { EventObject } from "../../../utils/model/EventObject";
 import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { Image, Icon, Button } from "@rneui/base";
+import { Button } from "@rneui/base";
+import { Icon } from "react-native-elements";
 import { RootStackParamList } from "../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerEventDetails">;

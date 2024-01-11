@@ -1,5 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Text, Icon } from "@rneui/base";
+import { Text } from "@rneui/base";
+import { Icon } from "react-native-elements";
 import { emojiUrl, eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
