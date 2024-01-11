@@ -39,15 +39,16 @@ const EventDetails = ({ route, navigation }: props) => {
     <View style={{ flex: 1, backgroundColor: colours.white }}>
       <ScrollView style={{ paddingHorizontal: spacing.horizontalMargin1, paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
         {/* Image */}
-        <View style={{ justifyContent: "center", width: "100%", height: windowHeight * 0.18 }}>
+        <View style={{ justifyContent: "center", width: "100%", height: Platform.OS != "web" ? windowHeight * 0.18 : 200 }}>
           {event.emoji ? (
             <View>
               {Platform.OS === "web" ? (
                 <img
                   src={backupUrl ?? emojiUrl(event.emoji)}
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: 200,
+                    height: 200,
+                    margin: "auto",
                   }}
                   onError={() => {
                     let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");

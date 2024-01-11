@@ -11,11 +11,15 @@ import { CheckBox } from "react-native-elements";
 import { useState } from "react";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
+import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { CustomDialog } from "../../atoms/CustomDialog";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllOrganizers">;
 export const AllOrganizers = ({ route, navigation }: props) => {
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
   const [search, setSearch] = useState("");
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState("");
 
   // Filters
   const [showOnlyAuthentic, setShowOnlyAuthentic] = useState(false);
@@ -97,8 +101,8 @@ export const AllOrganizers = ({ route, navigation }: props) => {
         style={{ height: "100%" }}
         data={organizers}
         renderItem={({ item }) => (
-          <View style={{ margin: 2 }}>
-            <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.image} />
+          <View style={{ margin: 20 }}>
+            <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.image} noSpacing />
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Text style={{ color: item.authentic ? "red" : "black" }}>
                 {" "}
@@ -156,7 +160,8 @@ export const AllOrganizers = ({ route, navigation }: props) => {
                 titleStyle={{ fontSize: 12 }}
                 color="red"
                 onPress={() => {
-                  deleteDoc(doc(fireStore, "users/" + item.id));
+                  setPendingDelete(item.id ?? "");
+                  setDeleteVisible(true);
                 }}
               >
                 Delete
@@ -176,6 +181,25 @@ export const AllOrganizers = ({ route, navigation }: props) => {
           }}
         />
       </View>
+
+      {/* Delete confirmation */}
+      <CustomDialog
+        visible={deleteVisible}
+        setVisible={setDeleteVisible}
+        includeCancel
+        navigation={navigation}
+        buttons={[
+          {
+            buttonName: "Delete",
+            onPress: () => {
+              setDeleteVisible(false);
+              deleteDoc(doc(fireStore, "users/" + pendingDelete));
+            },
+          },
+        ]}
+      >
+        Are you sure you want to delete this organizer
+      </CustomDialog>
     </View>
   );
 };

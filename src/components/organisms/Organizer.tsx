@@ -5,7 +5,13 @@ import { Image } from "@rneui/base";
 import { useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
 
-const Organizer = ({ name, imageID }: any) => {
+interface OrganizerProps {
+  name: string;
+  imageID?: string;
+  noSpacing?: boolean;
+}
+
+const Organizer = ({ name, imageID, noSpacing }: OrganizerProps) => {
   let url = "";
 
   let width = Platform.OS != "web" ? windowWidth * 0.11 : 50;
@@ -22,11 +28,17 @@ const Organizer = ({ name, imageID }: any) => {
 
   return (
     <View
-      style={{
-        flexDirection: "row",
-        ...spacing.verticalMargin1,
-        ...spacing.verticalPadding2,
-      }}
+      style={
+        noSpacing
+          ? {
+              flexDirection: "row",
+            }
+          : {
+              flexDirection: "row",
+              ...spacing.verticalMargin1,
+              ...spacing.verticalPadding2,
+            }
+      }
     >
       {/* Organizer Icon */}
       <View style={{ width: width, height: height, borderRadius: borderRadius, overflow: "hidden", justifyContent: "center" }}>

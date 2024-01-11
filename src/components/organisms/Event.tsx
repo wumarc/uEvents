@@ -123,9 +123,9 @@ const Event: React.FC<EventProps> = (props) => {
             <View
               style={{
                 paddingLeft: 1,
-                width: windowWidth * 0.04,
-                height: windowHeight * 0.02,
-                borderRadius: windowWidth * 0.05,
+                width: Platform.OS != "web" ? windowWidth * 0.04 : 20,
+                height: Platform.OS != "web" ? windowHeight * 0.02 : 20,
+                borderRadius: Platform.OS != "web" ? windowWidth * 0.05 : 20,
                 overflow: "hidden",
                 justifyContent: "center",
               }}
