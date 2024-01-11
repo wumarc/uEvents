@@ -2,7 +2,6 @@ export type Organizer = {
   id: string;
   type: "organizer";
   name: string;
-  image: string;
   email: string;
   instagram: string;
   description: string;
@@ -17,9 +16,9 @@ export type Organizer = {
 };
 
 export const defaultOrganizer: Organizer = {
+  authentic: false,
   type: "organizer",
   name: "",
-  image: "",
   email: "",
   instagram: "",
   description: "",

@@ -102,7 +102,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
         data={organizers}
         renderItem={({ item }) => (
           <View style={{ margin: 20 }}>
-            <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.image} noSpacing />
+            <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} noSpacing />
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Text style={{ color: item.authentic ? "red" : "black" }}>
                 {" "}
@@ -128,7 +128,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
                 style={{ marginLeft: 5 }}
                 titleStyle={{ fontSize: 12 }}
                 onPress={() => {
-                  navigation.navigate("EventOrganizerView", { organizerID: item.id, imageID: item.image });
+                  navigation.navigate("EventOrganizerView", { organizerID: item.id });
                 }}
               >
                 View

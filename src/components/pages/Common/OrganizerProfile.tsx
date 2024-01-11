@@ -30,7 +30,7 @@ type props = NativeStackScreenProps<RootStackParamList, "EventOrganizerView">;
 const OrganizerProfile = ({ route, navigation }: props) => {
   // States
   const [loading, organizer, setOrganizer] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
-  const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.imageID);
+  const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.organizerID);
   const [loading3, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading4, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
   const [dialogVisible, setdialogVisible] = useState(false);

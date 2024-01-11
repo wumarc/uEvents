@@ -77,13 +77,9 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
         response.blob().then((blob) => {
           uploadFile(reference, blob, {
             contentType: "image/jpeg",
-          })
-            .then(() => {
-              setLocalProfile({ ...localProfile, image: id });
-            })
-            .catch((e) => {
-              console.log(e);
-            });
+          }).catch((e) => {
+            console.log(e);
+          });
         });
       });
     }

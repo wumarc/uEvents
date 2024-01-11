@@ -49,14 +49,14 @@ export type RootStackParamList = {
   OrganizerSettings: { id?: string; new?: boolean };
   OrganizerEventDetails: { eventID: string };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
-  EventDetailsView: { eventID: string; organizerID: string; imageID: string; fake?: boolean }; // TODO: Review if imageID is necessary and all params in general
+  EventDetailsView: { eventID: string; organizerID: string; fake?: boolean };
   EventSignUpView: {};
   Events: {};
   Saved: {};
   Home: {};
   Search: {};
   HeaderLeft: {};
-  EventOrganizerView: { organizerID: string; imageID: string };
+  EventOrganizerView: { organizerID: string };
   HiddenEventsView: {};
   BlockedOrganizersView: {};
   AllEvents: {};

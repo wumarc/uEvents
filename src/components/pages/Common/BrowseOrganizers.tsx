@@ -58,8 +58,8 @@ const BrowseOrganizers = ({ navigation }: any) => {
         <FlatList
           data={filteredOrganizers}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView", { organizerID: item.id, imageID: item.image })}>
-              <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.image} />
+            <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView", { organizerID: item.id })}>
+              <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} />
             </TouchableOpacity>
           )}
         />
