@@ -10,7 +10,7 @@ interface CustomDialogProps {
   buttonProps?: ButtonProps;
   buttons?: CustomDialogButton[];
   includeCancel?: boolean;
-  cancelOnPress?: any;
+  cancelOnPress?: any; // Extra action on cancel button press
   visible: boolean;
   setVisible: (visible: boolean) => void;
   children?: any;

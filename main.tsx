@@ -33,6 +33,7 @@ import UploadFile from "./src/components/organisms/Outdated/UploadFile";
 import Preview from "./src/components/pages/Admin/Preview";
 import { CreateEventWeb } from "./src/components/pages/Admin/CreateEventWeb";
 import { NewVersion } from "./src/components/pages/Admin/NewVersion";
+import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -42,16 +43,15 @@ export type RootStackParamList = {
   MainView: {};
   AccountSettingsView: {};
   CreateEventView: {};
-  Profile: { id?: string };
+  OrganizerSettings: { id?: string; new?: boolean };
   OrganizerEventDetails: { eventID: string };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
-  EventDetailsView: { eventID: string; organizerID: string; imageID: string; fake?: boolean };
+  EventDetailsView: { eventID: string; organizerID: string; imageID: string; fake?: boolean }; // TODO: Review if imageID is necessary and all params in general
   EventSignUpView: {};
   Events: {};
   Saved: {};
   Home: {};
   Search: {};
-  OrganizerProfile: { organizerID: string };
   HeaderLeft: {};
   EventOrganizerView: { organizerID: string; imageID: string };
   HiddenEventsView: {};
@@ -123,6 +123,23 @@ const MainView = ({ route, navigation }: props) => {
           options={{
             tabBarLabel: "Events (Admin)",
             tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="ticket" color={focused ? colours.purple : colours.grey} size={30} />,
+          }}
+        />
+      )}
+      {/* All organizers. Admin */}
+      {isAdmin && (
+        <Tab.Screen
+          name="AllOrganizers"
+          component={AllOrganizers as any}
+          options={{
+            tabBarLabel: "Organizers (Admin)",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name={focused ? "office-building" : "office-building-outline"}
+                color={focused ? colours.purple : colours.grey}
+                size={30}
+              />
+            ),
           }}
         />
       )}
@@ -264,7 +281,7 @@ const Main: FC = (props) => {
           />
           {/* Account Settings. Organizer */}
           <Stack.Screen
-            name="Profile"
+            name="OrganizerSettings"
             component={OrganizerSettings as any}
             options={({ navigation }) => ({
               headerLeft: () => <HeaderLeft navigation={navigation} />,

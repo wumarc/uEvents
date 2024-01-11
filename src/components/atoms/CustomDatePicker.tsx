@@ -54,6 +54,14 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
           ""}
       </Text>
       <View style={{ display: "flex", flexDirection: "row" }}>
+        <CustomButton
+          style={{ ...baseStyle, marginHorizontal: 10 }}
+          onPress={() => {
+            setdateVisible(true);
+          }}
+        >
+          {selectDateString}
+        </CustomButton>
         {!shouldUseOnlyDate && (
           <CustomButton
             style={{ ...baseStyle, marginHorizontal: 10 }}
@@ -64,50 +72,50 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
             {selectTimeString}
           </CustomButton>
         )}
-        <CustomButton
-          style={{ ...baseStyle, marginHorizontal: 10 }}
-          onPress={() => {
-            setdateVisible(true);
-          }}
-        >
-          {selectDateString}
-        </CustomButton>
       </View>
 
-      <TimePickerModal
-        visible={timeVisible}
-        onDismiss={() => {
-          settimeVisible(false);
-        }}
-        onConfirm={(value: any) => {
-          let date = time.toDate();
-          date.setHours(value.hours);
-          date.setMinutes(value.minutes);
-          setTime(Timestamp.fromDate(date));
-          settimeVisible(false);
-        }}
-        label={selectTimeString}
-        cancelLabel="Cancel"
-        confirmLabel="Ok"
-        animationType="fade"
-        locale={"en"}
-      />
-
       <DatePickerModal
+        date={time.toDate()}
         visible={dateVisible}
         onDismiss={() => {
           setdateVisible(false);
         }}
         onConfirm={(value: any) => {
-          let date = time.toDate();
-          date.setFullYear(value.date.getFullYear());
-          date.setMonth(value.date.getMonth());
-          date.setDate(value.date.getDate());
-          setTime(Timestamp.fromDate(date));
-          setdateVisible(false);
+          if (value.date) {
+            let date = time.toDate();
+            date.setFullYear(value.date.getFullYear());
+            date.setMonth(value.date.getMonth());
+            date.setDate(value.date.getDate());
+            setTime(Timestamp.fromDate(date));
+            setdateVisible(false);
+          } else {
+            setdateVisible(false);
+          }
         }}
         mode="single"
         label={selectDateString}
+        animationType="fade"
+        locale={"en"}
+      />
+      <TimePickerModal
+        hours={time.toDate().getHours()}
+        minutes={time.toDate().getMinutes()}
+        visible={timeVisible}
+        onDismiss={() => {
+          settimeVisible(false);
+        }}
+        onConfirm={(value: any) => {
+          if (value) {
+            let date = time.toDate();
+            date.setHours(value.hours);
+            date.setMinutes(value.minutes);
+            setTime(Timestamp.fromDate(date));
+            settimeVisible(false);
+          }
+        }}
+        label={selectTimeString}
+        cancelLabel="Cancel"
+        confirmLabel="Ok"
         animationType="fade"
         locale={"en"}
       />

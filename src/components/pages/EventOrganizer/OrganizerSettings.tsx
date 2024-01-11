@@ -2,27 +2,43 @@ import { KeyboardAvoidingView, ScrollView, View, StyleSheet, Platform } from "re
 import { Input, Avatar, Text } from "@rneui/themed";
 import { Button } from "react-native-elements";
 import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Organizer } from "../../../utils/model/Organizer";
+import { Organizer, defaultOrganizer } from "../../../utils/model/Organizer";
 import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useUploadFile } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
-import { storage } from "../../../firebaseConfig";
+import { fireStore, storage } from "../../../firebaseConfig";
 import { Loading } from "../Common/Loading";
 import { RootStackParamList } from "../../../../main";
+import { doc, setDoc } from "firebase/firestore";
 
-type props = NativeStackScreenProps<RootStackParamList, "Profile">;
+type props = NativeStackScreenProps<RootStackParamList, "OrganizerSettings">;
 
 export const OrganizerSettings = ({ route, navigation }: props) => {
+  // Editing
+  console.log(route.params);
+  let isNew = route.params.new ?? false;
+  let isEditing = !isNew;
+  let dbPath = isEditing ? route.params.id ?? getFirebaseUserIDOrEmpty() : "dummy";
+  console.log("dbPath: " + dbPath);
+  console.log("isNew: " + isNew);
+
+  // States
+  const [id, setId] = useState<string>(isEditing ? route.params.id ?? getFirebaseUserIDOrEmpty() : uid()); // Id used to store in database.
   const [image, setImage] = useState<string>("");
-  const [loading, profile, setProfile] = useStateWithFireStoreDocument<Organizer>("users", route.params.id ?? getFirebaseUserIDOrEmpty());
-
+  const [loading, dbProfile, setDbProfile] = useStateWithFireStoreDocument<Organizer>("users", dbPath);
+  const [localProfile, setLocalProfile] = useState<Organizer>(defaultOrganizer);
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
+  const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + dbPath);
 
-  const [loading2, url, found] = useStateWithFireStoreImage("organizers/" + route.params.id ?? getFirebaseUserIDOrEmpty());
+  useEffect(() => {
+    if (isEditing && dbProfile) {
+      setLocalProfile(dbProfile);
+    }
+  }, [loading]);
 
   if (loading2 || loading) {
     return <Loading />;
@@ -34,8 +50,6 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
 
   let isAdmin = route.params.id != undefined;
 
-  // console.log("Url: " + url)
-
   let uri = "";
   if (image != "") {
     uri = image;
@@ -45,8 +59,6 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
     uri = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   }
 
-  const id = route.params.id ?? profile.id ?? getFirebaseUserIDOrEmpty();
-  console.log("id: " + id);
   const reference = ref(storage, "organizers/" + id);
 
   const pickImage = async () => {
@@ -60,17 +72,14 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
     });
 
     if (!result.canceled) {
-      console.log(result);
       setImage(result!.assets[0]!.uri);
       fetch(result!.assets[0]!.uri).then((response) => {
-        console.log(response);
         response.blob().then((blob) => {
           uploadFile(reference, blob, {
             contentType: "image/jpeg",
           })
             .then(() => {
-              setProfile({ ...profile, image: id });
-              console.log("done");
+              setLocalProfile({ ...localProfile, image: id });
             })
             .catch((e) => {
               console.log(e);
@@ -115,9 +124,9 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
                 </Text>
               }
               placeholder="Organization name"
-              defaultValue={profile.name}
+              defaultValue={localProfile.name}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) => setProfile({ ...profile, name: value })}
+              onChangeText={(value: string) => setLocalProfile({ ...localProfile, name: value })}
               containerStyle={{ paddingHorizontal: 0 }}
               selectionColor={colours.purple}
               inputContainerStyle={{
@@ -136,9 +145,9 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
                   </Text>
                 }
                 placeholder="Email"
-                defaultValue={profile.email}
+                defaultValue={localProfile.email}
                 labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-                onChangeText={(value: string) => setProfile({ ...profile, email: value })}
+                onChangeText={(value: string) => setLocalProfile({ ...localProfile, email: value })}
                 containerStyle={{ paddingHorizontal: 0 }}
                 selectionColor={colours.purple}
                 inputContainerStyle={{
@@ -160,11 +169,11 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
                 </Text>
               }
               placeholder="Insert Description"
-              defaultValue={profile.description}
+              defaultValue={localProfile.description}
               multiline={true}
               maxLength={700}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) => setProfile({ ...profile, description: value })}
+              onChangeText={(value: string) => setLocalProfile({ ...localProfile, description: value })}
               containerStyle={{ paddingHorizontal: 0 }}
               textAlignVertical="top"
               selectionColor={colours.purple}
@@ -186,9 +195,9 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
               leftIcon={{ type: "font-awesome", name: "at" }}
               leftIconContainerStyle={{ marginRight: 10 }}
               placeholder="Insert Instagram Handle"
-              defaultValue={profile.instagram}
+              defaultValue={localProfile.instagram}
               labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
-              onChangeText={(value: string) => setProfile({ ...profile, instagram: value })}
+              onChangeText={(value: string) => setLocalProfile({ ...localProfile, instagram: value })}
               containerStyle={{ paddingHorizontal: 0 }}
               autoCapitalize="none"
               selectionColor={colours.purple}
@@ -201,10 +210,6 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
               }}
             />
           </View>
-        </View>
-
-        <View style={{ justifyContent: "center" }}>
-          <Text style={{ textAlign: "center" }}>⚠️ Your changes are automatically saved. ⚠️</Text>
         </View>
       </ScrollView>
 
@@ -222,8 +227,15 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
               paddingHorizontal: 25,
               borderRadius: 10,
             }}
-            title={"Done"}
-            onPress={() => navigation.pop()}
+            title={"Submit"}
+            onPress={() => {
+              if (isNew) {
+                setDoc(doc(fireStore, "users/" + id), { ...localProfile, type: "organizer", saved: [], id: id, image: id, approved: false, authentic: false });
+              } else {
+                setDbProfile(localProfile);
+              }
+              navigation.pop();
+            }}
             titleStyle={{ ...fonts.title3, color: colours.white }}
           />
         </View>

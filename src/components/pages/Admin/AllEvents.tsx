@@ -15,6 +15,7 @@ import { searchAlgo } from "../../../utils/search";
 import { Student } from "../../../utils/model/Student";
 import { RootStackParamList } from "../../../../main";
 import { CustomText } from "../../atoms/CustomText";
+import { CustomDialog } from "../../atoms/CustomDialog";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllEvents">;
 // To access the type of user, use route.params.userType
@@ -225,6 +226,8 @@ const EventLine: FC<{
   const [reason, setReason] = useState("");
   const [keep, setKeep] = useState(false);
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState("");
 
   if (event.organizerType === "Organizer Added" || keep) {
     const [loading, organizer2] = useStateWithFireStoreDocument("users", event.organizer == "" ? "Default" : event.organizer);
@@ -342,7 +345,8 @@ const EventLine: FC<{
               color="error"
               titleStyle={{ fontSize: 12 }}
               onPress={() => {
-                del(event.id);
+                setPendingDelete(event.id);
+                setDeleteVisible(true);
               }}
             >
               Delete
@@ -395,6 +399,18 @@ const EventLine: FC<{
               }}
             >
               DB event
+            </Button>
+          </View>
+          <View style={{ marginLeft: 5, height: containerHeight }}>
+            <Button
+              color="blue"
+              size="sm"
+              titleStyle={{ fontSize: 12 }}
+              onPress={() => {
+                Clipboard.setString(event.id);
+              }}
+            >
+              Copy ID
             </Button>
           </View>
           {event.organizerType === "Organizer Added" && (
@@ -470,6 +486,25 @@ const EventLine: FC<{
       ) : (
         <></>
       )}
+
+      {/* Delete confirmation */}
+      <CustomDialog
+        visible={deleteVisible}
+        setVisible={setDeleteVisible}
+        includeCancel
+        navigation={navigation}
+        buttons={[
+          {
+            buttonName: "Delete",
+            onPress: () => {
+              setDeleteVisible(false);
+              del(pendingDelete);
+            },
+          },
+        ]}
+      >
+        Are you sure you want to delete this event
+      </CustomDialog>
     </View>
   );
 };

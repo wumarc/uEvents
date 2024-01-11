@@ -167,7 +167,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
                 style={{ marginLeft: 5 }}
                 titleStyle={{ fontSize: 12 }}
                 onPress={() => {
-                  navigation.navigate("OrganizerProfile", { userType: "", id: item.id });
+                  navigation.navigate("OrganizerSettings", { id: item.id });
                 }}
               >
                 Edit
@@ -195,15 +195,15 @@ export const AllOrganizers = ({ route, navigation }: props) => {
           size="large"
           onPress={() => {
             // Creating new organizer
-            let id: string = uid();
-            setDoc(doc(fireStore, "users/" + id), {
-              type: "organizer",
-              saved: [],
-              id: id,
-              approved: false,
-              authentic: false,
-            });
-            navigation.navigate("OrganizerProfile", { userType: "", id: id });
+            // let id: string = uid();
+            // setDoc(doc(fireStore, "users/" + id), {
+            //   type: "organizer",
+            //   saved: [],
+            //   id: id,
+            //   approved: false,
+            //   authentic: false,
+            // });
+            navigation.navigate("OrganizerSettings", { id: undefined, new: true });
           }}
         />
       </View>

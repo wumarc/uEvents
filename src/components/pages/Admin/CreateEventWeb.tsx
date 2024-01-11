@@ -31,7 +31,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   let previousEventId = route.params?.id ?? "dummy";
 
   // States
-  const [id, setId] = useState(previousEventId ?? uid());
+  const [id, setId] = useState(route.params?.id ?? uid()); // ID used to write in DB
   const [loading, dbEvent, setDbEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, previousEventId);
   const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
   const [loading2, users, addUsers] = useStateWithFireStoreCollection<Organizer>("users");
@@ -40,7 +40,15 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   // Error messages
   const [minPriceError, setMinPriceError] = useState("");
   const [maxPriceError, setMaxPriceError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const [topError, setTopError] = useState("");
+
+  // Char limit
+  const [nameChar, setNameChar] = useState(0);
+  const NAME_CHAR_LIMIT = 35;
+  const [descriptionChar, setDescriptionChar] = useState(0);
+  const DESCRIPTION_CHAR_LIMIT = 750;
 
   useEffect(() => {
     if (editing && dbEvent) {
@@ -115,8 +123,15 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           containerStyle={styles.formElement}
           placeholder="Name"
           value={localEvent.name}
+          errorMessage={nameError}
           onChangeText={(text: any) => {
             setLocalEvent({ ...localEvent, name: text });
+            setNameChar(text.length);
+            if (text.length > NAME_CHAR_LIMIT) {
+              setNameError("Name exceeds character limit. " + text.length + "/" + NAME_CHAR_LIMIT);
+            } else {
+              setNameError("");
+            }
           }}
         />
 
@@ -145,7 +160,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
               approved: false,
               authentic: false,
             });
-            navigation.navigate("OrganizerProfile", { userType: "", id: id });
+            navigation.navigate("OrganizerSettings", { id: id });
           }}
         >
           Create new organizer
@@ -220,9 +235,16 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           style={{ height: windowHeight * 0.2 }}
           placeholder="Description"
           multiline={true}
+          errorMessage={descriptionError}
           value={localEvent.description}
           onChangeText={(text: any) => {
             setLocalEvent({ ...localEvent, description: text });
+            setDescriptionChar(text.length);
+            if (text.length > DESCRIPTION_CHAR_LIMIT) {
+              setDescriptionError("Description exceeds character limit. " + text.length + "/" + DESCRIPTION_CHAR_LIMIT);
+            } else {
+              setDescriptionError("");
+            }
           }}
         />
 
@@ -399,7 +421,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           onPress={() => {
             if (localEvent.endTime == undefined) {
               // Switching to using end time
-              setLocalEvent({ ...localEvent, endTime: Timestamp.now() });
+              setLocalEvent({ ...localEvent, endTime: localEvent.startTime });
               return;
             } else {
               // Switching to not using end time
@@ -551,6 +573,11 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
               return;
             }
 
+            if (temp.name.length > NAME_CHAR_LIMIT) {
+              setTopError("Could not submit event. Name exceeds character limit. " + temp.name.length + "/" + NAME_CHAR_LIMIT);
+              return;
+            }
+
             // Check priceMin
             if (isNaN(temp.priceMin)) {
               setTopError("Could not submit event. Please enter a number for the minimum price");
@@ -560,6 +587,11 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             // Check description
             if (temp.description == "") {
               setTopError("Could not submit event. Please enter a description");
+              return;
+            }
+
+            if (temp.description.length > DESCRIPTION_CHAR_LIMIT) {
+              setTopError("Could not submit event. Description exceeds character limit. " + temp.description.length + "/" + DESCRIPTION_CHAR_LIMIT);
               return;
             }
 

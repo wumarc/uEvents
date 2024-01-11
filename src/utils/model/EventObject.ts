@@ -17,6 +17,7 @@ export type EventObject = {
 
   rejectReason: string;
 
+  // CHAR LIMIT: 35
   name: string;
 
   // If no max price is specified, this is the exact price
@@ -24,7 +25,7 @@ export type EventObject = {
 
   priceMax?: number;
 
-  // 750 characters max TODO change it to 400?
+  // CHAR LIMIT: 750
   description: string;
 
   // If empty: TBD. In case of on campus, this is the building name. Else, building name
@@ -170,13 +171,16 @@ export const nextEndTime = (originalStartTime: Timestamp, nextStartTime: Timesta
   return Timestamp.fromDate(nextEndTime);
 };
 
+let startTime = new Date();
+startTime.setHours(13, 0, 0, 0);
+
 export const defaultEvent: EventObject = {
   state: "Draft",
   fake: false,
   id: "1",
   name: "",
   description: "",
-  startTime: new Timestamp(0, 0),
+  startTime: Timestamp.fromDate(startTime),
   location: "",
   organizer: "",
   categories: [],
