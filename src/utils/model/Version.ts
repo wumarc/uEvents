@@ -14,6 +14,10 @@ export const currentVersion: Version = {
   update: "",
 };
 
+export function versionToString(version: Version): string {
+  return version.major + "." + version.minor + "." + version.patch;
+}
+
 export function latestVersion(versions: Version[]): Version {
   let latest = versions[0];
   for (let i = 1; i < versions.length; i++) {

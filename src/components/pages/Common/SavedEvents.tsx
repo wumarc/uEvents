@@ -1,10 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
-import Event from "../../organisms/Event";
+import { Event } from "../../organisms/Event";
 import { Loading } from "./Loading";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { colours, fonts, spacing } from "../../subatoms/Theme";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
+import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import { EventObject } from "../../../utils/model/EventObject";
 import { SvgUri } from "react-native-svg";
 import { Timestamp } from "firebase/firestore";
@@ -12,22 +12,27 @@ import { CustomButton } from "../../atoms/CustomButton";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
+import { EmojiImage } from "../../organisms/EmojiImage";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 
-const SavedEvents = ({ route, navigation }: props) => {
+export const SavedEvents = ({ navigation }: props) => {
+  // States
   const [user, loading3, error] = useAuthState(auth);
+  const [loading, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
 
-  if (loading3) {
+  // Loading
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
-  if (!user) {
+  if (!user || !student) {
     // User is not logged in
 
     return (
-      <View>
-        <Text style={{ ...fonts.regular, textAlign: "center" }}>{"You need to be logged in to view saved events."}</Text>
+      <View style={{ width: windowWidth * 0.5, height: "fit-content", marginVertical: "auto", marginHorizontal: "auto" }}>
+        <Text style={{ ...fonts.regular, textAlign: "center", paddingBottom: 20, fontSize: 16 }}>{"You need to be logged in to view saved events."}</Text>
         <CustomButton
           title="Login"
           onPress={() => {
@@ -38,12 +43,7 @@ const SavedEvents = ({ route, navigation }: props) => {
     );
   }
 
-  // States
-  const [loading, student, setStudent] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty());
-  const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
-
-  // Loading
-  if (loading || loading2 || !events) {
+  if (!events) {
     return <Loading />;
   }
 
@@ -89,7 +89,7 @@ const SavedEvents = ({ route, navigation }: props) => {
         </View>
 
         <View style={{ alignItems: "center", ...spacing.verticalMargin1 }}>
-          {(student.saved ?? []).length != 0 && (
+          {(savedEvents ?? []).length != 0 && (
             <FlatList
               data={savedEvents as EventObject[]}
               renderItem={({ item }) => <Event listView={false} organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={() => {}} />}
@@ -97,9 +97,9 @@ const SavedEvents = ({ route, navigation }: props) => {
           )}
         </View>
 
-        {(student.saved ?? []).length == 0 && (
+        {(savedEvents ?? []).length == 0 && (
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <SvgUri width="60%" height="40%" uri={"https://openmoji.org/data/color/svg/1F3DD.svg"} fill="black" />
+            <EmojiImage emoji="🏝️" style={{ width: "60%", height: "40%" }} />
             <Text style={{ ...fonts.title3, textAlign: "center" }}>
               You have no saved events. Your event list is as unoccupied as a peaceful oasis in the middle of the desert...
             </Text>
@@ -117,5 +117,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default SavedEvents;

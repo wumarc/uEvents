@@ -24,7 +24,7 @@ interface EventProps {
   fake?: boolean;
 }
 
-const Event: React.FC<EventProps> = (props) => {
+export const Event: React.FC<EventProps> = (props) => {
   // Fake
   let isFake = props.fake ?? false;
   let dbPath = isFake ? "events-test" : eventPath();

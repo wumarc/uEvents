@@ -15,6 +15,7 @@ const SettingsButton = ({ buttonName, onPressListener, disabled }: buttonProps) 
   const marginBottom = "4%";
   const fallbackSetting = { icon: "help-circle-outline", type: "ionicon" };
   const settingName = [
+    { "Log In": { icon: "log-in-outline", type: "ionicon" } },
     { "My Profile": { icon: "account-outline", type: "material-community" } },
     { "Privacy Policy": { icon: "shield-lock-outline", type: "material-community" } },
     { "Contact Us": { icon: "mail-outline", type: "ionicon" } },

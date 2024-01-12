@@ -1,6 +1,6 @@
 import Home from "./src/components/pages/Common/Home";
 import Settings from "./src/components/pages/Common/Settings";
-import SavedEvents from "./src/components/pages/Common/SavedEvents";
+import { SavedEvents } from "./src/components/pages/Common/SavedEvents";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer, Route } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -35,6 +35,7 @@ import { CreateEventWeb } from "./src/components/pages/Admin/CreateEventWeb";
 import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
+import { UnderConstruction } from "./src/components/pages/Common/UnderConstruction";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -151,7 +152,7 @@ const MainView = ({ route, navigation }: props) => {
       {isOrganizer && (
         <Tab.Screen
           name="YourEvents"
-          component={YourEvents as any}
+          component={UnderConstruction as any} // TEMPORARY
           options={{
             tabBarLabel: "Your Events",
             tabBarIcon: ({ color, focused }) => (

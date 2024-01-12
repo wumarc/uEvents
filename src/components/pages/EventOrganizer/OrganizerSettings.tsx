@@ -14,6 +14,7 @@ import { fireStore, storage } from "../../../firebaseConfig";
 import { Loading } from "../Common/Loading";
 import { RootStackParamList } from "../../../../main";
 import { doc, setDoc } from "firebase/firestore";
+import { CustomText } from "../../atoms/CustomText";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerSettings">;
 
@@ -103,6 +104,8 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
             />
           </Avatar>
         </View>
+
+        <CustomText style={{ textAlign: "center" }}>⚠️ Warning! Image updates automatically. ⚠️</CustomText>
 
         {image == "" ||
           (image == null && <Text style={{ textAlign: "center" }}>Please upload an image of your organization to finish setting up your account.</Text>)}

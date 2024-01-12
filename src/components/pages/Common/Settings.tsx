@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, Modal } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { useState } from "react";
 import { Button } from "@rneui/themed";
 import { StyleSheet } from "react-native";
@@ -20,6 +20,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { RootStackParamList } from "../../../../main";
 import { appVersion } from "../../../../config";
 import { useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
+import { CustomText } from "../../atoms/CustomText";
 
 type props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
@@ -59,25 +60,19 @@ const Settings = ({ route, navigation }: props) => {
         </View>
 
         {/* Version number */}
-        <Text>Version {appVersion}</Text>
-
-        {/* Welcome message */}
-        {user && <Text>Hi {auth.currentUser?.email}! Welcome to uEvents.</Text>}
+        <CustomText style={{ paddingHorizontal: 27.66 }}>Version {appVersion}</CustomText>
+        {!user && <CustomText style={{ paddingHorizontal: 27.66, paddingTop: 5 }}>Please Log In to access all features of this page</CustomText>}
 
         {/* Settings */}
-        <View style={{ marginTop: "10%" }}>
+        <View style={{ marginTop: "5%" }}>
           {/* Login button */}
           {!user && (
-            <View style={{ marginBottom: "4%" }}>
-              <CustomButton
-                onPress={() => {
-                  navigation.navigate("Welcome", {});
-                }}
-              >
-                Login
-              </CustomButton>
-              <Text>Log in to access all features of this page.</Text>
-            </View>
+            <SettingsButton
+              onPressListener={() => {
+                navigation.navigate("Welcome", {});
+              }}
+              buttonName={"Log In"}
+            ></SettingsButton>
           )}
 
           <SettingsButton buttonName={"My Profile"} onPressListener={() => navigation.navigate("AccountSettingsView", {})} disabled={!user} />

@@ -1,9 +1,4 @@
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./src/firebaseConfig";
-import SignIn from "./src/components/pages/Common/SignIn";
-import MainStudent from "./src/components/pages/Student/main";
-import MainOrganizer from "./src/components/pages/EventOrganizer/main";
-import MainAdmin from "./src/components/pages/Admin/main";
 import Main from "./main";
 import { Loading } from "./src/components/pages/Common/Loading";
 import { View, Text } from "react-native";
@@ -15,7 +10,7 @@ import { getFirebaseUserIDOrEmpty, isLogged, versionPath } from "./src/utils/uti
 import { Error } from "./src/components/pages/Common/Error";
 // import { LogBox } from "react-native";
 import { Button } from "react-native-elements";
-import { Version, compareVersion, currentVersion, latestVersion } from "./src/utils/model/Version";
+import { Version, compareVersion, currentVersion, latestVersion, versionToString } from "./src/utils/model/Version";
 
 export default function App() {
   // const [user, loading, error] = useAuthState(auth);
@@ -77,11 +72,13 @@ const AppInner: FC = () => {
 
   let versionsData = versions as Version[];
   let lstVersion = latestVersion(versionsData);
-  if (compareVersion(lstVersion, currentVersion) != 0) {
+  if (compareVersion(lstVersion, currentVersion) != 0 && lstVersion.major != currentVersion.major) {
     // The versions don't match. The app needs an update
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>{"Please update the app to the latest version to continue using the app."}</Text>
+        <Text>{"The current version of the app you are using is no longer supported and may contain bugs."}</Text>
+        <Text>{"Current version: " + versionToString(currentVersion) + " Latest version: " + versionToString(lstVersion)}</Text>
       </View>
     );
   }
