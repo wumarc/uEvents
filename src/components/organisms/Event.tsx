@@ -1,20 +1,18 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "@rneui/base";
 import { Icon } from "react-native-elements";
-import { emojiUrl, eventPath, getFirebaseUserIDOrEmpty, getNextDate, isLogged } from "../../utils/util";
+import { eventPath, getFirebaseUserIDOrEmpty, getNextDate } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
-import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged, useStateWithFireStoreImage } from "../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
 import { Loading } from "../pages/Common/Loading";
-import { nextStartTime, nextEndTime, EventObject, getTimeInAMPM, formattedDate } from "../../utils/model/EventObject";
+import { EventObject, formattedDate } from "../../utils/model/EventObject";
 import { Student } from "../../utils/model/Student";
-import { SvgUri } from "react-native-svg";
-import { Image } from "@rneui/themed";
 import FirebaseImage from "./FirebaseImage";
-import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Platform } from "react-native";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
+import { EmojiImage } from "./EmojiImage";
 
 // Event component props
 interface EventProps {
@@ -34,7 +32,6 @@ const Event: React.FC<EventProps> = (props) => {
   // States
   const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, props.id);
   const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>("users", props.organizer);
-  const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
   const [user, loading4, error] = useAuthState(auth);
   const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged<Student>(user != null, "users", getFirebaseUserIDOrEmpty());
 
@@ -83,36 +80,7 @@ const Event: React.FC<EventProps> = (props) => {
           borderRadius: 13,
         }}
       >
-        <View style={{ justifyContent: "center", width: windowWidth * 0.25, height: windowHeight * 0.15 }}>
-          {Platform.OS === "web" ? (
-            <img
-              src={backupUrl ?? emojiUrl(event.emoji)}
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              onError={() => {
-                let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-                // remove last part
-                parts.pop();
-                setBackupUrl(parts.join("-") + ".svg");
-              }}
-            />
-          ) : (
-            <SvgUri
-              width="100%"
-              height="100%"
-              uri={backupUrl ?? emojiUrl(event.emoji)}
-              fill="black"
-              onError={() => {
-                let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-                // remove last part
-                parts.pop();
-                setBackupUrl(parts.join("-") + ".svg");
-              }}
-            />
-          )}
-        </View>
+        <EmojiImage emoji={event.emoji} style={{ justifyContent: "center", width: windowWidth * 0.25, height: windowHeight * 0.15 }} />
 
         <View style={{ width: "70%", justifyContent: "center" }}>
           <View>

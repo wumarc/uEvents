@@ -1,7 +1,5 @@
 import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
-// @ts-ignore
-import emojiUnicode from "emoji-unicode";
 import { EventObject } from "./model/EventObject";
 import { testUsersEvents, testUsersVersion } from "../../userConfig";
 
@@ -89,26 +87,6 @@ export function toPrecision(value: number, precision: number) {
     final = "0" + final;
   }
   return final;
-}
-
-export function emojiUrl(emoji: string) {
-  if (emoji == undefined) {
-    return "";
-  }
-  let unicodeStringRaw = emojiUnicode(emoji) as string;
-  if (unicodeStringRaw.length == 0) {
-    return "";
-  }
-  if (unicodeStringRaw == undefined) {
-    return "";
-  }
-  for (let i = 0; i < unicodeStringRaw.length; i++) {
-    if (unicodeStringRaw[i] == " ") {
-      // replace with "-"
-      unicodeStringRaw = unicodeStringRaw.slice(0, i) + "-" + unicodeStringRaw.slice(i + 1);
-    }
-  }
-  return "https://openmoji.org/data/color/svg/" + unicodeStringRaw.toUpperCase() + ".svg";
 }
 
 export function getNextDate(event: EventObject, today: Date): [Date, Date, boolean] {

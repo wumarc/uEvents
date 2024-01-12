@@ -4,7 +4,7 @@ import { Button, Image, Text } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { CheckBox, SearchBar, Switch } from "react-native-elements";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { emojiUrl, getNextDate } from "../../../utils/util";
+import { getNextDate } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { EventObject } from "../../../utils/model/EventObject";
 import { doc, setDoc } from "firebase/firestore";
@@ -17,6 +17,7 @@ import { RootStackParamList } from "../../../../main";
 import { CustomText } from "../../atoms/CustomText";
 import { CustomDialog } from "../../atoms/CustomDialog";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
+import { EmojiImage } from "../../organisms/EmojiImage";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllEvents">;
 // To access the type of user, use route.params.userType
@@ -247,42 +248,8 @@ const EventLine: FC<{
 
   return (
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed ? containerHeight + 100 : containerHeight }}>
-      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%" }}>
-        {event.emoji ? (
-          <View>
-            {Platform.OS === "web" ? (
-              <img
-                src={backupUrl ?? emojiUrl(event.emoji)}
-                style={{
-                  width: containerHeight,
-                  height: containerHeight,
-                }}
-                onError={() => {
-                  let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-                  // remove last part
-                  parts.pop();
-                  setBackupUrl(parts.join("-") + ".svg");
-                }}
-              />
-            ) : (
-              <SvgUri
-                width={containerHeight}
-                height={containerHeight}
-                uri={backupUrl ?? emojiUrl(event.emoji)}
-                fill="black"
-                onError={() => {
-                  let parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-                  // remove last part
-                  parts.pop();
-                  setBackupUrl(parts.join("-") + ".svg");
-                }}
-              />
-            )}
-          </View>
-        ) : (
-          <></>
-        )}
-
+      <EmojiImage style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%" }} emoji={event.emoji} />
+      <View>
         <View style={{ height: containerHeight, alignItems: "flex-start", justifyContent: "flex-start" }}>
           <Text style={{ color: event.fake ? "blue" : undefined }}>
             {event.name}

@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { daysOfWeekArray, daysOfWeekBrief, emojiUrl, uid } from "../../../utils/util";
+import { daysOfWeekArray, daysOfWeekBrief, uid } from "../../../utils/util";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { EventObject, defaultEvent, recurrenceTypeArray } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
@@ -12,11 +12,11 @@ import { colours, windowHeight } from "../../subatoms/Theme";
 import { CustomButton } from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
-import { SvgUri } from "react-native-svg";
 import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
 import { fireStore } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomText } from "../../atoms/CustomText";
+import { EmojiImage } from "../../organisms/EmojiImage";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
@@ -160,46 +160,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         </CustomButton>
 
         {/* Emoji */}
-        {/* TODO: Create a central component for the emoji */}
-        {localEvent.emoji ? (
-          <>
-            <Text>How your emoji will look on our platform</Text>
-            <View style={{ alignItems: "center" }}>
-              {Platform.OS === "web" ? (
-                <img
-                  src={backupUrl ?? emojiUrl(localEvent.emoji)}
-                  style={{
-                    width: "100%",
-                    maxWidth: 200,
-                    height: "100%",
-                    maxHeight: 200,
-                  }}
-                  onError={() => {
-                    let parts = (backupUrl ?? emojiUrl(localEvent.emoji)).split("-");
-                    // remove last part
-                    parts.pop();
-                    setBackupUrl(parts.join("-") + ".svg");
-                  }}
-                />
-              ) : (
-                <SvgUri
-                  width="100%"
-                  height="100%"
-                  uri={backupUrl ?? emojiUrl(localEvent.emoji)}
-                  fill="black"
-                  onError={() => {
-                    let parts = (backupUrl ?? emojiUrl(localEvent.emoji)).split("-");
-                    // remove last part
-                    parts.pop();
-                    setBackupUrl(parts.join("-") + ".svg");
-                  }}
-                />
-              )}
-            </View>
-          </>
-        ) : (
-          <></>
-        )}
+        <EmojiImage emoji={localEvent.emoji} style={{ alignItems: "center", margin: "auto", height: 200 }} />
         <Input
           selectionColor={colours.purple}
           autoCapitalize="none"

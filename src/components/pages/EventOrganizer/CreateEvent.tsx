@@ -1,27 +1,24 @@
 import { View, Text, ScrollView, StyleSheet, Modal, KeyboardAvoidingView, Platform, Pressable, Touchable, TouchableOpacity, FlatList } from "react-native";
-import { ButtonGroup, CheckBox } from "react-native-elements";
+import { ButtonGroup } from "react-native-elements";
 import { Input, Button } from "@rneui/themed";
 import { Icon } from "react-native-elements";
-import { type FC, useEffect, useRef, useState } from "react";
-import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
+import { type FC, useEffect, useState } from "react";
+import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
 import { ProgressBar } from "react-native-paper";
-import { Calendar, LocaleConfig } from "react-native-calendars";
 import { Dropdown, MultiSelect } from "react-native-element-dropdown";
-import emojiRegex from "emoji-regex";
-import { useSateWithFireStore, useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 import { getOrderedCategories } from "../../../utils/categories";
-import { type EventObject, defaultEvent, recurrence, recurrenceType } from "../../../utils/model/EventObject";
-import { emojiUrl, getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
-import { Timestamp, doc, setDoc, waitForPendingWrites } from "firebase/firestore";
+import { type EventObject, recurrenceType } from "../../../utils/model/EventObject";
+import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { SvgUri } from "react-native-svg";
-import WheelPickerExpo from "react-native-wheel-picker-expo";
 import { DatePickerModal } from "../../atoms/DatePickerModal";
 import { CustomButton } from "../../atoms/CustomButton";
 import { type Organizer } from "../../../utils/model/Organizer";
 import React from "react";
+import { EmojiImage } from "../../organisms/EmojiImage";
 
 const data = [
   {
@@ -390,25 +387,8 @@ export const Step2: FC<{ eventID: string }> = (props) => {
       <Text style={fonts.regular}>Who still uses images? Yuck! Emojis are cooler 😎</Text>
 
       <View style={{ marginVertical: "5%", paddingHorizontal: "25%" }}>
-        {event.emoji && (
-          <>
-            <Text>How your emoji will look on our platform</Text>
-            <View style={{ alignItems: "center" }}>
-              <SvgUri
-                width={100}
-                height={100}
-                uri={backupUrl ?? emojiUrl(event.emoji)}
-                fill="black"
-                onError={() => {
-                  const parts = (backupUrl ?? emojiUrl(event.emoji)).split("-");
-                  // remove last part
-                  parts.pop();
-                  setBackupUrl(parts.join("-") + ".svg");
-                }}
-              />
-            </View>
-          </>
-        )}
+        <Text>How your emoji will look on our platform</Text>
+        <EmojiImage style={{ alignItems: "center" }} emoji={event.emoji} />
         <Input
           selectionColor={colours.purple}
           autoCapitalize="none"
