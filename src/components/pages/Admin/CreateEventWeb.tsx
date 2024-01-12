@@ -4,8 +4,7 @@ import { daysOfWeekArray, daysOfWeekBrief, uid } from "../../../utils/util";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { EventObject, defaultEvent, recurrenceTypeArray } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
-import { ButtonGroup, CheckBox, Input } from "react-native-elements";
-import { Dropdown } from "react-native-element-dropdown";
+import { CheckBox, Input } from "react-native-elements";
 import { View, StyleSheet, Text, Platform, ScrollView } from "react-native";
 import { Organizer } from "../../../utils/model/Organizer";
 import { colours, windowHeight } from "../../subatoms/Theme";
@@ -17,6 +16,8 @@ import { fireStore } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomText } from "../../atoms/CustomText";
 import { EmojiImage } from "../../organisms/EmojiImage";
+import { CustomButtonGroup } from "../../atoms/CustomButtonGroup";
+import { CustomDropdown } from "../../atoms/CustomDropdown";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
@@ -24,10 +25,12 @@ type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
 /// Form to create event intended for web use by admin only
 export const CreateEventWeb = ({ route, navigation }: props) => {
   // Fake event
+  // Fake event if the fake parameter is defined
   let isFake = route.params?.fake ?? false;
   let dbPath = isFake ? "events-test" : "events";
 
   // Editing event
+  // Editing event if the id is defined
   let editing = route.params?.id != undefined;
   let previousEventId = route.params?.id ?? "dummy";
 
@@ -116,10 +119,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         >
           Log event object to console
         </CustomButton>
-        <Text style={styles.formElement}>
-          The optional fields have a red or green circle besides them. Make sure the circle is red if you want to leave it empty.
-        </Text>
-
         {/* Name */}
         <CustomInput
           containerStyle={styles.formElement}
@@ -138,15 +137,13 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         />
 
         {/* Organizer select */}
-        <Dropdown
-          search
+        <CustomDropdown
           searchPlaceholder="Choose organizer"
-          placeholderStyle={{ fontSize: 17, padding: 7 }}
           data={organizerData}
           labelField="label"
           valueField="value"
           placeholder={findOrganizerName(localEvent.organizer)}
-          style={{ borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight * 0.05, ...styles.formElement }}
+          style={styles.formElement}
           onChange={(item) => setLocalEvent({ ...localEvent, organizer: item.value, organizerType: "Organizer Added" })}
         />
 
@@ -225,33 +222,26 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         />
 
         {/* Max price */}
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <CustomInput
-            containerStyle={{ ...styles.formElement }}
-            placeholder="Price max"
-            label="Max price. -- Set value to 0 to make it undefined (In the case where there is no max price)"
-            value={(localEvent.priceMax ?? 0).toString()}
-            errorMessage={maxPriceError}
-            onChangeText={(text: any) => {
-              if (isNaN(text)) {
-                setMaxPriceError("Please enter a number");
-                return;
-              } else if (maxPriceError != "") {
-                setMaxPriceError("");
-              }
-              if (text == "" || text == "0") {
-                setLocalEvent({ ...localEvent, priceMax: undefined });
-                return;
-              }
-              setLocalEvent({ ...localEvent, priceMax: parseInt(text) });
-            }}
-          />
-          {localEvent.priceMax == undefined ? (
-            <Text style={{ fontSize: 30, margin: "auto" }}>⭕</Text>
-          ) : (
-            <Text style={{ fontSize: 30, margin: "auto" }}>🟢</Text>
-          )}
-        </View>
+        <CustomInput
+          containerStyle={{ ...styles.formElement }}
+          placeholder="Price max"
+          label="Max price. -- Set value to 0 to make it undefined (In the case where there is no max price)"
+          value={(localEvent.priceMax ?? 0).toString()}
+          errorMessage={maxPriceError}
+          onChangeText={(text: any) => {
+            if (isNaN(text)) {
+              setMaxPriceError("Please enter a number");
+              return;
+            } else if (maxPriceError != "") {
+              setMaxPriceError("");
+            }
+            if (text == "" || text == "0") {
+              setLocalEvent({ ...localEvent, priceMax: undefined });
+              return;
+            }
+            setLocalEvent({ ...localEvent, priceMax: parseInt(text) });
+          }}
+        />
         <View style={{ display: "flex", flexDirection: "row" }}>
           <CheckBox
             title="Location is TBD"
@@ -281,14 +271,12 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
         {/* Location */}
         {localEvent.onCampus ? (
-          <Dropdown
-            search
+          <CustomDropdown
             searchPlaceholder="Search by name or acronym"
-            placeholderStyle={{ fontSize: 17, padding: 10 }}
             data={data}
             labelField="label"
             valueField="address"
-            placeholder={localEvent.location == "" ? "Select building" : localEvent.location}
+            placeholder={localEvent.location == "" ? "Select building" : localEvent.location ?? ""}
             style={{ borderWidth: 1, borderColor: colours.grey, borderRadius: 6, height: windowHeight * 0.05, ...styles.formElement }}
             onChange={(item) => {
               setLocalEvent({
@@ -300,62 +288,41 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             }}
           />
         ) : (
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <CustomInput
-              containerStyle={styles.formElement}
-              label="Location or building name. In the case of campus events, this would be CRX for ex."
-              placeholder="Location"
-              value={localEvent.location}
-              onChangeText={(text: any) => {
-                if (text == "") {
-                  setLocalEvent({ ...localEvent, location: undefined });
-                  return;
-                }
-                setLocalEvent({ ...localEvent, location: text });
-              }}
-            />
-            {localEvent.location == undefined || localEvent.location == "" ? (
-              <Text style={{ fontSize: 30, margin: "auto" }}>⭕</Text>
-            ) : (
-              <Text style={{ fontSize: 30, margin: "auto" }}>🟢</Text>
-            )}
-          </View>
+          <CustomInput
+            containerStyle={styles.formElement}
+            label="Location or building name. In the case of campus events, this would be CRX for ex."
+            placeholder="Location"
+            value={localEvent.location}
+            onChangeText={(text: any) => {
+              if (text == "") {
+                setLocalEvent({ ...localEvent, location: undefined });
+                return;
+              }
+              setLocalEvent({ ...localEvent, location: text });
+            }}
+          />
         )}
 
         {/* Room Number */}
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <CustomInput
-            containerStyle={styles.formElement}
-            placeholder="Room Number"
-            value={localEvent.roomNumber ?? ""}
-            onChangeText={(text: any) => {
-              setLocalEvent({ ...localEvent, roomNumber: text });
-            }}
-          />
-          {localEvent.roomNumber == undefined || localEvent.roomNumber == "" ? (
-            <Text style={{ fontSize: 30, margin: "auto" }}>⭕</Text>
-          ) : (
-            <Text style={{ fontSize: 30, margin: "auto" }}>🟢</Text>
-          )}
-        </View>
+        <CustomInput
+          containerStyle={styles.formElement}
+          placeholder="Room Number"
+          value={localEvent.roomNumber ?? ""}
+          onChangeText={(text: any) => {
+            setLocalEvent({ ...localEvent, roomNumber: text });
+          }}
+        />
 
         {/* Address */}
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <CustomInput
-            containerStyle={styles.formElement}
-            placeholder="Address"
-            label="Street address of the event."
-            value={localEvent.address}
-            onChangeText={(text: any) => {
-              setLocalEvent({ ...localEvent, address: text });
-            }}
-          />
-          {localEvent.address == undefined || localEvent.address == "" ? (
-            <Text style={{ fontSize: 30, margin: "auto" }}>⭕</Text>
-          ) : (
-            <Text style={{ fontSize: 30, margin: "auto" }}>🟢</Text>
-          )}
-        </View>
+        <CustomInput
+          containerStyle={styles.formElement}
+          placeholder="Address"
+          label="Street address of the event."
+          value={localEvent.address}
+          onChangeText={(text: any) => {
+            setLocalEvent({ ...localEvent, address: text });
+          }}
+        />
 
         {/* Start time */}
         <CustomDatePicker
@@ -400,43 +367,29 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         )}
 
         {/* Sign up link */}
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <CustomInput
-            containerStyle={styles.formElement}
-            placeholder="Sign up link"
-            label="Link to sign up for the event. This is optional."
-            value={localEvent.signUpLink ?? ""}
-            onChangeText={(text: any) => {
-              setLocalEvent({ ...localEvent, signUpLink: text });
-            }}
-          />
-          {localEvent.signUpLink == undefined || localEvent.signUpLink == "" ? (
-            <Text style={{ fontSize: 30, margin: "auto" }}>⭕</Text>
-          ) : (
-            <Text style={{ fontSize: 30, margin: "auto" }}>🟢</Text>
-          )}
-        </View>
+        <CustomInput
+          containerStyle={styles.formElement}
+          placeholder="Sign up link"
+          label="Link to sign up for the event. This is optional."
+          value={localEvent.signUpLink ?? ""}
+          onChangeText={(text: any) => {
+            setLocalEvent({ ...localEvent, signUpLink: text });
+          }}
+        />
 
         {/* Original link */}
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <CustomInput
-            containerStyle={styles.formElement}
-            placeholder="Event link"
-            label="Link to the event. This is optional (TODO is it?)"
-            value={localEvent.originalLink ?? ""}
-            onChangeText={(text: any) => {
-              setLocalEvent({ ...localEvent, originalLink: text });
-            }}
-          />
-          {localEvent.originalLink == undefined || localEvent.originalLink == "" ? (
-            <Text style={{ fontSize: 30, margin: "auto" }}>⭕</Text>
-          ) : (
-            <Text style={{ fontSize: 30, margin: "auto" }}>🟢</Text>
-          )}
-        </View>
+        <CustomInput
+          containerStyle={styles.formElement}
+          placeholder="Event link"
+          label="Link to the event. This is optional (TODO is it?)"
+          value={localEvent.originalLink ?? ""}
+          onChangeText={(text: any) => {
+            setLocalEvent({ ...localEvent, originalLink: text });
+          }}
+        />
 
         {/* Recurrence type */}
-        <ButtonGroup
+        <CustomButtonGroup
           buttons={["None", "Weekly", "Custom Weekly", "Specific Dates"]}
           selectedIndex={recurrenceTypeArray.indexOf(localEvent.recurrenceType)}
           onPress={(index) => {
@@ -446,7 +399,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
         {/* Recurrence Custom days */}
         {localEvent.recurrenceType == "Custom Weekly" && (
-          <ButtonGroup
+          <CustomButtonGroup
             buttons={["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]}
             selectedIndexes={daysOfWeekIndex}
             onPress={(index) => {
@@ -596,7 +549,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         )}
         <Text style={{ ...styles.formElement, color: "red" }}>{topError}</Text>
       </View>
-      <Text>End of page</Text>
     </ScrollView>
   );
 };

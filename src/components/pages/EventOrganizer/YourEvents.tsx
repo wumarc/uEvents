@@ -1,9 +1,8 @@
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, StatusBar } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar } from "react-native";
 import { colours, spacing, fonts } from "../../subatoms/Theme";
 import { FlatList } from "react-native";
 import OrganizerEvent from "./OrganizerEvent";
 import { FAB } from "react-native-elements";
-import { useState } from "react";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { EventObject } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
