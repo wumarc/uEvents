@@ -31,7 +31,7 @@ export const SavedEvents = ({ navigation }: props) => {
     // User is not logged in
 
     return (
-      <View style={{ width: windowWidth * 0.5, height: "fit-content", marginVertical: "auto", marginHorizontal: "auto" }}>
+      <View style={{ width: windowWidth * 0.5, height: "fit-content", marginRight: "auto", marginLeft: "auto", marginTop: "auto", marginBottom: "auto" }}>
         <Text style={{ ...fonts.regular, textAlign: "center", paddingBottom: 20, fontSize: 16 }}>{"You need to be logged in to view saved events."}</Text>
         <CustomButton
           title="Login"

@@ -12,15 +12,16 @@ import { Organizer } from "../../../utils/model/Organizer";
 import { SvgUri } from "react-native-svg";
 
 const YourEvents = ({ navigation }: any) => {
+  // States
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
-
   const [loading2, profile, setProfile] = useStateWithFireStoreDocument<Organizer>("users", getFirebaseUserIDOrEmpty());
 
   if (loading || loading2 || !events) {
     return <Loading />;
   }
 
-  if (!profile.name || !profile.description || !profile.image || profile.name == "" || profile.description == "" || profile.image == "") {
+  // TODO: Verify image is uploaded
+  if (!profile.name || !profile.description || profile.name == "" || profile.description == "") {
     return (
       <View style={{ justifyContent: "center", alignItems: "center", flex: 1, paddingHorizontal: "5%", backgroundColor: colours.white }}>
         <Text style={{ textAlign: "center", ...fonts.title3, marginBottom: "2%" }}>Your account is currently incomplete.</Text>

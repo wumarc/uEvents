@@ -11,6 +11,7 @@ import { Error } from "./src/components/pages/Common/Error";
 // import { LogBox } from "react-native";
 import { Button } from "react-native-elements";
 import { Version, compareVersion, currentVersion, latestVersion, versionToString } from "./src/utils/model/Version";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function App() {
   // const [user, loading, error] = useAuthState(auth);
@@ -62,11 +63,15 @@ const styles = StyleSheet.create({
 // This is an inner component to have access to the user type
 const AppInner: FC = () => {
   // States
-  // const [user, loading, error] = useAuthState(auth);
-  const [loading2, userData, setUserData] = useStateWithFireStoreDocument("users", getFirebaseUserIDOrEmpty() == "" ? "Dummy" : getFirebaseUserIDOrEmpty());
+  const [user, loading3, error] = useAuthState(auth);
+  const [loading2, userData, setUserData] = useStateWithFireStoreDocumentLogged(
+    user != null,
+    "users",
+    getFirebaseUserIDOrEmpty() == "" ? "Dummy" : getFirebaseUserIDOrEmpty()
+  );
   const [loading, versions, setVersions] = useStateWithFireStoreCollection(versionPath());
 
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
@@ -88,7 +93,7 @@ const AppInner: FC = () => {
   //   return <Error message="Oops! There is a problem. Check your internet connection! If the error persists, please contact us at uevents.dev@uottawa.ca" />;
   // }
 
-  if (!isLogged()) {
+  if (!user) {
     return <Main />;
   }
 
