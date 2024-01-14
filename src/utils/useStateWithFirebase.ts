@@ -1,6 +1,6 @@
 import { addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, DocumentData, setDoc, updateDoc, WithFieldValue } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
-import { fireStore, storage } from "../firebaseConfig";
+import { auth, fireStore, storage } from "../firebaseConfig";
 import { EventObject } from "./model/EventObject";
 import { useDownloadURL } from "react-firebase-hooks/storage";
 import { ref } from "firebase/storage";
@@ -56,7 +56,7 @@ export function useStateWithFireStoreDocument<T extends { [x: string]: any }>(pa
 }
 
 export function useStateWithFireStoreDocumentLogged<T extends { [x: string]: any }>(logged: boolean, pathToDocument: string, id: string) {
-  if (!logged) {
+  if (!logged || !auth.currentUser) {
     useStateWithFireStoreDocument(pathToDocument, "dummy");
     return [false, undefined, undefined] as const;
   }
