@@ -6,5 +6,6 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "search.exclude": {
     "**/Outdated": true
-  }
+  },
+  "cSpell.words": ["colours"]
 }

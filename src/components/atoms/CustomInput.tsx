@@ -13,11 +13,24 @@ interface inputProps {
   multiline?: boolean;
   errorMessage?: string;
   label?: string;
+  disabled?: boolean;
 }
 
 // TODO: On the web version, the selection color is blue
 // TODO: An extra padding is also added on the web version on both sides of the input
-const CustomInput = ({ value, placeholder, onChangeText, secureTextEntry, containerStyle, inputStyle, style, multiline, errorMessage, label }: inputProps) => {
+const CustomInput = ({
+  value,
+  placeholder,
+  onChangeText,
+  secureTextEntry,
+  containerStyle,
+  inputStyle,
+  style,
+  multiline,
+  errorMessage,
+  label,
+  disabled,
+}: inputProps) => {
   return (
     <Input
       disabledInputStyle={{ backgroundColor: "#ddd" }}
@@ -33,15 +46,23 @@ const CustomInput = ({ value, placeholder, onChangeText, secureTextEntry, contai
       inputContainerStyle={{
         borderColor: colours.grey,
         borderWidth: 1,
-        paddingVertical: 4,
-        paddingHorizontal: 8,
         borderRadius: 6,
       }}
       multiline={multiline}
       containerStyle={containerStyle}
-      inputStyle={inputStyle}
-      style={style}
+      inputStyle={[
+        inputStyle,
+        {
+          paddingLeft: 8,
+          paddingRight: 8,
+          paddingTop: 8,
+          paddingBottom: 8,
+        },
+      ]}
+      style={[style, { outlineColor: colours.purple }]}
+      // style={style}
       errorMessage={errorMessage}
+      disabled={disabled}
     />
   );
 };

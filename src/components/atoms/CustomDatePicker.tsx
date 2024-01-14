@@ -4,6 +4,7 @@ import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
 import { EventObject } from "../../utils/model/EventObject";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
+import CustomInput from "./CustomInput";
 
 interface CustomDatePickerProps {
   time: Timestamp;
@@ -41,19 +42,21 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
 
   return (
     <View>
-      <Text style={{ ...baseStyle, fontSize: 20 }}>
-        {time.toDate().toLocaleString("default", { month: "long" }) +
-          " " +
-          time.toDate().getDate() +
-          " " +
-          time.toDate().getFullYear() +
-          " : " +
-          formattedHours +
-          "h " +
-          formattedMinutes +
-          ""}
-      </Text>
       <View style={{ display: "flex", flexDirection: "row" }}>
+        <CustomInput
+          value={
+            time.toDate().toLocaleString("default", { month: "long" }) +
+            " " +
+            time.toDate().getDate() +
+            " " +
+            time.toDate().getFullYear() +
+            " : " +
+            formattedHours +
+            "h " +
+            formattedMinutes +
+            ""
+          }
+        />
         <CustomButton
           style={{ ...baseStyle, marginHorizontal: 10 }}
           onPress={() => {

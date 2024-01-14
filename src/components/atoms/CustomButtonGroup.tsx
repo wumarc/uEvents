@@ -1,5 +1,5 @@
 import { ButtonGroup, ButtonGroupProps } from "react-native-elements";
-import { colours } from "../subatoms/Theme";
+import { borderRadius, colours } from "../subatoms/Theme";
 import { Button } from "react-native";
 
 interface CustomButtonGroupProps {
@@ -17,6 +17,7 @@ export const CustomButtonGroup = (props: CustomButtonGroupProps) => {
       selectedIndexes={props.selectedIndexes}
       onPress={props.onPress}
       selectedButtonStyle={{ backgroundColor: colours.purple }}
+      containerStyle={{ borderRadius: borderRadius.small }}
     />
   );
 };

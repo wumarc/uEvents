@@ -18,6 +18,7 @@ import { CustomText } from "../../atoms/CustomText";
 import { EmojiImage } from "../../organisms/EmojiImage";
 import { CustomButtonGroup } from "../../atoms/CustomButtonGroup";
 import { CustomDropdown } from "../../atoms/CustomDropdown";
+import { CustomCheckBox } from "../../atoms/CustomCheckBox";
 
 // Props has the wrong type is not used
 type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
@@ -122,7 +123,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Name */}
         <CustomInput
           containerStyle={styles.formElement}
-          placeholder="Name"
+          label="Name"
           value={localEvent.name}
           errorMessage={nameError}
           onChangeText={(text: any) => {
@@ -184,7 +185,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         <CustomInput
           containerStyle={{ ...styles.formElement }}
           style={{ height: windowHeight * 0.2 }}
-          placeholder="Description"
+          label="Description"
           multiline={true}
           errorMessage={descriptionError}
           value={localEvent.description}
@@ -202,7 +203,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Price min */}
         <CustomInput
           containerStyle={styles.formElement}
-          placeholder="Price min"
           label="Min price (Or exact price if there is no max price)"
           value={localEvent.priceMin.toString()}
           errorMessage={minPriceError}
@@ -224,7 +224,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Max price */}
         <CustomInput
           containerStyle={{ ...styles.formElement }}
-          placeholder="Price max"
           label="Max price. -- Set value to 0 to make it undefined (In the case where there is no max price)"
           value={(localEvent.priceMax ?? 0).toString()}
           errorMessage={maxPriceError}
@@ -243,7 +242,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           }}
         />
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <CheckBox
+          <CustomCheckBox
             title="Location is TBD"
             checked={localEvent.onCampus == "TBD"}
             onPress={() => {
@@ -257,7 +256,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             }}
           />
           {localEvent.onCampus != "TBD" ? (
-            <CheckBox
+            <CustomCheckBox
               title="On campus"
               checked={localEvent.onCampus}
               onPress={() => {
@@ -291,7 +290,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           <CustomInput
             containerStyle={styles.formElement}
             label="Location or building name. In the case of campus events, this would be CRX for ex."
-            placeholder="Location"
             value={localEvent.location}
             onChangeText={(text: any) => {
               if (text == "") {
@@ -306,7 +304,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Room Number */}
         <CustomInput
           containerStyle={styles.formElement}
-          placeholder="Room Number"
+          label="Room Number"
           value={localEvent.roomNumber ?? ""}
           onChangeText={(text: any) => {
             setLocalEvent({ ...localEvent, roomNumber: text });
@@ -316,7 +314,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Address */}
         <CustomInput
           containerStyle={styles.formElement}
-          placeholder="Address"
           label="Street address of the event."
           value={localEvent.address}
           onChangeText={(text: any) => {
@@ -336,7 +333,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         />
 
         {/* End time */}
-        <CheckBox
+        <CustomCheckBox
           title="Use end time"
           checked={localEvent.endTime != undefined}
           onPress={() => {
@@ -369,7 +366,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Sign up link */}
         <CustomInput
           containerStyle={styles.formElement}
-          placeholder="Sign up link"
           label="Link to sign up for the event. This is optional."
           value={localEvent.signUpLink ?? ""}
           onChangeText={(text: any) => {
@@ -380,7 +376,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Original link */}
         <CustomInput
           containerStyle={styles.formElement}
-          placeholder="Event link"
           label="Link to the event. This is optional (TODO is it?)"
           value={localEvent.originalLink ?? ""}
           onChangeText={(text: any) => {
