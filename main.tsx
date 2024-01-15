@@ -21,7 +21,7 @@ import { Login, Signup, WelcomePage } from "./src/components/pages/Common/SignIn
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./src/firebaseConfig";
 import { useStateWithFireStoreDocumentLogged } from "./src/utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty } from "./src/utils/util";
+import { getFirebaseUserIDOrEmpty, userType } from "./src/utils/util";
 import { Loading } from "./src/components/pages/Common/Loading";
 import YourEvents from "./src/components/pages/EventOrganizer/YourEvents";
 import { Step0 } from "./src/components/pages/EventOrganizer/CreateEvent";
@@ -70,6 +70,7 @@ export type RootStackParamList = {
   CreateEventWeb: { id?: string; fake?: boolean };
   Settings: {};
   NewVersion: {};
+  YourEvents: {};
   Welcome: {};
 };
 
@@ -88,24 +89,7 @@ const MainView = ({ route, navigation }: props) => {
     return <Loading />;
   }
 
-  // Find out user type
-  let isStudent = false;
-  let isOrganizer = false;
-  let isAdmin = false;
-
-  if (!user) {
-    // Not logged in
-    isStudent = true;
-  } else {
-    // Logged in
-    if (userProfile?.type == "student") {
-      isStudent = true;
-    } else if (userProfile?.type == "organizer") {
-      isOrganizer = true;
-    } else if (userProfile?.type == "admin") {
-      isAdmin = true;
-    }
-  }
+  const [isStudent, isOrganizer, isAdmin, isBeta] = userType(userProfile);
 
   return (
     <Tab.Navigator barStyle={{ backgroundColor: "#f7f7f7" }} activeColor={colours.purple} inactiveColor={colours.grey} initialRouteName="Home">
@@ -113,10 +97,23 @@ const MainView = ({ route, navigation }: props) => {
       {isAdmin && (
         <Tab.Screen
           name="CreateEvent"
-          component={CreateEvent as any}
+          component={CreateEventWeb as any}
           options={{
             tabBarLabel: "Create",
             tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="plus-circle" color={focused ? colours.purple : colours.grey} size={30} />,
+          }}
+        />
+      )}
+      {isAdmin && (
+        <Tab.Screen
+          name="CreateEventFake"
+          component={CreateEventWeb as any}
+          initialParams={{
+            fake: true,
+          }}
+          options={{
+            tabBarLabel: "Create",
+            tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="plus" color={focused ? colours.purple : colours.grey} size={30} />,
           }}
         />
       )}
@@ -152,7 +149,7 @@ const MainView = ({ route, navigation }: props) => {
       {isOrganizer && (
         <Tab.Screen
           name="YourEvents"
-          component={UnderConstruction as any} // TEMPORARY
+          component={isBeta ? (YourEvents as any) : (UnderConstruction as any)} // TEMPORARY
           options={{
             tabBarLabel: "Your Events",
             tabBarIcon: ({ color, focused }) => (
@@ -374,7 +371,7 @@ const Main: FC = (props) => {
             />
           )}
           {/* Create event form (web). Admin */}
-          {isAdmin && (
+          {(isAdmin || isOrganizer) && (
             <Stack.Screen
               name="CreateEventWeb"
               component={CreateEventWeb as any}

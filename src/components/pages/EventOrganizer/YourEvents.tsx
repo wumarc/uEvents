@@ -8,9 +8,13 @@ import { EventObject } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
 import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { Organizer } from "../../../utils/model/Organizer";
-import { SvgUri } from "react-native-svg";
+import { EmojiImage } from "../../organisms/EmojiImage";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../../main";
 
-const YourEvents = ({ navigation }: any) => {
+type props = NativeStackScreenProps<RootStackParamList, "YourEvents">;
+
+const YourEvents = ({ route, navigation }: props) => {
   // States
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, profile, setProfile] = useStateWithFireStoreDocument<Organizer>("users", getFirebaseUserIDOrEmpty());
@@ -20,7 +24,9 @@ const YourEvents = ({ navigation }: any) => {
   }
 
   // TODO: Verify image is uploaded
-  if (!profile.name || !profile.description || profile.name == "" || profile.description == "") {
+  // if (!profile.name || !profile.description || profile.name == "" || profile.description == "") {
+  if (false) {
+    // TODO: I temp removed the verification of the account since we need to work on the profile
     return (
       <View style={{ justifyContent: "center", alignItems: "center", flex: 1, paddingHorizontal: "5%", backgroundColor: colours.white }}>
         <Text style={{ textAlign: "center", ...fonts.title3, marginBottom: "2%" }}>Your account is currently incomplete.</Text>
@@ -66,7 +72,7 @@ const YourEvents = ({ navigation }: any) => {
 
         {(myEvents ?? []).length == 0 && (
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <SvgUri width="50%" height="30%" uri={"https://openmoji.org/data/color/svg/E10C.svg"} fill="black" />
+            <EmojiImage emoji="" />
             <Text style={{ ...fonts.title3, textAlign: "center" }}>You currently have no events. Smash the red button to launch an event!</Text>
           </View>
         )}
@@ -78,7 +84,7 @@ const YourEvents = ({ navigation }: any) => {
           placement="right"
           color={"#FD6262"}
           size="large"
-          onPress={() => navigation.navigate("Step0", { useDefault: false })}
+          onPress={() => navigation.navigate("CreateEventWeb", {})}
         />
       </View>
     </View>

@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
 import { EventObject } from "./model/EventObject";
-import { testUsersEvents, testUsersVersion } from "../../userConfig";
+import { betaUsers, testUsersEvents, testUsersVersion } from "../../userConfig";
 
 export function getFirebaseUserID(): string | undefined {
   let id = auth.currentUser?.uid;
@@ -41,24 +41,27 @@ export function versionPath() {
   return "versions";
 }
 
-// [isStudent, isOrganizer, isAdmin]
-export function userType(user: any): [boolean, boolean, boolean] {
+// [isStudent, isOrganizer, isAdmin, isBeta]
+export function userType(user: any): [boolean, boolean, boolean, boolean] {
   if (user == undefined) {
-    return [true, false, false];
+    return [true, false, false, false];
   }
+
+  let isBeta = betaUsers.includes(user.email);
+
   if (user.type == undefined) {
-    return [true, false, false];
+    return [true, false, false, isBeta];
   }
   if (user.type == "student") {
-    return [true, false, false];
+    return [true, false, false, isBeta];
   }
   if (user.type == "organizer") {
-    return [false, true, false];
+    return [false, true, false, isBeta];
   }
   if (user.type == "admin") {
-    return [false, false, true];
+    return [false, false, true, isBeta];
   }
-  return [true, false, false];
+  return [true, false, false, isBeta];
 }
 
 /**

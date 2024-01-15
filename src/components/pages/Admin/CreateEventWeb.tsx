@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { daysOfWeekArray, daysOfWeekBrief, uid } from "../../../utils/util";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { daysOfWeekArray, daysOfWeekBrief, getFirebaseUserIDOrEmpty, uid, userType } from "../../../utils/util";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { EventObject, defaultEvent, recurrenceTypeArray } from "../../../utils/model/EventObject";
 import { Loading } from "../Common/Loading";
 import { CheckBox, Input } from "react-native-elements";
@@ -12,13 +12,14 @@ import { CustomButton } from "../../atoms/CustomButton";
 import CustomInput from "../../atoms/CustomInput";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { CustomDatePicker, CustomDatePickerList } from "../../atoms/CustomDatePicker";
-import { fireStore } from "../../../firebaseConfig";
+import { auth, fireStore } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomText } from "../../atoms/CustomText";
 import { EmojiImage } from "../../organisms/EmojiImage";
 import { CustomButtonGroup } from "../../atoms/CustomButtonGroup";
 import { CustomDropdown } from "../../atoms/CustomDropdown";
 import { CustomCheckBox } from "../../atoms/CustomCheckBox";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 // NOTE!!!
 // Beware that firebase does not accept undefined or null values
@@ -43,6 +44,12 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
   const [loading2, users, addUsers] = useStateWithFireStoreCollection<Organizer>("users");
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
+  const [user, loading3, error] = useAuthState(auth);
+  const [loading4, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+
+  // Who is it?
+  // Here we assume that the user is logged in to access this page
+  const [isStudent, isOrganizer, isAdmin] = userType(student);
 
   // Error messages
   const [minPriceError, setMinPriceError] = useState("");
@@ -64,7 +71,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   }, [loading]);
 
   // Loading
-  if (loading || loading2) {
+  if (loading || loading2 || loading3 || loading4) {
     return <Loading />;
   }
 
@@ -100,6 +107,10 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     temp.state = "Pending";
     temp.organizerType = "Organizer Added"; // TODO: Confirm
 
+    if (isOrganizer) {
+      temp.organizer = getFirebaseUserIDOrEmpty();
+    }
+
     // Fake
     if (isFake) {
       temp.fake = true;
@@ -112,16 +123,19 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     <ScrollView>
       <View style={{ margin: 50, maxWidth: 1000 }}>
         {isFake && <CustomText style={{ textAlign: "center", color: "red" }}>Warning !!! You are editing / creating a fake event</CustomText>}
-        <CustomButton
-          style={styles.formElement}
-          onPress={() => {
-            let temp = localEvent;
-            beforeSubmit(temp);
-            console.log(temp);
-          }}
-        >
-          Log event object to console
-        </CustomButton>
+        {isAdmin && (
+          <CustomButton
+            style={styles.formElement}
+            onPress={() => {
+              let temp = localEvent;
+              beforeSubmit(temp);
+              console.log(temp);
+            }}
+          >
+            Log event object to console
+          </CustomButton>
+        )}
+
         {/* Name */}
         <CustomInput
           containerStyle={styles.formElement}
@@ -140,24 +154,28 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         />
 
         {/* Organizer select */}
-        <CustomDropdown
-          searchPlaceholder="Choose organizer"
-          data={organizerData}
-          labelField="label"
-          valueField="value"
-          placeholder={findOrganizerName(localEvent.organizer)}
-          style={styles.formElement}
-          onChange={(item) => setLocalEvent({ ...localEvent, organizer: item.value, organizerType: "Organizer Added" })}
-        />
+        {isAdmin && (
+          <CustomDropdown
+            searchPlaceholder="Choose organizer"
+            data={organizerData}
+            labelField="label"
+            valueField="value"
+            placeholder={findOrganizerName(localEvent.organizer)}
+            style={styles.formElement}
+            onChange={(item) => setLocalEvent({ ...localEvent, organizer: item.value, organizerType: "Organizer Added" })}
+          />
+        )}
 
         {/* New Organizer */}
-        <CustomButton
-          onPress={() => {
-            navigation.navigate("OrganizerSettings", { id: undefined, new: true });
-          }}
-        >
-          Create new organizer
-        </CustomButton>
+        {isAdmin && (
+          <CustomButton
+            onPress={() => {
+              navigation.navigate("OrganizerSettings", { id: undefined, new: true });
+            }}
+          >
+            Create new organizer
+          </CustomButton>
+        )}
 
         {/* Emoji */}
         <EmojiImage emoji={localEvent.emoji} style={{ alignItems: "center", margin: "auto", height: 200 }} />
