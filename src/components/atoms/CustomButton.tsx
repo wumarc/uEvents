@@ -9,6 +9,7 @@ interface CustomButtonProps {
   onPress?: any;
   children?: any;
   title?: string;
+  disabled?: boolean;
 }
 
 export const CustomButton = (props: CustomButtonProps) => {
@@ -25,6 +26,7 @@ export const CustomButton = (props: CustomButtonProps) => {
       color={colours.purple}
       size={props.size ?? "md"}
       onPress={props.onPress}
+      disabled={props.disabled}
       title={props.title}
     >
       {props.children}

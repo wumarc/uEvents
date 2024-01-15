@@ -125,4 +125,10 @@ Firebase offers only a high level view of events. You can't dive in and see prop
 
 Analytics events are batched together and sent every hour so it is very annoying to test. It is possible to use what is called the debug view. It is possible to activate the debug view using a chrome extension and then view the events in the firebase debug view console.
 
-The current implementation of analytics to log event doesn't work in the web. TODO: explore using expo-firebase/_ libraries instead of the firebase/_ libraries we currently use.s
+The current implementation of analytics to log event doesn't work in the web. TODO: explore using expo-firebase/_ libraries instead of the firebase/_ libraries we currently use.
+
+According to this documentation, the expo-firebase-\* libraries are depreciated: https://github.com/expo/fyi/blob/main/firebase-migration-guide.md
+
+According to this documentation, the firebase library doesn't support web for analytics: https://rnfirebase.io/
+
+For the web version, the solution is to use the normal tools firebase give you if you were to use react: https://firebase.google.com/docs/analytics/get-started?platform=web
