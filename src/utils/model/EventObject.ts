@@ -50,6 +50,7 @@ export type EventObject = {
   startTime: Timestamp;
 
   // End time doesn't have to be specified
+  // If Epoch time is 0, it means the event has no end time
   endTime?: Timestamp;
 
   // Not being used right now
@@ -210,6 +211,10 @@ export const getTimeInAMPM = (date: any) => {
 
 export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd?: Timestamp) => {
   /* ---------------------------- Initialize dates ---------------------------- */
+
+  if (firebaseTimestampEnd?.seconds === 0) {
+    firebaseTimestampEnd = undefined;
+  }
 
   let eventDate = firebaseTimestamp.toDate();
   let eventDateEnd = firebaseTimestampEnd?.toDate();

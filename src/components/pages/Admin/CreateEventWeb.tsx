@@ -20,7 +20,9 @@ import { CustomButtonGroup } from "../../atoms/CustomButtonGroup";
 import { CustomDropdown } from "../../atoms/CustomDropdown";
 import { CustomCheckBox } from "../../atoms/CustomCheckBox";
 
-// Props has the wrong type is not used
+// NOTE!!!
+// Beware that firebase does not accept undefined or null values
+
 type props = NativeStackScreenProps<RootStackParamList, "CreateEventWeb">;
 
 /// Form to create event intended for web use by admin only
@@ -235,7 +237,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
               setMaxPriceError("");
             }
             if (text == "" || text == "0") {
-              setLocalEvent({ ...localEvent, priceMax: undefined });
+              setLocalEvent({ ...localEvent, priceMax: 0 });
               return;
             }
             setLocalEvent({ ...localEvent, priceMax: parseInt(text) });
@@ -248,7 +250,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             onPress={() => {
               if (localEvent.onCampus == "TBD") {
                 // Switching from TBD to a specific value
-                setLocalEvent({ ...localEvent, onCampus: undefined });
+                setLocalEvent({ ...localEvent, onCampus: true });
                 return;
               }
               // Switching from a specific value to TBD
@@ -293,7 +295,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             value={localEvent.location}
             onChangeText={(text: any) => {
               if (text == "") {
-                setLocalEvent({ ...localEvent, location: undefined });
+                setLocalEvent({ ...localEvent, location: "" });
                 return;
               }
               setLocalEvent({ ...localEvent, location: text });
@@ -330,26 +332,27 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           selectDateString="Select start date"
           selectTimeString="Select start time"
           baseStyle={styles.formElement}
+          label="Start"
         />
 
         {/* End time */}
         <CustomCheckBox
           title="Use end time"
-          checked={localEvent.endTime != undefined}
+          checked={localEvent.endTime != undefined && localEvent.endTime.seconds != 0}
           onPress={() => {
-            if (localEvent.endTime == undefined) {
+            if (localEvent.endTime == new Timestamp(0, 0) || localEvent.endTime == undefined) {
               // Switching to using end time
               setLocalEvent({ ...localEvent, endTime: localEvent.startTime });
               return;
             } else {
               // Switching to not using end time
-              setLocalEvent({ ...localEvent, endTime: undefined });
+              setLocalEvent({ ...localEvent, endTime: new Timestamp(0, 0) });
               return;
             }
           }}
         />
 
-        {localEvent.endTime != undefined ? (
+        {localEvent.endTime != undefined && localEvent.endTime.seconds != 0 ? (
           <CustomDatePicker
             time={localEvent.endTime}
             setTime={(time: any) => {
@@ -358,6 +361,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             selectDateString="Select end date"
             selectTimeString="Select end time"
             baseStyle={styles.formElement}
+            label="End"
           />
         ) : (
           <></>

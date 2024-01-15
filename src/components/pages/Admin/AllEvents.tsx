@@ -248,27 +248,29 @@ const EventLine: FC<{
 
   return (
     <View style={{ margin: 10, width: "100%", display: "flex", flexDirection: "column", height: detailed ? containerHeight + 100 : containerHeight }}>
-      <EmojiImage style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%" }} emoji={event.emoji} />
-      <View>
-        <View style={{ height: containerHeight, alignItems: "flex-start", justifyContent: "flex-start" }}>
-          <Text style={{ color: event.fake ? "blue" : undefined }}>
-            {event.name}
-            {event.fake && " (Test Event)"}
-          </Text>
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text>{event.startTime.toDate().toDateString()}</Text>
-            <Text style={{ color: statusColor }}>{" - " + status}</Text>
-          </View>
-          {event.recurrenceType !== "None" && (
+      <View style={{ width: "100%", display: "flex", flexDirection: "row", height: "50%" }}>
+        <EmojiImage emoji={event.emoji} style={{ width: 70, height: 70, marginRight: 30 }} />
+        <View>
+          <View style={{ height: containerHeight, alignItems: "flex-start", justifyContent: "flex-start" }}>
+            <Text style={{ color: event.fake ? "blue" : undefined }}>
+              {event.name}
+              {event.fake && " (Test Event)"}
+            </Text>
             <View style={{ display: "flex", flexDirection: "row" }}>
-              <Text style={{ color: "purple" }}>{event.recurrenceType}</Text>
-              <Text style={{ color: "purple" }}>{" (next): " + nextStartTime.toDateString()}</Text>
-              <Text style={{ color: "purple" }}>{" (until): " + event.recurrenceEnd?.toDate().toDateString()}</Text>
+              <Text>{event.startTime.toDate().toDateString()}</Text>
+              <Text style={{ color: statusColor }}>{" - " + status}</Text>
             </View>
-          )}
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text>{event.organizerType + " - "}</Text>
-            <Text style={{ color: organizer == "Organizer name not found" ? "red" : undefined }}>{organizer}</Text>
+            {event.recurrenceType !== "None" && (
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <Text style={{ color: "purple" }}>{event.recurrenceType}</Text>
+                <Text style={{ color: "purple" }}>{" (next): " + nextStartTime.toDateString()}</Text>
+                <Text style={{ color: "purple" }}>{" (until): " + event.recurrenceEnd?.toDate().toDateString()}</Text>
+              </View>
+            )}
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <Text>{event.organizerType + " - "}</Text>
+              <Text style={{ color: organizer == "Organizer name not found" ? "red" : undefined }}>{organizer}</Text>
+            </View>
           </View>
         </View>
       </View>

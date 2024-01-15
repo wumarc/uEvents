@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { CustomButton } from "./CustomButton";
 import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
 import { EventObject } from "../../utils/model/EventObject";
@@ -13,9 +13,10 @@ interface CustomDatePickerProps {
   selectTimeString?: string;
   baseStyle?: any;
   useOnlyDate?: boolean;
+  label?: string;
 }
 
-export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeString, baseStyle, useOnlyDate }: CustomDatePickerProps) => {
+export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeString, baseStyle, useOnlyDate, label }: CustomDatePickerProps) => {
   const [timeVisible, settimeVisible] = useState(false);
   const [dateVisible, setdateVisible] = useState(false);
 
@@ -43,37 +44,28 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
   return (
     <View>
       <View style={{ display: "flex", flexDirection: "row" }}>
-        <CustomInput
-          value={
-            time.toDate().toLocaleString("default", { month: "long" }) +
-            " " +
-            time.toDate().getDate() +
-            " " +
-            time.toDate().getFullYear() +
-            " : " +
-            formattedHours +
-            "h " +
-            formattedMinutes +
-            ""
-          }
-        />
-        <CustomButton
-          style={{ ...baseStyle, marginHorizontal: 10 }}
+        <TouchableOpacity
+          style={{ width: shouldUseOnlyDate ? "100%" : "50%" }}
           onPress={() => {
             setdateVisible(true);
           }}
         >
-          {selectDateString}
-        </CustomButton>
+          <CustomInput
+            label={label + " date"}
+            containerStyle={{ width: "100%" }}
+            value={time.toDate().toLocaleString("default", { month: "long" }) + " " + time.toDate().getDate() + " " + time.toDate().getFullYear()}
+          />
+        </TouchableOpacity>
+
         {!shouldUseOnlyDate && (
-          <CustomButton
-            style={{ ...baseStyle, marginHorizontal: 10 }}
+          <TouchableOpacity
+            style={{ width: "50%" }}
             onPress={() => {
               settimeVisible(true);
             }}
           >
-            {selectTimeString}
-          </CustomButton>
+            <CustomInput label={label + " time"} containerStyle={{ width: "100%" }} value={formattedHours + "h " + formattedMinutes + ""} />
+          </TouchableOpacity>
         )}
       </View>
 
