@@ -1,5 +1,5 @@
 import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { EventObject } from "../../../utils/model/EventObject";
 import Event from "../../organisms/Event";
@@ -17,6 +17,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
+import { customLogEvent } from "../../../utils/analytics";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -29,6 +30,10 @@ const Home = ({ route, navigation }: props) => {
   const [user, loading4, error] = useAuthState(auth);
   const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
   const [timeShift, setTimeShift] = useState(0); // Only used for admin
+
+  useEffect(() => {
+    customLogEvent("Open_home_page");
+  }, []);
 
   // Loading
   if (loading || loading2 || loading3 || loading4) {

@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
+import { customLogEvent } from "../../../utils/analytics";
 
 const BrowseOrganizers = ({ navigation }: any) => {
   // States
@@ -58,7 +59,12 @@ const BrowseOrganizers = ({ navigation }: any) => {
         <FlatList
           data={filteredOrganizers}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("EventOrganizerView", { organizerID: item.id })}>
+            <TouchableOpacity
+              onPress={() => {
+                customLogEvent("Clicked_on_organizer_browsing", { organizer: item.id });
+                navigation.navigate("EventOrganizerView", { organizerID: item.id });
+              }}
+            >
               <Organizer name={item.name == "" || item.name == undefined ? "Undefined Name" : item.name} imageID={item.id} />
             </TouchableOpacity>
           )}

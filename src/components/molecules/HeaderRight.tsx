@@ -11,6 +11,7 @@ import { CustomButton } from "../atoms/CustomButton";
 import { LoginDialog } from "./LoginDialog";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
+import { customLogEvent } from "../../utils/analytics";
 
 const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
   // States
@@ -39,16 +40,19 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         size={30}
         onPress={() => {
           if (!user) {
+            customLogEvent("Tried_save_signed_out", { eventId: props.eventID });
             setLoginReason("You need to be logged in to save events.");
             setLoginVisible(true);
             return;
           }
           if (setUserData) {
             if (saved) {
+              customLogEvent("Unsaving", { eventId: props.eventID });
               setUserData({
                 saved: (userData?.saved ?? []).filter((id: string) => id !== props.eventID),
               });
             } else {
+              customLogEvent("Saving", { eventId: props.eventID });
               setUserData({
                 saved: [...(userData?.saved ?? []), props.eventID],
               });

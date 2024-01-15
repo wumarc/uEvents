@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
 import { Loading } from "./Loading";
 import { Linking } from "react-native";
-import { auth, fireStore, customLogEvent } from "../../../firebaseConfig";
+import { auth, fireStore } from "../../../firebaseConfig";
 import { Icon } from "react-native-elements";
 import SettingsButton from "../../molecules/SettingsButton";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -21,6 +21,7 @@ import { RootStackParamList } from "../../../../main";
 import { appVersion } from "../../../../config";
 import { useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { CustomText } from "../../atoms/CustomText";
+import { customLogEvent } from "../../../utils/analytics";
 
 type props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
@@ -136,7 +137,7 @@ const Settings = ({ route, navigation }: props) => {
           <CustomButton
             title="Send Test Analytics"
             onPress={() => {
-              customLogEvent("test_event", getFirebaseUserIDOrEmpty());
+              customLogEvent("test_event");
             }}
           />
         )}

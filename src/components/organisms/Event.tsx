@@ -13,6 +13,7 @@ import { Platform } from "react-native";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 import { EmojiImage } from "./EmojiImage";
+import { customLogEvent } from "../../utils/analytics";
 
 // Event component props
 interface EventProps {
@@ -66,6 +67,7 @@ export const Event: React.FC<EventProps> = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
+        customLogEvent("Clicked_on_event", { eventId: props.id });
         props.navigation.navigate("EventDetailsView", {
           eventID: props.id,
           organizerID: event.organizer,

@@ -14,6 +14,7 @@ import { getNextDate } from "../../../utils/util";
 import { Platform } from "react-native";
 import { RootStackParamList } from "../../../../main";
 import { EmojiImage } from "../../organisms/EmojiImage";
+import { customLogEvent } from "../../../utils/analytics";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -104,6 +105,7 @@ const EventDetails = ({ route, navigation }: props) => {
             <TouchableOpacity
               disabled={event.organizerType == "Manually Added"}
               onPress={() => {
+                customLogEvent("Clicked_on_organizer_from_event", { eventId: event.id, organizer: event.organizer });
                 navigation.navigate("EventOrganizerView", { organizerID: event.organizer });
               }}
             >
@@ -226,6 +228,7 @@ const EventDetails = ({ route, navigation }: props) => {
           disabled={event.signUpLink == null || event.signUpLink == ""}
           titleStyle={{ fontSize: 15, fontWeight: "600" }}
           onPress={() => {
+            customLogEvent("Clicked_on_signup_link", { eventId: event.id });
             if (event.signUpLink != null && event.signUpLink != "") {
               Linking.openURL(event.signUpLink!);
             }
