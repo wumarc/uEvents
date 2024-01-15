@@ -14,6 +14,9 @@ interface inputProps {
   errorMessage?: string;
   label?: string;
   disabled?: boolean;
+  onPressIn?: any;
+  onFocus?: any;
+  onPointerDown?: any;
 }
 
 // TODO: On the web version, the selection color is blue
@@ -30,9 +33,17 @@ const CustomInput = ({
   errorMessage,
   label,
   disabled,
+  onPressIn,
+  onFocus,
+  onPointerDown,
 }: inputProps) => {
   return (
     <Input
+      onPressIn={onPressIn}
+      onFocus={onFocus}
+      onPointerDown={onPointerDown}
+      onTouchStart={onPointerDown}
+      onPressOut={onPointerDown}
       disabledInputStyle={{ backgroundColor: "#ddd" }}
       secureTextEntry={secureTextEntry}
       value={value}
