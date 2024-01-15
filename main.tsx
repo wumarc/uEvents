@@ -112,7 +112,7 @@ const MainView = ({ route, navigation }: props) => {
             fake: true,
           }}
           options={{
-            tabBarLabel: "Create",
+            tabBarLabel: "Create Fake",
             tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="plus" color={focused ? colours.purple : colours.grey} size={30} />,
           }}
         />

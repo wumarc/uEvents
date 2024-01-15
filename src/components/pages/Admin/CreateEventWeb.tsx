@@ -553,8 +553,17 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             }
 
             // Write event
-            setDoc(doc(fireStore, dbPath + "/" + id), temp);
-            navigation.pop();
+            try {
+              setDoc(doc(fireStore, dbPath + "/" + id), temp)
+                .then(() => {
+                  navigation.pop();
+                })
+                .catch((error) => {
+                  setTopError("Could not submit event. Error: " + error);
+                });
+            } catch (e) {
+              setTopError("Could not submit event. Error: " + e);
+            }
           }}
         >
           {isFake ? "Submit test event" : "Submit event"}
@@ -566,8 +575,18 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             onPress={() => {
               let temp = localEvent;
               beforeSubmit(temp);
-              setDoc(doc(fireStore, dbPath + "/" + id), temp);
-              navigation.pop();
+              temp.onCampus = undefined;
+              try {
+                setDoc(doc(fireStore, dbPath + "/" + id), temp)
+                  .then(() => {
+                    navigation.pop();
+                  })
+                  .catch((error) => {
+                    setTopError("Could not submit event. Error: " + error);
+                  });
+              } catch (e) {
+                setTopError("Could not submit event. Error: " + e);
+              }
             }}
           >
             Force submit test event (Without checks)
