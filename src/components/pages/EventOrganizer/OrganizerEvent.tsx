@@ -48,8 +48,8 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
             <Text style={{ ...fonts.small, fontWeight: "500" }}>{formattedDate(event.startTime, event.endTime)}</Text>
           </View>
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
-          {/* {event.rejectionReason && <Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>} */}
-          {<Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>}
+          {event.rejectReason && <Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>}
+          {/* {<Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>} */}
           {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
 
