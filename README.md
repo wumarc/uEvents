@@ -46,7 +46,11 @@ https://uevents-a9365.web.app/
 
 ## Deploy the app
 
-TODO
+Using eas update:
+
+`eas update`
+Use the production branch
+Pay attention to the `runtimeVersion` in app.json. This is what determines if we can do the OTA updates or not. https://docs.expo.dev/eas-update/runtime-versions/
 
 ## CLI package management tools
 

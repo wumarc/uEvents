@@ -3,7 +3,7 @@ import { SvgUri, SvgXml } from "react-native-svg";
 // @ts-ignore
 import emojiUnicode from "emoji-unicode";
 import { ALL_EMOJIS } from "../../assets/emoji_list";
-import { EMOJI_REQUIRE_LIST } from "../../assets/emoji_list_final";
+// import { EMOJI_REQUIRE_LIST } from "../../assets/emoji_list_final";
 
 export function emojiUrl(emoji: string) {
   if (emoji == undefined) {
@@ -56,7 +56,8 @@ export const EmojiImage = (props: EmojiImageProps) => {
   }
 
   if (Platform.OS === "web") {
-    let emoji = (EMOJI_REQUIRE_LIST as any)[url];
+    // let emoji = (EMOJI_REQUIRE_LIST as any)[url];
+    let emoji = "https://openmoji.org/data/color/svg/" + url;
     return (
       <View style={props.style}>
         <img
