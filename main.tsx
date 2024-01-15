@@ -149,7 +149,7 @@ const MainView = ({ route, navigation }: props) => {
       {isOrganizer && (
         <Tab.Screen
           name="YourEvents"
-          component={isBeta ? (YourEvents as any) : (UnderConstruction as any)} // TEMPORARY
+          component={YourEvents as any}
           options={{
             tabBarLabel: "Your Events",
             tabBarIcon: ({ color, focused }) => (

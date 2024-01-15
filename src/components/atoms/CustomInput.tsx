@@ -12,9 +12,11 @@ interface inputProps {
   style?: any;
   multiline?: boolean;
   errorMessage?: string;
-  label?: string;
+  label?: any;
   disabled?: boolean;
   onChange?: any;
+  defaultValue?: string;
+  leftIcon?: any;
   maxLength?: number;
 }
 
@@ -34,6 +36,8 @@ const CustomInput = ({
   disabled,
   onChange,
   maxLength,
+  defaultValue,
+  leftIcon,
 }: inputProps) => {
   return (
     <Input
@@ -44,6 +48,8 @@ const CustomInput = ({
       onChangeText={onChangeText}
       onChange={onChange}
       placeholder={placeholder}
+      defaultValue={defaultValue}
+      leftIcon={leftIcon}
       maxLength={maxLength}
       autoCapitalize="none"
       selectionColor={colours.purple}

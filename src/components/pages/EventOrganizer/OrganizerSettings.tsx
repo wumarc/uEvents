@@ -15,6 +15,7 @@ import { Loading } from "../Common/Loading";
 import { RootStackParamList } from "../../../../main";
 import { doc, setDoc } from "firebase/firestore";
 import { CustomText } from "../../atoms/CustomText";
+import CustomInput from "../../atoms/CustomInput";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerSettings">;
 
@@ -113,7 +114,7 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
         {/* Club Info Section */}
         <View style={styles.studentInfo}>
           <View style={{ flexDirection: "column", flex: 1 }}>
-            <Input
+            <CustomInput
               label={
                 <Text>
                   Organization Name <Text style={{ color: "red" }}>*</Text>
@@ -121,20 +122,10 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
               }
               placeholder="Organization name"
               defaultValue={localProfile.name}
-              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) => setLocalProfile({ ...localProfile, name: value })}
-              containerStyle={{ paddingHorizontal: 0 }}
-              selectionColor={colours.purple}
-              inputContainerStyle={{
-                borderColor: colours.grey,
-                borderWidth: 1,
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-                borderRadius: 6,
-              }}
             />
             {isAdmin ? (
-              <Input
+              <CustomInput
                 label={
                   <Text>
                     Email<Text style={{ color: "red" }}>*</Text>
@@ -142,23 +133,13 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
                 }
                 placeholder="Email"
                 defaultValue={localProfile.email}
-                labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
                 onChangeText={(value: string) => setLocalProfile({ ...localProfile, email: value })}
-                containerStyle={{ paddingHorizontal: 0 }}
-                selectionColor={colours.purple}
-                inputContainerStyle={{
-                  borderColor: colours.grey,
-                  borderWidth: 1,
-                  paddingVertical: 4,
-                  paddingHorizontal: 8,
-                  borderRadius: 6,
-                }}
               />
             ) : (
               <></>
             )}
 
-            <Input
+            <CustomInput
               label={
                 <Text>
                   Organization Description <Text style={{ color: "red" }}>*</Text>
@@ -169,42 +150,19 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
               multiline={true}
               style={{ height: windowHeight * 0.2 }}
               maxLength={700}
-              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) => setLocalProfile({ ...localProfile, description: value })}
-              containerStyle={{ paddingHorizontal: 0 }}
-              textAlignVertical="top"
-              selectionColor={colours.purple}
-              inputContainerStyle={{
-                borderColor: colours.grey,
-                borderWidth: 1,
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-                borderRadius: 6,
-              }}
             />
 
-            <Input
+            <CustomInput
               label={
                 <Text>
                   Instagram Handle <Text style={{ color: "red" }}></Text>
                 </Text>
               }
               leftIcon={{ type: "font-awesome", name: "at" }}
-              leftIconContainerStyle={{ marginRight: 10 }}
               placeholder="Insert Instagram Handle"
               defaultValue={localProfile.instagram}
-              labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
               onChangeText={(value: string) => setLocalProfile({ ...localProfile, instagram: value })}
-              containerStyle={{ paddingHorizontal: 0 }}
-              autoCapitalize="none"
-              selectionColor={colours.purple}
-              inputContainerStyle={{
-                borderColor: colours.grey,
-                borderWidth: 1,
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-                borderRadius: 6,
-              }}
             />
           </View>
         </View>

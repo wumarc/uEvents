@@ -1,19 +1,20 @@
 import { View, Text, Touchable, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { Dialog } from "react-native-elements";
-import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowHeight, windowWidth } from "../../subatoms/Theme";
 import { FC, useState } from "react";
-import { EventObject, getTimeInAMPM } from "../../../utils/model/EventObject";
+import { EventObject, formattedDate, getTimeInAMPM } from "../../../utils/model/EventObject";
 import { Button } from "@rneui/base";
-import { deleteDoc, doc } from "firebase/firestore";
+import { Timestamp, deleteDoc, doc } from "firebase/firestore";
 import { fireStore } from "../../../firebaseConfig";
 import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
 import { Loading } from "../Common/Loading";
 import { CustomButton } from "../../atoms/CustomButton";
+import { EmojiImage } from "../../organisms/EmojiImage";
 
 const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [loading, event, setEvent] = useStateWithFireStoreDocument("events", props.eventID);
+  const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>("events", props.eventID);
 
   if (loading) {
     return <Loading />;
@@ -38,12 +39,18 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           ...spacing.verticalPadding1,
         }}
       >
+        <EmojiImage emoji={event.emoji} style={{ justifyContent: "center", width: windowWidth * 0.25, height: windowHeight * 0.15 }} />
+
         <View style={{ width: windowWidth * 0.5 }}>
           {/* Emoji */}
           <Text style={{ ...fonts.title2, color: colours.purple }}>{event.name}</Text>
-          {/* <Text style={fonts.title3}>{event.startTime}</Text> */}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
+            <Text style={{ ...fonts.small, fontWeight: "500" }}>{formattedDate(event.startTime, event.endTime)}</Text>
+          </View>
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
-          {event.rejectionReason && <Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>}
+          {event.rejectReason && <Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>}
+          {/* {<Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>} */}
           {/* <Text style={{...fonts.title3}}>345 Clicks</Text> */}
         </View>
 
@@ -62,6 +69,8 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
             <Text
               style={{
                 ...fonts.title3,
+                paddingLeft: 10,
+                paddingRight: 10,
                 color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Rejected" ? "red" : "#EF9B0F",
               }}
             >
@@ -75,9 +84,8 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
             <TouchableOpacity
               style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}
               onPress={() =>
-                props.navigation.navigate("Step0", {
-                  eventID: props.eventID,
-                  useDefault: false,
+                props.navigation.navigate("CreateEventWeb", {
+                  id: props.eventID,
                 })
               }
             >
