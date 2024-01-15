@@ -22,6 +22,8 @@ import { appVersion } from "../../../../config";
 import { useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { CustomText } from "../../atoms/CustomText";
 import { customLogEvent } from "../../../utils/analytics";
+import { useLocalStorage } from "../../../utils/localStorage";
+import CustomInput from "../../atoms/CustomInput";
 
 type props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
@@ -31,6 +33,7 @@ const Settings = ({ route, navigation }: props) => {
   const [dialogVisible, setdialogVisible] = useState(false);
   const [user, loading, error] = useAuthState(auth);
   const [loading2, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [localStored, setLocalStored] = useLocalStorage("user", "");
 
   if (loading || loading2) {
     return <Loading />;
@@ -138,6 +141,17 @@ const Settings = ({ route, navigation }: props) => {
             title="Send Test Analytics"
             onPress={() => {
               customLogEvent("test_event");
+            }}
+          />
+        )}
+
+        {/* Testing local storage */}
+        {isAdmin && (
+          <CustomInput
+            value={localStored}
+            label="Local storage test value"
+            onChangeText={(text: any) => {
+              setLocalStored(text);
             }}
           />
         )}

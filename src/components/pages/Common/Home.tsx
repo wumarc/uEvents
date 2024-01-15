@@ -18,6 +18,7 @@ import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { customLogEvent } from "../../../utils/analytics";
+import { useLocalStorage } from "../../../utils/localStorage";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -30,10 +31,6 @@ const Home = ({ route, navigation }: props) => {
   const [user, loading4, error] = useAuthState(auth);
   const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
   const [timeShift, setTimeShift] = useState(0); // Only used for admin
-
-  useEffect(() => {
-    customLogEvent("Open_home_page");
-  }, []);
 
   // Loading
   if (loading || loading2 || loading3 || loading4) {
