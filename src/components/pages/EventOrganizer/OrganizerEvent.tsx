@@ -39,6 +39,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
         }}
       >
         <View style={{ width: windowWidth * 0.5 }}>
+          {/* Emoji */}
           <Text style={{ ...fonts.title2, color: colours.purple }}>{event.name}</Text>
           {/* <Text style={fonts.title3}>{event.startTime}</Text> */}
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
