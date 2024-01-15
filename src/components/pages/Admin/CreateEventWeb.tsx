@@ -161,23 +161,11 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
         {/* Emoji */}
         <EmojiImage emoji={localEvent.emoji} style={{ alignItems: "center", margin: "auto", height: 200 }} />
-        <Input
-          selectionColor={colours.purple}
-          autoCapitalize="none"
-          defaultValue={localEvent.emoji}
+        <CustomInput
+          value={localEvent.emoji}
           label="Emoji"
-          style={{ ...styles.formElement }}
-          inputContainerStyle={{
-            borderColor: colours.grey,
-            borderBottomWidth: 1,
-            borderWidth: 1,
-            paddingVertical: 4,
-            paddingHorizontal: 10,
-            borderRadius: 6,
-          }}
-          textAlign="center"
           inputStyle={{ fontSize: 70 }}
-          onChange={(e) => {
+          onChange={(e: any) => {
             setLocalEvent({ ...localEvent, emoji: e.nativeEvent.text });
           }}
           maxLength={8}
@@ -388,6 +376,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         />
 
         {/* Recurrence type */}
+        <CustomText style={{ paddingLeft: 10 }}>Recurrence</CustomText>
         <CustomButtonGroup
           buttons={["None", "Weekly", "Custom Weekly", "Specific Dates"]}
           selectedIndex={recurrenceTypeArray.indexOf(localEvent.recurrenceType)}
@@ -395,6 +384,26 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             setLocalEvent({ ...localEvent, recurrenceType: recurrenceTypeArray[index] ?? "None" });
           }}
         />
+
+        {/* Recurrence message */}
+        {localEvent.recurrenceType == "Weekly" && (
+          <CustomText style={{ padding: 10 }}>
+            Your event will recur every week at the same day and time specified in the start and end date above. The event will recur until the specified end of
+            recurrence date. You can also add exceptions. On the exception dates, the event will not recur.
+          </CustomText>
+        )}
+        {localEvent.recurrenceType == "Custom Weekly" && (
+          <CustomText style={{ padding: 10 }}>
+            Your event will recur every week at the selected days and at the time specified in the start and end date above. The event will recur until the
+            specified end of recurrence date. You can also add exceptions. On the exception dates, the event will not recur.
+          </CustomText>
+        )}
+        {localEvent.recurrenceType == "Specific Dates" && (
+          <CustomText style={{ padding: 10 }}>
+            Your event will recur on the selected dates at the time specified in the start and end date above. The event will recur until the specified end of
+            recurrence date. You can also add exceptions. On the exception dates, the event will not recur.
+          </CustomText>
+        )}
 
         {/* Recurrence Custom days */}
         {localEvent.recurrenceType == "Custom Weekly" && (
@@ -437,7 +446,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {/* Recurrence End */}
         {localEvent.recurrenceType != "None" && (
           <View>
-            <Text style={{ ...styles.formElement, fontSize: 20 }}>Recurrence end</Text>
             <CustomDatePicker
               time={localEvent.recurrenceEnd ?? Timestamp.now()}
               setTime={(time: any) => {
@@ -447,6 +455,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
               selectTimeString="Select end time"
               baseStyle={styles.formElement}
               useOnlyDate={true}
+              label={"Recurrence end"}
             />
           </View>
         )}

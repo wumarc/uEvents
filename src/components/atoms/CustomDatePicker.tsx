@@ -131,7 +131,6 @@ interface CustomDatePickerListProps {
 export const CustomDatePickerList = ({ label, times, setTimes, selectDateString, selectTimeString, baseStyle, useOnlyDate }: CustomDatePickerListProps) => {
   return (
     <View>
-      <Text style={{ ...baseStyle, fontSize: 20 }}>{label}</Text>
       {(times ?? []).map((time, index) => {
         return (
           <View key={index} style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
@@ -147,9 +146,11 @@ export const CustomDatePickerList = ({ label, times, setTimes, selectDateString,
               selectTimeString={selectTimeString}
               baseStyle={baseStyle}
               useOnlyDate={useOnlyDate}
+              label={label}
             />
             <CustomButton
               style={{ ...baseStyle, marginHorizontal: 10 }}
+              size="sm"
               onPress={() => {
                 let newTimes = [...(times ?? [])];
                 newTimes.splice(index, 1);
@@ -162,14 +163,15 @@ export const CustomDatePickerList = ({ label, times, setTimes, selectDateString,
         );
       })}
       <CustomButton
-        style={{ ...baseStyle }}
+        style={{ ...baseStyle, width: "fit-content" }}
+        size="sm"
         onPress={() => {
           let newTimes = [...(times ?? [])];
           newTimes.push(Timestamp.now());
           setTimes(newTimes);
         }}
       >
-        Add
+        Add {label}
       </CustomButton>
     </View>
   );

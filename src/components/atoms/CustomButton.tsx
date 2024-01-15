@@ -1,18 +1,33 @@
 import { Button } from "@rneui/themed";
 import { borderRadius, colours } from "../subatoms/Theme";
 import { ButtonProps } from "react-native-elements";
+import { Children } from "react";
 
-export const CustomButton = (props: ButtonProps) => {
+interface CustomButtonProps {
+  size?: "sm" | "md" | "lg";
+  style?: any;
+  onPress?: any;
+  children?: any;
+  title?: string;
+}
+
+export const CustomButton = (props: CustomButtonProps) => {
   return (
     <Button
-      {...props}
       style={{
         borderRadius: borderRadius.large,
         marginVertical: "1%",
+        paddingLeft: 10,
+        paddingRight: 10,
         ...(props.style as any),
       }}
       buttonStyle={{ borderRadius: borderRadius.small }}
       color={colours.purple}
-    ></Button>
+      size={props.size ?? "md"}
+      onPress={props.onPress}
+      title={props.title}
+    >
+      {props.children}
+    </Button>
   );
 };
