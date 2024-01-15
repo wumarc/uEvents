@@ -59,9 +59,7 @@ const Settings = ({ route, navigation }: props) => {
           <Text style={fonts.title1}>Settings</Text>
         </View>
 
-        {/* Version number */}
-        <CustomText style={{ paddingHorizontal: 27.66 }}>Version {appVersion}</CustomText>
-        {!user && <CustomText style={{ paddingHorizontal: 27.66, paddingTop: 5 }}>Please Log In to access all features of this page</CustomText>}
+        {!user && <CustomText style={spacing.verticalPadding2}>Please log in to access all features of this page</CustomText>}
 
         {/* Settings */}
         <View style={{ marginTop: "5%" }}>
@@ -119,6 +117,9 @@ const Settings = ({ route, navigation }: props) => {
             </Button>
           )}
         </View>
+
+        {/* Version number */}
+        <CustomText style={spacing.verticalPadding2}>Version {appVersion}</CustomText>
 
         {/* Add version button */}
         {isAdmin && (
