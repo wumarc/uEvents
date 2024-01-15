@@ -24,9 +24,7 @@ const YourEvents = ({ route, navigation }: props) => {
   }
 
   // TODO: Verify image is uploaded
-  // if (!profile.name || !profile.description || profile.name == "" || profile.description == "") {
-  if (false) {
-    // TODO: I temp removed the verification of the account since we need to work on the profile
+  if (!profile.name || !profile.description || profile.name == "" || profile.description == "") {
     return (
       <View style={{ justifyContent: "center", alignItems: "center", flex: 1, paddingHorizontal: "5%", backgroundColor: colours.white }}>
         <Text style={{ textAlign: "center", ...fonts.title3, marginBottom: "2%" }}>Your account is currently incomplete.</Text>

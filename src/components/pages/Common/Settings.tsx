@@ -2,7 +2,7 @@ import { ScrollView, View, Text } from "react-native";
 import { useState } from "react";
 import { Button } from "@rneui/themed";
 import { StyleSheet } from "react-native";
-import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "../../../utils/util";
+import { getFirebaseUserID, getFirebaseUserIDOrEmpty, userType } from "../../../utils/util";
 import { User, deleteUser, getAuth, signOut } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { borderRadius, colours, fonts, spacing } from "../../subatoms/Theme";
@@ -39,10 +39,7 @@ const Settings = ({ route, navigation }: props) => {
     return <Loading />;
   }
 
-  let isAdmin = false;
-  if (userData) {
-    isAdmin = (userData as any).type === "admin";
-  }
+  let [isStudent, isOrganizer, isAdmin] = userType(userData);
 
   const logout = () => {
     const auth = getAuth();
@@ -77,7 +74,17 @@ const Settings = ({ route, navigation }: props) => {
             ></SettingsButton>
           )}
 
-          <SettingsButton buttonName={"My Profile"} onPressListener={() => navigation.navigate("AccountSettingsView", {})} disabled={!user} />
+          <SettingsButton
+            buttonName={"My Profile"}
+            onPressListener={() => {
+              if (isStudent || isAdmin) {
+                navigation.navigate("AccountSettingsView", {});
+              } else {
+                navigation.navigate("OrganizerSettings", {});
+              }
+            }}
+            disabled={!user}
+          />
           <SettingsButton buttonName={"Privacy Policy"} onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")} />
           <SettingsButton buttonName={"Contact Us"} onPressListener={() => setdialogVisible(true)} />
           <SettingsButton
