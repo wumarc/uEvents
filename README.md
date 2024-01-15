@@ -44,6 +44,10 @@ https://uevents-a9365.web.app/
 - `npx expo export:web`
 - `firebase deploy --only hosting`
 
+## Deploy the app
+
+TODO
+
 ## CLI package management tools
 
 npx: 8.13.2

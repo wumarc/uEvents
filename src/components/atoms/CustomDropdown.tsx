@@ -21,6 +21,8 @@ export const CustomDropdown = (props: CustomDropdownProps) => {
       labelField={props.labelField}
       valueField={props.valueField}
       placeholder={props.placeholder}
+      // @ts-ignore
+      inputSearchStyle={{ outlineColor: colours.purple, padding: 0, paddingLeft: 0, paddingRight: 0, margin: 12, outlineOffset: 12 }}
       style={{
         ...props.style,
         borderWidth: 1,
