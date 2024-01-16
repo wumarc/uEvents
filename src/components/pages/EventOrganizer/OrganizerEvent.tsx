@@ -42,6 +42,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
         <EmojiImage emoji={event.emoji} style={{ justifyContent: "center", width: windowWidth * 0.25, height: windowHeight * 0.15 }} />
 
         <View style={{ width: windowWidth * 0.5 }}>
+          {/* Emoji */}
           <Text style={{ ...fonts.title2, color: colours.purple }}>{event.name}</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
