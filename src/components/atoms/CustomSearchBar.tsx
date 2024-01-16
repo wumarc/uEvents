@@ -19,6 +19,9 @@ export const CustomSearchBar = (props: CustomSearchBarProps) => {
         height: 38,
         backgroundColor: "#ebebeb",
       }}
+      /* 
+      // @ts-ignore */
+      inputStyle={{ outlineWidth: 0 }}
       containerStyle={{
         borderWidth: 0,
         borderTopWidth: 0,

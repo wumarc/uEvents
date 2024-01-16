@@ -47,6 +47,7 @@ export function userType(user: any): [boolean, boolean, boolean, boolean] {
     return [true, false, false, false];
   }
 
+  // @ts-ignore
   let isBeta = betaUsers.includes(user.email);
 
   if (user.type == undefined) {

@@ -18,6 +18,7 @@ import { CustomText } from "../../atoms/CustomText";
 import { CustomDialog } from "../../atoms/CustomDialog";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { EmojiImage } from "../../organisms/EmojiImage";
+import { User } from "../../../utils/model/User";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllEvents">;
 // To access the type of user, use route.params.userType
@@ -28,7 +29,7 @@ export const AllEvents = ({ route, navigation }: props) => {
   // Use state
   const [loading, events, add, del] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading3, eventsFake, addFake, delFake] = useStateWithFireStoreCollection<EventObject>("events-test");
-  const [loading2, users, add2] = useStateWithFireStoreCollection<Student>("users");
+  const [loading2, users, add2] = useStateWithFireStoreCollection<User>("users");
   const [search, setSearch] = useState("");
 
   // Options
@@ -42,6 +43,7 @@ export const AllEvents = ({ route, navigation }: props) => {
   const [showFake, setShowFake] = useState(true);
   const [showFakeOnly, setShowFakeOnly] = useState(false);
   const [showOnlyRecurring, setShowOnlyRecurring] = useState(false);
+  const [showOnlyAuthentic, setShowOnlyAuthentic] = useState(false);
 
   // Loading
   if (loading || loading2 || loading3) {
@@ -96,6 +98,10 @@ export const AllEvents = ({ route, navigation }: props) => {
       return false;
     }
     if (showOnlyRecurring && (event.recurrenceType === "None" || !event.recurrenceType)) {
+      return false;
+    }
+    let authentic = users?.find((user) => user.id == event.organizer)?.authentic ?? false;
+    if (showOnlyAuthentic && !authentic) {
       return false;
     }
     return true;
@@ -177,6 +183,13 @@ export const AllEvents = ({ route, navigation }: props) => {
             setShowOnlyRecurring(!showOnlyRecurring);
           }}
         />
+        <CheckBox
+          title="Show Only Authentic"
+          checked={showOnlyAuthentic}
+          onPress={() => {
+            setShowOnlyAuthentic(!showOnlyAuthentic);
+          }}
+        />
       </View>
       <FlatList
         style={{ height: "100%" }}
@@ -188,7 +201,15 @@ export const AllEvents = ({ route, navigation }: props) => {
             return stateOrder.indexOf(a.state) - stateOrder.indexOf(b.state);
           }
         })}
-        renderItem={({ item }) => <EventLine event={item} del={item.fake ? delFake : del} navigation={navigation} detailed={detailed} />}
+        renderItem={({ item }) => (
+          <EventLine
+            event={item}
+            del={item.fake ? delFake : del}
+            navigation={navigation}
+            detailed={detailed}
+            authentic={users?.find((user) => user.id == item.organizer)?.authentic ?? false}
+          />
+        )}
       />
     </View>
   );
@@ -196,10 +217,11 @@ export const AllEvents = ({ route, navigation }: props) => {
 
 const EventLine: FC<{
   event: EventObject;
+  authentic: boolean;
   del: (id: string) => void;
   navigation: any;
   detailed?: boolean;
-}> = ({ event, del, navigation, detailed }) => {
+}> = ({ event, authentic, del, navigation, detailed }) => {
   let organizer = event.organizer;
 
   // State
@@ -255,6 +277,7 @@ const EventLine: FC<{
             <Text style={{ color: event.fake ? "blue" : undefined }}>
               {event.name}
               {event.fake && " (Test Event)"}
+              {authentic && " (🌟 Authentic 🌟)"}
             </Text>
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Text>{event.startTime.toDate().toDateString()}</Text>

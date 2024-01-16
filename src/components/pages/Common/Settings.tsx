@@ -60,12 +60,12 @@ const Settings = ({ route, navigation }: props) => {
 
         {!isLogged && <CustomText style={spacing.verticalPadding2}>Please log in to access all features of this page</CustomText>}
 
-        <CustomButton
+        {/* <CustomButton
           title="Log user"
           onPress={() => {
             console.log(userData);
           }}
-        />
+        /> */}
 
         {/* Settings */}
         <View style={{ marginTop: "5%" }}>
