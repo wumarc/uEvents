@@ -107,6 +107,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     temp.id = id;
     temp.state = "Pending";
     temp.organizerType = "Organizer Added"; // TODO: Confirm
+    temp.lastUpdate = Timestamp.now();
 
     if (isOrganizer) {
       temp.organizer = getFirebaseUserIDOrEmpty();
@@ -182,7 +183,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         <EmojiImage emoji={localEvent.emoji} style={{ alignItems: "center", margin: "auto", height: 200 }} />
         <CustomInput
           value={localEvent.emoji}
-          label="Emoji"
+          label={Platform.OS == "web" ? "Emoji (The best way is to copy paste an emoji from an external website)" : "Emoji"}
           inputStyle={{ fontSize: 70 }}
           onChange={(e: any) => {
             setLocalEvent({ ...localEvent, emoji: e.nativeEvent.text });

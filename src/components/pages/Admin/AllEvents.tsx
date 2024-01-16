@@ -259,6 +259,9 @@ const EventLine: FC<{
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Text>{event.startTime.toDate().toDateString()}</Text>
               <Text style={{ color: statusColor }}>{" - " + status}</Text>
+              {event.lastUpdate && (
+                <Text>{" (Last update: " + event.lastUpdate.toDate().toLocaleDateString() + " " + event.lastUpdate.toDate().toLocaleTimeString() + ")"}</Text>
+              )}
             </View>
             {event.recurrenceType !== "None" && (
               <View style={{ display: "flex", flexDirection: "row" }}>
