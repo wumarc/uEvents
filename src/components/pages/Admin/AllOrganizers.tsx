@@ -13,20 +13,28 @@ import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { CustomDialog } from "../../atoms/CustomDialog";
+import CustomInput from "../../atoms/CustomInput";
+import { CustomText } from "../../atoms/CustomText";
+import { EventObject } from "../../../utils/model/EventObject";
+import { eventPath } from "../../../utils/util";
 
 type props = NativeStackScreenProps<RootStackParamList, "AllOrganizers">;
 export const AllOrganizers = ({ route, navigation }: props) => {
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
+  const [loading2, events, addEvent] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [search, setSearch] = useState("");
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [pendingDelete, setPendingDelete] = useState("");
+  const [claimVisible, setClaimVisible] = useState(false);
+  const [claimID, setClaimID] = useState("");
+  const [claimCurrentID, setClaimCurrentID] = useState("");
 
   // Filters
   const [showOnlyAuthentic, setShowOnlyAuthentic] = useState(false);
   const [showCreated, setShowCreated] = useState(true);
   const [showApproved, setShowApproved] = useState(true);
 
-  if (loading) {
+  if (loading || loading2) {
     return <Loading />;
   }
 
@@ -166,6 +174,17 @@ export const AllOrganizers = ({ route, navigation }: props) => {
               >
                 Delete
               </Button>
+              <Button
+                size="sm"
+                style={{ marginLeft: 5 }}
+                titleStyle={{ fontSize: 12 }}
+                onPress={() => {
+                  setClaimCurrentID(item.id ?? "");
+                  setClaimVisible(true);
+                }}
+              >
+                Claim
+              </Button>
             </View>
           </View>
         )}
@@ -199,6 +218,48 @@ export const AllOrganizers = ({ route, navigation }: props) => {
         ]}
       >
         Are you sure you want to delete this organizer
+      </CustomDialog>
+
+      <CustomDialog
+        visible={claimVisible}
+        setVisible={setClaimVisible}
+        includeCancel
+        navigation={navigation}
+        buttons={[
+          {
+            buttonName: "Claim",
+            onPress: () => {
+              let currentOrganizer = claimCurrentID;
+              let newOrganizer = claimID;
+              console.log("Claiming " + currentOrganizer + " to " + newOrganizer);
+
+              // Find current organizer profile
+              let currentOrganizerProfile = organizers.find((organizer) => organizer.id == currentOrganizer);
+              setDoc(doc(fireStore, "users/" + newOrganizer), { ...currentOrganizerProfile, id: newOrganizer });
+
+              // Find current organizer events
+              if (events) {
+                for (let event of events) {
+                  if (event.organizer == currentOrganizer) {
+                    console.log("Claiming event " + event.id);
+                    setDoc(doc(fireStore, "events/" + event.id), { ...event, organizer: newOrganizer });
+                  }
+                }
+              }
+
+              console.log("Will not delete old organizer. This has to be done manually");
+            },
+          },
+        ]}
+      >
+        <CustomText>Claiming an organizer will swap it's profile and events to the new organizer page. This is irreversible.</CustomText>
+
+        <CustomInput
+          label={"Enter the id of the new organizer"}
+          onChangeText={(text: any) => {
+            setClaimID(text);
+          }}
+        />
       </CustomDialog>
     </View>
   );
