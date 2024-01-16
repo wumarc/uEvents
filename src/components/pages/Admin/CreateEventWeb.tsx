@@ -46,6 +46,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
   const [user, loading3, error] = useAuthState(auth);
   const [loading4, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [useOnlyDate, setUseOnlyDate] = useState<boolean>(false);
 
   // Who is it?
   // Here we assume that the user is logged in to access this page
@@ -106,6 +107,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
     temp.id = id;
     temp.state = "Pending";
     temp.organizerType = "Organizer Added"; // TODO: Confirm
+    temp.lastUpdate = Timestamp.now();
 
     if (isOrganizer) {
       temp.organizer = getFirebaseUserIDOrEmpty();
@@ -181,7 +183,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         <EmojiImage emoji={localEvent.emoji} style={{ alignItems: "center", margin: "auto", height: 200 }} />
         <CustomInput
           value={localEvent.emoji}
-          label="Emoji"
+          label={Platform.OS == "web" ? "Emoji (The best way is to copy paste an emoji from an external website)" : "Emoji"}
           inputStyle={{ fontSize: 70 }}
           onChange={(e: any) => {
             setLocalEvent({ ...localEvent, emoji: e.nativeEvent.text });
@@ -329,6 +331,31 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           }}
         />
 
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <CustomCheckBox
+            title="Use end time"
+            checked={localEvent.endTime != undefined && localEvent.endTime.seconds != 0}
+            onPress={() => {
+              if (localEvent.endTime?.seconds == 0 || localEvent.endTime == undefined) {
+                // Switching to using end time
+                setLocalEvent({ ...localEvent, endTime: localEvent.startTime });
+                return;
+              } else {
+                // Switching to not using end time
+                setLocalEvent({ ...localEvent, endTime: new Timestamp(0, 0) });
+                return;
+              }
+            }}
+          />
+          <CustomCheckBox
+            title="Use only date"
+            checked={useOnlyDate}
+            onPress={() => {
+              setUseOnlyDate(!useOnlyDate);
+            }}
+          />
+        </View>
+
         {/* Start time */}
         <CustomDatePicker
           time={localEvent.startTime}
@@ -338,29 +365,15 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           selectDateString="Select start date"
           selectTimeString="Select start time"
           baseStyle={styles.formElement}
+          useOnlyDate={useOnlyDate}
           label="Start"
         />
 
         {/* End time */}
-        <CustomCheckBox
-          title="Use end time"
-          checked={localEvent.endTime != undefined && localEvent.endTime.seconds != 0}
-          onPress={() => {
-            if (localEvent.endTime == new Timestamp(0, 0) || localEvent.endTime == undefined) {
-              // Switching to using end time
-              setLocalEvent({ ...localEvent, endTime: localEvent.startTime });
-              return;
-            } else {
-              // Switching to not using end time
-              setLocalEvent({ ...localEvent, endTime: new Timestamp(0, 0) });
-              return;
-            }
-          }}
-        />
-
         {localEvent.endTime != undefined && localEvent.endTime.seconds != 0 ? (
           <CustomDatePicker
             time={localEvent.endTime}
+            useOnlyDate={useOnlyDate}
             setTime={(time: any) => {
               setLocalEvent({ ...localEvent, endTime: time });
             }}
@@ -554,13 +567,8 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
             // Write event
             try {
-              setDoc(doc(fireStore, dbPath + "/" + id), temp)
-                .then(() => {
-                  navigation.pop();
-                })
-                .catch((error) => {
-                  setTopError("Could not submit event. Error: " + error);
-                });
+              setDoc(doc(fireStore, dbPath + "/" + id), temp);
+              navigation.navigate("Home", {});
             } catch (e) {
               setTopError("Could not submit event. Error: " + e);
             }
@@ -575,15 +583,9 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             onPress={() => {
               let temp = localEvent;
               beforeSubmit(temp);
-              temp.onCampus = undefined;
               try {
-                setDoc(doc(fireStore, dbPath + "/" + id), temp)
-                  .then(() => {
-                    navigation.pop();
-                  })
-                  .catch((error) => {
-                    setTopError("Could not submit event. Error: " + error);
-                  });
+                setDoc(doc(fireStore, dbPath + "/" + id), temp);
+                navigation.navigate("Home", {});
               } catch (e) {
                 setTopError("Could not submit event. Error: " + e);
               }

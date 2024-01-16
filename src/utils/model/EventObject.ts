@@ -53,6 +53,10 @@ export type EventObject = {
   // If Epoch time is 0, it means the event has no end time
   endTime?: Timestamp;
 
+  // Time of creation of the event or last update
+  // Only used internally to get an idea of when the event was created
+  lastUpdate?: Timestamp;
+
   // Not being used right now
   categories: string[];
 
