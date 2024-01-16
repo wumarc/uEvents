@@ -1,5 +1,5 @@
 # Special exclude
-userConfig.tsx
+# userConfig.tsx
 
 node_modules
 package-lock.json
