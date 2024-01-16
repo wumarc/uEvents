@@ -554,13 +554,8 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
             // Write event
             try {
-              setDoc(doc(fireStore, dbPath + "/" + id), temp)
-                .then(() => {
-                  navigation.pop();
-                })
-                .catch((error) => {
-                  setTopError("Could not submit event. Error: " + error);
-                });
+              setDoc(doc(fireStore, dbPath + "/" + id), temp);
+              navigation.navigate("Home", {});
             } catch (e) {
               setTopError("Could not submit event. Error: " + e);
             }
@@ -575,15 +570,9 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
             onPress={() => {
               let temp = localEvent;
               beforeSubmit(temp);
-              temp.onCampus = undefined;
               try {
-                setDoc(doc(fireStore, dbPath + "/" + id), temp)
-                  .then(() => {
-                    navigation.pop();
-                  })
-                  .catch((error) => {
-                    setTopError("Could not submit event. Error: " + error);
-                  });
+                setDoc(doc(fireStore, dbPath + "/" + id), temp);
+                navigation.navigate("Home", {});
               } catch (e) {
                 setTopError("Could not submit event. Error: " + e);
               }

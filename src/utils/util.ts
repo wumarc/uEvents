@@ -96,7 +96,13 @@ export function getNextDate(event: EventObject, today: Date): [Date, Date, boole
   let startDate = event.startTime.toDate();
   let endDate = (event.endTime ?? event.startTime).toDate();
   let hasEnd = event.endTime != undefined;
+  let duration = 0; // ms
+  if (hasEnd) {
+    duration = endDate.getTime() - startDate.getTime();
+  }
   let recurrenceType = event.recurrenceType;
+  let limit = event.recurrenceEnd?.toDate();
+  let exceptions = event.recurrenceExceptions;
 
   if (!recurrenceType) {
     return [startDate, endDate, hasEnd];
@@ -106,9 +112,6 @@ export function getNextDate(event: EventObject, today: Date): [Date, Date, boole
     case "None":
       return [startDate, endDate, hasEnd];
     case "Weekly":
-      let limit = event.recurrenceEnd?.toDate();
-      let exceptions = event.recurrenceExceptions;
-
       while (endDate < today) {
         // Increment the start and end date by 7 days
         let startEpoch = startDate.getTime();
@@ -148,6 +151,71 @@ export function getNextDate(event: EventObject, today: Date): [Date, Date, boole
 
       // Return the right date
       return [startDate, endDate, hasEnd];
+
+    case "Custom Weekly":
+      let flag2 = false;
+
+      while (!flag2) {
+        // Increment the start and end date by 1 day
+        let startEpoch = startDate.getTime();
+        let endEpoch = endDate.getTime();
+        startDate = new Date(startEpoch + 24 * 60 * 60 * 1000);
+        endDate = new Date(endEpoch + 24 * 60 * 60 * 1000);
+
+        // Check if the start date is an exception
+        flag2 = true;
+        if (exceptions) {
+          for (let i = 0; i < exceptions.length; i++) {
+            let exception = (exceptions[i] as Timestamp).toDate();
+            // Set exception time to startDate
+            exception.setHours(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds(), startDate.getMilliseconds());
+            if (exception.getTime() == startDate.getTime()) {
+              flag2 = false;
+            }
+          }
+        }
+
+        // Check if start day is part of the custom days
+        // Sunday - Saturday : 0 - 6
+        let day = startDate.getDay();
+        let customDays = event.recurrenceCustomDays;
+        let customDaysInt: number[] = [];
+        if (customDays) {
+          customDaysInt = customDays.map((day) => daysOfWeekArray.indexOf(day));
+        }
+        if (customDaysInt) {
+          if (!customDaysInt.includes(day)) {
+            flag2 = false;
+          }
+        }
+      }
+      return [startDate, endDate, hasEnd];
+
+    case "Specific Dates":
+      let specificDates = event.recurrenceCustomDates;
+      if (!specificDates) {
+        return [startDate, endDate, hasEnd];
+      }
+      // Sort the dates from earliest to latest
+      specificDates.sort((a, b) => (a as Timestamp).toDate().getTime() - (b as Timestamp).toDate().getTime());
+
+      // Find the next date
+      let foundDate = startDate;
+      for (let i = 0; i < specificDates.length; i++) {
+        let date = (specificDates[i] as Timestamp).toDate();
+        if (date > today) {
+          foundDate = date;
+          break;
+        }
+      }
+
+      // Find end date
+      if (hasEnd) {
+        endDate = new Date(foundDate.getTime() + duration);
+      }
+
+      return [foundDate, endDate, hasEnd];
+
     default:
       console.error("Unsupported recurrence type: " + recurrenceType);
       return [startDate, endDate, hasEnd];
