@@ -46,6 +46,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
   const [user, loading3, error] = useAuthState(auth);
   const [loading4, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [useOnlyDate, setUseOnlyDate] = useState<boolean>(false);
 
   // Who is it?
   // Here we assume that the user is logged in to access this page
@@ -329,6 +330,31 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           }}
         />
 
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <CustomCheckBox
+            title="Use end time"
+            checked={localEvent.endTime != undefined && localEvent.endTime.seconds != 0}
+            onPress={() => {
+              if (localEvent.endTime?.seconds == 0 || localEvent.endTime == undefined) {
+                // Switching to using end time
+                setLocalEvent({ ...localEvent, endTime: localEvent.startTime });
+                return;
+              } else {
+                // Switching to not using end time
+                setLocalEvent({ ...localEvent, endTime: new Timestamp(0, 0) });
+                return;
+              }
+            }}
+          />
+          <CustomCheckBox
+            title="Use only date"
+            checked={useOnlyDate}
+            onPress={() => {
+              setUseOnlyDate(!useOnlyDate);
+            }}
+          />
+        </View>
+
         {/* Start time */}
         <CustomDatePicker
           time={localEvent.startTime}
@@ -338,29 +364,15 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           selectDateString="Select start date"
           selectTimeString="Select start time"
           baseStyle={styles.formElement}
+          useOnlyDate={useOnlyDate}
           label="Start"
         />
 
         {/* End time */}
-        <CustomCheckBox
-          title="Use end time"
-          checked={localEvent.endTime != undefined && localEvent.endTime.seconds != 0}
-          onPress={() => {
-            if (localEvent.endTime == new Timestamp(0, 0) || localEvent.endTime == undefined) {
-              // Switching to using end time
-              setLocalEvent({ ...localEvent, endTime: localEvent.startTime });
-              return;
-            } else {
-              // Switching to not using end time
-              setLocalEvent({ ...localEvent, endTime: new Timestamp(0, 0) });
-              return;
-            }
-          }}
-        />
-
         {localEvent.endTime != undefined && localEvent.endTime.seconds != 0 ? (
           <CustomDatePicker
             time={localEvent.endTime}
+            useOnlyDate={useOnlyDate}
             setTime={(time: any) => {
               setLocalEvent({ ...localEvent, endTime: time });
             }}
