@@ -24,6 +24,7 @@ import { CustomText } from "../../atoms/CustomText";
 import { customLogEvent } from "../../../utils/analytics";
 import { useLocalStorage } from "../../../utils/localStorage";
 import CustomInput from "../../atoms/CustomInput";
+import { useUser } from "../../../utils/model/User";
 
 type props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
@@ -31,15 +32,12 @@ const Settings = ({ route, navigation }: props) => {
   // States
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [dialogVisible, setdialogVisible] = useState(false);
-  const [user, loading, error] = useAuthState(auth);
-  const [loading2, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
-  const [localStored, setLocalStored] = useLocalStorage("user", "");
+  const [loading, userData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
+  const [localStored, setLocalStored] = useLocalStorage("test", "");
 
-  if (loading || loading2) {
+  if (loading) {
     return <Loading />;
   }
-
-  let [isStudent, isOrganizer, isAdmin] = userType(userData);
 
   const logout = () => {
     const auth = getAuth();
@@ -60,12 +58,19 @@ const Settings = ({ route, navigation }: props) => {
           <Text style={fonts.title1}>Settings</Text>
         </View>
 
-        {!user && <CustomText style={spacing.verticalPadding2}>Please log in to access all features of this page</CustomText>}
+        {!isLogged && <CustomText style={spacing.verticalPadding2}>Please log in to access all features of this page</CustomText>}
+
+        <CustomButton
+          title="Log user"
+          onPress={() => {
+            console.log(userData);
+          }}
+        />
 
         {/* Settings */}
         <View style={{ marginTop: "5%" }}>
           {/* Login button */}
-          {!user && (
+          {!isLogged && (
             <SettingsButton
               onPressListener={() => {
                 navigation.navigate("Welcome", {});
@@ -83,28 +88,28 @@ const Settings = ({ route, navigation }: props) => {
                 navigation.navigate("OrganizerSettings", {});
               }
             }}
-            disabled={!user}
+            disabled={!isLogged}
           />
           <SettingsButton buttonName={"Privacy Policy"} onPressListener={() => Linking.openURL("https://uevents.webnode.page/privacy-policy/")} />
           <SettingsButton buttonName={"Contact Us"} onPressListener={() => setdialogVisible(true)} />
           <SettingsButton
-            disabled={!user}
+            disabled={!isLogged}
             buttonName={"Hidden Events"}
             onPressListener={() => {
               navigation.navigate("HiddenEventsView", {});
             }}
           />
           <SettingsButton
-            disabled={!user}
+            disabled={!isLogged}
             buttonName={"Blocked Organizers"}
             onPressListener={() => {
               navigation.navigate("BlockedOrganizersView", {});
             }}
           />
-          <SettingsButton buttonName={"Delete Account"} onPressListener={() => setConfirmDelete(true)} disabled={!user} />
+          <SettingsButton buttonName={"Delete Account"} onPressListener={() => setConfirmDelete(true)} disabled={!isLogged} />
 
           {/* Log Out Button */}
-          {user && (
+          {isLogged && (
             <Button buttonStyle={{ backgroundColor: colours.primaryGrey }} containerStyle={{ borderRadius: borderRadius.large }} onPress={() => logout()}>
               <View
                 style={{
