@@ -1,10 +1,11 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { CustomButton } from "./CustomButton";
 import { TimePickerModal, DatePickerModal } from "react-native-paper-dates";
 import { EventObject } from "../../utils/model/EventObject";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import CustomInput from "./CustomInput";
+import { CustomText } from "./CustomText";
 
 interface CustomDatePickerProps {
   time: Timestamp;
@@ -42,29 +43,31 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
   let shouldUseOnlyDate = useOnlyDate ? useOnlyDate : false;
 
   return (
-    <View>
+    <View style={{ marginTop: 10, marginBottom: 10 }}>
       <View style={{ display: "flex", flexDirection: "row" }}>
         <TouchableOpacity
-          style={{ width: shouldUseOnlyDate ? "100%" : "50%" }}
+          style={{ width: shouldUseOnlyDate ? "100%" : "50%", paddingLeft: 10, paddingRight: 10 }}
           onPress={() => {
             setdateVisible(true);
           }}
         >
-          <CustomInput
-            label={label + " date"}
-            containerStyle={{ width: "100%" }}
-            value={time.toDate().toLocaleString("default", { month: "long" }) + " " + time.toDate().getDate() + " " + time.toDate().getFullYear()}
-          />
+          <CustomText>{label + " date"}</CustomText>
+          <Text style={{ width: "100%", padding: 8, borderWidth: 1, borderColor: "rgb(119, 119, 119)", borderRadius: 6, fontSize: 18, minHeight: 40 }}>
+            {time.toDate().toLocaleString("default", { month: "long" }) + " " + time.toDate().getDate() + " " + time.toDate().getFullYear()}
+          </Text>
         </TouchableOpacity>
 
         {!shouldUseOnlyDate && (
           <TouchableOpacity
-            style={{ width: "50%" }}
+            style={{ width: "50%", paddingLeft: 10, paddingRight: 10 }}
             onPress={() => {
               settimeVisible(true);
             }}
           >
-            <CustomInput label={label + " time"} containerStyle={{ width: "100%" }} value={formattedHours + "h " + formattedMinutes + ""} />
+            <CustomText>{label + " time"}</CustomText>
+            <Text style={{ width: "100%", padding: 8, borderWidth: 1, borderColor: "rgb(119, 119, 119)", borderRadius: 6, fontSize: 18, minHeight: 40 }}>
+              {formattedHours + "h " + formattedMinutes + ""}
+            </Text>
           </TouchableOpacity>
         )}
       </View>

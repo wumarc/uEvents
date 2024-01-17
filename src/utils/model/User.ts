@@ -2,7 +2,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 import { useStateWithFireStoreDocumentLogged } from "../useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty, uid, userType } from "../util";
-import { useLocalStorage } from "../localStorage";
 import { useEffect } from "react";
 
 export type User = {
@@ -55,29 +54,35 @@ export type UserLocalStorage = {
   UserLocalStorageOrganizerOnly;
 
 const defaultUserLocalStorage: UserLocalStorage = {
-  id: uid(),
+  id: "",
 };
 
 export type UserLocalStorageStudentOnly = {};
 
 export type UserLocalStorageOrganizerOnly = {};
 
-// [loading, userData, isLogged, isStudent, isOrganizer, isAdmin, isBeta]
+/// [loading, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta]
+/// TODO Implement this using local storage
 export const useUser = (): [boolean, User | undefined, ((arg0: User) => void) | undefined, boolean, boolean, boolean, boolean, boolean] => {
   const [user, loading3, error] = useAuthState(auth);
   const [loading2, userData, setUserData] = useStateWithFireStoreDocumentLogged<User>(user != null, "users", getFirebaseUserIDOrEmpty());
-  const [localUserData, setUserDataLocal] = useLocalStorage<UserLocalStorage>("user", defaultUserLocalStorage);
+  //   const [localUserData, setUserDataLocal] = useLocalStorage<UserLocalStorage>("user", defaultUserLocalStorage);
   let [isStudent, isOrganizer, isAdmin, isBeta] = userType(userData);
   let loading = loading2 || loading3;
-  let isLogged = user != null;
+  let isLogged = user != null && userData != undefined;
 
-  useEffect(() => {
-    // Id
+  //   useEffect(() => {
+  //     console.log("Setting ID. Local id: " + localUserData?.id + " User id: " + userData?.id);
 
-    if (localUserData.id == "") {
-      setUserDataLocal({ ...localUserData, id: uid() });
-    }
-  }, [loading, isLogged]);
+  //     if (isLogged && userData && localUserData?.id != userData?.id) {
+  //       console.log("Updating local ID to user ID");
+  //       setUserDataLocal({ ...localUserData, id: userData?.id as string });
+  //       // @ts-ignore
+  //     } else if (localUserData?.id == "" || !localUserData?.id || !localUserData || localUserData == "") {
+  //       console.log("UserID is null. Updating.");
+  //       setUserDataLocal({ ...localUserData, id: uid() });
+  //     }
+  //   }, [loading, isLogged]);
 
   return [loading, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta];
 };

@@ -1,34 +1,31 @@
 import { View, StyleSheet, ScrollView, Text, FlatList, Touchable, TouchableOpacity, Button } from "react-native";
 import { colours, fonts, spacing } from "../../subatoms/Theme";
 import Organizer from "../../organisms/Organizer";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreCollection } from "../../../utils/useStateWithFirebase";
 import { Organizer as OrganizerType } from "../../../utils/model/Organizer";
 import { Loading } from "./Loading";
-import { getFirebaseUserIDOrEmpty } from "../../../utils/util";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebaseConfig";
+import { useUser } from "../../../utils/model/User";
 
 const BlockedOrganizers = ({ navigation }: any) => {
   // States
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
-  const [user, loading3, error] = useAuthState(auth);
-  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   // Loading
-  if (loading || loading2 || loading3) {
+  if (loading || loading3) {
     return <Loading />;
   }
 
   // Assuming user is logged in
   // This page should only be accessible if the user is logged in
-  if (!student) {
+  if (!isLogged || !userData || !setUserData) {
     navigation.navigate("Home", {});
     return <Loading />;
   }
 
   // Filtered organizers
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
-  let blockedOrganizers = student.blocked ?? [];
+  let blockedOrganizers = userData.blocked ?? [];
 
   let filteredOrganizers = organizers.filter((organizer) => {
     for (let i = 0; i < blockedOrganizers.length; i++) {
@@ -58,9 +55,9 @@ const BlockedOrganizers = ({ navigation }: any) => {
                 title={"Unblock"}
                 color={colours.purple}
                 onPress={() => {
-                  let blockedOrganizers = student.blocked ?? [];
+                  let blockedOrganizers = userData.blocked ?? [];
                   blockedOrganizers = blockedOrganizers.filter((organizerID: string) => organizerID != item.id);
-                  setStudent({ ...student, blocked: blockedOrganizers });
+                  setUserData({ ...userData, blocked: blockedOrganizers });
                 }}
               />
             </View>

@@ -235,7 +235,15 @@ export const AllOrganizers = ({ route, navigation }: props) => {
 
               // Find current organizer profile
               let currentOrganizerProfile = organizers.find((organizer) => organizer.id == currentOrganizer);
-              setDoc(doc(fireStore, "users/" + newOrganizer), { ...currentOrganizerProfile, id: newOrganizer });
+              let newOrganizerProfile = organizers.find((organizer) => organizer.id == newOrganizer);
+              setDoc(doc(fireStore, "users/" + newOrganizer), {
+                ...currentOrganizerProfile,
+                id: newOrganizer,
+                email: newOrganizerProfile?.email,
+                type: "organizer",
+                authentic: newOrganizerProfile?.authentic,
+                approved: newOrganizerProfile?.approved,
+              });
 
               // Find current organizer events
               if (events) {
@@ -248,6 +256,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
               }
 
               console.log("Will not delete old organizer. This has to be done manually");
+              setClaimVisible(false);
             },
           },
         ]}

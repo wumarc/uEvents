@@ -16,13 +16,10 @@ import { CustomButton } from "../../atoms/CustomButton";
 import { BottomSheet } from "@rneui/base";
 import { Dialog } from "react-native-elements";
 import * as Clipboard from "expo-clipboard";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { RootStackParamList } from "../../../../main";
 import { appVersion } from "../../../../config";
-import { useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { CustomText } from "../../atoms/CustomText";
 import { customLogEvent } from "../../../utils/analytics";
-import { useLocalStorage } from "../../../utils/localStorage";
 import CustomInput from "../../atoms/CustomInput";
 import { useUser } from "../../../utils/model/User";
 
@@ -32,8 +29,7 @@ const Settings = ({ route, navigation }: props) => {
   // States
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [dialogVisible, setdialogVisible] = useState(false);
-  const [loading, userData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
-  const [localStored, setLocalStored] = useLocalStorage("test", "");
+  const [loading, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   if (loading) {
     return <Loading />;
@@ -59,13 +55,6 @@ const Settings = ({ route, navigation }: props) => {
         </View>
 
         {!isLogged && <CustomText style={spacing.verticalPadding2}>Please log in to access all features of this page</CustomText>}
-
-        {/* <CustomButton
-          title="Log user"
-          onPress={() => {
-            console.log(userData);
-          }}
-        /> */}
 
         {/* Settings */}
         <View style={{ marginTop: "5%" }}>
@@ -153,17 +142,6 @@ const Settings = ({ route, navigation }: props) => {
             title="Send Test Analytics"
             onPress={() => {
               customLogEvent("test_event");
-            }}
-          />
-        )}
-
-        {/* Testing local storage */}
-        {isAdmin && (
-          <CustomInput
-            value={localStored}
-            label="Local storage test value"
-            onChangeText={(text: any) => {
-              setLocalStored(text);
             }}
           />
         )}

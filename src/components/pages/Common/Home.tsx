@@ -17,8 +17,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
-import { customLogEvent } from "../../../utils/analytics";
-import { useLocalStorage } from "../../../utils/localStorage";
+import { useUser } from "../../../utils/model/User";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -28,16 +27,13 @@ const Home = ({ route, navigation }: props) => {
   const [listView, setListView] = useState(true);
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [user, loading4, error] = useAuthState(auth);
-  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
   const [timeShift, setTimeShift] = useState(0); // Only used for admin
 
   // Loading
-  if (loading || loading2 || loading3 || loading4) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
-
-  let [isStudent, isOrganizer, isAdmin] = userType(student);
 
   // Time shift
   let realTimeShift = Math.round(timeShift * 100);
@@ -86,13 +82,13 @@ const Home = ({ route, navigation }: props) => {
       return organizer?.approved ?? false;
     });
 
-    if (user) {
+    if (isLogged) {
       // Remove blocked or hidden events
       filteredEvents = filteredEvents.filter((event) => {
-        if ((student?.hidden ?? []).includes(event.id)) {
+        if ((userData?.hidden ?? []).includes(event.id)) {
           return false;
         }
-        if ((student?.blocked ?? []).includes(event.organizer)) {
+        if ((userData?.blocked ?? []).includes(event.organizer)) {
           return false;
         }
         return true;

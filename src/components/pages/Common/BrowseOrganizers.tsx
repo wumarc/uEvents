@@ -11,24 +11,24 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { customLogEvent } from "../../../utils/analytics";
+import { useUser } from "../../../utils/model/User";
 
 const BrowseOrganizers = ({ navigation }: any) => {
   // States
   const [loading, users, add] = useStateWithFireStoreCollection<OrganizerType>("users");
   const [search, setSearch] = useState("");
-  const [user, loading3, error] = useAuthState(auth);
-  const [loading2, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   // Loading
-  if (loading || loading2 || loading3) {
+  if (loading || loading3) {
     return <Loading />;
   }
 
   let filteredOrganizers = users?.filter((user) => user.type === "organizer" && user.approved) ?? [];
 
-  if (user && student) {
+  if (isLogged && userData) {
     filteredOrganizers = filteredOrganizers.filter((organizer) => {
-      if ((student.blocked ?? []).includes(organizer.id)) {
+      if ((userData.blocked ?? []).includes(organizer.id)) {
         return false;
       }
       return true;

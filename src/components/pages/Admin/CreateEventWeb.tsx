@@ -20,6 +20,7 @@ import { CustomButtonGroup } from "../../atoms/CustomButtonGroup";
 import { CustomDropdown } from "../../atoms/CustomDropdown";
 import { CustomCheckBox } from "../../atoms/CustomCheckBox";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useUser } from "../../../utils/model/User";
 
 // NOTE!!!
 // Beware that firebase does not accept undefined or null values
@@ -44,13 +45,8 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [localEvent, setLocalEvent] = useState<EventObject>(defaultEvent);
   const [loading2, users, addUsers] = useStateWithFireStoreCollection<Organizer>("users");
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
-  const [user, loading3, error] = useAuthState(auth);
-  const [loading4, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
   const [useOnlyDate, setUseOnlyDate] = useState<boolean>(false);
-
-  // Who is it?
-  // Here we assume that the user is logged in to access this page
-  const [isStudent, isOrganizer, isAdmin] = userType(student);
 
   // Error messages
   const [minPriceError, setMinPriceError] = useState("");
@@ -72,7 +68,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   }, [loading]);
 
   // Loading
-  if (loading || loading2 || loading3 || loading4) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
@@ -123,7 +119,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
 
   return (
     <ScrollView>
-      <View style={{ margin: 50, maxWidth: 1000 }}>
+      <View style={{ margin: Platform.OS === "web" ? 50 : 5, maxWidth: 1000 }}>
         {isFake && <CustomText style={{ textAlign: "center", color: "red" }}>Warning !!! You are editing / creating a fake event</CustomText>}
         {isAdmin && (
           <CustomButton

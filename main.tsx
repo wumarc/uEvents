@@ -36,6 +36,7 @@ import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
 import { UnderConstruction } from "./src/components/pages/Common/UnderConstruction";
+import { useUser } from "./src/utils/model/User";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -81,15 +82,12 @@ const MainView = ({ route, navigation }: props) => {
   useTheme().colors.secondaryContainer = "transparent"; // This removes the background color of the bottom bar
 
   // States
-  const [user, loading, error] = useAuthState(auth);
-  const [loading2, userProfile, setUserProfile] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   // Loading
-  if (loading || loading2) {
+  if (loading) {
     return <Loading />;
   }
-
-  const [isStudent, isOrganizer, isAdmin, isBeta] = userType(userProfile);
 
   return (
     <Tab.Navigator barStyle={{ backgroundColor: "#f7f7f7" }} activeColor={colours.purple} inactiveColor={colours.grey} initialRouteName="Home">
@@ -211,31 +209,11 @@ const MainView = ({ route, navigation }: props) => {
 // Other screens
 const Main: FC = (props) => {
   // States
-  const [user, loading, error] = useAuthState(auth);
-  const [loading2, userProfile, setUserProfile] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   // Loading
-  if (loading || loading2) {
+  if (loading) {
     return <Loading />;
-  }
-
-  // Find out user type
-  let isStudent = false;
-  let isOrganizer = false;
-  let isAdmin = false;
-
-  if (!user) {
-    // Not logged in
-    isStudent = true;
-  } else {
-    // Logged in
-    if (userProfile?.type == "student") {
-      isStudent = true;
-    } else if (userProfile?.type == "organizer") {
-      isOrganizer = true;
-    } else if (userProfile?.type == "admin") {
-      isAdmin = true;
-    }
   }
 
   return (

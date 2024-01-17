@@ -8,18 +8,18 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 import { CustomDialog } from "../atoms/CustomDialog";
 import { LoginDialog } from "./LoginDialog";
+import { useUser } from "../../utils/model/User";
 
 // Header for the organizer profile page
 const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) => {
   // States
-  const [user, loading2, error] = useAuthState(auth);
-  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
   const [visible, setVisible] = useState(false);
   const [blockVisible, setBlockVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
 
   // Loading
-  if (loading || loading2) {
+  if (loading || !setUserData) {
     return <MaterialCommunityIcons name="dots-vertical" color={colours.black} size={30} />;
   }
 
@@ -30,7 +30,7 @@ const ProfileHeaderRight: FC<{ organizer: string; navigation: any }> = (props) =
         color={colours.black}
         size={30}
         onPress={() => {
-          if (user) {
+          if (isLogged) {
             setVisible(true);
           } else {
             setLoginVisible(true);

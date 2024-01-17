@@ -12,6 +12,7 @@ import { LoginDialog } from "./LoginDialog";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 import { customLogEvent } from "../../utils/analytics";
+import { useUser } from "../../utils/model/User";
 
 const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
   // States
@@ -22,11 +23,10 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
   const [blockVisible, setBlockVisible] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
   const [loginReason, setLoginReason] = useState("");
-  const [user, loading3, error] = useAuthState(auth);
-  const [loading, userData, setUserData] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   // Loading
-  if (loading || loading2 || loading3) {
+  if (loading2 || loading3) {
     return <MaterialCommunityIcons name="heart" color={colours.black} size={30} />;
   }
 
@@ -39,23 +39,19 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         color={saved ? colours.purple : colours.black}
         size={30}
         onPress={() => {
-          if (!user) {
+          if (!isLogged) {
             customLogEvent("Tried_save_signed_out", { eventId: props.eventID });
             setLoginReason("You need to be logged in to save events.");
             setLoginVisible(true);
             return;
           }
-          if (setUserData) {
+          if (setUserData && userData) {
             if (saved) {
               customLogEvent("Unsaving", { eventId: props.eventID });
-              setUserData({
-                saved: (userData?.saved ?? []).filter((id: string) => id !== props.eventID),
-              });
+              setUserData({ ...userData, saved: (userData?.saved ?? []).filter((id: string) => id !== props.eventID) });
             } else {
               customLogEvent("Saving", { eventId: props.eventID });
-              setUserData({
-                saved: [...(userData?.saved ?? []), props.eventID],
-              });
+              setUserData({ ...userData, saved: [...(userData?.saved ?? []), props.eventID] });
             }
           }
         }}
@@ -68,7 +64,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
           color={colours.black}
           size={30}
           onPress={() => {
-            if (!user) {
+            if (!isLogged) {
               setLoginReason("You need to be logged in to report events.");
               setLoginVisible(true);
               return;
@@ -127,7 +123,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         <CustomButton
           title="Report"
           onPress={() => {
-            if (setUserData) {
+            if (setUserData && userData) {
               setUserData({
                 ...userData,
                 reported: [...(userData?.reported ?? []), props.eventID],
@@ -164,7 +160,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         <CustomButton
           title="Hide"
           onPress={() => {
-            if (setUserData) {
+            if (setUserData && userData) {
               setUserData({
                 ...userData,
                 hidden: [...(userData?.hidden ?? []), props.eventID],
@@ -199,7 +195,7 @@ const HeaderRight: FC<{ eventID: string; navigation: any }> = (props) => {
         <CustomButton
           title="Block"
           onPress={() => {
-            if (setUserData) {
+            if (setUserData && userData) {
               setUserData({
                 ...userData,
                 blocked: [...(userData?.blocked ?? []), event?.organizer],

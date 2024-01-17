@@ -11,6 +11,7 @@ import { eventPath, getFirebaseUserIDOrEmpty } from "../../../utils/util";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
+import { useUser } from "../../../utils/model/User";
 
 type props = NativeStackScreenProps<RootStackParamList, "HiddenEventsView">;
 // To access the type of user, use route.params.userType
@@ -19,17 +20,16 @@ export const HiddenEvents = ({ route, navigation }: props) => {
   // States
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
-  const [user, loading4, error] = useAuthState(auth);
-  const [loading3, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
 
   // Loading
-  if (loading || loading2 || loading3 || loading4) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
   // Assuming user is logged in
   // This page should only be accessible if the user is logged in
-  if (!student || !setStudent) {
+  if (!userData || !setUserData || !isLogged) {
     navigation.navigate("Home", {});
     return <Loading />;
   }
@@ -62,7 +62,7 @@ export const HiddenEvents = ({ route, navigation }: props) => {
   });
 
   // Only hidden events
-  let hiddenEvents = student?.hidden ?? [];
+  let hiddenEvents = userData?.hidden ?? [];
   console.log(hiddenEvents);
   filteredEvents = filteredEvents.filter((event) => hiddenEvents.includes(event.id));
 
@@ -88,9 +88,9 @@ export const HiddenEvents = ({ route, navigation }: props) => {
                 title="Unhide"
                 color={colours.purple}
                 onPress={() => {
-                  let newHiddenEvents = student?.hidden ?? [];
+                  let newHiddenEvents = userData?.hidden ?? [];
                   newHiddenEvents = newHiddenEvents.filter((eventID: string) => eventID !== item.id);
-                  setStudent({ ...student, hidden: newHiddenEvents });
+                  setUserData({ ...userData, hidden: newHiddenEvents });
                 }}
               />
             </View>

@@ -13,21 +13,21 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { EmojiImage } from "../../organisms/EmojiImage";
+import { useUser } from "../../../utils/model/User";
 
 type props = NativeStackScreenProps<RootStackParamList, "Saved">;
 
 export const SavedEvents = ({ navigation }: props) => {
   // States
-  const [user, loading3, error] = useAuthState(auth);
-  const [loading, student, setStudent] = useStateWithFireStoreDocumentLogged(user != null, "users", getFirebaseUserIDOrEmpty());
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
   const [loading2, events, add] = useStateWithFireStoreCollection<EventObject>(eventPath());
 
   // Loading
-  if (loading || loading2 || loading3) {
+  if (loading2 || loading3) {
     return <Loading />;
   }
 
-  if (!user || !student) {
+  if (!isLogged || !userData || !setUserData) {
     // User is not logged in
 
     return (
@@ -48,8 +48,8 @@ export const SavedEvents = ({ navigation }: props) => {
   }
 
   let savedEvents = [];
-  for (let i = 0; i < (student.saved ?? []).length; i++) {
-    let savedId = student.saved[i];
+  for (let i = 0; i < (userData.saved ?? []).length; i++) {
+    let savedId = userData.saved[i];
     let found = false;
     for (let j = 0; j < events.length; j++) {
       if (events[j]?.id == savedId) {
@@ -61,9 +61,7 @@ export const SavedEvents = ({ navigation }: props) => {
 
     if (!found) {
       // remove from saved
-      setStudent({
-        saved: (student.saved ?? []).filter((id: string) => id != savedId),
-      });
+      setUserData({ ...userData, saved: (userData.saved ?? []).filter((id: string) => id != savedId) });
     }
   }
 
