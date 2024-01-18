@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
+import { View, Text, FlatList, StyleSheet, ScrollView, Platform } from "react-native";
 import { eventPath, getFirebaseUserIDOrEmpty, isLogged } from "../../../utils/util";
 import { Event } from "../../organisms/Event";
 import { Loading } from "./Loading";
@@ -31,6 +31,7 @@ export const SavedEvents = ({ navigation }: props) => {
     // User is not logged in
 
     return (
+      // @ts-ignore
       <View style={{ width: windowWidth * 0.5, height: "fit-content", marginRight: "auto", marginLeft: "auto", marginTop: "auto", marginBottom: "auto" }}>
         <Text style={{ ...fonts.regular, textAlign: "center", paddingBottom: 20, fontSize: 16 }}>{"You need to be logged in to view saved events."}</Text>
         <CustomButton
@@ -86,7 +87,7 @@ export const SavedEvents = ({ navigation }: props) => {
           <Text style={fonts.title1}>Saved Events</Text>
         </View>
 
-        <View style={{ alignItems: "center", ...spacing.verticalMargin1 }}>
+        <View style={{ alignItems: Platform.OS == "web" ? "flex-start" : "center", ...spacing.verticalMargin1 }}>
           {(savedEvents ?? []).length != 0 && (
             <FlatList
               data={savedEvents as EventObject[]}
