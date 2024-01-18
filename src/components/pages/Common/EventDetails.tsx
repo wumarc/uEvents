@@ -36,6 +36,22 @@ const EventDetails = ({ route, navigation }: props) => {
 
   let [startTime, endTime] = getNextDate(event, new Date());
 
+  let dateString = startTime.toDateString();
+  if (endTime && endTime.getTime() - startTime.getTime() > 24 * 60 * 60 * 1000) {
+    dateString += " - " + endTime.toDateString();
+  }
+
+  let timeString = "";
+  if (event.allDay) {
+    timeString = "All Day";
+  } else {
+    if (endTime) {
+      timeString = getTimeInAMPM(startTime) + " - " + getTimeInAMPM(endTime);
+    } else {
+      timeString = getTimeInAMPM(startTime);
+    }
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: colours.white }}>
       <ScrollView style={{ paddingHorizontal: spacing.horizontalMargin1, paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
@@ -53,12 +69,11 @@ const EventDetails = ({ route, navigation }: props) => {
             <Text style={fonts.title2}>📅 </Text>
             {/* {relativeDate(event.startTime)} */}
             {/* Return the startTime in the format of day of the week month day */}
-            {startTime.toDateString()}
+            {dateString}
           </Text>
           <Text style={fonts.regular}>
             <Text style={fonts.title2}>🕧 </Text>
-            {getTimeInAMPM(startTime) + " - "}
-            {event.endTime ? getTimeInAMPM(endTime) : "End"}
+            {timeString}
           </Text>
           {event.recurrenceType == "Weekly" && (
             <Text style={fonts.regular}>

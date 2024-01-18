@@ -96,6 +96,9 @@ export function toPrecision(value: number, precision: number) {
 export function getNextDate(event: EventObject, today: Date): [Date, Date, boolean] {
   let startDate = event.startTime.toDate();
   let endDate = (event.endTime ?? event.startTime).toDate();
+  if (event.endTime?.seconds == 0) {
+    endDate = startDate;
+  }
   let hasEnd = event.endTime != undefined;
   let duration = 0; // ms
   if (hasEnd) {

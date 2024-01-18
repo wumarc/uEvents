@@ -46,7 +46,6 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   const [loading2, users, addUsers] = useStateWithFireStoreCollection<Organizer>("users");
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
   const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
-  const [useOnlyDate, setUseOnlyDate] = useState<boolean>(false);
 
   // Error messages
   const [minPriceError, setMinPriceError] = useState("");
@@ -347,9 +346,9 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           />
           <CustomCheckBox
             title="Use only date"
-            checked={useOnlyDate}
+            checked={localEvent.allDay}
             onPress={() => {
-              setUseOnlyDate(!useOnlyDate);
+              setLocalEvent({ ...localEvent, allDay: !localEvent.allDay });
             }}
           />
         </View>
@@ -363,7 +362,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
           selectDateString="Select start date"
           selectTimeString="Select start time"
           baseStyle={styles.formElement}
-          useOnlyDate={useOnlyDate}
+          useOnlyDate={localEvent.allDay}
           label="Start"
         />
 
@@ -371,7 +370,7 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
         {localEvent.endTime != undefined && localEvent.endTime.seconds != 0 ? (
           <CustomDatePicker
             time={localEvent.endTime}
-            useOnlyDate={useOnlyDate}
+            useOnlyDate={localEvent.allDay}
             setTime={(time: any) => {
               setLocalEvent({ ...localEvent, endTime: time });
             }}

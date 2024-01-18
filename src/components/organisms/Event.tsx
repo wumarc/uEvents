@@ -108,7 +108,7 @@ export const Event: React.FC<EventProps> = (props) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
             <Text style={{ ...fonts.small, fontWeight: "500" }}>
-              {formattedDate(Timestamp.fromDate(startTime), hasEnd ? Timestamp.fromDate(endTime) : undefined)}
+              {formattedDate(Timestamp.fromDate(startTime), event.allDay, hasEnd ? Timestamp.fromDate(endTime) : undefined)}
             </Text>
           </View>
 
