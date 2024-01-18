@@ -8,7 +8,7 @@ import { getFirebaseUserID, getFirebaseUserIDOrEmpty } from "./util";
 const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
 
 let analyticsModule: any;
-if (!isExpoGo) {
+if (!isExpoGo && Platform.OS != "web") {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   analyticsModule = require("@react-native-firebase/analytics").default;
 }
