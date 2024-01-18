@@ -101,7 +101,9 @@ export const CreateEventWeb = ({ route, navigation }: props) => {
   // Fields before submitting
   function beforeSubmit(temp: EventObject) {
     temp.id = id;
-    temp.state = "Pending";
+    if (!editing) {
+      temp.state = "Pending";
+    }
     temp.organizerType = "Organizer Added"; // TODO: Confirm
     temp.lastUpdate = Timestamp.now();
 
