@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text, Platform } from "react-native";
 import { useEffect, useState } from "react";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { EventObject } from "../../../utils/model/EventObject";
@@ -18,6 +18,7 @@ import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { useUser } from "../../../utils/model/User";
+import { EmojiImage } from "../../organisms/EmojiImage";
 import { CustomCheckBox } from "../../atoms/CustomCheckBox";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -167,21 +168,28 @@ const Home = ({ route, navigation }: props) => {
 
         {/* Today's event list */}
         {todayEvents.length != 0 && (
-          <View style={{ marginTop: windowHeight * 0.01 }}>
-            <Text style={fonts.title2}>🔥 Events happening today 🔥</Text>
+          <>
+            <View style={{ flexDirection: "row", justifyContent: Platform.OS != "web" ? "center" : "flex-start", alignItems: "center" }}>
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
+              <Text style={fonts.title2}> Events Happening Today </Text>
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
+            </View>
 
-            <FlatList
-              style={{}}
-              showsVerticalScrollIndicator={false}
-              data={todayEvents}
-              renderItem={({ item, index }) => (
-                <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
-                  <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
-                </View>
-              )}
-            />
-            <Divider width={1} style={{ marginVertical: 2 }} />
-          </View>
+            <View style={{ marginTop: windowHeight * 0.01 }}>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={todayEvents}
+                renderItem={({ item, index }) => (
+                  <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
+                    <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                  </View>
+                )}
+              />
+              <Divider width={1} style={{ marginVertical: 2 }} />
+            </View>
+          </>
         )}
 
         {/* This week's event list */}
