@@ -218,7 +218,7 @@ export const getTimeInAMPM = (date: any) => {
   return hours + ":" + minutes + "" + ampm;
 };
 
-export const formattedDate = (firebaseTimestamp: Timestamp, allDay: boolean, firebaseTimestampEnd?: Timestamp): string => {
+export const formattedDate = (firebaseTimestamp: Timestamp, firebaseTimestampEnd: Timestamp | undefined, allDay: boolean, today: Date): string => {
   /* ---------------------------- Initialize dates ---------------------------- */
 
   if (firebaseTimestampEnd?.seconds === 0) {
@@ -227,8 +227,7 @@ export const formattedDate = (firebaseTimestamp: Timestamp, allDay: boolean, fir
 
   let eventDate = firebaseTimestamp.toDate();
   let eventDateEnd = firebaseTimestampEnd?.toDate();
-  let today = new Date();
-  let todayFlat = new Date();
+  let todayFlat = today;
   todayFlat.setHours(0, 0, 0, 0);
   let eventDateFlat = firebaseTimestamp.toDate();
   eventDateFlat.setHours(0, 0, 0, 0);

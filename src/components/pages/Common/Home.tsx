@@ -18,6 +18,7 @@ import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { useUser } from "../../../utils/model/User";
+import { CustomCheckBox } from "../../atoms/CustomCheckBox";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -29,10 +30,18 @@ const Home = ({ route, navigation }: props) => {
   const [loading2, users, add2] = useStateWithFireStoreCollection<Organizer>("users");
   const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
   const [timeShift, setTimeShift] = useState(0); // Only used for admin
+  const [highlightRecurring, setHighlightRecurring] = useState(false); // Only used for admin
 
   // Loading
   if (loading || loading2 || loading3) {
     return <Loading />;
+  }
+
+  function borderWidth(highlight: boolean, recurrenceType: string) {
+    if (highlight && recurrenceType != "None") {
+      return 2;
+    }
+    return 0;
   }
 
   // Time shift
@@ -94,6 +103,11 @@ const Home = ({ route, navigation }: props) => {
         return true;
       });
     }
+
+    // Remove non recurring
+    if (highlightRecurring) {
+      filteredEvents = filteredEvents.filter((event) => event.recurrenceType != "None");
+    }
   } catch (e) {
     console.error("Error filtering events: ", e);
   }
@@ -138,8 +152,13 @@ const Home = ({ route, navigation }: props) => {
         {isAdmin && (
           <View>
             <Slider value={timeShift} onValueChange={(value) => setTimeShift(value)} />
-            <Text>Time shift: {realTimeShift} days</Text>
-            <Text>Current day: {today.toDateString()}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <CustomCheckBox title="Highlight recurring events" checked={highlightRecurring} onPress={() => setHighlightRecurring(!highlightRecurring)} />
+              <View>
+                <Text>Time shift: {realTimeShift} days</Text>
+                <Text>Current day: {today.toDateString()}</Text>
+              </View>
+            </View>
           </View>
         )}
 
@@ -156,8 +175,8 @@ const Home = ({ route, navigation }: props) => {
               showsVerticalScrollIndicator={false}
               data={todayEvents}
               renderItem={({ item, index }) => (
-                <View style={styles.event}>
-                  <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
+                  <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
                 </View>
               )}
             />
@@ -174,8 +193,8 @@ const Home = ({ route, navigation }: props) => {
               showsVerticalScrollIndicator={false}
               data={thisWeekEvents}
               renderItem={({ item, index }) => (
-                <View style={styles.event}>
-                  <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
+                  <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
                 </View>
               )}
             />
@@ -196,8 +215,8 @@ const Home = ({ route, navigation }: props) => {
               showsVerticalScrollIndicator={false}
               data={otherEvents}
               renderItem={({ item, index }) => (
-                <View style={styles.event}>
-                  <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
+                  <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
                 </View>
               )}
             />

@@ -148,7 +148,7 @@ const OrganizerProfile = ({ route, navigation }: props) => {
             data={filteredEvents}
             renderItem={({ item, index }) => (
               <View style={{ marginVertical: "2%" }}>
-                <Event organizer={item.organizer} id={item.id} navigation={navigation} listView={false} onSaveEvent={() => {}} />
+                <Event organizer={item.organizer} id={item.id} today={new Date()} navigation={navigation} listView={false} onSaveEvent={() => {}} />
               </View>
             )}
           />

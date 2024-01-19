@@ -91,7 +91,9 @@ export const SavedEvents = ({ navigation }: props) => {
           {(savedEvents ?? []).length != 0 && (
             <FlatList
               data={savedEvents as EventObject[]}
-              renderItem={({ item }) => <Event listView={false} organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={() => {}} />}
+              renderItem={({ item }) => (
+                <Event today={new Date()} listView={false} organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={() => {}} />
+              )}
             />
           )}
         </View>

@@ -51,7 +51,7 @@ export type RootStackParamList = {
   OrganizerSettings: { id?: string; new?: boolean };
   OrganizerEventDetails: { eventID: string };
   Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
-  EventDetailsView: { eventID: string; organizerID: string; fake?: boolean };
+  EventDetailsView: { eventID: string; organizerID: string; fake?: boolean; today?: Date };
   EventSignUpView: {};
   Events: {};
   Saved: {};

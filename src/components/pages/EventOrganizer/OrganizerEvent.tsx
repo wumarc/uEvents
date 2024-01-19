@@ -46,7 +46,7 @@ const OrganizerEvent: FC<{ eventID: string; navigation: any }> = (props) => {
           <Text style={{ ...fonts.title2, color: colours.purple }}>{event.name}</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
-            <Text style={{ ...fonts.small, fontWeight: "500" }}>{formattedDate(event.startTime, event.allDay, event.endTime)}</Text>
+            <Text style={{ ...fonts.small, fontWeight: "500" }}>{formattedDate(event.startTime, event.endTime, event.allDay, new Date())}</Text>
           </View>
           {/* <Text style={fonts.title3}>{getTimeInAMPM(event.endTime.toDate())}</Text> */}
           {event.rejectReason && <Text style={{ ...fonts.small, color: "red" }}>Reason for rejection: {event.rejectReason}</Text>}

@@ -22,6 +22,7 @@ interface EventProps {
   navigation: any;
   onSaveEvent: any;
   listView: boolean;
+  today: Date;
   fake?: boolean;
 }
 
@@ -46,7 +47,7 @@ export const Event: React.FC<EventProps> = (props) => {
   }
 
   // True start time and end time
-  let [startTime, endTime, hasEnd] = getNextDate(event, new Date());
+  let [startTime, endTime, hasEnd] = getNextDate(event, props.today);
 
   let onCampusText = "";
   switch (event.onCampus) {
@@ -73,6 +74,7 @@ export const Event: React.FC<EventProps> = (props) => {
           organizerID: event.organizer,
           imageID: "",
           fake: isFake,
+          today: props.today,
         });
       }}
     >
@@ -108,7 +110,7 @@ export const Event: React.FC<EventProps> = (props) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
             <Text style={{ ...fonts.small, fontWeight: "500" }}>
-              {formattedDate(Timestamp.fromDate(startTime), event.allDay, hasEnd ? Timestamp.fromDate(endTime) : undefined)}
+              {formattedDate(Timestamp.fromDate(startTime), hasEnd ? Timestamp.fromDate(endTime) : undefined, event.allDay, props.today)}
             </Text>
           </View>
 

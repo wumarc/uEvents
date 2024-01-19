@@ -34,7 +34,9 @@ const EventDetails = ({ route, navigation }: props) => {
     return <Loading />;
   }
 
-  let [startTime, endTime] = getNextDate(event, new Date());
+  let today = route.params.today ?? new Date();
+
+  let [startTime, endTime] = getNextDate(event, today);
 
   let dateString = startTime.toDateString();
   if (endTime && endTime.getTime() - startTime.getTime() > 24 * 60 * 60 * 1000) {

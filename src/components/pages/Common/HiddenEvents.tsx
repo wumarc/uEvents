@@ -83,7 +83,7 @@ export const HiddenEvents = ({ route, navigation }: props) => {
           data={filteredEvents}
           renderItem={({ item, index }) => (
             <View style={styles.event}>
-              <Event organizer={item.organizer} id={item.id} navigation={navigation} onSaveEvent={() => {}} listView={false} />
+              <Event organizer={item.organizer} id={item.id} navigation={navigation} today={new Date()} onSaveEvent={() => {}} listView={false} />
               <Button
                 title="Unhide"
                 color={colours.purple}
