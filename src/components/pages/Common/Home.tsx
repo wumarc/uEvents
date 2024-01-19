@@ -169,33 +169,32 @@ const Home = ({ route, navigation }: props) => {
         {/* Today's event list */}
         {todayEvents.length != 0 && (
           <>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}>
-            <EmojiImage emoji="🔥" style={{ width: "8%", height: '10%'}} />
-            <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
-            <Text style={fonts.title2}> Events Happening Today </Text>
-            <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
-            <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
-          </View>
+            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: "red" }}>
+              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+              <Text style={fonts.title2}> Events Happening Today </Text>
+              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+            </View>
 
-          <View style={{ marginTop: windowHeight * 0.01}}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={todayEvents}
-              renderItem={({ item, index }) => (
-                <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
-                  <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
-                </View>
-              )}
-            />
-            <Divider width={1} style={{ marginVertical: 2 }} />
-          </View>
-
+            <View style={{ marginTop: windowHeight * 0.01 }}>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={todayEvents}
+                renderItem={({ item, index }) => (
+                  <View style={{ ...styles.event, borderWidth: borderWidth(highlightRecurring, item.recurrenceType) }}>
+                    <Event organizer={item.organizer} id={item.id} today={today} navigation={navigation} onSaveEvent={showToast} listView={listView} />
+                  </View>
+                )}
+              />
+              <Divider width={1} style={{ marginVertical: 2 }} />
+            </View>
           </>
         )}
 
         {/* This week's event list */}
         {thisWeekEvents.length != 0 && (
-          <View style={{ marginTop: windowHeight * 0.01}}>
+          <View style={{ marginTop: windowHeight * 0.01 }}>
             <Text style={fonts.title2}>Events happening this week</Text>
             <FlatList
               style={{}}
