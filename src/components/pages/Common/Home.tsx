@@ -18,6 +18,7 @@ import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { CustomSearchBar } from "../../atoms/CustomSearchBar";
 import { useUser } from "../../../utils/model/User";
+import { EmojiImage } from "../../organisms/EmojiImage";
 import { CustomCheckBox } from "../../atoms/CustomCheckBox";
 
 type props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -167,11 +168,17 @@ const Home = ({ route, navigation }: props) => {
 
         {/* Today's event list */}
         {todayEvents.length != 0 && (
-          <View style={{ marginTop: windowHeight * 0.01 }}>
-            <Text style={fonts.title2}>🔥 Events happening today 🔥</Text>
+          <>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}>
+            <EmojiImage emoji="🔥" style={{ width: "8%", height: '10%'}} />
+            <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+            <Text style={fonts.title2}> Events Happening Today </Text>
+            <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+            <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+          </View>
 
+          <View style={{ marginTop: windowHeight * 0.01}}>
             <FlatList
-              style={{}}
               showsVerticalScrollIndicator={false}
               data={todayEvents}
               renderItem={({ item, index }) => (
@@ -182,11 +189,13 @@ const Home = ({ route, navigation }: props) => {
             />
             <Divider width={1} style={{ marginVertical: 2 }} />
           </View>
+
+          </>
         )}
 
         {/* This week's event list */}
         {thisWeekEvents.length != 0 && (
-          <View style={{ marginTop: windowHeight * 0.01 }}>
+          <View style={{ marginTop: windowHeight * 0.01}}>
             <Text style={fonts.title2}>Events happening this week</Text>
             <FlatList
               style={{}}
