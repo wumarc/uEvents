@@ -169,7 +169,7 @@ const Home = ({ route, navigation }: props) => {
         {/* Today's event list */}
         {todayEvents.length != 0 && (
           <>
-            <View style={{ flexDirection: "row", justifyContent: Platform.OS != 'web' ? "center" : 'flex-start', alignItems: "center"}}>
+            <View style={{ flexDirection: "row", justifyContent: Platform.OS != "web" ? "center" : "flex-start", alignItems: "center" }}>
               <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
               <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
               <Text style={fonts.title2}> Events Happening Today </Text>
