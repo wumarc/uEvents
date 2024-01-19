@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar, ScrollView, Text, Platform } from "react-native";
 import { useEffect, useState } from "react";
 import { useStateWithFireStoreCollection, useStateWithFireStoreDocumentLogged } from "../../../utils/useStateWithFirebase";
 import { EventObject } from "../../../utils/model/EventObject";
@@ -169,12 +169,12 @@ const Home = ({ route, navigation }: props) => {
         {/* Today's event list */}
         {todayEvents.length != 0 && (
           <>
-            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: "red" }}>
-              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
-              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+            <View style={{ flexDirection: "row", justifyContent: Platform.OS != 'web' ? "center" : 'flex-start', alignItems: "center"}}>
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
               <Text style={fonts.title2}> Events Happening Today </Text>
-              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
-              <EmojiImage emoji="🔥" style={{ width: "8%", height: "10%" }} />
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
+              <EmojiImage emoji="🔥" style={{ width: 30, height: 40 }} />
             </View>
 
             <View style={{ marginTop: windowHeight * 0.01 }}>
