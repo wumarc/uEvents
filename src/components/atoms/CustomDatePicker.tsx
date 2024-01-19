@@ -17,13 +17,13 @@ interface CustomDatePickerProps {
   label?: string;
 }
 
-export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeString, baseStyle, useOnlyDate, label }: CustomDatePickerProps) => {
+export const CustomDatePicker = (props: CustomDatePickerProps) => {
   const [timeVisible, settimeVisible] = useState(false);
   const [dateVisible, setdateVisible] = useState(false);
 
   // Formatted hours
   let formattedHours = "";
-  let hours = time.toDate().getHours();
+  let hours = props.time.toDate().getHours();
   if (hours < 10) {
     formattedHours = "0" + hours;
   } else {
@@ -32,7 +32,7 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
 
   // Formatted minutes
   let formattedMinutes = "";
-  let minutes = time.toDate().getMinutes();
+  let minutes = props.time.toDate().getMinutes();
   if (minutes < 10) {
     formattedMinutes = "0" + minutes;
   } else {
@@ -40,7 +40,7 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
   }
 
   // Use only date
-  let shouldUseOnlyDate = useOnlyDate ? useOnlyDate : false;
+  let shouldUseOnlyDate = props.useOnlyDate ? props.useOnlyDate : false;
 
   return (
     <View style={{ marginTop: 10, marginBottom: 10 }}>
@@ -51,9 +51,9 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
             setdateVisible(true);
           }}
         >
-          <CustomText>{label + " date"}</CustomText>
+          <CustomText>{props.label + " date"}</CustomText>
           <Text style={{ width: "100%", padding: 8, borderWidth: 1, borderColor: "rgb(119, 119, 119)", borderRadius: 6, fontSize: 18, minHeight: 40 }}>
-            {time.toDate().toLocaleString("default", { month: "long" }) + " " + time.toDate().getDate() + " " + time.toDate().getFullYear()}
+            {props.time.toDate().toLocaleString("default", { month: "long" }) + " " + props.time.toDate().getDate() + " " + props.time.toDate().getFullYear()}
           </Text>
         </TouchableOpacity>
 
@@ -64,7 +64,7 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
               settimeVisible(true);
             }}
           >
-            <CustomText>{label + " time"}</CustomText>
+            <CustomText>{props.label + " time"}</CustomText>
             <Text style={{ width: "100%", padding: 8, borderWidth: 1, borderColor: "rgb(119, 119, 119)", borderRadius: 6, fontSize: 18, minHeight: 40 }}>
               {formattedHours + "h " + formattedMinutes + ""}
             </Text>
@@ -73,45 +73,45 @@ export const CustomDatePicker = ({ time, setTime, selectDateString, selectTimeSt
       </View>
 
       <DatePickerModal
-        date={time.toDate()}
+        date={props.time.toDate()}
         visible={dateVisible}
         onDismiss={() => {
           setdateVisible(false);
         }}
         onConfirm={(value: any) => {
           if (value.date) {
-            let date = time.toDate();
+            let date = props.time.toDate();
             date.setFullYear(value.date.getFullYear());
             date.setMonth(value.date.getMonth());
             date.setDate(value.date.getDate());
-            setTime(Timestamp.fromDate(date));
+            props.setTime(Timestamp.fromDate(date));
             setdateVisible(false);
           } else {
             setdateVisible(false);
           }
         }}
         mode="single"
-        label={selectDateString}
+        label={props.selectDateString}
         animationType="fade"
         locale={"en"}
       />
       <TimePickerModal
-        hours={time.toDate().getHours()}
-        minutes={time.toDate().getMinutes()}
+        hours={props.time.toDate().getHours()}
+        minutes={props.time.toDate().getMinutes()}
         visible={timeVisible}
         onDismiss={() => {
           settimeVisible(false);
         }}
         onConfirm={(value: any) => {
           if (value) {
-            let date = time.toDate();
+            let date = props.time.toDate();
             date.setHours(value.hours);
             date.setMinutes(value.minutes);
-            setTime(Timestamp.fromDate(date));
+            props.setTime(Timestamp.fromDate(date));
             settimeVisible(false);
           }
         }}
-        label={selectTimeString}
+        label={props.selectTimeString}
         cancelLabel="Cancel"
         confirmLabel="Ok"
         animationType="fade"

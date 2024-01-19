@@ -18,24 +18,16 @@ import ProfileHeaderRight from "./src/components/molecules/ProfileHeaderRight";
 import { HiddenEvents } from "./src/components/pages/Common/HiddenEvents";
 import BlockedOrganizers from "./src/components/pages/Common/BlockedOrganizers";
 import { Login, Signup, WelcomePage } from "./src/components/pages/Common/SignIn";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./src/firebaseConfig";
-import { useStateWithFireStoreDocumentLogged } from "./src/utils/useStateWithFirebase";
-import { getFirebaseUserIDOrEmpty, userType } from "./src/utils/util";
 import { Loading } from "./src/components/pages/Common/Loading";
 import YourEvents from "./src/components/pages/EventOrganizer/YourEvents";
-import { Step0 } from "./src/components/pages/EventOrganizer/CreateEvent";
 import { OrganizerSettings } from "./src/components/pages/EventOrganizer/OrganizerSettings";
 import { StudentSettings } from "./src/components/pages/Student/StudentSettings";
-import CreateEvent from "./src/components/pages/Admin/CreateEvent";
 import { AllEvents } from "./src/components/pages/Admin/AllEvents";
-import UploadFile from "./src/components/organisms/Outdated/UploadFile";
 import Preview from "./src/components/pages/Admin/Preview";
 import { CreateEventWeb } from "./src/components/pages/Admin/CreateEventWeb";
 import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
-import { UnderConstruction } from "./src/components/pages/Common/UnderConstruction";
 import { useUser } from "./src/utils/model/User";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -47,12 +39,12 @@ registerTranslation("en", en);
 export type RootStackParamList = {
   MainView: {};
   AccountSettingsView: {};
-  CreateEventView: {};
+  // CreateEventView: {};
   OrganizerSettings: { id?: string; new?: boolean };
-  OrganizerEventDetails: { eventID: string };
-  Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
+  // OrganizerEventDetails: { eventID: string };
+  // Step0: { eventID: string | undefined; useDefault: boolean; organizerName: string | undefined; isAdmin?: boolean };
   EventDetailsView: { eventID: string; organizerID: string; fake?: boolean; today?: Date };
-  EventSignUpView: {};
+  // EventSignUpView: {};
   Events: {};
   Saved: {};
   Home: {};
@@ -63,11 +55,11 @@ export type RootStackParamList = {
   BlockedOrganizersView: {};
   AllEvents: {};
   CreateEvent: {};
-  EditEvent: { eventId: string };
-  UploadFile: { eventId: string };
+  // EditEvent: { eventId: string };
+  // UploadFile: { eventId: string };
   Preview: { eventId: string; organizerId: string; fake?: boolean };
   AllOrganizers: {};
-  OnePageCreateEvent: {};
+  // OnePageCreateEvent: {};
   CreateEventWeb: { id?: string; fake?: boolean };
   Settings: {};
   NewVersion: {};
@@ -328,19 +320,6 @@ const Main: FC = (props) => {
               headerTitle: "Register",
             }}
           />
-          {/* Create Event form. Organizer */}
-          {isOrganizer && (
-            <Stack.Screen
-              name="Step0"
-              component={Step0 as any}
-              options={({ navigation }) => ({
-                headerShown: true,
-                headerTitle: "",
-                headerLeft: () => <HeaderLeft navigation={navigation} type={"cross"} />,
-                animation: "slide_from_bottom",
-              })}
-            />
-          )}
           {/* Event Preview. Admin */}
           {isAdmin && (
             <Stack.Screen

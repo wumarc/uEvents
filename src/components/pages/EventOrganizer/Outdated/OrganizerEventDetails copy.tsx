@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Linking } from "react-native";
-import { EventObject } from "../../../utils/model/EventObject";
-import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../subatoms/Theme";
+import { EventObject } from "../../../../utils/model/EventObject";
+import { colours, fonts, spacing, windowHeight, windowWidth, buttons } from "../../../subatoms/Theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
+import { useStateWithFireStoreDocument } from "../../../../utils/useStateWithFirebase";
 import { Button } from "@rneui/base";
 import { Icon } from "react-native-elements";
-import { RootStackParamList } from "../../../../main";
+import { RootStackParamList } from "../../../../../main";
 
 type props = NativeStackScreenProps<RootStackParamList, "OrganizerEventDetails">;
 

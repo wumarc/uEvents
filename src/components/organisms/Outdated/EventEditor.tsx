@@ -10,7 +10,7 @@ import UploadFile from "./UploadFile";
 import { deleteObject, ref } from "firebase/storage";
 import { storage } from "../../../firebaseConfig";
 import { daysOfWeekArray, daysOfWeekBrief } from "../../../utils/util";
-import { DatePicker } from "../../atoms/DatePicker";
+import { DatePicker } from "../../atoms/Outdated/DatePicker";
 
 const EventEditor: FC<{
   default: EventObject;

@@ -4,8 +4,8 @@ import { Modal, View, Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button, Input } from "react-native-elements";
 import WheelPickerExpo from "react-native-wheel-picker-expo";
-import { CustomButton } from "./CustomButton";
-import { borderRadius, colours } from "../subatoms/Theme";
+import { CustomButton } from "../CustomButton";
+import { borderRadius, colours } from "../../subatoms/Theme";
 
 export const DatePickerModal: FC<{
   setDate: (date: Timestamp) => void;

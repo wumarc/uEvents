@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Input } from "react-native-elements";
-import { toPrecision } from "../../utils/util";
+import { toPrecision } from "../../../utils/util";
 
 export const DatePicker: FC<{
   default?: Date;

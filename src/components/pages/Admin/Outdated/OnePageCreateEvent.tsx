@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../main";
 import { ScrollView, View } from "react-native";
-import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8 } from "../../EventOrganizer/CreateEvent";
+import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8 } from "../../EventOrganizer/Outdated/CreateEvent";
 import { useEffect, useState } from "react";
 import { uid } from "../../../../utils/util";
 import { useStateWithFireStoreDocument } from "../../../../utils/useStateWithFirebase";

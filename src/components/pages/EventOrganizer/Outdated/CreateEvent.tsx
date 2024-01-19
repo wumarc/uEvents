@@ -3,22 +3,22 @@ import { ButtonGroup } from "react-native-elements";
 import { Input, Button } from "@rneui/themed";
 import { Icon } from "react-native-elements";
 import { type FC, useEffect, useState } from "react";
-import { colours, fonts, spacing, windowHeight } from "../../subatoms/Theme";
+import { colours, fonts, spacing, windowHeight } from "../../../subatoms/Theme";
 import { ProgressBar } from "react-native-paper";
 import { Dropdown, MultiSelect } from "react-native-element-dropdown";
-import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../utils/useStateWithFirebase";
-import { Loading } from "../Common/Loading";
-import { getOrderedCategories } from "../../../utils/categories";
-import { type EventObject, recurrenceType } from "../../../utils/model/EventObject";
-import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
+import { useStateWithFireStoreCollection, useStateWithFireStoreDocument } from "../../../../utils/useStateWithFirebase";
+import { Loading } from "../../Common/Loading";
+import { getOrderedCategories } from "../../../../utils/categories";
+import { type EventObject, recurrenceType } from "../../../../utils/model/EventObject";
+import { getFirebaseUserIDOrEmpty, uid } from "../../../../utils/util";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
-import { fireStore } from "../../../firebaseConfig";
+import { fireStore } from "../../../../firebaseConfig";
 import { SvgUri } from "react-native-svg";
-import { DatePickerModal } from "../../atoms/DatePickerModal";
-import { CustomButton } from "../../atoms/CustomButton";
-import { type Organizer } from "../../../utils/model/Organizer";
+import { DatePickerModal } from "../../../atoms/Outdated/DatePickerModal";
+import { CustomButton } from "../../../atoms/CustomButton";
+import { type Organizer } from "../../../../utils/model/Organizer";
 import React from "react";
-import { EmojiImage } from "../../organisms/EmojiImage";
+import { EmojiImage } from "../../../organisms/EmojiImage";
 
 const data = [
   {

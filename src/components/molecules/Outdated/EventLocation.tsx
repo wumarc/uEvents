@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
 import { Text } from "react-native-elements";
 
-const EventLocation = ({ prop }: any) => {
+const EventLocation = ({ props }: any) => {
   return (
     <View style={styles.container}>
       {/* Column 1: Icon */}

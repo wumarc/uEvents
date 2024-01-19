@@ -20,37 +20,19 @@ interface inputProps {
   maxLength?: number;
 }
 
-// TODO: On the web version, the selection color is blue
-// TODO: An extra padding is also added on the web version on both sides of the input
-const CustomInput = ({
-  value,
-  placeholder,
-  onChangeText,
-  secureTextEntry,
-  containerStyle,
-  inputStyle,
-  style,
-  multiline,
-  errorMessage,
-  label,
-  disabled,
-  onChange,
-  maxLength,
-  defaultValue,
-  leftIcon,
-}: inputProps) => {
+const CustomInput = (props: inputProps) => {
   return (
     <Input
       disabledInputStyle={{ backgroundColor: "#ddd" }}
-      secureTextEntry={secureTextEntry}
-      value={value}
-      label={label}
-      onChangeText={onChangeText}
-      onChange={onChange}
-      placeholder={placeholder}
-      defaultValue={defaultValue}
-      leftIcon={leftIcon}
-      maxLength={maxLength}
+      secureTextEntry={props.secureTextEntry}
+      value={props.value}
+      label={props.label}
+      onChangeText={props.onChangeText}
+      onChange={props.onChange}
+      placeholder={props.placeholder}
+      defaultValue={props.defaultValue}
+      leftIcon={props.leftIcon}
+      maxLength={props.maxLength}
       autoCapitalize="none"
       selectionColor={colours.purple}
       selectTextOnFocus={true}
@@ -60,10 +42,10 @@ const CustomInput = ({
         borderWidth: 1,
         borderRadius: 6,
       }}
-      multiline={multiline}
-      containerStyle={containerStyle}
+      multiline={props.multiline}
+      containerStyle={props.containerStyle}
       inputStyle={[
-        inputStyle,
+        props.inputStyle,
         {
           paddingLeft: 8,
           paddingRight: 8,
@@ -71,10 +53,10 @@ const CustomInput = ({
           paddingBottom: 8,
         },
       ]}
-      style={[style, { outlineColor: colours.purple }]}
+      style={[props.style, { outlineColor: colours.purple }]}
       // style={style}
-      errorMessage={errorMessage}
-      disabled={disabled}
+      errorMessage={props.errorMessage}
+      disabled={props.disabled}
     />
   );
 };
