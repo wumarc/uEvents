@@ -67,33 +67,52 @@ const EventDetails = ({ route, navigation }: props) => {
 
         {/* Date and time */}
         <View style={{ ...spacing.verticalMargin1 }}>
-          <Text style={fonts.regular}>
-            <Text style={fonts.title2}>📅 </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ height: 30, width: 30 }}>
+              <EmojiImage emoji="📅" />
+            </View>
             {/* {relativeDate(event.startTime)} */}
             {/* Return the startTime in the format of day of the week month day */}
-            {dateString}
-          </Text>
-          <Text style={fonts.regular}>
-            <Text style={fonts.title2}>🕧 </Text>
-            {timeString}
-          </Text>
+            <Text style={fonts.regular}>{dateString}</Text>
+          </View>
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ height: 30, width: 30 }}>
+              <EmojiImage emoji="🕐" />
+            </View>
+            <Text style={fonts.regular}>{timeString}</Text>
+          </View>
+
           {event.recurrenceType == "Weekly" && (
-            <Text style={fonts.regular}>
-              <Text style={fonts.title2}>🔁 </Text>
-              Every week {event.recurrenceEnd ? "until " + event.recurrenceEnd.toDate().toDateString() : ""}
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View style={{ height: 30, width: 30 }}>
+                <EmojiImage emoji="🔁" />
+              </View>
+              <Text style={fonts.regular}>Every week {event.recurrenceEnd ? "until " + event.recurrenceEnd.toDate().toDateString() : ""}</Text>
+            </View>
           )}
         </View>
 
         {/* Description */}
         <View style={spacing.verticalMargin1}>
-          <Text style={{ ...fonts.title2, ...spacing.bottomMargin1 }}>ℹ️ Description</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", ...spacing.bottomMargin1 }}>
+            <View style={{ height: 30, width: 30 }}>
+              <EmojiImage emoji="📝" />
+            </View>
+            <Text style={{ ...fonts.title2 }}>Description</Text>
+          </View>
           <Text style={fonts.regular}>{event.description}</Text>
         </View>
 
         {/* Location */}
         <View style={spacing.verticalMargin1}>
-          <Text style={{ ...fonts.title2, ...spacing.bottomMargin1 }}>📍 Location</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", ...spacing.bottomMargin1 }}>
+            <View style={{ height: 30, width: 30 }}>
+              <EmojiImage emoji="📍" />
+            </View>
+            <Text style={{ ...fonts.title2 }}>Location</Text>
+          </View>
+
           {event.address == "" ? (
             <Text style={{ ...fonts.regular, textAlign: "center" }}>To be determined</Text>
           ) : (
@@ -118,7 +137,15 @@ const EventDetails = ({ route, navigation }: props) => {
         {/* Organizer */}
         {event.organizer ? (
           <View style={spacing.verticalMargin1}>
-            <Text style={{ ...fonts.title2, ...spacing.bottomMargin1 }}>🏠 Organizer</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", ...spacing.bottomMargin1 }}>
+              <View style={{ height: 30, width: 30 }}>
+                <EmojiImage emoji="🏠" />
+              </View>
+              <View style={{}}>
+                <Text style={{ ...fonts.title2 }}>Organizer</Text>
+              </View>
+            </View>
+
             <TouchableOpacity
               disabled={event.organizerType == "Manually Added"}
               onPress={() => {
@@ -166,7 +193,7 @@ const EventDetails = ({ route, navigation }: props) => {
         )}
 
         {/* Tags */}
-        <View style={spacing.verticalMargin1}>
+        {/* <View style={spacing.verticalMargin1}>
           <Text style={{ ...fonts.title2, ...spacing.bottomMargin1 }}>🏷️ Tags</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
             {event.categories.map((category, index) => {
@@ -187,7 +214,7 @@ const EventDetails = ({ route, navigation }: props) => {
               );
             })}
           </View>
-        </View>
+        </View> */}
 
         {event.originalLink && (
           <View style={spacing.verticalMargin1}>

@@ -37,8 +37,8 @@ export const borderRadius = {
 export const fonts = {
   title1: { color: colours.black, fontSize: 27, fontWeight: "500" as TextStyle["fontWeight"] },
   title2: { color: colours.black, fontSize: 20, fontWeight: "500" as TextStyle["fontWeight"] },
-  title3: { color: colours.black, fontSize: 17, fontWeight: "300" as TextStyle["fontWeight"] },
-  regular: { color: colours.grey, fontSize: 16, fontWeight: "300" as TextStyle["fontWeight"] },
+  title3: { color: colours.black, fontSize: 17, fontWeight: "400" as TextStyle["fontWeight"] },
+  regular: { color: colours.grey, fontSize: 16, fontWeight: "400" as TextStyle["fontWeight"] },
   small: { color: colours.grey, fontSize: 14, fontWeight: "200" as TextStyle["fontWeight"] },
 };
 
