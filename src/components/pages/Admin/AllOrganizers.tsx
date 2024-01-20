@@ -39,7 +39,7 @@ export const AllOrganizers = ({ route, navigation }: props) => {
   }
 
   let organizers = users?.filter((user) => user.type === "organizer") ?? [];
-  let organizer = organizers.sort((a, b) => {
+  organizers = organizers.sort((a, b) => {
     // undefined first
     if (a.approved == undefined) {
       return -1;
@@ -80,6 +80,8 @@ export const AllOrganizers = ({ route, navigation }: props) => {
     <View style={{ height: "100%" }}>
       {/* Search Bar */}
       <CustomSearchBar placeholder="Search organizer by name" search={search} setSearch={setSearch} />
+
+      <CustomText style={{ marginLeft: 20, marginTop: 20, marginBottom: 10 }}>Total: {organizers.length}</CustomText>
 
       {/* Filter */}
       <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
