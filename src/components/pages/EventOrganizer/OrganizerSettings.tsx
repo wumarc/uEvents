@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, ScrollView, View, StyleSheet, Platform } from "react-native";
-import { Input, Avatar, Text } from "@rneui/themed";
-import { Button } from "react-native-elements";
+import { Input, Text } from "@rneui/themed";
+import { Avatar, Button } from "react-native-elements";
 import { useStateWithFireStoreDocument, useStateWithFireStoreImage } from "../../../utils/useStateWithFirebase";
 import { getFirebaseUserIDOrEmpty, uid } from "../../../utils/util";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
