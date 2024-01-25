@@ -257,6 +257,7 @@ const Main: FC = (props) => {
             component={OrganizerSettings as any}
             options={({ navigation }) => ({
               headerLeft: () => <HeaderLeft navigation={navigation} />,
+              title: "Settings",
             })}
           />
           {/* Organizer Profile. Student, Organizer, Admin */}

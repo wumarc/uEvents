@@ -1,7 +1,8 @@
 import { View, Text, ScrollView, StyleSheet, Linking, FlatList } from "react-native";
 import { colours, fonts, spacing, windowWidth } from "../../subatoms/Theme";
 import Event from "../../organisms/Event";
-import { Avatar, ButtonGroup, Icon } from "react-native-elements";
+import { Avatar, ButtonGroup } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { useState } from "react";
 import { Dialog } from "react-native-elements";
 import * as Clipboard from "expo-clipboard";
@@ -125,6 +126,14 @@ const OrganizerProfile = ({ route, navigation }: props) => {
           size={35}
           containerStyle={{ ...spacing.verticalMargin1 }}
           onPress={() => setdialogVisible(true)}
+        />
+        <Icon
+          name="discord"
+          type="font-awesome-5"
+          color={colours.black}
+          size={35}
+          containerStyle={{ ...spacing.verticalMargin1 }}
+          // onPress={() => setdialogVisible(true)}
         />
       </View>
 
