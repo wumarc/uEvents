@@ -160,7 +160,19 @@ export const OrganizerSettings = ({ route, navigation }: props) => {
                 </Text>
               }
               leftIcon={{ type: "font-awesome", name: "at" }}
-              placeholder="Insert Instagram Handle"
+              placeholder="Insert Instagram handle"
+              defaultValue={localProfile.instagram}
+              onChangeText={(value: string) => setLocalProfile({ ...localProfile, instagram: value })}
+            />
+
+            <CustomInput
+              label={
+                <Text>
+                  Discord <Text style={{ color: "red" }}></Text>
+                </Text>
+              }
+              // leftIcon={{ type: "font-awesome", name: "at" }}
+              placeholder="Insert Discord invite link"
               defaultValue={localProfile.instagram}
               onChangeText={(value: string) => setLocalProfile({ ...localProfile, instagram: value })}
             />
