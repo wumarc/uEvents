@@ -65,7 +65,11 @@ const Organizer = ({ name, imageID, noSpacing }: OrganizerProps) => {
 
       {/* Organizer name */}
       <View style={{ justifyContent: "center" }}>
-        <Text style={fonts.title3}> {name}</Text>
+        <Text 
+          style={fonts.title3}
+        >
+          {name}
+        </Text>
       </View>
     </View>
   );

@@ -296,6 +296,7 @@ const Main: FC = (props) => {
             name="Welcome"
             component={WelcomePage}
             options={({ navigation }) => ({
+              headerTitle: "Sign In",
               headerStyle: { backgroundColor: colours.white },
               headerLeft: () => <HeaderLeft navigation={navigation} />,
             })}
