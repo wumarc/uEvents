@@ -1,6 +1,7 @@
 import Home from "./src/components/pages/Common/Home";
 import Settings from "./src/components/pages/Common/Settings";
 import { SavedEvents } from "./src/components/pages/Common/SavedEvents";
+import { TicketsPage } from "./src/components/pages/Common/TicketsPage";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer, Route } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -180,6 +181,18 @@ const MainView = ({ route, navigation }: props) => {
           title: "Saved",
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+          ),
+        }}
+      />
+      {/* Tickets. Student */}
+      <Tab.Screen
+        name="Tickets"
+        component={TicketsPage as any}
+        options={{
+          tabBarLabel: "Tickets",
+          title: "Tickets",
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons name={focused ? "ticket" : "ticket-outline"} color={focused ? colours.purple : colours.grey} size={30} />
           ),
         }}
       />

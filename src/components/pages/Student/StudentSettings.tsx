@@ -58,6 +58,22 @@ export const StudentSettings = () => {
             containerStyle={{ paddingHorizontal: 0 }}
             selectionColor={colours.purple}
           />
+          <Input
+            label="Student number"
+            value={""}
+            labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+            autoCapitalize="none"
+            containerStyle={{ paddingHorizontal: 0 }}
+            selectionColor={colours.purple}
+          />
+          <Input
+            label="Phone number"
+            value={""}
+            labelStyle={{ color: "black", fontWeight: "500", marginBottom: "1%" }}
+            autoCapitalize="none"
+            containerStyle={{ paddingHorizontal: 0 }}
+            selectionColor={colours.purple}
+          />
 
           <CustomButton title="Change Password" onPress={() => setIsVisible(true)} />
 
