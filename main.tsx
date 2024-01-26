@@ -30,6 +30,7 @@ import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
 import { useUser } from "./src/utils/model/User";
+import { Tickets } from "./src/components/pages/Common/Tickets";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -65,6 +66,7 @@ export type RootStackParamList = {
   Settings: {};
   NewVersion: {};
   YourEvents: {};
+  Tickets: {};
   Welcome: {};
 };
 

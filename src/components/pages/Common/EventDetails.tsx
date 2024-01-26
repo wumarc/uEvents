@@ -15,6 +15,7 @@ import { Platform } from "react-native";
 import { RootStackParamList } from "../../../../main";
 import { EmojiImage } from "../../organisms/EmojiImage";
 import { customLogEvent } from "../../../utils/analytics";
+import { useUser } from "../../../utils/model/User";
 
 type props = NativeStackScreenProps<RootStackParamList, "EventDetailsView">;
 // To access the type of user, use route.params.userType
@@ -25,12 +26,13 @@ const EventDetails = ({ route, navigation }: props) => {
   let dbPath = isFake ? "events-test" : "events";
 
   // States
+  const [loading3, userData, setUserData, isLogged, isStudent, isOrganizer, isAdmin, isBeta] = useUser();
   const [loading, event, set] = useStateWithFireStoreDocument<EventObject>(dbPath, route.params.eventID);
   const [loading2, organizer, set2] = useStateWithFireStoreDocument<Organizer>("users", route.params.organizerID);
   const [backupUrl, setBackupUrl] = useState<string | undefined>(undefined);
 
   // Loading
-  if (loading || loading2) {
+  if (loading || loading2 || loading3) {
     return <Loading />;
   }
 
@@ -274,6 +276,14 @@ const EventDetails = ({ route, navigation }: props) => {
           onPress={() => {
             customLogEvent("Clicked_on_signup_link", { eventId: event.id });
             if (event.signUpLink != null && event.signUpLink != "") {
+              // Add tickets to user
+              if (isLogged && setUserData && userData) {
+                if (isStudent) {
+                  setUserData({ ...userData, tickets: [...(userData.tickets ?? []), event.id] });
+                } else {
+                  setUserData({ ...userData, tickets: [...(userData.tickets ?? []), event.id] });
+                }
+              }
               Linking.openURL(event.signUpLink!);
             }
           }}
