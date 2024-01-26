@@ -29,6 +29,7 @@ import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
 import { useUser } from "./src/utils/model/User";
+import { Tickets } from "./src/components/pages/Common/Tickets";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -64,6 +65,7 @@ export type RootStackParamList = {
   Settings: {};
   NewVersion: {};
   YourEvents: {};
+  Tickets: {};
   Welcome: {};
 };
 
@@ -183,6 +185,20 @@ const MainView = ({ route, navigation }: props) => {
           ),
         }}
       />
+      {/* Tickets. Admin */}
+      {isAdmin && (
+        <Tab.Screen
+          name="Tickets"
+          component={Tickets as any}
+          options={{
+            tabBarLabel: "Tickets",
+            title: "Tickets",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+            ),
+          }}
+        />
+      )}
       {/* Settings. Student, Organizer, Admin */}
       <Tab.Screen
         name="Settings"
