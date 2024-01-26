@@ -13,7 +13,7 @@ export const TicketsPage = () => {
       </View>
 
       <View style={{ alignItems: Platform.OS == "web" ? "flex-start" : "center", ...spacing.verticalMargin1 }}>
-          <EventDetails/>
+          {/* <EventDetails/> */}
       </View>
 
     </View>
