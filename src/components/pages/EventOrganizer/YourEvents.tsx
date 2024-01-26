@@ -11,6 +11,11 @@ import { Organizer } from "../../../utils/model/Organizer";
 import { EmojiImage } from "../../organisms/EmojiImage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../../main";
+import { Event } from "../../organisms/Event";
+import { useState } from "react";
+import { CustomDialog } from "../../atoms/CustomDialog";
+import { deleteDoc, doc } from "firebase/firestore";
+import { fireStore } from "../../../firebaseConfig";
 
 type props = NativeStackScreenProps<RootStackParamList, "YourEvents">;
 
@@ -18,6 +23,9 @@ const YourEvents = ({ route, navigation }: props) => {
   // States
   const [loading, events, add] = useStateWithFireStoreCollection<EventObject>("events");
   const [loading2, profile, setProfile] = useStateWithFireStoreDocument<Organizer>("users", getFirebaseUserIDOrEmpty());
+  const [showEdit, setShowEdit] = useState(false);
+  const [editId, setEditId] = useState("");
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   if (loading || loading2 || !events) {
     return <Loading />;
@@ -57,13 +65,22 @@ const YourEvents = ({ route, navigation }: props) => {
 
         {(myEvents ?? []).length != 0 && (
           <FlatList
-            style={{}}
+            style={{
+              marginTop: 40,
+            }}
             showsVerticalScrollIndicator={false}
             data={myEvents}
             renderItem={({ item, index }) => (
-              <View>
-                <OrganizerEvent eventID={item.id} navigation={navigation} />
-              </View>
+              <Event
+                id={item.id}
+                organizer={item.organizer}
+                navigation={navigation}
+                showState
+                onClick={() => {
+                  setEditId(item.id);
+                  setShowEdit(true);
+                }}
+              />
             )}
           />
         )}
@@ -85,6 +102,54 @@ const YourEvents = ({ route, navigation }: props) => {
           onPress={() => navigation.navigate("CreateEventWeb", {})}
         />
       </View>
+      <CustomDialog
+        visible={showEdit}
+        setVisible={setShowEdit}
+        includeCancel
+        navigation={navigation}
+        buttons={[
+          {
+            buttonName: "Edit",
+            onPress: () => {
+              setShowEdit(false);
+              navigation.navigate("CreateEventWeb", { id: editId });
+            },
+          },
+          {
+            buttonName: "View",
+            onPress: () => {
+              setShowEdit(false);
+              navigation.navigate("EventDetailsView", {
+                eventID: editId,
+                organizerID: profile.id,
+              });
+            },
+          },
+          {
+            buttonName: "Delete",
+            onPress: () => {
+              setShowConfirmDelete(true);
+            },
+          },
+        ]}
+      />
+      <CustomDialog
+        visible={showConfirmDelete}
+        setVisible={setShowConfirmDelete}
+        includeCancel
+        navigation={navigation}
+        buttons={[
+          {
+            buttonName: "Delete",
+            onPress: () => {
+              deleteDoc(doc(fireStore, "events/" + editId));
+              setShowConfirmDelete(false);
+            },
+          },
+        ]}
+      >
+        Are you sure you want to delete the event?
+      </CustomDialog>
     </View>
   );
 };

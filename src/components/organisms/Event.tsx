@@ -20,10 +20,12 @@ interface EventProps {
   id: string;
   organizer: string;
   navigation: any;
-  onSaveEvent: any;
-  listView: boolean;
-  today: Date;
+  onSaveEvent?: any;
+  listView?: boolean;
+  today?: Date;
   fake?: boolean;
+  showState?: boolean;
+  onClick?: any;
 }
 
 export const Event: React.FC<EventProps> = (props) => {
@@ -47,7 +49,7 @@ export const Event: React.FC<EventProps> = (props) => {
   }
 
   // True start time and end time
-  let [startTime, endTime, hasEnd] = getNextDate(event, props.today);
+  let [startTime, endTime, hasEnd] = getNextDate(event, props.today ?? new Date());
 
   let onCampusText = "";
   switch (event.onCampus) {
@@ -65,17 +67,23 @@ export const Event: React.FC<EventProps> = (props) => {
       break;
   }
 
+  let showState = props.showState ?? false;
+
   return (
     <TouchableOpacity
       onPress={() => {
-        customLogEvent("Clicked_on_event", { eventId: props.id });
-        props.navigation.navigate("EventDetailsView", {
-          eventID: props.id,
-          organizerID: event.organizer,
-          imageID: "",
-          fake: isFake,
-          today: props.today,
-        });
+        if (props.onClick) {
+          props.onClick();
+        } else {
+          customLogEvent("Clicked_on_event", { eventId: props.id });
+          props.navigation.navigate("EventDetailsView", {
+            eventID: props.id,
+            organizerID: event.organizer,
+            imageID: "",
+            fake: isFake,
+            today: props.today,
+          });
+        }
       }}
     >
       <View
@@ -90,27 +98,41 @@ export const Event: React.FC<EventProps> = (props) => {
           <View>
             <Text style={{ fontWeight: "700", fontSize: 19, color: colours.purple }}>{event.name}</Text>
           </View>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <View
-              style={{
-                paddingLeft: 1,
-                width: Platform.OS != "web" ? windowWidth * 0.04 : 20,
-                height: Platform.OS != "web" ? windowHeight * 0.02 : 20,
-                borderRadius: Platform.OS != "web" ? windowWidth * 0.05 : 20,
-                overflow: "hidden",
-                justifyContent: "center",
-              }}
-            >
-              <FirebaseImage style={{ width: "100%", height: "100%", borderRadius: windowWidth * 0.02, overflow: "hidden" }} id={event.organizer} />
+          {showState ? (
+            <View>
+              <Text
+                style={{
+                  ...fonts.title3,
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  color: event.state == "Draft" ? colours.grey : event.state == "Published" ? "#93C572" : event.state == "Rejected" ? "red" : "#EF9B0F",
+                }}
+              >
+                {event.state}
+              </Text>
             </View>
-            <Text style={{ ...fonts.small, fontWeight: "500" }}> {event.organizerType == "Organizer Added" ? organizer.name : event.organizer}</Text>
-          </View>
+          ) : (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  paddingLeft: 1,
+                  width: Platform.OS != "web" ? windowWidth * 0.04 : 20,
+                  height: Platform.OS != "web" ? windowHeight * 0.02 : 20,
+                  borderRadius: Platform.OS != "web" ? windowWidth * 0.05 : 20,
+                  overflow: "hidden",
+                  justifyContent: "center",
+                }}
+              >
+                <FirebaseImage style={{ width: "100%", height: "100%", borderRadius: windowWidth * 0.02, overflow: "hidden" }} id={event.organizer} />
+              </View>
+              <Text style={{ ...fonts.small, fontWeight: "500" }}> {event.organizerType == "Organizer Added" ? organizer.name : event.organizer}</Text>
+            </View>
+          )}
 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
             <Text style={{ ...fonts.small, fontWeight: "500" }}>
-              {formattedDate(Timestamp.fromDate(startTime), hasEnd ? Timestamp.fromDate(endTime) : undefined, event.allDay, props.today)}
+              {formattedDate(Timestamp.fromDate(startTime), hasEnd ? Timestamp.fromDate(endTime) : undefined, event.allDay, props.today ?? new Date())}
             </Text>
           </View>
 
