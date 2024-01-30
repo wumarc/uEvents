@@ -30,8 +30,10 @@ import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
 import { useUser } from "./src/utils/model/User";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { color } from "@rneui/base";
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 registerTranslation("en", en);
@@ -84,7 +86,20 @@ const MainView = ({ route, navigation }: props) => {
   }
 
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: "#f7f7f7" }} activeColor={colours.purple} inactiveColor={colours.grey} initialRouteName="Home">
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBarPosition="bottom"
+      screenOptions={{
+        tabBarActiveTintColor: colours.purple,
+        tabBarLabelStyle: { fontSize: 9, textTransform: 'none'},
+        tabBarStyle: { backgroundColor: '#f7f7f7'},
+        swipeEnabled: true,
+        tabBarIndicatorStyle: { backgroundColor: colours.purple },
+      }}
+      // barStyle={{ backgroundColor: "#f7f7f7" }}
+      // activeColor={colours.purple} 
+      // inactiveColor={colours.grey} 
+    >
       {/* Create event form. Admin */}
       {isAdmin && (
         <Tab.Screen
@@ -157,8 +172,9 @@ const MainView = ({ route, navigation }: props) => {
         component={Home as any}
         options={{
           tabBarLabel: "Events",
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none' },
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name={focused ? "jellyfish" : "jellyfish-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+            <MaterialCommunityIcons name={focused ? "jellyfish" : "jellyfish-outline"} color={focused ? colours.purple : colours.grey} size={26} />
           ),
         }}
       />
@@ -167,9 +183,10 @@ const MainView = ({ route, navigation }: props) => {
         name="BrowseOrganizers"
         component={BrowseOrganizers as any}
         options={{
-          tabBarLabel: "Organizers",
+          tabBarLabel: "Clubs",
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none' },
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name={focused ? "office-building" : "office-building-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+            <MaterialCommunityIcons name={focused ? "office-building" : "office-building"} color={focused ? colours.purple : colours.grey} size={26} />
           ),
         }}
       />
@@ -179,9 +196,10 @@ const MainView = ({ route, navigation }: props) => {
         component={SavedEvents as any}
         options={{
           tabBarLabel: "Saved",
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none' },
           title: "Saved",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+            <MaterialCommunityIcons name={focused ? "heart" : "heart-outline"} color={focused ? colours.purple : colours.grey} size={26} />
           ),
         }}
       />
@@ -191,9 +209,10 @@ const MainView = ({ route, navigation }: props) => {
         component={Tickets as any}
         options={{
           tabBarLabel: "Tickets",
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none' },
           title: "Tickets",
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name={focused ? "ticket" : "ticket-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+            <MaterialCommunityIcons name={focused ? "ticket" : "ticket-outline"} color={focused ? colours.purple : colours.grey} size={26} />
           ),
         }}
       />
@@ -203,8 +222,9 @@ const MainView = ({ route, navigation }: props) => {
         component={Settings as any}
         options={{
           tabBarLabel: "Settings",
+          tabBarLabelStyle: { fontSize: 12, textTransform: 'none' },
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name={focused ? "cog" : "cog-outline"} color={focused ? colours.purple : colours.grey} size={30} />
+            <MaterialCommunityIcons name={focused ? "cog" : "cog-outline"} color={focused ? colours.purple : colours.grey} size={28} />
           ),
         }}
       />
