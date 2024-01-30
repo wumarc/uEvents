@@ -1,7 +1,7 @@
 import Home from "./src/components/pages/Common/Home";
 import Settings from "./src/components/pages/Common/Settings";
 import { SavedEvents } from "./src/components/pages/Common/SavedEvents";
-import { TicketsPage } from "./src/components/pages/Common/TicketsPage";
+import { Tickets } from "./src/components/pages/Common/Tickets";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer, Route } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -30,7 +30,6 @@ import { NewVersion } from "./src/components/pages/Admin/NewVersion";
 import { AllOrganizers } from "./src/components/pages/Admin/AllOrganizers";
 import { en, registerTranslation } from "react-native-paper-dates";
 import { useUser } from "./src/utils/model/User";
-import { Tickets } from "./src/components/pages/Common/Tickets";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -189,7 +188,7 @@ const MainView = ({ route, navigation }: props) => {
       {/* Tickets. Student */}
       <Tab.Screen
         name="Tickets"
-        component={TicketsPage as any}
+        component={Tickets as any}
         options={{
           tabBarLabel: "Tickets",
           title: "Tickets",

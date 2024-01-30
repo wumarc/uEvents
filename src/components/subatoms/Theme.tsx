@@ -13,6 +13,7 @@ export const colours = {
   primaryGrey: "#EDEDED",
   white: "#FFFFFF",
   darkPurple: "#8A4287",
+  green: "#93C572",
   // textGrey: '#99A1AA',
   // titleGrey: '#47494F',
 };

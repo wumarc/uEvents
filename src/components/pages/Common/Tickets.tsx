@@ -14,6 +14,7 @@ import { auth } from "../../../firebaseConfig";
 import { RootStackParamList } from "../../../../main";
 import { EmojiImage } from "../../organisms/EmojiImage";
 import { useUser } from "../../../utils/model/User";
+import { Icon } from "react-native-elements";
 
 type props = NativeStackScreenProps<RootStackParamList, "Tickets">;
 
@@ -87,9 +88,8 @@ export const Tickets = ({ navigation }: props) => {
 
         {(ticketEvents ?? []).length == 0 && (
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <EmojiImage emoji="🏝️" style={{ width: "60%", height: "40%" }} />
             <Text style={{ ...fonts.title3, textAlign: "center" }}>
-              You have no tickets. Your event list is as unoccupied as a peaceful oasis in the middle of the desert...
+              Empty tickets nest? Start attending events to kick off the ultimate student experience!
             </Text>
           </View>
         )}

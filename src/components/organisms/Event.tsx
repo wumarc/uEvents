@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "@rneui/base";
-import { Icon } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import { eventPath, getFirebaseUserIDOrEmpty, getNextDate } from "../../utils/util";
 import { colours, fonts, windowHeight, windowWidth } from "../subatoms/Theme";
 import { useStateWithFireStoreDocument, useStateWithFireStoreDocumentLogged } from "../../utils/useStateWithFirebase";
@@ -14,6 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 import { EmojiImage } from "./EmojiImage";
 import { customLogEvent } from "../../utils/analytics";
+import React from "react";
 
 // Event component props
 interface EventProps {
@@ -34,6 +35,7 @@ export const Event: React.FC<EventProps> = (props) => {
   let dbPath = isFake ? "events-test" : eventPath();
 
   // States
+  const [typeTicket, setTypeTicket] = React.useState(false);
   const [loading, event, setEvent] = useStateWithFireStoreDocument<EventObject>(dbPath, props.id);
   const [loading3, organizer, set2] = useStateWithFireStoreDocument<EventObject>("users", props.organizer);
   const [user, loading4, error] = useAuthState(auth);
@@ -92,9 +94,9 @@ export const Event: React.FC<EventProps> = (props) => {
           borderRadius: 13,
         }}
       >
-        <EmojiImage emoji={event.emoji} style={{ justifyContent: "center", width: windowWidth * 0.25, height: windowHeight * 0.15 }} />
+        <EmojiImage emoji={event.emoji} style={{ justifyContent: "center", width: windowWidth * 0.23, height: windowHeight * 0.15 }} />
 
-        <View style={{ width: "70%", justifyContent: "center" }}>
+        <View style={{ width: typeTicket ? "50%" : "70%", justifyContent: "center" }}>
           <View>
             <Text style={{ fontWeight: "700", fontSize: 19, color: colours.purple }}>{event.name}</Text>
           </View>
@@ -130,7 +132,6 @@ export const Event: React.FC<EventProps> = (props) => {
           )}
 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon name="time-outline" type="ionicon" size={19} color={colours.grey} />
             <Text style={{ ...fonts.small, fontWeight: "500" }}>
               {formattedDate(Timestamp.fromDate(startTime), hasEnd ? Timestamp.fromDate(endTime) : undefined, event.allDay, props.today ?? new Date())}
             </Text>
@@ -141,6 +142,19 @@ export const Event: React.FC<EventProps> = (props) => {
             <Text style={{ ...fonts.small, fontWeight: "500" }}>{onCampusText}</Text>
           </View>
         </View>
+
+        {/* Display this only if it's a ticket */}
+        {typeTicket && (
+          <TouchableOpacity
+            style={{ width: windowWidth * 0.25, justifyContent: "center" }}
+            onPress={() => {
+              console.log("Hello there, you click me to sign up or unregister");
+            }}
+          >
+            <Icon name="checkmark-done-circle-sharp" type="ionicon" size={40} color={colours.green} />
+            <Text style={{ ...fonts.small, color: colours.green, textAlign: "center", fontWeight: "700" }}>Going</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );
