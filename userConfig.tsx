@@ -2,11 +2,10 @@
 // Personal config. Global config in is config.tsx
 
 // This is a list of special users that uses test events
-// export const testUsersEvents = ["alavi091@uottawa.ca", "admin@uevents.org"];
-export const testUsersEvents = ["mwu078@uottawa.ca"];
+export const testUsersEvents = ["email@email.ca"];
 
 // List of users that uses test version
-// Uses the path "version-test" in the database
+// Uses the path "" in the database
 export const testUsersVersion = [];
 
-export const betaUsers = ["organizer@uottawa.ca", "admin@uevents.org"];
+export const betaUsers = ["email@email.ca"];
