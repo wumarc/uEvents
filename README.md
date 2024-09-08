@@ -27,6 +27,7 @@ The following are some major features of uEvents:
 |-----------------------------------------|----------------------------------------|--------------------------------------|--------------------------------------|
 | <img src="./screenshots/screenshot1.png" width="200"> | <img src="./screenshots/screenshot7.png" width="200"> <img src="./screenshots/screenshot6.png" width="200"> | <img src="./screenshots/screenshot2.png" width="200"> | <img src="./screenshots/screenshot8.png" width="200"> |
 
+
 ## Lessons Learned
 
 Working with the university is challenging due to its bureaucratic nature, which hampered our progress. Additionally, the project began with eight members, making it difficult to manage tasks and decision-making effectively within such a large team.
