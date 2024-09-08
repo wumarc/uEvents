@@ -25,8 +25,7 @@ Additionally, we invested in a marketing campaign that involved putting up poste
 The following are some major features of uEvents:
 | Browsing Events | Viewing Event Details | Saving Events | Browsing Clubs |
 |-----------------------------------------|----------------------------------------|--------------------------------------|--------------------------------------|
-| <img src="./screenshots/screenshot1.png" width="200"> | <img src="./screenshots/screenshot7.png" width="200"> <img src="./screenshots/screenshot6.png" width="200"> | <img src="./screenshots/screenshot2.png" width="200"> | <img src="./screenshots/screenshot8.png" width="200"> |
-
+| <img src="./screenshots/screenshot1.png" width="200"> | <img src="./screenshots/screenshot7.png" width="170"> <img src="./screenshots/screenshot6.png" width="170"> | <img src="./screenshots/screenshot2.png" width="200"> | <img src="./screenshots/screenshot8.png" width="200"> |
 
 ## Lessons Learned
 
