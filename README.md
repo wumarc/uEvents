@@ -33,7 +33,7 @@ Working with the university is challenging due to its bureaucratic nature, which
 
 ## Contribution and Contributors
 
-As of January 2024, this project has been officially shut down and is no longer actively maintained. The app was primarily developed by @antoine2304 and @wumarc, with contributions from several other team members who exited the project during its early stages. Please note that we are no longer accepting any contributions or updates, as the repository has been archived. Thank you to everyone who supported and showed interest in the project during its development.
+As of January 2024, this project has been officially shut down and is no longer actively maintained. The app was primarily developed by [@antoine2304](https://github.com/antoine2304) and [@wumarc](https://github.com/wumarc), with some contributions from several other team members who exited the project during its early stages. Please note that we are no longer accepting any contributions or updates, as the repository has been archived. Thank you to everyone who supported and showed interest in the project during its development.
 
 ---
 
