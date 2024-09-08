@@ -11,19 +11,19 @@ Despite initial success and positive feedback from students, uEvents was ultimat
 We experienced some success with students discussing uEvents on platforms like Discord!
 
 <div style="text-align: center;">
-  <img src="./screenshots/screenshot4.png" width="150">
+  <img src="./screenshots/screenshot4.png" width="200">
 </div>
 
 Additionally, we invested in a marketing campaign that involved putting up posters across campus, creating a dedicated Discord server, and launching an Instagram account to promote the app.
 
 <div style="text-align: center;">
-  <img src="./screenshots/screenshot5.png" width="150">
+  <img src="./screenshots/screenshot5.png" width="200">
 </div>
 
 ## Features
 
 The following are some major features of uEvents:
-| browsing events | viewing event details | saving events | browsing clubs |
+| Browsing Events | Viewing Event Details | Saving Events | Browsing Clubs |
 |-----------------------------------------|----------------------------------------|--------------------------------------|--------------------------------------|
 | <img src="./screenshots/screenshot1.png" width="200"> | <img src="./screenshots/screenshot7.png" width="200"> <img src="./screenshots/screenshot6.png" width="200"> | <img src="./screenshots/screenshot2.png" width="200"> | <img src="./screenshots/screenshot8.png" width="200">|
 
