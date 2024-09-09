@@ -4,10 +4,6 @@
 
 uEvents is a social media platform built to help uOttawa students find out what they are missing out on campus. the goal was to transform the process of finding events and communities into something as simple as opening an app.
 
-## Reasons for Archival
-
-Despite initial success and positive feedback from students, uEvents was ultimately archived due to several challenges. The primary issue was scalability, particularly in attracting new users, especially event organizers. This created a "chicken and egg" problem, where the platform needed more clubs and events to attract students, but without a strong user base, it was difficult to engage organizers. Additionally, maintaining long-term user engagement and managing the resources needed for continuous updates became increasingly difficult.
-
 Within the first two months, the app achieved 500 signups and maintained an average of 50 daily active users. it also sparked discussions among students on platforms like Discord!
 
 <div style="text-align: center;">
@@ -19,6 +15,10 @@ Additionally, we invested in a marketing campaign that involved putting up poste
 <div style="text-align: center;">
   <img src="./screenshots/screenshot5.png" width="200">
 </div>
+
+## Reasons for Archival
+
+Despite initial success and positive feedback from students, uEvents was ultimately archived due to several challenges. The primary issue was scalability, particularly in attracting new users, especially event organizers. This created a "chicken and egg" problem, where the platform needed more clubs and events to attract students, but without a strong user base, it was difficult to engage organizers. Additionally, maintaining long-term user engagement and managing the resources needed for continuous updates became increasingly difficult.
 
 ## Features
 
