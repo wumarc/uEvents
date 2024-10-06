@@ -20,6 +20,11 @@ Additionally, we invested in a marketing campaign that involved putting up poste
 
 Despite initial success and positive feedback from students, uEvents was ultimately archived due to several challenges. The primary issue was scalability, particularly in attracting new users, especially event organizers. This created a "chicken and egg" problem, where the platform needed more clubs and events to attract students, but without a strong user base, it was difficult to engage organizers. Additionally, maintaining long-term user engagement and managing the resources needed for continuous updates became increasingly difficult.
 
+Update on October 6th 2024: we are still getting [requests](https://www.reddit.com/r/geegees/comments/1flki7h/what_happened_to_uevents/?share_id=KDmCEgqUfy_8blDcUe_j2&utm_content=2&utm_medium=android_app&utm_name=androidcss&utm_source=share&utm_term=1) from students asking about uEvents. Looks like we really made an impact on some of them! 😁
+<div style="text-align: center;">
+  <img src="./screenshots/reddit.png" width="200">
+</div>
+
 ## Features
 
 The following are some major features of uEvents:
