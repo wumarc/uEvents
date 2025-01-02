@@ -2,7 +2,9 @@
 
 ## Project Overview, Goals & Objectives
 
-uEvents is a social media platform built to help uOttawa students find out what they are missing out on campus. the goal was to transform the process of finding events and communities into something as simple as opening an app.
+Problem: uOttawa students often miss out on-campus events and communities because event information is scattered across multiple platforms like Discord, Eventbrite, Instagram, and Facebook. With no centralized platform, staying informed is challenging, leading to missed opportunities for connection and engagement.
+
+Solution: uEvents is a social media platform built to help uOttawa students discover what they’re missing on campus. The goal was to transform the process of finding events and communities into something as simple as opening an app. Centralizing all campus event information in one place, uEvents ensures students can easily stay connected and never miss an opportunity to participate in campus life.
 
 Within the first two months, the app achieved 500 signups and maintained an average of 50 daily active users. it also sparked discussions among students on platforms like Discord!
 
